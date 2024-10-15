@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>여행 코스 추천</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    input, select, button {
+      width: 100%;
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+    }
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    li {
+      background-color: #f9f9f9;
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 5px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>충남투어패스 지역별 가맹점 한눈에 보기</h1>
+
+    <select id="region">
+      <option value="">지역 선택</option>
+      <option value="천안">천안</option>
+      <option value="공주">공주</option>
+      <option value="보령">보령</option>
+      <option value="아산">아산</option>
+      <option value="서산">서산</option>
+      <option value="논산">논산</option>
+      <option value="계룡">계룡</option>
+      <option value="당진">당진</option>
+      <option value="금산">금산</option>
+      <option value="부여">부여</option>
+      <option value="서천">서천</option>
+      <option value="청양">청양</option>
+      <option value="홍성">홍성</option>
+      <option value="예산">예산</option>
+      <option value="태안">태안</option>
+    </select>
+
+    <select id="concept">
+      <option value="">유형 선택</option>
+      <option value="카페">카페</option>
+      <option value="체험">체험</option>
+      <option value="관광">관광</option>
+    </select>
+
+    <button onclick="recommend()">안내받기</button>
+
+    <ul id="results"></ul>
+  </div>
+
+  <script>
+  fetch('./places.json')  // JSON 파일이 같은 폴더에 있음을 의미
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log('JSON loaded:', data);
+      places = data;
+    })
+    .catch(error => console.error('Error loading JSON:', error));
+    function recommend() {
+      const region = document.getElementById('region').value;
+      const concept = document.getElementById('concept').value;
+      const results = document.getElementById('results');
+      results.innerHTML = '';
+
+      const filteredPlaces = places.filter(place =>
+        place.region.includes(region) && place.name.includes(concept)
+      );
+
+      if (filteredPlaces.length === 0) {
+        results.innerHTML = '<li>조건에 맞는 장소가 없습니다.</li>';
+        return;
+      }
+
+      filteredPlaces.forEach(place => {
+        const li = document.createElement('li');
+        li.innerHTML = `
+          <h2>${place.name}</h2>
+          <p>혜택: ${place.benefit}</p>
+          <p>주소: ${place.address}</p>
+          <p>운영시간: ${place.operation_hours}</p>
+          <p>유의사항: ${place.notes}</p>
+        `;
+        results.appendChild(li);
+      });
+    }
+  </script>
+</body>
+</html>
