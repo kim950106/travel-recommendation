@@ -802,51 +802,71 @@ async function callGoogleAppsScript(data, method = 'GET') {
             }
         ];
 
-        // 구글 로그인 (실제 백엔드 연동)
-        async function googleLogin() {
-            try {
-                document.getElementById('googleLoginBtn').innerHTML = '⏳ 로그인 중...';
-                
-                // 실제 환경에서는 Google OAuth를 사용하지만, 
-                // 데모를 위해 사용자 입력으로 대체
-                const name = prompt('이름을 입력하세요:');
-                if (!name) {
-                    document.getElementById('googleLoginBtn').innerHTML = '🔗 Google 계정으로 로그인';
-                    return;
-                }
-                
-                const email = prompt('이메일을 입력하세요:');
-                if (!email) {
-                    document.getElementById('googleLoginBtn').innerHTML = '🔗 Google 계정으로 로그인';
-                    return;
-                }
-                
-                // 백엔드에 사용자 등록
-                const userData = {
-                    action: 'registerUser',
-                    name: name,
-                    email: email,
-                    team: '투어패스사업부',
-                    position: '직원'
-                };
-                
-                const response = await callGoogleAppsScript(userData, 'POST');
-                
-                currentUser = {
-                    name: response.user.name,
-                    email: response.user.email,
-                    team: response.user.team,
-                    position: response.user.position,
-                    avatar: response.user.name.substring(0, 1)
-                };
-                
-                showMainApp();
-                
-            } catch (error) {
-                alert('로그인 실패: ' + error.message + '\n\n백엔드가 배포되지 않은 경우 발생할 수 있습니다.');
-                document.getElementById('googleLoginBtn').innerHTML = '🔗 Google 계정으로 로그인';
-            }
-        }
+// 구글 로그인(데모용) - 기존 사용자 기록 불러오기 기능 추가
+async function googleLogin() {
+  const btn = document.getElementById('googleLoginBtn');
+  try {
+    btn.innerHTML = '⏳ 로그인 중...';
+
+    const name = prompt('이름을 입력하세요:');
+    if (!name) { btn.innerHTML = '이름으로 로그인'; return; }
+
+    const email = prompt('이메일을 입력하세요:');
+    if (!email) { btn.innerHTML = '이름으로 로그인'; return; }
+
+    // 1) 먼저 기존 참가자 목록 조회
+    let existingUser = null;
+    try {
+      const check = await callGoogleAppsScript({ action: 'getParticipants' });
+      if (check.participants) {
+        existingUser = check.participants.find(p =>
+          p.name === name && p.email === email
+        );
+      }
+    } catch (e) {
+      console.warn('참가자 조회 실패:', e.message);
+    }
+
+    if (existingUser) {
+      // 2) 기존 사용자면 그대로 로그인
+      currentUser = {
+        name: existingUser.name,
+        email: existingUser.email,
+        team: existingUser.team,
+        position: existingUser.position,
+        avatar: existingUser.name.substring(0, 1)
+      };
+      alert(`${name}님, 기존 기록으로 로그인되었습니다.`);
+      showMainApp();
+      return;
+    }
+
+    // 3) 신규 사용자 등록
+    const userData = {
+      action: 'registerUser',
+      name: name,
+      email: email,
+      team: '투어패스사업부',
+      position: '직원'
+    };
+
+    const response = await callGoogleAppsScript(userData, 'POST');
+    currentUser = {
+      name: response.user.name,
+      email: response.user.email,
+      team: response.user.team,
+      position: response.user.position,
+      avatar: response.user.name.substring(0, 1)
+    };
+
+    showMainApp();
+
+  } catch (error) {
+    alert('로그인 실패: ' + error.message);
+  } finally {
+    btn.innerHTML = '이름으로 로그인';
+  }
+}
 
         // 실제 백엔드와 연동한 데이터 동기화
         async function syncData() {
