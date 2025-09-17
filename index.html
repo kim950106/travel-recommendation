@@ -132,38 +132,46 @@
       </div>
 
       <!-- 메뉴 -->
-      <div id="mainMenu" class="menu-grid">
-        <div class="menu-item" data-action="participants" data-mark="👥" onclick="openModal('participantsModal')">
-          <div class="menu-icon">👥</div>
-          <div class="menu-title">참가자 현황</div>
-          <div class="menu-desc">MBTI 및 팀 구성 보기</div>
-        </div>
-        <div class="menu-item" data-action="schedule" data-mark="📅" onclick="openScheduleOptions()">
-          <div class="menu-icon">📅</div>
-          <div class="menu-title">워크샵 일정</div>
-          <div class="menu-desc">상세 일정 및 프로그램</div>
-        </div>
-        <div class="menu-item" data-action="mbti" data-mark="🧠" onclick="startMBTITest()">
-          <div class="menu-icon">🧠</div>
-          <div class="menu-title">MBTI 검사</div>
-          <div class="menu-desc">성격 유형 검사 실시</div>
-        </div>
-        <div class="menu-item" data-action="ticket" data-mark="🎫" onclick="openTourpassTicket()">
-          <div class="menu-icon">🎫</div>
-          <div class="menu-title">투어패스 열기</div>
-          <div class="menu-desc">지정된 링크 연결</div>
-        </div>
-        <div class="menu-item" data-action="survey" data-mark="📝" onclick="openModal('surveyModal')">
-          <div class="menu-icon">📝</div>
-          <div class="menu-title">설문조사</div>
-          <div class="menu-desc">워크샵 만족도</div>
-        </div>
-        <div class="menu-item" data-action="tourpassbox" data-mark="📦" onclick="openModal('tourpassBoxModal')">
-          <div class="menu-icon">📦</div>
-          <div class="menu-title">투어패스 보관함</div>
-          <div class="menu-desc">개인 링크 저장소</div>
-        </div>
-      </div>
+<div id="mainMenu" class="menu-grid">
+  <div class="menu-item" data-action="participants" data-mark="👥" onclick="openModal('participantsModal')">
+    <div class="menu-icon">👥</div>
+    <div class="menu-title">참가자 현황</div>
+    <div class="menu-desc">MBTI 및 팀 구성 보기</div>
+  </div>
+
+  <!-- 변경: 일정 클릭 시 상세 일정 바로 오픈 -->
+  <div class="menu-item" data-action="schedule" data-mark="📅" onclick="showDetailedSchedule()">
+    <div class="menu-icon">📅</div>
+    <div class="menu-title">워크샵 일정</div>
+    <div class="menu-desc">상세 일정 및 프로그램</div>
+  </div>
+
+  <div class="menu-item" data-action="mbti" data-mark="🧠" onclick="startMBTITest()">
+    <div class="menu-icon">🧠</div>
+    <div class="menu-title">MBTI 검사</div>
+    <div class="menu-desc">성격 유형 검사 실시</div>
+  </div>
+
+  <!-- 변경: 4번째 자리에 '투어패스 보관함' 이동 -->
+  <div class="menu-item" data-action="tourpassbox" data-mark="📦" onclick="openModal('tourpassBoxModal')">
+    <div class="menu-icon">📦</div>
+    <div class="menu-title">투어패스 보관함</div>
+    <div class="menu-desc">개인 링크 저장소</div>
+  </div>
+
+  <div class="menu-item" data-action="survey" data-mark="📝" onclick="openModal('surveyModal')">
+    <div class="menu-icon">📝</div>
+    <div class="menu-title">설문조사</div>
+    <div class="menu-desc">워크샵 만족도</div>
+  </div>
+
+  <!-- 변경: 기존 '투어패스 보관함' 자리(6번째)에 '워크숍 챗봇' 생성 -->
+  <div class="menu-item" data-action="chatbot" data-mark="🤖" onclick="openWorkshopChatbot()">
+    <div class="menu-icon">🤖</div>
+    <div class="menu-title">워크숍 챗봇</div>
+    <div class="menu-desc">대화형 도우미 바로가기</div>
+  </div>
+</div>
 
       <!-- 번역 -->
       <div class="app-translate">
@@ -243,6 +251,16 @@
     </div>
   </div>
 
+ <script>
+// 워크숍 챗봇 링크 오픈
+function openWorkshopChatbot() {
+  window.open(
+    'https://chatgpt.com/g/g-6899821cd87481919c7a20d26b89f0ce-tueopaeseusaeobbu-weokeusyob-aieosiseuteonteu',
+    '_blank'
+  );
+}
+</script>
+ 
   <!-- 투어패스 보관함 모달 -->
   <div id="tourpassBoxModal" class="modal">
     <div class="modal-content" style="width:760px;max-width:95%">
