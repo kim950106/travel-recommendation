@@ -802,107 +802,72 @@ async function callGoogleAppsScript(data, method = 'GET') {
             }
         ];
 
-// 구글 로그인(데모용) - 기존 사용자 기록 불러오기 기능 추가
+// 로그인 (기존 사용자면 가입 없이 기록까지 불러오기)
 async function googleLogin() {
   const btn = document.getElementById('googleLoginBtn');
   try {
     btn.innerHTML = '⏳ 로그인 중...';
 
-    const name = prompt('이름을 입력하세요:');
+    let name = prompt('이름을 입력하세요:');
     if (!name) { btn.innerHTML = '이름으로 로그인'; return; }
+    name = name.trim();
 
-    const email = prompt('이메일을 입력하세요:');
+    let email = prompt('이메일을 입력하세요:');
     if (!email) { btn.innerHTML = '이름으로 로그인'; return; }
+    email = email.trim().toLowerCase(); // 정규화
 
-    // 1) 먼저 기존 참가자 목록 조회
-    let existingUser = null;
+    // 1) 기존 사용자 번들 조회 (가입 없이 기록 포함)
     try {
-      const check = await callGoogleAppsScript({ action: 'getParticipants' });
-      if (check.participants) {
-        existingUser = check.participants.find(p =>
-          p.name === name && p.email === email
-        );
+      const found = await callGoogleAppsScript({ action: 'getUserBundle', name, email }, 'POST');
+      if (found && found.user) {
+        currentUser = {
+          name: found.user.name,
+          email: found.user.email,
+          team: found.user.team,
+          position: found.user.position,
+          avatar: found.user.name.substring(0, 1)
+        };
+        // 서버 기록을 로컬에 반영 (MBTI/설문)
+        importRecordsToLocal(found.records, currentUser);
+        alert(`${currentUser.name}님, 기존 기록으로 로그인되었습니다.`);
+        showMainApp();
+        return;
       }
     } catch (e) {
-      console.warn('참가자 조회 실패:', e.message);
+      // getUserBundle 실패 시에도 계속 진행(신규일 수 있음)
+      // 단, 의미 있는 에러 메시지는 안내
+      const msg = (e && e.message) || '';
+      if (msg.includes('EMAIL_NAME_MISMATCH')) {
+        alert('이 이메일은 다른 이름으로 등록되어 있어요.\n기존 등록한 이름으로 로그인하거나 이메일을 확인해주세요.');
+        btn.innerHTML = '이름으로 로그인';
+        return;
+      }
+      // NOT_FOUND 등은 신규 가입으로 진행
     }
 
-    if (existingUser) {
-      // 2) 기존 사용자면 그대로 로그인
-      currentUser = {
-        name: existingUser.name,
-        email: existingUser.email,
-        team: existingUser.team,
-        position: existingUser.position,
-        avatar: existingUser.name.substring(0, 1)
-      };
-      alert(`${name}님, 기존 기록으로 로그인되었습니다.`);
-      showMainApp();
-      return;
-    }
-
-    // 3) 신규 사용자 등록
-    const userData = {
+    // 2) 신규 사용자 등록 (또는 기존이지만 이름/이메일 동일하면 기존 반환)
+    const response = await callGoogleAppsScript({
       action: 'registerUser',
-      name: name,
-      email: email,
+      name,
+      email,
       team: '투어패스사업부',
       position: '직원'
-    };
+    }, 'POST');
 
-    const response = await callGoogleAppsScript(userData, 'POST');
+    // 백엔드가 { user, records } 반환
+    const { user, records } = response;
     currentUser = {
-      name: response.user.name,
-      email: response.user.email,
-      team: response.user.team,
-      position: response.user.position,
-      avatar: response.user.name.substring(0, 1)
+      name: user.name,
+      email: user.email,
+      team: user.team,
+      position: user.position,
+      avatar: user.name.substring(0, 1)
     };
-
+    importRecordsToLocal(records, currentUser);
     showMainApp();
 
   } catch (error) {
-    alert('로그인 실패: ' + error.message);
-  } finally {
-    btn.innerHTML = '이름으로 로그인';
-  }
-}
-
-        // 실제 백엔드와 연동한 데이터 동기화
-        async function syncData() {
-            const syncBtn = document.querySelector('button[onclick="syncData()"]');
-            if (syncBtn) {
-                syncBtn.innerHTML = '⏳';
-                syncBtn.style.animation = 'spin 2s linear infinite';
-            }
-            
-            try {
-                // 참가자 목록 동기화
-                const participantsData = await callGoogleAppsScript({action: 'getParticipants'});
-                if (participantsData.participants) {
-                    updateParticipantsList(participantsData.participants);
-                }
-                
-                // MBTI 결과 동기화  
-                const mbtiData = await callGoogleAppsScript({action: 'getMBTIResults'});
-                if (mbtiData.results) {
-                    // 로컬 스토리지 업데이트
-                    localStorage.setItem('mbtiResults', JSON.stringify(mbtiData.results));
-                }
-                
-                const now = new Date().toLocaleTimeString('ko-KR');
-                document.getElementById('lastSync').textContent = '동기화: ' + now;
-                
-            } catch (error) {
-                console.error('동기화 실패:', error);
-                alert('데이터 동기화에 실패했습니다. 백엔드 연결을 확인해주세요.');
-            } finally {
-                if (syncBtn) {
-                    syncBtn.innerHTML = '🔄';
-                    syncBtn.style.animation = 'none';
-                }
-            }
-        }
+    const msg = (error && err
 
         // MBTI 결과 실제 저장
         async function showMBTIResult() {
