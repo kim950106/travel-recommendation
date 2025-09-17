@@ -708,37 +708,25 @@
         const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyQyuXtoF6LOh7Ag8w1N9yVbTV9MecJSg16UyP5VSb1kt2SDplndvsxX6OpDgGIXiv8/exec';
         
         // API 호출 개선 함수
-        async function callGoogleAppsScript(data, method = 'GET') {
-            try {
-                let url = GAS_WEB_APP_URL;
-                let options = {
-                    method: method,
-                    headers: {
-                        'Content-Type': 'application/json',
-                    }
-                };
-                
-                if (method === 'GET') {
-                    const params = new URLSearchParams(data);
-                    url += '?' + params.toString();
-                } else {
-                    options.body = JSON.stringify(data);
-                }
-                
-                const response = await fetch(url, options);
-                const result = await response.json();
-                
-                if (!result.success) {
-                    throw new Error(result.error || '서버 오류가 발생했습니다');
-                }
-                
-                return result.data;
-                
-            } catch (error) {
-                console.error('API 호출 실패:', error);
-                throw error;
-            }
-        }
+async function callGoogleAppsScript(data, method = 'GET') {
+  let url = GAS_WEB_APP_URL;
+  const opts = { method };
+
+  if (method === 'GET') {
+    url += '?' + new URLSearchParams(data).toString();
+  } else {
+    // application/json 대신 폼 인코딩 사용 → OPTIONS 안 뜸
+    opts.headers = { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' };
+    opts.body = new URLSearchParams({ payload: JSON.stringify(data) }).toString();
+  }
+
+  const res = await fetch(url, opts);
+  const text = await res.text();
+  const result = JSON.parse(text);
+  if (!result.success) throw new Error(result.data?.error || '서버 오류');
+  return result.data;
+}
+
         
         // MBTI 질문 배열 (문자열 안전하게 처리)
         const mbtiQuestions = [
