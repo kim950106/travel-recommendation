@@ -139,46 +139,46 @@
       </div>
 
       <!-- 메뉴 -->
-<div id="mainMenu" class="menu-grid">
-  <div class="menu-item" data-action="participants" data-mark="👥" onclick="openModal('participantsModal')">
-    <div class="menu-icon">👥</div>
-    <div class="menu-title">참가자 현황</div>
-    <div class="menu-desc">MBTI 및 팀 구성 보기</div>
-  </div>
+      <div id="mainMenu" class="menu-grid">
+        <div class="menu-item" data-action="participants" data-mark="👥" onclick="openModal('participantsModal')">
+          <div class="menu-icon">👥</div>
+          <div class="menu-title">참가자 현황</div>
+          <div class="menu-desc">MBTI 및 팀 구성 보기</div>
+        </div>
 
-  <!-- 변경: 일정 클릭 시 상세 일정 바로 오픈 -->
-  <div class="menu-item" data-action="schedule" data-mark="📅" onclick="showDetailedSchedule()">
-    <div class="menu-icon">📅</div>
-    <div class="menu-title">워크샵 일정</div>
-    <div class="menu-desc">상세 일정 및 프로그램</div>
-  </div>
+        <!-- 변경: 일정 클릭 시 상세 일정 바로 오픈 -->
+        <div class="menu-item" data-action="schedule" data-mark="📅" onclick="showDetailedSchedule()">
+          <div class="menu-icon">📅</div>
+          <div class="menu-title">워크샵 일정</div>
+          <div class="menu-desc">상세 일정 및 프로그램</div>
+        </div>
 
-  <div class="menu-item" data-action="mbti" data-mark="🧠" onclick="startMBTITest()">
-    <div class="menu-icon">🧠</div>
-    <div class="menu-title">MBTI 검사</div>
-    <div class="menu-desc">성격 유형 검사 실시</div>
-  </div>
+        <div class="menu-item" data-action="mbti" data-mark="🧠" onclick="startMBTITest()">
+          <div class="menu-icon">🧠</div>
+          <div class="menu-title">MBTI 검사</div>
+          <div class="menu-desc">성격 유형 검사 실시</div>
+        </div>
 
-  <!-- 변경: 4번째 자리에 '투어패스 보관함' 이동 -->
-  <div class="menu-item" data-action="tourpassbox" data-mark="📦" onclick="openModal('tourpassBoxModal')">
-    <div class="menu-icon">📦</div>
-    <div class="menu-title">투어패스 보관함</div>
-    <div class="menu-desc">개인 링크 저장소</div>
-  </div>
+        <!-- 변경: 4번째 자리에 '투어패스 보관함' 이동 -->
+        <div class="menu-item" data-action="tourpassbox" data-mark="📦" onclick="openModal('tourpassBoxModal')">
+          <div class="menu-icon">📦</div>
+          <div class="menu-title">투어패스 보관함</div>
+          <div class="menu-desc">개인 링크 저장소</div>
+        </div>
 
-  <div class="menu-item" data-action="survey" data-mark="📝" onclick="openModal('surveyModal')">
-    <div class="menu-icon">📝</div>
-    <div class="menu-title">설문조사</div>
-    <div class="menu-desc">워크샵 만족도</div>
-  </div>
+        <div class="menu-item" data-action="survey" data-mark="📝" onclick="openModal('surveyModal')">
+          <div class="menu-icon">📝</div>
+          <div class="menu-title">설문조사</div>
+          <div class="menu-desc">워크샵 만족도</div>
+        </div>
 
-  <!-- 변경: 기존 '투어패스 보관함' 자리(6번째)에 '워크숍 챗봇' 생성 -->
-  <div class="menu-item" data-action="chatbot" data-mark="🤖" onclick="openWorkshopChatbot()">
-    <div class="menu-icon">🤖</div>
-    <div class="menu-title">워크숍 챗봇</div>
-    <div class="menu-desc">대화형 도우미 바로가기</div>
-  </div>
-</div>
+        <!-- 변경: 기존 '투어패스 보관함' 자리(6번째)에 '워크숍 챗봇' 생성 -->
+        <div class="menu-item" data-action="chatbot" data-mark="🤖" onclick="openWorkshopChatbot()">
+          <div class="menu-icon">🤖</div>
+          <div class="menu-title">워크숍 챗봇</div>
+          <div class="menu-desc">대화형 도우미 바로가기</div>
+        </div>
+      </div>
 
       <!-- 번역 -->
       <div class="app-translate">
@@ -225,8 +225,6 @@
     </div>
   </div>
 
-
- 
   <!-- 설문 모달 -->
   <div id="surveyModal" class="modal">
     <div class="modal-content" style="width:760px;max-width:95%">
@@ -260,15 +258,15 @@
     </div>
   </div>
 
- <script>
-// 워크숍 챗봇 링크 오픈
-function openWorkshopChatbot() {
-  window.open(
-    'https://chatgpt.com/g/g-6899821cd87481919c7a20d26b89f0ce-tueopaeseusaeobbu-weokeusyob-aieosiseuteonteu',
-    '_blank'
-  );
-}
-</script>
+  <script>
+  // 워크숍 챗봇 링크 오픈 (UI 변경 없음)
+  function openWorkshopChatbot() {
+    window.open(
+      'https://chatgpt.com/g/g-6899821cd87481919c7a20d26b89f0ce-tueopaeseusaeobbu-weokeusyob-aieosiseuteonteu',
+      '_blank'
+    );
+  }
+  </script>
 
   <!-- 투어패스 보관함 모달 -->
   <div id="tourpassBoxModal" class="modal">
@@ -347,14 +345,16 @@ function applyDirectoryToUser(u){
 async function callGoogleAppsScript(data, method='GET'){
   let url = GAS_WEB_APP_URL;
   const opts = { method };
-  if (method==='GET'){ url += '?' + new URLSearchParams(data).toString(); }
-  else{
+  if (method==='GET'){
+    url += '?' + new URLSearchParams(data).toString();
+  } else {
     opts.headers = { 'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8' };
     opts.body = new URLSearchParams({ payload: JSON.stringify(data) }).toString();
   }
   const res = await fetch(url, opts);
   const text = await res.text();
-  let result; try{ result = JSON.parse(text); }catch{ throw new Error('서버 응답 파싱 실패'); }
+  let result;
+  try { result = JSON.parse(text); } catch (e) { throw new Error('서버 응답 파싱 실패'); }
   if (!result.success) throw new Error(result.data?.error || '서버 오류');
   return result.data;
 }
@@ -365,8 +365,8 @@ async function callGoogleAppsScript(data, method='GET'){
 function updateConnectionStatus(){
   const dot=document.getElementById('connectionDot');
   const text=document.getElementById('connectionText');
-  if (isOnline){ dot.className='status-dot status-online'; text.textContent='온라인'; }
-  else { dot.className='status-dot status-offline'; text.textContent='오프라인'; }
+  if (isOnline){ dot.className='status-dot status-online'; text.textContent=getLangMap().online; }
+  else { dot.className='status-dot status-offline'; text.textContent=getLangMap().offline; }
 }
 function checkConnection(){
   isOnline = navigator.onLine; updateConnectionStatus();
@@ -374,10 +374,10 @@ function checkConnection(){
   window.addEventListener('offline', ()=>{ isOnline=false; updateConnectionStatus(); });
 }
 async function checkBackendConnection(){ try{ await callGoogleAppsScript({action:'healthCheck'}); return true; }catch{return false;} }
-function syncData(){ document.getElementById('lastSync').textContent='동기화: '+new Date().toLocaleTimeString(); }
+function syncData(){ document.getElementById('lastSync').textContent=getLangMap().sync + new Date().toLocaleTimeString(); }
 
 /* =========================
-   4) 세션/로그인  (변경됨)
+   4) 세션/로그인
 ========================= */
 function logout(){
   localStorage.removeItem('tourpassUser'); currentUser=null;
@@ -392,24 +392,20 @@ async function googleLogin(){
   try{
     btn.innerHTML='⏳ 로그인 중...';
 
-    // 이름 입력
     let name = prompt('이름을 입력하세요:');
     if (!name){ btn.innerHTML='<i class="fab fa-google"></i> 이름+MBTI로 로그인'; return; }
     name = name.trim();
 
-    // MBTI 입력
     let mbti = prompt('MBTI를 입력하세요 (예: ENTP, INFJ 등 4자리):');
     if (!mbti){ btn.innerHTML='<i class="fab fa-google"></i> 이름+MBTI로 로그인'; return; }
     mbti = mbti.trim().toUpperCase();
 
-    // MBTI 형식 검증
     if (!/^(E|I)(S|N)(T|F)(J|P)$/.test(mbti)){
       alert('MBTI 형식이 올바르지 않습니다. 예: ENFP, ISTJ');
       btn.innerHTML='<i class="fab fa-google"></i> 이름+MBTI로 로그인';
       return;
     }
 
-    // 이전 로그인과 동일성 검사 (이름+MBTI 동일해야 함)
     const savedRaw = localStorage.getItem('tourpassUser');
     if (savedRaw){
       const saved = JSON.parse(savedRaw);
@@ -420,23 +416,19 @@ async function googleLogin(){
       }
     }
 
-    // (호환용) 서버/다른 함수에서 email을 참조하므로 가짜 이메일을 생성
     const pseudoEmail = `${name}+${mbti}@local`;
 
-    // 사용자 객체
     let u = {
       name,
       mbti,
-      email: pseudoEmail, // 호환용
+      email: pseudoEmail,
       team: '투어패스사업부',
       position: '직원',
       avatar: name.substring(0,1)
     };
 
-    // 명단 매핑(부서/직급)
     u = applyDirectoryToUser(u);
 
-    // 세션 저장 및 표시
     currentUser = u;
     localStorage.setItem('tourpassUser', JSON.stringify(currentUser));
     showMainApp();
@@ -471,9 +463,12 @@ function showMainApp(){
   document.getElementById('userDept').textContent = `${currentUser.team||''} ${currentUser.position||''}  ${currentUser.mbti?`| MBTI: ${currentUser.mbti}`:''}`;
   document.getElementById('userAvatar').textContent=currentUser.avatar;
   localStorage.setItem('tourpassUser', JSON.stringify(currentUser));
-  setTimeout(updateMBTIButtonState, 60);
+  setTimeout(updateMBTIButtonState, 60); // 안전한 no-op
   syncData();
 }
+
+/* 없는 함수 호출 방지용 no-op */
+function updateMBTIButtonState(){}
 
 /* =========================
    5) 모달/메뉴
@@ -611,13 +606,9 @@ function closeMBTIRelationship(){ const m=document.getElementById('mbtiRelations
 
 /* =========================
    7) 여행심리테스트 (제공 모듈 호환 어댑터)
-   - 외부 계약 유지: startMBTITest, updateMBTIQuestion, selectAnswer, nextQuestion, showMBTIResult, closeMBTITest
-   - 기존 모달/버튼/DOM id 재사용
-   - 로컬 저장 + GAS 전송 유지
 ========================= */
 
-/* ---- (1) 질문/분석/운세/스타일/호환성: 제공 코드 그대로 ---- */
-let psychologyAnswers = []; // 선택 기록 (전역 currentQuestion는 상단에서 이미 선언됨! 재선언 금지)
+let psychologyAnswers = [];
 
 const psychologyQuestions = [
   { q:'선호하는 휴가 방식은?', a:[
@@ -748,25 +739,22 @@ function getCompleteResult(answers, userName){
   };
 }
 
-/* ---- (2) 앱 계약 어댑터: 기존 함수 시그니처/DOM 맞춤 ---- */
+/* ---- (2) 앱 계약 어댑터 ---- */
 function startMBTITest(){
-  // 기존 흐름 유지: 모달 오픈 + 상태 초기화
   window.travelTestStart = Date.now();
-  currentQuestion = 0;               // 상단 전역 사용 (재선언 금지)
+  currentQuestion = 0;
   psychologyAnswers = [];
   updateMBTIQuestion();
-  openModal('mbtiModal');            // 기존 모달 재사용
+  openModal('mbtiModal');
 }
 
 function updateMBTIQuestion(){
   if (currentQuestion >= psychologyQuestions.length){ showMBTIResult(); return; }
   const q = psychologyQuestions[currentQuestion];
 
-  // 상단 진행바/문항 텍스트
   document.getElementById('questionNumber').textContent = `질문 ${currentQuestion+1}/${psychologyQuestions.length}`;
   document.getElementById('questionText').textContent = q.q;
 
-  // 보기 버튼 렌더링
   const box = document.getElementById('answerOptions');
   box.innerHTML = '';
   q.a.forEach((opt,i)=>{
@@ -777,21 +765,16 @@ function updateMBTIQuestion(){
     box.appendChild(btn);
   });
 
-  // 진행바/다음버튼
   document.getElementById('progressBar').style.width = (currentQuestion/psychologyQuestions.length*100)+'%';
   document.getElementById('nextBtn').style.display='none';
 }
 
 function selectAnswer(answerIndex){
-  // 버튼 스타일 토글
   document.querySelectorAll('.answer-btn').forEach(b=>b.classList.remove('selected'));
   const selected = document.querySelectorAll('.answer-btn')[answerIndex];
   if (selected) selected.classList.add('selected');
 
-  // 선택 저장
   psychologyAnswers[currentQuestion] = psychologyQuestions[currentQuestion].a[answerIndex];
-
-  // 다음 버튼 노출
   document.getElementById('nextBtn').style.display='inline-block';
 }
 
@@ -801,11 +784,9 @@ function nextQuestion(){
 }
 
 async function showMBTIResult(){
-  // 결과 계산
   const result = getCompleteResult(psychologyAnswers, (currentUser?.name||'사용자'));
   const durationSec = Math.floor((Date.now()-(window.travelTestStart||Date.now()))/1000);
 
-  // 로컬 저장 (email 기준 단건 갱신)
   try{
     const arr = JSON.parse(localStorage.getItem('travelTestResults')||'[]')
       .filter(r=> !currentUser || r.email !== (currentUser.email||''));
@@ -823,7 +804,6 @@ async function showMBTIResult(){
     localStorage.setItem('travelTestResults', JSON.stringify(arr));
   }catch(_){}
 
-  // 서버 전송 (기존 액션 그대로, 추가 필드만 덧붙임 → 백엔드 무관)
   try{
     await callGoogleAppsScript({
       action:'saveMBTIResult',
@@ -838,25 +818,11 @@ async function showMBTIResult(){
     }, 'POST');
   }catch(_){}
 
-  // 결과 모달 표시
   openTravelResultModal(result.type, result.travel, result.fortune, durationSec);
-
-  // 기존 흐름과 동일하게 테스트 모달 닫기
   closeMBTITest();
 }
 
-/* 결과 모달 (이 블록에 함께 포함) */
-function openTravelResultModal(type, travel, fortune, sec){
-  const wrap = (label,val)=>`<div style="margin:6px 0"><strong>${label}</strong> <div style="margin-top:4px;color:#333">${val}</div></div>`;
-  const list = (title, arr)=>`${wrap(title, Array.isArray(arr)?arr.join(' · '):arr)}`;
-
-  const html = `
-    <div class="modal" id="travelResultModal" style="display:block">
-      <div class="modal-content" style="width:760px;max-width:96%">
-        <button class="close-btn" onclick="closeTravelResultModal()">&times;</button>
-        <div class="modal-header">
-<script>
-// ===== 여행심리테스트 결과 모달 (새 UI + 궁합도) =====
+/* ===== 결과 모달 (최종 정상 버전) ===== */
 const ALL_ANIMAL_TYPES = [
   '🐨 코알라형','🦅 독수리형','🦉 올빼미형','🐿️ 다람쥐형','🦋 나비형','🐎 말형',
   '🐬 돌고래형','🐺 늑대형','🐻 곰형','🦊 여우형','🐼 판다형','🐅 호랑이형',
@@ -888,6 +854,28 @@ function openTravelResultModal(type, travel, fortune, sec){
   const chips = (arr, max=6)=> arr.slice(0,max).map(x=>chip(x.name||x)).join('') || '<span style="color:#666">-</span>';
 
   const html = `
+    <style>
+      .result-wrap .result-head{display:flex;gap:12px;align-items:center;margin-bottom:12px}
+      .result-wrap .result-emoji{font-size:2.2rem}
+      .result-wrap .result-title{font-weight:900;font-size:1.05rem}
+      .result-wrap .pill{background:#111827;color:#fff;border-radius:999px;padding:6px 10px;font-size:.78em;display:inline-flex;gap:6px;align-items:center}
+      .result-wrap .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+      .result-wrap .card{border:1px solid #eee;border-radius:12px;padding:12px;background:#fff}
+      .result-wrap .kv{display:flex;gap:10px;margin:6px 0}
+      .result-wrap .kv>strong{min-width:56px}
+      .result-wrap .chips{display:flex;flex-wrap:wrap;gap:6px}
+      .result-wrap .chip{display:inline-block;border:1px solid #eee;border-radius:999px;padding:6px 10px;font-size:.78em;background:#fafbff;cursor:default}
+      .result-wrap .level-badge{display:inline-flex;gap:6px;align-items:center;border-radius:999px;padding:6px 10px;font-size:.78em;border:1px solid #eee}
+      .lv-perfect{background:#ffe3ea;border-color:#ffd1dc}
+      .lv-great{background:#fff0e0;border-color:#ffd7b0}
+      .lv-good{background:#eaf7ef;border-color:#d6f0df}
+      .lv-okay{background:#e8f0fe;border-color:#d5e4fd}
+      .lv-challenging{background:#efe7ff;border-color:#e2d8ff}
+      .result-wrap .meter{width:100%;height:8px;background:#f0f2f5;border-radius:6px;overflow:hidden}
+      .result-wrap .meter-fill{height:8px;width:0}
+      .result-wrap .note{color:#555;margin-top:8px}
+      @media (max-width:640px){.result-wrap .grid-2{grid-template-columns:1fr}}
+    </style>
     <div class="modal" id="${modalId}" style="display:block">
       <div class="modal-content" style="width:820px;max-width:96%">
         <button class="close-btn" onclick="closeTravelResultModal()">&times;</button>
@@ -939,7 +927,7 @@ function openTravelResultModal(type, travel, fortune, sec){
               </div>
             </div>
             <div id="compMeterBox" style="margin-top:6px"></div>
-            <div class="sep"></div>
+            <div class="sep" style="height:1px;background:#eee;margin:10px 0"></div>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
               <div>
                 <div class="level-badge lv-perfect">찰떡 궁합</div>
@@ -977,7 +965,6 @@ function updateCompatibilityView(selfType){
 }
 
 function closeTravelResultModal(){ const m=document.getElementById('travelResultModal'); if (m) m.remove(); }
-</script>
 
 /* =========================
    8) 설문
@@ -1057,10 +1044,17 @@ function closeDetailedSchedule(){ const m=document.getElementById('detailedSched
    10) 투어패스 보관함
 ========================= */
 function showAddLinkForm(){ document.getElementById('addLinkForm').style.display='block'; document.getElementById('linkTitle').focus(); }
-function cancelAddLink(){ document.getElementById('addLinkForm').style.display='none'; linkTitle.value=''; linkUrl.value=''; linkPassword.value=''; }
+function cancelAddLink(){
+  document.getElementById('addLinkForm').style.display='none';
+  document.getElementById('linkTitle').value='';
+  document.getElementById('linkUrl').value='';
+  document.getElementById('linkPassword').value='';
+}
 function isValidUrl(s){ try{ new URL(s); return true; }catch{return false;} }
 function saveNewLink(){
-  const title=linkTitle.value.trim(); const url=linkUrl.value.trim(); const pw=linkPassword.value.trim();
+  const title=document.getElementById('linkTitle').value.trim();
+  const url=document.getElementById('linkUrl').value.trim();
+  const pw=document.getElementById('linkPassword').value.trim();
   if (!title){ alert('제목을 입력해주세요.'); return; }
   if (!url || !isValidUrl(url)){ alert('올바른 URL을 입력해주세요.'); return; }
   const links=JSON.parse(localStorage.getItem('tourpassLinks')||'[]');
@@ -1091,7 +1085,11 @@ function openTourpassTicket(){
   activateMenuButton('ticket');
   const links=JSON.parse(localStorage.getItem('tourpassLinks')||'[]');
   if (links.length===0){ alert('보관함에 링크를 먼저 추가해주세요.'); deactivateMenuButton('ticket'); return; }
-  const def=localStorage.getItem('defaultTourpass'); if (def){ const d=links.find(l=> l.id==def); if (d && confirm(`기본 투어패스를 열까요?\n${d.title}`)){ openLink(d.id); deactivateMenuButton('ticket'); return; } }
+  const def=localStorage.getItem('defaultTourpass');
+  if (def){
+    const d=links.find(l=> l.id==def);
+    if (d && confirm(`기본 투어패스를 열까요?\n${d.title}`)){ openLink(d.id); deactivateMenuButton('ticket'); return; }
+  }
   showTourpassSelector(links);
 }
 function showTourpassSelector(links){
@@ -1119,6 +1117,16 @@ function showTourpassSelector(links){
 }
 function selectTourpass(id){ openLink(id); closeTourpassSelector(); }
 function closeTourpassSelector(){ const m=document.getElementById('tourpassSelectorModal'); if (m) m.remove(); deactivateMenuButton('ticket'); }
+
+/* =========================
+   11) 번역(실동작, UI 변경 없이 문구만 교체)
+========================= */
+function getLangMap(){
+  const lang=document.getElementById('languageSelect')?.value || 'ko';
+  const map={
+    ko:{title:'투어패스사업부 2025 워크샵',sub:'TRAVEL SHIFT',login:'이름+MBTI로 로그인',online:'온라인',offline:'오프라인',checking:'연결 확인 중...',sync:'동기화: '},
+    en:{title:'TourPass BU 2025 Workshop',sub
+
 
 /* =========================
    11) 번역(간단)
