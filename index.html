@@ -608,113 +608,188 @@ function showMBTIRelationship(){
 function closeMBTIRelationship(){ const m=document.getElementById('mbtiRelationshipModal'); if (m) m.remove(); }
 
 /* =========================
-   7) 여행심리테스트 (MBTI 검사 대체)
-   - 외부 의존 함수/이름 유지: startMBTITest, updateMBTIQuestion, selectAnswer, nextQuestion, showMBTIResult, closeMBTITest
-   - 결과는 localStorage('travelTestResults')에 저장
-   - 서버에는 기존 액션(saveMBTIResult)로 추가 필드 동봉(백엔드 영향 없음)
+   7) 여행심리테스트 (제공 모듈 호환 어댑터)
+   - 외부 계약 유지: startMBTITest, updateMBTIQuestion, selectAnswer, nextQuestion, showMBTIResult, closeMBTITest
+   - 기존 모달/버튼/DOM id 재사용
+   - 로컬 저장 + GAS 전송 유지
 ========================= */
-const travelQuestions = [
-  { q:'하루짜리 자유시간이 생겼다! 가장 먼저 떠오르는 계획은?', a:[
-    { t:'근교 하이킹/액티비티를 바로 예약한다', k:'ACT' },
-    { t:'카페 탐방하며 느긋하게 쉰다',            k:'RELAX' }
+
+/* ---- (1) 질문/분석/운세/스타일/호환성: 제공 코드 그대로 ---- */
+let psychologyAnswers = []; // 선택 기록 (전역 currentQuestion는 상단에서 이미 선언됨! 재선언 금지)
+
+const psychologyQuestions = [
+  { q:'선호하는 휴가 방식은?', a:[
+    { t:'🏖️ 해변에서 여유롭게 휴식', type:'calm', emoji:'🏖️' },
+    { t:'🏔️ 산과 자연 속에서 모험', type:'adventure', emoji:'🏔️' },
+    { t:'🏛️ 문화와 역사 탐방',     type:'culture', emoji:'🏛️' },
+    { t:'🛍️ 도시에서 쇼핑과 맛집', type:'city', emoji:'🛍️' }
   ]},
-  { q:'여행 일정 잡을 때 나는…', a:[
-    { t:'세부 타임라인까지 구글캘린더로 쪼갠다',  k:'PLAN' },
-    { t:'핵심만 정하고 현지에서 유연하게 움직인다', k:'FLEX' }
+  { q:'스트레스를 받을 때 해소 방법은?', a:[
+    { t:'🎵 음악을 듣거나 노래하기', type:'artistic', emoji:'🎵' },
+    { t:'🏃‍♀️ 운동으로 몸을 움직이기', type:'active',   emoji:'🏃‍♀️' },
+    { t:'👥 친구들과 수다떨기',      type:'social',   emoji:'👥' },
+    { t:'📚 혼자만의 시간 갖기',     type:'solitary', emoji:'📚' }
   ]},
-  { q:'도착 첫날 저녁, 어디로 갈까?', a:[
-    { t:'현지 박물관/전시/공연부터 체크',         k:'CULT' },
-    { t:'핫플 야시장/포장마차로 직행',            k:'SOC' }
+  { q:'이상적인 주말 저녁은?', a:[
+    { t:'🍿 집에서 영화나 드라마 보기', type:'home',     emoji:'🍿' },
+    { t:'🍻 친구들과 외식하며 수다',    type:'social',   emoji:'🍻' },
+    { t:'🎨 취미활동이나 새로운 배움',  type:'creative', emoji:'🎨' },
+    { t:'🛌 푹 쉬면서 에너지 충전',     type:'rest',     emoji:'🛌' }
   ]},
-  { q:'여행에서 가장 아까운 건?', a:[
-    { t:'줄 서는 시간—빠르게 많이 경험하고 싶다',   k:'ACT' },
-    { t:'무계획으로 헤매다 놓치는 것—계획이 답',    k:'PLAN' }
+  { q:'새로운 도전 앞에서 나는?', a:[
+    { t:'⚡ 즉시 도전하고 경험해보기', type:'impulsive', emoji:'⚡' },
+    { t:'📋 신중하게 계획 세우고 준비', type:'planned',   emoji:'📋' },
+    { t:'👂 다른 사람 경험담 먼저 듣기', type:'cautious',  emoji:'👂' },
+    { t:'💭 충분히 생각한 후 결정',    type:'thoughtful',emoji:'💭' }
   ]},
-  { q:'식사 선택의 기준은?', a:[
-    { t:'로컬 맛집/미쉐린/특색 있는 메뉴',        k:'FOOD' },
-    { t:'근처 아무 데나—동선이 더 중요',          k:'ACT' }
+  { q:'가장 중요하게 생각하는 가치는?', a:[
+    { t:'💰 안정적인 경제적 기반',    type:'security',     emoji:'💰' },
+    { t:'❤️ 사랑하는 사람들과의 관계', type:'relationship', emoji:'❤️' },
+    { t:'🏆 개인적 성취와 성공',      type:'achievement',  emoji:'🏆' },
+    { t:'🌟 자유로운 삶과 개성',      type:'freedom',      emoji:'🌟' }
   ]},
-  { q:'아침 루틴은?', a:[
-    { t:'해 뜨기 전 산책/러닝/사진 촬영',          k:'NATURE' },
-    { t:'숙소에서 느긋한 브런치',                 k:'RELAX' }
+  { q:'팀 프로젝트에서 내 역할은?', a:[
+    { t:'🎯 목표 설정하고 방향 제시', type:'leader',  emoji:'🎯' },
+    { t:'🔍 자료 조사하고 분석하기',  type:'analyst', emoji:'🔍' },
+    { t:'🤝 팀원들 조율하고 소통',    type:'mediator',emoji:'🤝' },
+    { t:'✨ 창의적 아이디어 제공',    type:'creative',emoji:'✨' }
   ]},
-  { q:'동행 스타일은?', a:[
-    { t:'여럿이 떠들썩하게—새 인연도 환영',        k:'SOC' },
-    { t:'적은 인원/솔로—몰입하며 깊게 본다',       k:'FOCUS' }
-  ]},
-  { q:'비 소식이 있다면?', a:[
-    { t:'실내 대체 코스(전시/체험)로 즉시 전환',    k:'CULT' },
-    { t:'우비 입고 강행! 비 오는 맛도 있다',        k:'ACT' }
-  ]},
-  { q:'사진/영상 기록은?', a:[
-    { t:'컷리스트/스팟 사전 조사까지—콘텐츠 중요', k:'PLAN' },
-    { t:'그때그때 끌리는 장면만 담는다',           k:'FLEX' }
-  ]},
-  { q:'완벽한 여행의 한 줄 정의는?', a:[
-    { t:'지역의 맛과 이야기를 “먹고 듣는” 시간',    k:'FOOD' },
-    { t:'자연 속에서 리셋되는 치유의 시간',         k:'NATURE' }
+  { q:'행운이 찾아올 것 같은 때는?', a:[
+    { t:'🌅 새로운 시작을 할 때', type:'beginning', emoji:'🌅' },
+    { t:'🤲 남을 도와줄 때',     type:'helping',   emoji:'🤲' },
+    { t:'💪 열심히 노력할 때',   type:'effort',    emoji:'💪' },
+    { t:'😊 마음이 평온할 때',   type:'peace',     emoji:'😊' }
   ]}
 ];
 
-function inferTravelPersona(scores){
-  const s = Object.assign(
-    {ACT:0, PLAN:0, FLEX:0, CULT:0, FOOD:0, NATURE:0, SOC:0, RELAX:0, FOCUS:0},
-    scores || {}
-  );
-  const top = Object.entries(s).sort((a,b)=>b[1]-a[1]).slice(0,2).map(([k])=>k);
-
-  if (s.ACT >=3 && s.FLEX >=2) return { code:'ADV',  title:'액티비티 러',       desc:'즉흥과 속도로 여행을 밀어붙이는 모험가 타입. 바다·산·도시 액티비티를 사랑합니다.' };
-  if (s.PLAN>=3 && s.PLAN >= s.FLEX) return { code:'PLN',  title:'마스터 플래너',    desc:'빈틈없는 일정 설계로 효율을 극대화하는 설계자 타입. 예약/동선 최적화가 즐겁습니다.' };
-  if (s.CULT>=3)                    return { code:'CUL',  title:'컬처 시커',       desc:'도시의 역사/예술/전시/공연을 깊이 있게 즐기는 문화 감도 최상 타입.' };
-  if (s.FOOD>=3)                    return { code:'FDX',  title:'푸디 익스플로러',  desc:'현지의 맛을 통해 도시를 해석하는 미식 탐험가. 식당 큐레이션이 핵심.' };
-  if (s.NATURE>=3)                  return { code:'NTR',  title:'네이처 러버',     desc:'숲·바다·호수와 함께 숨 쉬는 힐링 지향 타입. 풍경과 리프레시가 목적.' };
-  if (s.SOC>=3)                     return { code:'SOC',  title:'소셜 익스플로러',  desc:'사람/축제/야시장/바로 여행의 힘을 얻는 교류형 타입.' };
-  if (s.RELAX>=2 || s.FOCUS>=2)     return { code:'RLX',  title:'릴랙서',         desc:'과한 이동보다 깊은 휴식을 우선하는 충전형 타입.' };
-
-  const labelMap = {
-    ACT:'액티비티', PLAN:'플래너', FLEX:'유연성', CULT:'컬처', FOOD:'푸디', NATURE:'네이처', SOC:'소셜', RELAX:'릴랙스', FOCUS:'몰입'
+function analyzePsychologyType(answers){
+  const typeCount={};
+  answers.forEach(a=>{ typeCount[a.type]=(typeCount[a.type]||0)+1; });
+  const top = Object.entries(typeCount).sort((a,b)=>b[1]-a[1])[0]?.[0];
+  const map={
+    calm:{ name:'🐨 코알라형', desc:'평온하고 여유로운' },
+    adventure:{ name:'🦅 독수리형', desc:'모험을 즐기는' },
+    culture:{ name:'🦉 올빼미형', desc:'지혜롭고 탐구하는' },
+    city:{ name:'🐿️ 다람쥐형', desc:'활발하고 바쁜' },
+    artistic:{ name:'🦋 나비형', desc:'아름다움을 추구하는' },
+    active:{ name:'🐎 말형', desc:'에너지 넘치는' },
+    social:{ name:'🐬 돌고래형', desc:'사교적이고 친근한' },
+    solitary:{ name:'🐺 늑대형', desc:'독립적이고 강인한' },
+    home:{ name:'🐻 곰형', desc:'안정을 추구하는' },
+    creative:{ name:'🦊 여우형', desc:'창의적이고 영리한' },
+    rest:{ name:'🐼 판다형', desc:'여유롭고 평화로운' },
+    impulsive:{ name:'🐅 호랑이형', desc:'직감적이고 용맹한' },
+    planned:{ name:'🐘 코끼리형', desc:'신중하고 계획적인' },
+    cautious:{ name:'🐢 거북이형', desc:'신중하고 꾸준한' },
+    thoughtful:{ name:'🦌 사슴형', desc:'사색적이고 우아한' },
+    security:{ name:'🐃 황소형', desc:'안정과 현실을 중시하는' },
+    relationship:{ name:'🐰 토끼형', desc:'감정이 풍부하고 따뜻한' },
+    achievement:{ name:'🦁 사자형', desc:'성취욕이 강한' },
+    freedom:{ name:'🐦 새형', desc:'자유로운 영혼의' },
+    leader:{ name:'🦈 상어형', desc:'리더십 있는' },
+    analyst:{ name:'🐙 문어형', desc:'분석적이고 다재다능한' },
+    mediator:{ name:'🐳 고래형', desc:'조화를 이루는' },
+    beginning:{ name:'🐣 병아리형', desc:'새로운 시작을 좋아하는' },
+    helping:{ name:'🐕 개형', desc:'충성스럽고 도움을 주는' },
+    effort:{ name:'🐜 개미형', desc:'부지런하고 노력하는' },
+    peace:{ name:'🕊️ 비둘기형', desc:'평화로운' }
   };
+  return map[top] || { name:'🦄 유니콘형', desc:'특별하고 신비로운' };
+}
+
+function generateFortune(psychologyTypeName, name){
+  const fortunes={
+    '🐨 코알라형':{ today:'🌿 오늘은 마음의 평화를…', lucky:'🟢 초록색', number:'7️⃣', advice:'천천히 한 걸음씩…' },
+    '🦅 독수리형':{ today:'⚡ 새로운 도전이…', lucky:'🟠 주황색', number:'3️⃣', advice:'직감을 믿고…' },
+    '🦉 올빼미형':{ today:'📚 지적 호기심이…', lucky:'🟣 보라색', number:'9️⃣', advice:'역사 속에서 지혜를…' },
+    '🐿️ 다람쥐형':{ today:'💨 에너지가 넘치는…', lucky:'🔴 빨간색', number:'5️⃣', advice:'팀워크가 중요…' },
+    '🦋 나비형':{ today:'🎨 창조적 영감이…', lucky:'🩷 분홍색', number:'2️⃣', advice:'아름다움에 시간을…' },
+    '🐎 말형':{ today:'🏃‍♀️ 활력이 충만…', lucky:'🟢 초록색', number:'8️⃣', advice:'백마강 산책…' },
+    '🐬 돌고래형':{ today:'👫 인간관계 좋은 소식…', lucky:'🟡 노란색', number:'6️⃣', advice:'진심으로 다가가면…' },
+    '🐺 늑대형':{ today:'🌙 혼자만의 시간이…', lucky:'⚪ 흰색', number:'1️⃣', advice:'고란사 명상…' }
+  };
+  return fortunes[psychologyTypeName] || { today:'🌟 특별한 하루', lucky:'🌈 무지개색', number:'0️⃣', advice:'자신만의 길' };
+}
+
+function getTravelStyle(psychologyTypeName){
+  const styles={
+    '🐨 코알라형':{ style:'힐링 여행러', preference:'자연 속 휴양', destinations:['제주 숲길','강원 펜션','온천 리조트','한적한 해변'], activities:['산책','독서','온천','요가','명상'], accommodation:'조용한 펜션/리조트', planning:'여유 일정', companion:'가족/연인 소규모', motto:'여행은 마음의 재충전' },
+    '🦅 독수리형':{ style:'어드벤처 여행러', preference:'스릴/도전', destinations:['히말라야','뉴질랜드','사파리','알래스카'], activities:['등산','스카이다이빙','래프팅','암벽','패러'], accommodation:'캠핑/산장', planning:'도전 목표+안전', companion:'모험 동료', motto:'한계를 뛰어넘는 도전' },
+    '🦉 올빼미형':{ style:'문화탐방 여행러', preference:'역사/문화 탐구', destinations:['유럽 박물관','교토','이집트','그리스'], activities:['박물관','유적','공부','공예'], accommodation:'전통/역사 호텔', planning:'사전 조사·세밀 일정', companion:'지적 호기심 소수', motto:'살아있는 역사책' },
+    '🐿️ 다람쥐형':{ style:'도시탐험 여행러', preference:'도시 총체 체험', destinations:['뉴욕','도쿄','런던','파리'], activities:['쇼핑','맛집','클럽/바','뮤지컬','시장'], accommodation:'시내 중심 호텔', planning:'빡빡한 일정', companion:'에너지 넘치는 친구', motto:'도시 매력 흡수' }
+  };
+  return styles[psychologyTypeName] || { style:'자유로운 여행러', preference:'다양한 스타일 시도', destinations:['어디든지'], activities:['새로운 경험'], accommodation:'상황 맞춤', planning:'유연 계획', companion:'누구든지', motto:'새로운 나를 발견' };
+}
+
+function travelPartnerCompatibility(a,b){
+  const map={
+    '🐨 코알라형':{ perfect:['🦌 사슴형','🐳 고래형','🕊️ 비둘기형'], challenging:['🦅 독수리형','🐿️ 다람쥐형','🦈 상어형'] },
+    '🦅 독수리형':{ perfect:['🐅 호랑이형','🐎 말형','🦈 상어형'], challenging:['🐨 코알라형','🐻 곰형','🐼 판다형'] },
+    '🦉 올빼미형':{ perfect:['🐙 문어형','🦊 여우형','🦌 사슴형'], challenging:['🐬 돌고래형','🐿️ 다람쥐형','🐣 병아리형'] },
+    '🐿️ 다람쥐형':{ perfect:['🐬 돌고래형','🦋 나비형','🦊 여우형'], challenging:['🐨 코알라형','🐺 늑대형','🦉 올빼미형'] }
+  };
+  const prof=map[a]||{perfect:[],challenging:[]};
+  if (prof.perfect.includes(b)) return {score:95, level:'perfect'};
+  if (prof.challenging.includes(b)) return {score:45, level:'challenging'};
+  let s=70; if(a===b) s+=15; else s+=Math.floor(Math.random()*15)+5;
+  const level = s>=90?'perfect':s>=80?'great':s>=70?'good':s>=50?'okay':'challenging';
+  return {score:s, level};
+}
+
+function getCompleteResult(answers, userName){
+  const type = analyzePsychologyType(answers);
+  const fortune = generateFortune(type.name, userName);
+  const travel = getTravelStyle(type.name);
   return {
-    code:`MIX-${top.join('+')}`,
-    title:`믹스형(${labelMap[top[0]]} + ${labelMap[top[1]]})`,
-    desc:'두 축이 균형을 이루는 복합형 여행자. 상황에 따라 코스를 가변적으로 설계하는 장점이 있습니다.'
+    user:userName, type, fortune, travel,
+    compatibility:(otherType)=> travelPartnerCompatibility(type.name, otherType)
   };
 }
 
-let travelAnswers = [];
-
+/* ---- (2) 앱 계약 어댑터: 기존 함수 시그니처/DOM 맞춤 ---- */
 function startMBTITest(){
+  // 기존 흐름 유지: 모달 오픈 + 상태 초기화
   window.travelTestStart = Date.now();
-  currentQuestion = 0;
-  travelAnswers = [];
+  currentQuestion = 0;               // 상단 전역 사용 (재선언 금지)
+  psychologyAnswers = [];
   updateMBTIQuestion();
-  openModal('mbtiModal');
+  openModal('mbtiModal');            // 기존 모달 재사용
 }
 
 function updateMBTIQuestion(){
-  if (currentQuestion >= travelQuestions.length){ showMBTIResult(); return; }
-  const q = travelQuestions[currentQuestion];
-  document.getElementById('questionNumber').textContent=`질문 ${currentQuestion+1}/${travelQuestions.length}`;
-  document.getElementById('questionText').textContent=q.q;
+  if (currentQuestion >= psychologyQuestions.length){ showMBTIResult(); return; }
+  const q = psychologyQuestions[currentQuestion];
 
+  // 상단 진행바/문항 텍스트
+  document.getElementById('questionNumber').textContent = `질문 ${currentQuestion+1}/${psychologyQuestions.length}`;
+  document.getElementById('questionText').textContent = q.q;
+
+  // 보기 버튼 렌더링
   const box = document.getElementById('answerOptions');
   box.innerHTML = '';
   q.a.forEach((opt,i)=>{
-    const b=document.createElement('button');
-    b.className='answer-btn';
-    b.textContent=opt.t;
-    b.onclick=()=>selectAnswer(i);
-    box.appendChild(b);
+    const btn = document.createElement('button');
+    btn.className = 'answer-btn';
+    btn.textContent = opt.t;
+    btn.onclick = ()=> selectAnswer(i);
+    box.appendChild(btn);
   });
 
-  document.getElementById('progressBar').style.width=(currentQuestion/travelQuestions.length*100)+'%';
+  // 진행바/다음버튼
+  document.getElementById('progressBar').style.width = (currentQuestion/psychologyQuestions.length*100)+'%';
   document.getElementById('nextBtn').style.display='none';
 }
 
-function selectAnswer(i){
+function selectAnswer(answerIndex){
+  // 버튼 스타일 토글
   document.querySelectorAll('.answer-btn').forEach(b=>b.classList.remove('selected'));
-  document.querySelectorAll('.answer-btn')[i].classList.add('selected');
-  travelAnswers[currentQuestion] = travelQuestions[currentQuestion].a[i];
+  const selected = document.querySelectorAll('.answer-btn')[answerIndex];
+  if (selected) selected.classList.add('selected');
+
+  // 선택 저장
+  psychologyAnswers[currentQuestion] = psychologyQuestions[currentQuestion].a[answerIndex];
+
+  // 다음 버튼 노출
   document.getElementById('nextBtn').style.display='inline-block';
 }
 
@@ -724,54 +799,54 @@ function nextQuestion(){
 }
 
 async function showMBTIResult(){
-  const score = {};
-  travelAnswers.forEach(a=>{
-    const k=a.k;
-    score[k] = (score[k]||0)+1;
-  });
+  // 결과 계산
+  const result = getCompleteResult(psychologyAnswers, (currentUser?.name||'사용자'));
+  const durationSec = Math.floor((Date.now()-(window.travelTestStart||Date.now()))/1000);
 
-  const persona = inferTravelPersona(score);
-  const durationSec = Math.floor((Date.now()-window.travelTestStart)/1000);
-
+  // 로컬 저장 (email 기준 단건 갱신)
   try{
     const arr = JSON.parse(localStorage.getItem('travelTestResults')||'[]')
       .filter(r=> !currentUser || r.email !== (currentUser.email||''));
     arr.push({
       name: currentUser?.name || '사용자',
       email: currentUser?.email || '',
-      personaCode: persona.code,
-      personaTitle: persona.title,
-      personaDesc: persona.desc,
-      rawScore: score,
+      personaName: result.type.name,
+      personaDesc: result.type.desc,
+      fortune: result.fortune,
+      travel: result.travel,
+      answers: psychologyAnswers,
       timestamp: new Date().toISOString(),
-      team: currentUser?.team,
-      position: currentUser?.position
+      team: currentUser?.team, position: currentUser?.position
     });
     localStorage.setItem('travelTestResults', JSON.stringify(arr));
   }catch(_){}
 
+  // 서버 전송 (기존 액션 그대로, 추가 필드만 덧붙임 → 백엔드 무관)
   try{
     await callGoogleAppsScript({
       action:'saveMBTIResult',
       name: currentUser?.name || '사용자',
       email: currentUser?.email || '',
       mbtiType: currentUser?.mbti || '',
-      travelPersona: persona,
-      travelScore: score,
+      travelPersona: { name: result.type.name, desc: result.type.desc },
+      travelStyle: result.travel,
+      travelFortune: result.fortune,
       testDuration: durationSec,
-      testKind: 'travel'
+      testKind: 'travel-animal'
     }, 'POST');
   }catch(_){}
 
-  openTravelResultModal(persona, score, durationSec);
+  // 결과 모달 표시
+  openTravelResultModal(result.type, result.travel, result.fortune, durationSec);
+
+  // 기존 흐름과 동일하게 테스트 모달 닫기
   closeMBTITest();
 }
 
-function openTravelResultModal(persona, score, sec){
-  const pretty = Object.entries(score)
-    .sort((a,b)=>b[1]-a[1])
-    .map(([k,v])=>`<span style="display:inline-block;background:#f1f5f9;border:1px solid #e5e7eb;border-radius:8px;padding:6px 8px;margin:4px 6px">${k}: ${v}</span>`)
-    .join('');
+/* 결과 모달 (이 블록에 함께 포함) */
+function openTravelResultModal(type, travel, fortune, sec){
+  const wrap = (label,val)=>`<div style="margin:6px 0"><strong>${label}</strong> <div style="margin-top:4px;color:#333">${val}</div></div>`;
+  const list = (title, arr)=>`${wrap(title, Array.isArray(arr)?arr.join(' · '):arr)}`;
 
   const html = `
     <div class="modal" id="travelResultModal" style="display:block">
@@ -783,47 +858,44 @@ function openTravelResultModal(persona, score, sec){
         </div>
         <div style="padding:16px 18px 22px">
           <div style="background:#f7f7fb;border:1px solid #eee;border-radius:12px;padding:14px;margin-bottom:14px">
-            <div style="font-size:1.1em;font-weight:900">${persona.title}</div>
-            <div style="margin-top:6px;color:#333">${persona.desc}</div>
-            <div style="margin-top:8px;font-size:.9em;color:#555">코드: ${persona.code}</div>
+            <div style="font-size:1.1em;font-weight:900">${type.name}</div>
+            <div style="margin-top:6px;color:#333">${type.desc||''}</div>
           </div>
-          <div>
-            <div style="font-weight:800;margin-bottom:6px">세부 점수</div>
-            ${pretty || '<div style="color:#666">데이터 없음</div>'}
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div class="rel-box">
+              <div style="font-weight:800;margin-bottom:6px">여행 스타일</div>
+              ${wrap('스타일', travel.style)}
+              ${wrap('선호', travel.preference)}
+              ${list('목적지', travel.destinations||[])}
+              ${list('활동', travel.activities||[])}
+              ${wrap('숙소', travel.accommodation||'')}
+              ${wrap('기획', travel.planning||'')}
+              ${wrap('동행', travel.companion||'')}
+              ${wrap('모토', travel.motto||'')}
+            </div>
+
+            <div class="rel-box">
+              <div style="font-weight:800;margin-bottom:6px">오늘의 운세(부여 에디션)</div>
+              ${wrap('메시지', fortune.today)}
+              ${wrap('럭키 컬러', fortune.lucky)}
+              ${wrap('럭키 넘버', fortune.number)}
+              ${wrap('조언', fortune.advice)}
+            </div>
           </div>
+
           <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap">
-            <button class="sync-btn" onclick="copyTravelPersonaToClipboard('${persona.title}','${persona.code}')">결과 복사</button>
+            <button class="sync-btn" onclick="navigator.clipboard.writeText('[여행심리테스트] '+ '${type.name} | '+ (travel.style||''))">결과 복사</button>
             <button class="sync-btn" style="background:#111827" onclick="closeTravelResultModal()">닫기</button>
           </div>
         </div>
       </div>
-    </div>
-  `;
+    </div>`;
   document.body.insertAdjacentHTML('beforeend', html);
 }
+function closeTravelResultModal(){ const m=document.getElementById('travelResultModal'); if (m) m.remove(); }
+function closeMBTITest(){ closeModal('mbtiModal'); } // 기존 계약 유지
 
-function closeTravelResultModal(){
-  const m=document.getElementById('travelResultModal');
-  if (m) m.remove();
-}
-
-function copyTravelPersonaToClipboard(title, code){
-  const txt = `[여행심리테스트 결과]\n유형: ${title}\n코드: ${code}`;
-  navigator.clipboard.writeText(txt).then(()=> alert('결과가 복사되었습니다.'));
-}
-
-function updateMBTIButtonState(){
-  const btn=document.querySelector('[data-action="mbti"]'); if (!btn) return;
-  btn.querySelector('.menu-title').textContent='여행심리테스트';
-  btn.querySelector('.menu-desc').textContent='10문항 · 약 1분';
-  if (!btn.querySelector('.completed-badge')){
-    const b=document.createElement('div'); b.className='completed-badge'; b.textContent='✓';
-    b.style.cssText='position:absolute;top:6px;right:6px;background:#2ecc71;color:#fff;border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:.75em;font-weight:800';
-    btn.appendChild(b);
-  }
-}
-
-function closeMBTITest(){ closeModal('mbtiModal'); }
 
 /* =========================
    8) 설문
