@@ -363,18 +363,19 @@ async function callGoogleAppsScript(data, method='GET'){
    3) 연결/초기화
 ========================= */
 function updateConnectionStatus(){
-  const dot=document.getElementById('connectionDot');
-  const text=document.getElementById('connectionText');
-  if (isOnline){ dot.className='status-dot status-online'; text.textContent=getLangMap().online; }
-  else { dot.className='status-dot status-offline'; text.textContent=getLangMap().offline; }
+  const dict = (typeof getLangMap==='function')
+    ? getLangMap()
+    : {online:'온라인', offline:'오프라인'};
+  const dot = document.getElementById('connectionDot');
+  const text = document.getElementById('connectionText');
+  if (isOnline){ dot.className='status-dot status-online'; text.textContent=dict.online; }
+  else { dot.className='status-dot status-offline'; text.textContent=dict.offline; }
 }
-function checkConnection(){
-  isOnline = navigator.onLine; updateConnectionStatus();
-  window.addEventListener('online', ()=>{ isOnline=true; updateConnectionStatus(); syncData(); });
-  window.addEventListener('offline', ()=>{ isOnline=false; updateConnectionStatus(); });
+
+function syncData(){
+  const prefix = (typeof getLangMap==='function') ? getLangMap().sync : '동기화: ';
+  document.getElementById('lastSync').textContent = prefix + new Date().toLocaleTimeString();
 }
-async function checkBackendConnection(){ try{ await callGoogleAppsScript({action:'healthCheck'}); return true; }catch{return false;} }
-function syncData(){ document.getElementById('lastSync').textContent=getLangMap().sync + new Date().toLocaleTimeString(); }
 
 /* =========================
    4) 세션/로그인
