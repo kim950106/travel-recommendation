@@ -330,6 +330,16 @@ const DIRECTORY = {
   "이주아": { team:"투어패스사업부 영업 2팀", position:"주임" },
   "장은진": { team:"투어패스사업부 영업 2팀", position:"주임" },
 };
+<script>
+function applyDirectoryToUser(u){
+  const dir = DIRECTORY[u.name];
+  if (dir){
+    u.team = dir.team;
+    u.position = dir.position;
+  }
+  return u;
+}
+</script>
 
 /* =========================
    2) 통신 헬퍼
