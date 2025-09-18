@@ -996,7 +996,7 @@ function openTravelResultModal(type, travel, fortune, sec){
 
           <div class="actions">
             <button class="btn" onclick="navigator.clipboard.writeText('[여행심리테스트] ${type.name} | ${travel.style||''}')">결과 복사</button>
-            <button class="btn secondary" onclick="closeTravelResultModal()">닫기</button>
+            <button class="btn secondary" onclick="closeModal('travelResultModal', event)">닫기</button>
           </div>
         </div>
       </div>
