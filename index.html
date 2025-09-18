@@ -343,22 +343,50 @@ function applyDirectoryToUser(u){
    2) 통신 헬퍼
 ========================= */
 async function callGoogleAppsScript(data, method='GET'){
+  const bust = `_=${Date.now()}`; // 캐시 버스터
   let url = GAS_WEB_APP_URL;
-  const opts = { method };
-  if (method==='GET'){
-    url += '?' + new URLSearchParams(data).toString();
-  } else {
-    opts.headers = { 'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8' };
-    opts.body = new URLSearchParams({ payload: JSON.stringify(data) }).toString();
-  }
-  const res = await fetch(url, opts);
-  const text = await res.text();
-  let result;
-  try { result = JSON.parse(text); } catch (e) { throw new Error('서버 응답 파싱 실패'); }
-  if (!result.success) throw new Error(result.data?.error || '서버 오류');
-  return result.data;
-}
+  const opts = {
+    method,
+    mode: 'cors',           // ← CORS 명시
+    redirect: 'follow',
+    credentials: 'omit'     // 쿠키 제거
+  };
 
+  if (method === 'GET'){
+    const qs = new URLSearchParams({...data, [bust]: ''}).toString();
+    url += (url.includes('?') ? '&' : '?') + qs;
+  } else {
+    opts.headers = { 'Content-Type':'application/x-www-form-urlencoded' }; 
+    const payload = new URLSearchParams({ payload: JSON.stringify(data) }).toString();
+    url += (url.includes('?') ? '&' : '?') + bust;
+    opts.body = payload;
+  }
+
+  let res;
+  try {
+    res = await fetch(url, opts);
+  } catch (err) {
+    throw new Error(`네트워크 오류: ${err?.message || err}`);
+  }
+
+  const text = await res.text().catch(()=> '');
+  if (!res.ok){
+    throw new Error(`HTTP ${res.status} ${res.statusText} / body: ${text?.slice(0,200)}`);
+  }
+
+  let json;
+  try{
+    json = JSON.parse(text);
+  }catch(_){
+    throw new Error(`JSON 파싱 실패 / body: ${text?.slice(0,200)}`);
+  }
+
+  if (!json.success){
+    const detail = (json.data && json.data.error) ? ` / ${json.data.error}` : '';
+    throw new Error(`백엔드 오류: success=false${detail}`);
+  }
+  return json.data;
+}
 /* =========================
    3) 연결/초기화
 ========================= */
