@@ -485,28 +485,49 @@ function openModal(id){
 function closeModal(id){ const action=id.replace('Modal',''); deactivateMenuButton(action); document.getElementById(id).style.display='none'; }
 
 /* =========================
-   6) 참가자/관계도
+   6) 참가자/관계도// 교체본
 ========================= */
-function renderParticipants(){
-  const listEl=document.getElementById('participantsList');
-  const arr = JSON.parse(localStorage.getItem('mbtiResults')||'[]');
-  const onlyWhitelisted = arr.filter(r=> DIRECTORY[r.name]);
-  if (onlyWhitelisted.length===0){
-    listEl.innerHTML='<div style="text-align:center;color:#666;padding:20px">표시할 참가자 데이터가 없습니다.</div>'; return;
-  }
-  const filled = onlyWhitelisted.map(r=>({...r, team: DIRECTORY[r.name].team, position: DIRECTORY[r.name].position}));
-  listEl.innerHTML = filled
-    .sort((a,b)=> (a.name||'').localeCompare(b.name||'','ko'))
-    .map(p=>`
-      <div class="participant-item">
-        <div class="participant-avatar">${(p.name||'?').substring(0,1)}</div>
-        <div>
-          <div><strong>${p.name}</strong> ${p.mbtiType?`<span style="color:#111827">[${p.mbtiType}]</span>`:''}</div>
-          <div style="font-size:.8em;color:#666">${p.team} ${p.position}</div>
+async function renderParticipants(){
+  const listEl = document.getElementById('participantsList');
+  listEl.innerHTML = '<div style="text-align:center;color:#666;padding:20px">불러오는 중…</div>';
+
+  try {
+    // Apps Script 에서 action:'getMBTIResults'가 참가자 배열을 반환해야 합니다.
+    // 기대형태: [{ name:'김현철', mbtiType:'INTP', team:'...', position:'...' }, ...]
+    const data = await callGoogleAppsScript({ action:'getMBTIResults' });
+
+    const rows = (data || []).map(r => {
+      const d = DIRECTORY[r.name] || {};
+      return {
+        name: r.name || '',
+        mbtiType: r.mbtiType || r.mbti || '',
+        team: r.team || d.team || '',
+        position: r.position || d.position || ''
+      };
+    }).filter(r => r.name);
+
+    if (rows.length === 0){
+      listEl.innerHTML = '<div style="text-align:center;color:#666;padding:20px">표시할 참가자 데이터가 없습니다.</div>';
+      return;
+    }
+
+    listEl.innerHTML = rows
+      .sort((a,b)=>(a.name||'').localeCompare(b.name||'','ko'))
+      .map(p=>`
+        <div class="participant-item">
+          <div class="participant-avatar">${(p.name||'?').substring(0,1)}</div>
+          <div>
+            <div><strong>${p.name}</strong> ${p.mbtiType?`<span style="color:#111827">[${p.mbtiType}]</span>`:''}</div>
+            <div style="font-size:.8em;color:#666">${p.team||''} ${p.position||''}</div>
+          </div>
         </div>
-      </div>
-    `).join('');
+      `).join('');
+  } catch (e){
+    console.error(e);
+    listEl.innerHTML = '<div style="text-align:center;color:#c00;padding:20px">불러오기에 실패했습니다.</div>';
+  }
 }
+
 
 function mbtiCompatibility(a,b){
   const perfect = {
@@ -530,29 +551,51 @@ function mbtiCompatibility(a,b){
   return {score:s, level};
 }
 
-function showMBTIRelationship(){
+// ▼ 기존 showMBTIRelationship() 전체 교체
+async function showMBTIRelationship(){
   if (!currentUser || !currentUser.mbti){
     alert('로그인한 사용자의 MBTI가 필요합니다. 먼저 로그인해주세요.');
     return;
   }
 
-  const arr = JSON.parse(localStorage.getItem('mbtiResults')||'[]');
-  const others = arr.filter(r=> DIRECTORY[r.name]);
+  // 1) 백엔드에서 참가자 목록 가져오기
+  let others = [];
+  try {
+    // Apps Script는 action:'getMBTIResults'로 아래 형태를 반환해야 합니다:
+    // [{ name:'김현철', mbtiType:'INFP', team:'...', position:'...' }, ...]
+    const data = await callGoogleAppsScript({ action: 'getMBTIResults' });
 
-  if (others.length===0){
+    // 본인 제외 + 사전에 정의한 DIRECTORY에 있는 사람만 보강해서 사용
+    others = (data || [])
+      .filter(r => r.name && r.name !== currentUser.name && DIRECTORY[r.name])
+      .map(r => ({
+        name: r.name,
+        mbtiType: r.mbtiType || r.mbti || '',
+        team: r.team || DIRECTORY[r.name]?.team || '',
+        position: r.position || DIRECTORY[r.name]?.position || ''
+      }));
+  } catch (e){
+    console.error(e);
+    alert('관계도 데이터를 불러오지 못했습니다.');
+    return;
+  }
+
+  if (others.length === 0){
     alert('관계도를 표시할 참가자 데이터가 없습니다.');
     return;
   }
 
   const me = { name: currentUser.name, mbtiType: currentUser.mbti };
 
+  // 2) 궁합 버킷화
   const buckets = { perfect:[], great:[], good:[], okay:[], challenging:[] };
   others.forEach(o=>{
     if (!o.mbtiType) return;
     const {score, level} = mbtiCompatibility(me.mbtiType, o.mbtiType);
-    buckets[level].push({...o, score, team:DIRECTORY[o.name]?.team, position:DIRECTORY[o.name]?.position});
+    buckets[level].push({...o, score});
   });
 
+  // 3) 렌더
   const cats = [
     { key:'perfect', title:'환상의 궁합', emoji:'💖', color:'#ff4d6d', bg:'#ffe3ea' },
     { key:'great',   title:'최고의 파트너', emoji:'🌟', color:'#ff8f1f', bg:'#fff0e0' },
@@ -603,7 +646,11 @@ function showMBTIRelationship(){
   `;
   document.body.insertAdjacentHTML('beforeend', html);
 }
-function closeMBTIRelationship(){ const m=document.getElementById('mbtiRelationshipModal'); if (m) m.remove(); }
+
+function closeMBTIRelationship(){
+  const m = document.getElementById('mbtiRelationshipModal');
+  if (m) m.remove();
+}
 
 /* =========================
    7) 여행심리테스트 (제공 모듈 호환 어댑터)
@@ -788,23 +835,15 @@ async function showMBTIResult(){
   const result = getCompleteResult(psychologyAnswers, (currentUser?.name||'사용자'));
   const durationSec = Math.floor((Date.now()-(window.travelTestStart||Date.now()))/1000);
 
-  try{
-    const arr = JSON.parse(localStorage.getItem('travelTestResults')||'[]')
-      .filter(r=> !currentUser || r.email !== (currentUser.email||''));
-    arr.push({
-      name: currentUser?.name || '사용자',
-      email: currentUser?.email || '',
-      personaName: result.type.name,
-      personaDesc: result.type.desc,
-      fortune: result.fortune,
-      travel: result.travel,
-      answers: psychologyAnswers,
-      timestamp: new Date().toISOString(),
-      team: currentUser?.team, position: currentUser?.position
-    });
-    localStorage.setItem('travelTestResults', JSON.stringify(arr));
-  }catch(_){}
+  // ❌ 이 로컬 저장 블록을 지우거나 주석 처리하세요.
+  // try{
+  //   const arr = JSON.parse(localStorage.getItem('travelTestResults')||'[]')
+  //     .filter(r=> !currentUser || r.email !== (currentUser.email||''));
+  //   arr.push({ ... });
+  //   localStorage.setItem('travelTestResults', JSON.stringify(arr));
+  // }catch(_){}
 
+  // ✅ 백엔드 저장만 유지
   try{
     await callGoogleAppsScript({
       action:'saveMBTIResult',
@@ -817,12 +856,13 @@ async function showMBTIResult(){
       testDuration: durationSec,
       testKind: 'travel-animal'
     }, 'POST');
-  }catch(_){}
+  }catch(e){
+    console.error(e); // 실패해도 UI는 진행
+  }
 
   openTravelResultModal(result.type, result.travel, result.fortune, durationSec);
   closeMBTITest();
 }
-
 /* ===== 결과 모달 (최종 정상 버전) ===== */
 const ALL_ANIMAL_TYPES = [
   '🐨 코알라형','🦅 독수리형','🦉 올빼미형','🐿️ 다람쥐형','🦋 나비형','🐎 말형',
