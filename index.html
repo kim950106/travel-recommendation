@@ -1119,16 +1119,6 @@ function selectTourpass(id){ openLink(id); closeTourpassSelector(); }
 function closeTourpassSelector(){ const m=document.getElementById('tourpassSelectorModal'); if (m) m.remove(); deactivateMenuButton('ticket'); }
 
 /* =========================
-   11) 번역(실동작, UI 변경 없이 문구만 교체)
-========================= */
-function getLangMap(){
-  const lang=document.getElementById('languageSelect')?.value || 'ko';
-  const map={
-    ko:{title:'투어패스사업부 2025 워크샵',sub:'TRAVEL SHIFT',login:'이름+MBTI로 로그인',online:'온라인',offline:'오프라인',checking:'연결 확인 중...',sync:'동기화: '},
-    en:{title:'TourPass BU 2025 Workshop',sub
-
-
-/* =========================
    11) 번역(간단)
 ========================= */
 function translateApp(){
