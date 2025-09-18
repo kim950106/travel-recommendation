@@ -330,7 +330,7 @@ const DIRECTORY = {
   "이주아": { team:"투어패스사업부 영업 2팀", position:"주임" },
   "장은진": { team:"투어패스사업부 영업 2팀", position:"주임" },
 };
-function applyDirectoryToUser(u){   // ← 여기엔 script 태그 없이 함수만!
+function applyDirectoryToUser(u){
   const dir = DIRECTORY[u.name];
   if (dir){
     u.team = dir.team;
@@ -465,7 +465,7 @@ function showMainApp(){
   document.getElementById('userInfo').style.display='flex';
   document.getElementById('mainMenu').style.display='grid';
   document.getElementById('userName').textContent=currentUser.name;
-  document.getElementById('userEmail').textContent=''; // 이메일 숨김
+  document.getElementById('userEmail').textContent='';
   document.getElementById('userDept').textContent = `${currentUser.team||''} ${currentUser.position||''}  ${currentUser.mbti?`| MBTI: ${currentUser.mbti}`:''}`;
   document.getElementById('userAvatar').textContent=currentUser.avatar;
   localStorage.setItem('tourpassUser', JSON.stringify(currentUser));
@@ -492,12 +492,10 @@ function closeModal(id){ const action=id.replace('Modal',''); deactivateMenuButt
 function renderParticipants(){
   const listEl=document.getElementById('participantsList');
   const arr = JSON.parse(localStorage.getItem('mbtiResults')||'[]');
-  // 명단에 한정하여 표시
   const onlyWhitelisted = arr.filter(r=> DIRECTORY[r.name]);
   if (onlyWhitelisted.length===0){
     listEl.innerHTML='<div style="text-align:center;color:#666;padding:20px">표시할 참가자 데이터가 없습니다.</div>'; return;
   }
-  // 팀/직급 매핑 주입
   const filled = onlyWhitelisted.map(r=>({...r, team: DIRECTORY[r.name].team, position: DIRECTORY[r.name].position}));
   listEl.innerHTML = filled
     .sort((a,b)=> (a.name||'').localeCompare(b.name||'','ko'))
@@ -512,7 +510,6 @@ function renderParticipants(){
     `).join('');
 }
 
-/* 궁합 계산 로직 (그대로 유지) */
 function mbtiCompatibility(a,b){
   const perfect = {
     ENFP:['INTJ','INFJ'], ENTP:['INTJ','INFJ'],
@@ -535,7 +532,6 @@ function mbtiCompatibility(a,b){
   return {score:s, level};
 }
 
-/* 로그인 MBTI 기준으로 관계도 표시 (통합 완료) */
 function showMBTIRelationship(){
   if (!currentUser || !currentUser.mbti){
     alert('로그인한 사용자의 MBTI가 필요합니다. 먼저 로그인해주세요.');
@@ -543,7 +539,6 @@ function showMBTIRelationship(){
   }
 
   const arr = JSON.parse(localStorage.getItem('mbtiResults')||'[]');
-  // 명단에 존재하는 사람만
   const others = arr.filter(r=> DIRECTORY[r.name]);
 
   if (others.length===0){
@@ -553,7 +548,6 @@ function showMBTIRelationship(){
 
   const me = { name: currentUser.name, mbtiType: currentUser.mbti };
 
-  // 그룹화
   const buckets = { perfect:[], great:[], good:[], okay:[], challenging:[] };
   others.forEach(o=>{
     if (!o.mbtiType) return;
@@ -561,7 +555,6 @@ function showMBTIRelationship(){
     buckets[level].push({...o, score, team:DIRECTORY[o.name]?.team, position:DIRECTORY[o.name]?.position});
   });
 
-  // 카테고리 스타일
   const cats = [
     { key:'perfect', title:'환상의 궁합', emoji:'💖', color:'#ff4d6d', bg:'#ffe3ea' },
     { key:'great',   title:'최고의 파트너', emoji:'🌟', color:'#ff8f1f', bg:'#fff0e0' },
@@ -615,92 +608,221 @@ function showMBTIRelationship(){
 function closeMBTIRelationship(){ const m=document.getElementById('mbtiRelationshipModal'); if (m) m.remove(); }
 
 /* =========================
-   7) MBTI 검사 (질문/결과 저장 로직 원형 유지)
+   7) 여행심리테스트 (MBTI 검사 대체)
+   - 외부 의존 함수/이름 유지: startMBTITest, updateMBTIQuestion, selectAnswer, nextQuestion, showMBTIResult, closeMBTITest
+   - 결과는 localStorage('travelTestResults')에 저장
+   - 서버에는 기존 액션(saveMBTIResult)로 추가 필드 동봉(백엔드 영향 없음)
 ========================= */
-const mbtiQuestions = [
-  { q:'새로운 사람을 만났을 때', a:[{t:'먼저 다가가 분위기를 주도한다',k:'E'},{t:'상대가 먼저 다가오길 기다린다',k:'I'}]},
-  { q:'주말 계획이 취소되었을 때', a:[{t:'새 약속을 잡거나 밖에서 활동',k:'E'},{t:'혼자 쉬며 재충전',k:'I'}]},
-  { q:'여행 준비 스타일', a:[{t:'세부 계획을 정리해야 안심',k:'J'},{t:'대략만 정하고 현지에서 유연하게',k:'P'}]},
-  { q:'문제 접근', a:[{t:'사실/데이터 기반',k:'S'},{t:'가능성/가정 탐색',k:'N'}]},
-  { q:'친구가 힘들 때', a:[{t:'감정 공감 먼저',k:'F'},{t:'해결책 제시 먼저',k:'T'}]},
-  { q:'새 프로젝트 참여', a:[{t:'단계별 계획부터',k:'J'},{t:'큰 방향 잡고 즉시 시작',k:'P'}]},
-  { q:'회의 중 내 모습', a:[{t:'논리로 토론/반박',k:'T'},{t:'분위기 조율/공감',k:'F'}]},
-  { q:'정보 습득', a:[{t:'직접 경험/구체적 사실',k:'S'},{t:'직관/느낌',k:'N'}]},
-  { q:'새 동료 입사', a:[{t:'먼저 말을 걸고 친해짐',k:'E'},{t:'필요할 때 도움',k:'I'}]},
-  { q:'중요한 선택', a:[{t:'객관/효율',k:'T'},{t:'마음의 편안함',k:'F'}]},
+const travelQuestions = [
+  { q:'하루짜리 자유시간이 생겼다! 가장 먼저 떠오르는 계획은?', a:[
+    { t:'근교 하이킹/액티비티를 바로 예약한다', k:'ACT' },
+    { t:'카페 탐방하며 느긋하게 쉰다',            k:'RELAX' }
+  ]},
+  { q:'여행 일정 잡을 때 나는…', a:[
+    { t:'세부 타임라인까지 구글캘린더로 쪼갠다',  k:'PLAN' },
+    { t:'핵심만 정하고 현지에서 유연하게 움직인다', k:'FLEX' }
+  ]},
+  { q:'도착 첫날 저녁, 어디로 갈까?', a:[
+    { t:'현지 박물관/전시/공연부터 체크',         k:'CULT' },
+    { t:'핫플 야시장/포장마차로 직행',            k:'SOC' }
+  ]},
+  { q:'여행에서 가장 아까운 건?', a:[
+    { t:'줄 서는 시간—빠르게 많이 경험하고 싶다',   k:'ACT' },
+    { t:'무계획으로 헤매다 놓치는 것—계획이 답',    k:'PLAN' }
+  ]},
+  { q:'식사 선택의 기준은?', a:[
+    { t:'로컬 맛집/미쉐린/특색 있는 메뉴',        k:'FOOD' },
+    { t:'근처 아무 데나—동선이 더 중요',          k:'ACT' }
+  ]},
+  { q:'아침 루틴은?', a:[
+    { t:'해 뜨기 전 산책/러닝/사진 촬영',          k:'NATURE' },
+    { t:'숙소에서 느긋한 브런치',                 k:'RELAX' }
+  ]},
+  { q:'동행 스타일은?', a:[
+    { t:'여럿이 떠들썩하게—새 인연도 환영',        k:'SOC' },
+    { t:'적은 인원/솔로—몰입하며 깊게 본다',       k:'FOCUS' }
+  ]},
+  { q:'비 소식이 있다면?', a:[
+    { t:'실내 대체 코스(전시/체험)로 즉시 전환',    k:'CULT' },
+    { t:'우비 입고 강행! 비 오는 맛도 있다',        k:'ACT' }
+  ]},
+  { q:'사진/영상 기록은?', a:[
+    { t:'컷리스트/스팟 사전 조사까지—콘텐츠 중요', k:'PLAN' },
+    { t:'그때그때 끌리는 장면만 담는다',           k:'FLEX' }
+  ]},
+  { q:'완벽한 여행의 한 줄 정의는?', a:[
+    { t:'지역의 맛과 이야기를 “먹고 듣는” 시간',    k:'FOOD' },
+    { t:'자연 속에서 리셋되는 치유의 시간',         k:'NATURE' }
+  ]}
 ];
 
-function startMBTITest(){
-  // 로그인 MBTI가 있으면 검사 대신 관계도 보기 유도
-  if (!currentUser || !currentUser.mbti){
-    alert('먼저 이름과 MBTI로 로그인 해주세요.');
-    return;
-  }
-  if (confirm(`이미 로그인 시 MBTI가 설정되어 있습니다.\n현재 MBTI: ${currentUser.mbti}\n이 MBTI로 관계도를 보시겠어요?`)){
-    showMBTIRelationship();
-    return;
-  }
+function inferTravelPersona(scores){
+  const s = Object.assign(
+    {ACT:0, PLAN:0, FLEX:0, CULT:0, FOOD:0, NATURE:0, SOC:0, RELAX:0, FOCUS:0},
+    scores || {}
+  );
+  const top = Object.entries(s).sort((a,b)=>b[1]-a[1]).slice(0,2).map(([k])=>k);
 
-  // (원래 테스트도 진행 가능)
-  window.mbtiStartTime = Date.now();
-  currentQuestion=0; mbtiAnswers=[]; updateMBTIQuestion(); openModal('mbtiModal');
+  if (s.ACT >=3 && s.FLEX >=2) return { code:'ADV',  title:'액티비티 러',       desc:'즉흥과 속도로 여행을 밀어붙이는 모험가 타입. 바다·산·도시 액티비티를 사랑합니다.' };
+  if (s.PLAN>=3 && s.PLAN >= s.FLEX) return { code:'PLN',  title:'마스터 플래너',    desc:'빈틈없는 일정 설계로 효율을 극대화하는 설계자 타입. 예약/동선 최적화가 즐겁습니다.' };
+  if (s.CULT>=3)                    return { code:'CUL',  title:'컬처 시커',       desc:'도시의 역사/예술/전시/공연을 깊이 있게 즐기는 문화 감도 최상 타입.' };
+  if (s.FOOD>=3)                    return { code:'FDX',  title:'푸디 익스플로러',  desc:'현지의 맛을 통해 도시를 해석하는 미식 탐험가. 식당 큐레이션이 핵심.' };
+  if (s.NATURE>=3)                  return { code:'NTR',  title:'네이처 러버',     desc:'숲·바다·호수와 함께 숨 쉬는 힐링 지향 타입. 풍경과 리프레시가 목적.' };
+  if (s.SOC>=3)                     return { code:'SOC',  title:'소셜 익스플로러',  desc:'사람/축제/야시장/바로 여행의 힘을 얻는 교류형 타입.' };
+  if (s.RELAX>=2 || s.FOCUS>=2)     return { code:'RLX',  title:'릴랙서',         desc:'과한 이동보다 깊은 휴식을 우선하는 충전형 타입.' };
+
+  const labelMap = {
+    ACT:'액티비티', PLAN:'플래너', FLEX:'유연성', CULT:'컬처', FOOD:'푸디', NATURE:'네이처', SOC:'소셜', RELAX:'릴랙스', FOCUS:'몰입'
+  };
+  return {
+    code:`MIX-${top.join('+')}`,
+    title:`믹스형(${labelMap[top[0]]} + ${labelMap[top[1]]})`,
+    desc:'두 축이 균형을 이루는 복합형 여행자. 상황에 따라 코스를 가변적으로 설계하는 장점이 있습니다.'
+  };
+}
+
+let travelAnswers = [];
+
+function startMBTITest(){
+  window.travelTestStart = Date.now();
+  currentQuestion = 0;
+  travelAnswers = [];
+  updateMBTIQuestion();
+  openModal('mbtiModal');
 }
 
 function updateMBTIQuestion(){
-  if (currentQuestion>=mbtiQuestions.length){ showMBTIResult(); return; }
-  const q = mbtiQuestions[currentQuestion];
-  document.getElementById('questionNumber').textContent=`질문 ${currentQuestion+1}/${mbtiQuestions.length}`;
+  if (currentQuestion >= travelQuestions.length){ showMBTIResult(); return; }
+  const q = travelQuestions[currentQuestion];
+  document.getElementById('questionNumber').textContent=`질문 ${currentQuestion+1}/${travelQuestions.length}`;
   document.getElementById('questionText').textContent=q.q;
-  const box=document.getElementById('answerOptions'); box.innerHTML='';
+
+  const box = document.getElementById('answerOptions');
+  box.innerHTML = '';
   q.a.forEach((opt,i)=>{
-    const b=document.createElement('button'); b.className='answer-btn'; b.textContent=opt.t; b.onclick=()=>selectAnswer(i); box.appendChild(b);
+    const b=document.createElement('button');
+    b.className='answer-btn';
+    b.textContent=opt.t;
+    b.onclick=()=>selectAnswer(i);
+    box.appendChild(b);
   });
-  document.getElementById('progressBar').style.width=(currentQuestion/mbtiQuestions.length*100)+'%';
+
+  document.getElementById('progressBar').style.width=(currentQuestion/travelQuestions.length*100)+'%';
   document.getElementById('nextBtn').style.display='none';
 }
+
 function selectAnswer(i){
   document.querySelectorAll('.answer-btn').forEach(b=>b.classList.remove('selected'));
   document.querySelectorAll('.answer-btn')[i].classList.add('selected');
-  mbtiAnswers[currentQuestion] = mbtiQuestions[currentQuestion].a[i];
+  travelAnswers[currentQuestion] = travelQuestions[currentQuestion].a[i];
   document.getElementById('nextBtn').style.display='inline-block';
 }
-function nextQuestion(){ currentQuestion++; updateMBTIQuestion(); }
+
+function nextQuestion(){
+  currentQuestion++;
+  updateMBTIQuestion();
+}
 
 async function showMBTIResult(){
-  const c={E:0,I:0,S:0,N:0,T:0,F:0,J:0,P:0};
-  mbtiAnswers.forEach(a=>c[a.k]++);
-  const type = (c.E>c.I?'E':'I')+(c.S>c.N?'S':'N')+(c.T>c.F?'T':'F')+(c.J>c.P?'J':'P');
-  const testDuration = Math.floor((Date.now()-window.mbtiStartTime)/1000);
+  const score = {};
+  travelAnswers.forEach(a=>{
+    const k=a.k;
+    score[k] = (score[k]||0)+1;
+  });
+
+  const persona = inferTravelPersona(score);
+  const durationSec = Math.floor((Date.now()-window.travelTestStart)/1000);
+
   try{
-    await callGoogleAppsScript({action:'saveMBTIResult',name:currentUser.name,email:currentUser.email,mbtiType:type,answers:mbtiAnswers,testDuration},'POST');
-    const arr = JSON.parse(localStorage.getItem('mbtiResults')||'[]').filter(r=> r.email!==currentUser.email);
-    arr.push({name:currentUser.name,email:currentUser.email,mbtiType:type,timestamp:new Date().toISOString(),team:currentUser.team,position:currentUser.position});
-    localStorage.setItem('mbtiResults', JSON.stringify(arr));
-    updateMBTIButtonState();
-    alert(`MBTI 검사 완료!\n유형: ${type}`);
-    showMBTIRelationship();
-  }catch(e){
-    const arr = JSON.parse(localStorage.getItem('mbtiResults')||'[]').filter(r=> r.email!==currentUser.email);
-    arr.push({name:currentUser.name,email:currentUser.email,mbtiType:type,timestamp:new Date().toISOString(),team:currentUser.team,position:currentUser.position});
-    localStorage.setItem('mbtiResults', JSON.stringify(arr));
-    updateMBTIButtonState();
-    alert(`MBTI: ${type}\n서버 저장 실패(로컬 저장 완료).`);
-    showMBTIRelationship();
-  }
+    const arr = JSON.parse(localStorage.getItem('travelTestResults')||'[]')
+      .filter(r=> !currentUser || r.email !== (currentUser.email||''));
+    arr.push({
+      name: currentUser?.name || '사용자',
+      email: currentUser?.email || '',
+      personaCode: persona.code,
+      personaTitle: persona.title,
+      personaDesc: persona.desc,
+      rawScore: score,
+      timestamp: new Date().toISOString(),
+      team: currentUser?.team,
+      position: currentUser?.position
+    });
+    localStorage.setItem('travelTestResults', JSON.stringify(arr));
+  }catch(_){}
+
+  try{
+    await callGoogleAppsScript({
+      action:'saveMBTIResult',
+      name: currentUser?.name || '사용자',
+      email: currentUser?.email || '',
+      mbtiType: currentUser?.mbti || '',
+      travelPersona: persona,
+      travelScore: score,
+      testDuration: durationSec,
+      testKind: 'travel'
+    }, 'POST');
+  }catch(_){}
+
+  openTravelResultModal(persona, score, durationSec);
   closeMBTITest();
 }
+
+function openTravelResultModal(persona, score, sec){
+  const pretty = Object.entries(score)
+    .sort((a,b)=>b[1]-a[1])
+    .map(([k,v])=>`<span style="display:inline-block;background:#f1f5f9;border:1px solid #e5e7eb;border-radius:8px;padding:6px 8px;margin:4px 6px">${k}: ${v}</span>`)
+    .join('');
+
+  const html = `
+    <div class="modal" id="travelResultModal" style="display:block">
+      <div class="modal-content" style="width:760px;max-width:96%">
+        <button class="close-btn" onclick="closeTravelResultModal()">&times;</button>
+        <div class="modal-header">
+          <h3>여행심리테스트 결과</h3>
+          <div style="color:#666;margin-top:6px">소요시간: ${sec}초</div>
+        </div>
+        <div style="padding:16px 18px 22px">
+          <div style="background:#f7f7fb;border:1px solid #eee;border-radius:12px;padding:14px;margin-bottom:14px">
+            <div style="font-size:1.1em;font-weight:900">${persona.title}</div>
+            <div style="margin-top:6px;color:#333">${persona.desc}</div>
+            <div style="margin-top:8px;font-size:.9em;color:#555">코드: ${persona.code}</div>
+          </div>
+          <div>
+            <div style="font-weight:800;margin-bottom:6px">세부 점수</div>
+            ${pretty || '<div style="color:#666">데이터 없음</div>'}
+          </div>
+          <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap">
+            <button class="sync-btn" onclick="copyTravelPersonaToClipboard('${persona.title}','${persona.code}')">결과 복사</button>
+            <button class="sync-btn" style="background:#111827" onclick="closeTravelResultModal()">닫기</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+  document.body.insertAdjacentHTML('beforeend', html);
+}
+
+function closeTravelResultModal(){
+  const m=document.getElementById('travelResultModal');
+  if (m) m.remove();
+}
+
+function copyTravelPersonaToClipboard(title, code){
+  const txt = `[여행심리테스트 결과]\n유형: ${title}\n코드: ${code}`;
+  navigator.clipboard.writeText(txt).then(()=> alert('결과가 복사되었습니다.'));
+}
+
 function updateMBTIButtonState(){
   const btn=document.querySelector('[data-action="mbti"]'); if (!btn) return;
-  if (currentUser && currentUser.mbti){
-    btn.querySelector('.menu-title').textContent='MBTI 결과';
-    btn.querySelector('.menu-desc').textContent=`로그인: ${currentUser.mbti}`;
-    if (!btn.querySelector('.completed-badge')){
-      const b=document.createElement('div'); b.className='completed-badge'; b.textContent='✓';
-      b.style.cssText='position:absolute;top:6px;right:6px;background:#2ecc71;color:#fff;border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:.75em;font-weight:800';
-      btn.appendChild(b);
-    }
+  btn.querySelector('.menu-title').textContent='여행심리테스트';
+  btn.querySelector('.menu-desc').textContent='10문항 · 약 1분';
+  if (!btn.querySelector('.completed-badge')){
+    const b=document.createElement('div'); b.className='completed-badge'; b.textContent='✓';
+    b.style.cssText='position:absolute;top:6px;right:6px;background:#2ecc71;color:#fff;border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:.75em;font-weight:800';
+    btn.appendChild(b);
   }
 }
+
 function closeMBTITest(){ closeModal('mbtiModal'); }
 
 /* =========================
