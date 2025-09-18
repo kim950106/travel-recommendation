@@ -225,6 +225,47 @@
     </div>
   </div>
 
+ /* ===== 여행심리테스트 결과 UI ===== */
+.result-wrap{display:block}
+.result-head{
+  display:flex;align-items:center;gap:12px;
+  padding:14px;border:1px solid #eee;border-radius:14px;margin-bottom:14px;
+  background:
+    radial-gradient(60% 80% at 100% 0%, rgba(17,24,39,.06), transparent 50%),
+    radial-gradient(50% 70% at 0% 100%, rgba(17,24,39,.04), transparent 50%),
+    linear-gradient(180deg,#fff 0%,#f8fafc 100%);
+  box-shadow:0 6px 18px rgba(16,24,40,.08);
+}
+.result-emoji{font-size:44px;line-height:1.1}
+.result-title{font-weight:900;font-size:1.06rem}
+.result-desc{color:#555;margin-top:2px}
+.pill{display:inline-flex;align-items:center;gap:6px;
+  padding:6px 10px;border-radius:9999px;background:#111827;color:#fff;
+  font-size:.76rem;font-weight:800}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.card{background:#fff;border:1px solid #eee;border-radius:12px;padding:14px}
+.kv{margin:6px 0}
+.kv strong{display:block;font-size:.86rem;margin-bottom:3px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:8px 10px;border-radius:10px;border:1px solid #eee;background:#fafbff;
+  font-size:.86rem;font-weight:700;cursor:pointer
+}
+.chip:hover{background:#f1f5ff}
+.sep{height:1px;background:#eee;margin:10px 0}
+.meter{position:relative;height:12px;background:#f1f3f7;border-radius:9999px;overflow:hidden;border:1px solid #e5e7eb}
+.meter-fill{height:100%;width:0;border-radius:9999px;transition:width .35s}
+.level-badge{display:inline-block;border-radius:8px;padding:4px 8px;font-size:.78rem;font-weight:800}
+.lv-perfect{background:#ffe3ea;color:#bf1d35}
+.lv-great{background:#fff0e0;color:#b45309}
+.lv-good{background:#eaf7ef;color:#166534}
+.lv-okay{background:#e8f0fe;color:#1e40af}
+.lv-challenging{background:#efe7ff;color:#5b21b6}
+.note{color:#555;font-size:.86rem;margin-top:8px}
+@media (max-width:640px){.grid-2{grid-template-columns:1fr}}
+
+ 
   <!-- 설문 모달 -->
   <div id="surveyModal" class="modal">
     <div class="modal-content" style="width:760px;max-width:95%">
@@ -853,50 +894,159 @@ function openTravelResultModal(type, travel, fortune, sec){
       <div class="modal-content" style="width:760px;max-width:96%">
         <button class="close-btn" onclick="closeTravelResultModal()">&times;</button>
         <div class="modal-header">
-          <h3>여행심리테스트 결과</h3>
-          <div style="color:#666;margin-top:6px">소요시간: ${sec}초</div>
-        </div>
-        <div style="padding:16px 18px 22px">
-          <div style="background:#f7f7fb;border:1px solid #eee;border-radius:12px;padding:14px;margin-bottom:14px">
-            <div style="font-size:1.1em;font-weight:900">${type.name}</div>
-            <div style="margin-top:6px;color:#333">${type.desc||''}</div>
+/* ===== 여행심리테스트 결과 모달 (새 UI + 궁합도) ===== */
+
+/* 26개 동물 유형 전체 목록 (이모지 그대로 노출) */
+const ALL_ANIMAL_TYPES = [
+  '🐨 코알라형','🦅 독수리형','🦉 올빼미형','🐿️ 다람쥐형','🦋 나비형','🐎 말형',
+  '🐬 돌고래형','🐺 늑대형','🐻 곰형','🦊 여우형','🐼 판다형','🐅 호랑이형',
+  '🐘 코끼리형','🐢 거북이형','🦌 사슴형','🐃 황소형','🐰 토끼형','🦁 사자형',
+  '🐦 새형','🦈 상어형','🐙 문어형','🐳 고래형','🐣 병아리형','🐕 개형','🐜 개미형','🕊️ 비둘기형'
+];
+
+/* 내 타입 기준으로 전반적인 궁합 버킷 계산 */
+function getCompatibilityBuckets(selfType){
+  const buckets = { perfect:[], great:[], good:[], okay:[], challenging:[] };
+  ALL_ANIMAL_TYPES.forEach(t=>{
+    if (t===selfType) return;
+    const {score, level} = travelPartnerCompatibility(selfType, t);
+    buckets[level].push({ name:t, score });
+  });
+  // 보기 좋게 점수순 정렬
+  Object.keys(buckets).forEach(k=> buckets[k].sort((a,b)=>b.score-a.score));
+  return buckets;
+}
+
+function levelClass(level){
+  return ({
+    perfect:'lv-perfect', great:'lv-great', good:'lv-good', okay:'lv-okay', challenging:'lv-challenging'
+  })[level] || 'lv-good';
+}
+function levelColor(level){
+  return ({
+    perfect:'#ff4d6d', great:'#ff8f1f', good:'#22c55e', okay:'#2563eb', challenging:'#7c3aed'
+  })[level] || '#22c55e';
+}
+function levelCopy(level){
+  return ({
+    perfect:'찰떡궁합! 시너지가 폭발해요',
+    great:'아주 잘 맞아요. 함께하면 든든!',
+    good:'무난하게 잘 맞는 편',
+    okay:'서로 배려하면 충분히 좋아요',
+    challenging:'관점 차이가 커요. 역할/속도 조율 필수'
+  })[level] || '';
+}
+
+function openTravelResultModal(type, travel, fortune, sec){
+  const emoji = (type.name||'').split(' ')[0] || '🧭';
+  const selfType = type.name;
+  const buckets = getCompatibilityBuckets(selfType);
+
+  const defaultPartner = (buckets.perfect[0]?.name) || '🦉 올빼미형';
+  const modalId = 'travelResultModal';
+
+  const chip = (label)=>`<span class="chip" onclick="document.getElementById('compSelect').value='${label}'; updateCompatibilityView('${selfType}')">${label}</span>`;
+  const chips = (arr, max=6)=> arr.slice(0,max).map(x=>chip(x.name||x)).join('') || '<span style="color:#666">-</span>';
+
+  const html = `
+    <div class="modal" id="${modalId}" style="display:block">
+      <div class="modal-content" style="width:820px;max-width:96%">
+        <button class="close-btn" onclick="closeTravelResultModal()">&times;</button>
+
+        <div class="result-wrap" style="padding:16px 18px 22px">
+          <div class="result-head">
+            <div class="result-emoji">${emoji}</div>
+            <div style="flex:1;min-width:0">
+              <div class="result-title">${type.name}</div>
+              <div class="result-desc">${type.desc||''}</div>
+            </div>
+            <span class="pill"><span>여행 스타일</span><span>·</span><span>${travel.style||'-'}</span></span>
           </div>
 
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-            <div class="rel-box">
+          <div style="color:#666;margin:-4px 0 12px">소요시간: ${sec}초</div>
+
+          <div class="grid-2">
+            <div class="card">
               <div style="font-weight:800;margin-bottom:6px">여행 스타일</div>
-              ${wrap('스타일', travel.style)}
-              ${wrap('선호', travel.preference)}
-              ${list('목적지', travel.destinations||[])}
-              ${list('활동', travel.activities||[])}
-              ${wrap('숙소', travel.accommodation||'')}
-              ${wrap('기획', travel.planning||'')}
-              ${wrap('동행', travel.companion||'')}
-              ${wrap('모토', travel.motto||'')}
+              <div class="kv"><strong>선호</strong><div>${travel.preference||'-'}</div></div>
+              <div class="kv"><strong>목적지</strong><div class="chips">${(travel.destinations||[]).map(d=>`<span class="chip">${d}</span>`).join('')}</div></div>
+              <div class="kv"><strong>활동</strong><div class="chips">${(travel.activities||[]).map(d=>`<span class="chip">${d}</span>`).join('')}</div></div>
+              <div class="grid-2" style="gap:10px;margin-top:6px">
+                <div class="kv"><strong>숙소</strong><div>${travel.accommodation||'-'}</div></div>
+                <div class="kv"><strong>동행</strong><div>${travel.companion||'-'}</div></div>
+              </div>
+              <div class="kv"><strong>기획</strong><div>${travel.planning||'-'}</div></div>
+              <div class="kv"><strong>모토</strong><div>“${travel.motto||'-'}”</div></div>
             </div>
 
-            <div class="rel-box">
-              <div style="font-weight:800;margin-bottom:6px">오늘의 운세(부여 에디션)</div>
-              ${wrap('메시지', fortune.today)}
-              ${wrap('럭키 컬러', fortune.lucky)}
-              ${wrap('럭키 넘버', fortune.number)}
-              ${wrap('조언', fortune.advice)}
+            <div class="card">
+              <div style="font-weight:800;margin-bottom:6px">오늘의 운세 (부여 에디션)</div>
+              <div class="kv"><strong>메시지</strong><div>${fortune.today}</div></div>
+              <div class="grid-2" style="gap:10px;margin-top:6px">
+                <div class="kv"><strong>럭키 컬러</strong><div>${fortune.lucky}</div></div>
+                <div class="kv"><strong>럭키 넘버</strong><div>${fortune.number}</div></div>
+              </div>
+              <div class="kv"><strong>조언</strong><div>${fortune.advice}</div></div>
             </div>
           </div>
 
-          <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap">
-            <button class="sync-btn" onclick="navigator.clipboard.writeText('[여행심리테스트] '+ '${type.name} | '+ (travel.style||''))">결과 복사</button>
+          <div class="card" style="margin-top:12px">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+              <div style="font-weight:800">여행 파트너 궁합도</div>
+              <div>
+                <select id="compSelect" style="padding:8px 10px;border-radius:10px;border:1px solid #ddd">
+                  ${ALL_ANIMAL_TYPES.map(t=>`<option value="${t}" ${t===defaultPartner?'selected':''}>${t}</option>`).join('')}
+                </select>
+              </div>
+            </div>
+
+            <div id="compMeterBox" style="margin-top:6px"></div>
+
+            <div class="sep"></div>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+              <div>
+                <div class="level-badge lv-perfect">찰떡 궁합</div>
+                <div class="chips" style="margin-top:8px">${chips(buckets.perfect)}</div>
+              </div>
+              <div>
+                <div class="level-badge lv-challenging">주의 필요</div>
+                <div class="chips" style="margin-top:8px">${chips(buckets.challenging)}</div>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap">
+            <button class="sync-btn" onclick="navigator.clipboard.writeText('[여행심리테스트] ${type.name} | ${travel.style||''}')">결과 복사</button>
             <button class="sync-btn" style="background:#111827" onclick="closeTravelResultModal()">닫기</button>
           </div>
         </div>
       </div>
-    </div>`;
+    </div>
+  `;
   document.body.insertAdjacentHTML('beforeend', html);
+  // 첫 렌더링 시 궁합 미터 업데이트
+  updateCompatibilityView(selfType);
+}
+
+function updateCompatibilityView(selfType){
+  const partner = document.getElementById('compSelect').value;
+  const box = document.getElementById('compMeterBox');
+  const {score, level} = travelPartnerCompatibility(selfType, partner);
+  const color = levelColor(level);
+  const klass = levelClass(level);
+  const copy = levelCopy(level);
+
+  box.innerHTML = `
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+      <div style="font-weight:800">${partner}</div>
+      <div class="level-badge ${klass}">${level.toUpperCase()} · ${score}%</div>
+    </div>
+    <div class="meter"><div class="meter-fill" style="background:${color};width:${score}%"></div></div>
+    <div class="note">${copy}</div>
+  `;
 }
 function closeTravelResultModal(){ const m=document.getElementById('travelResultModal'); if (m) m.remove(); }
-function closeMBTITest(){ closeModal('mbtiModal'); } // 기존 계약 유지
-
-
 /* =========================
    8) 설문
 ========================= */
