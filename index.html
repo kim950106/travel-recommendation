@@ -1093,26 +1093,30 @@ function openTourpassTicket(){
   showTourpassSelector(links);
 }
 function showTourpassSelector(links){
-  const html=`
-    <div class="modal" id="tourpassSelectorModal" style="display:block">
-      <div class="modal-content" style="width:560px;max-width:96%">
-        <button class="close-btn" onclick="closeTourpassSelector()">&times;</button>
-        <div class="modal-header"><h3>🎫 투어패스 선택</h3></div>
-        <div style="padding:16px">
-          ${links.map(l=>`
-            <div style="display:flex;justify-content:space-between;align-items:center;padding:12px;border:1px solid #eee;border-radius:12px;margin-bottom:10px">
-              <div style="min-width:0">
-                <div style="font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${l.title}</div>
-                <div style="font-size:.82em;color:#666;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${l.url}</div>
-              </div>
-              <div style="display:flex;gap:6px;margin-left:8px">
-                <button onclick="event.stopPropagation(); setDefaultTourpass(${l.id})" style="background:#2ecc71;color:#fff;border:none;border-radius:10px;padding:8px 10px;cursor:pointer;font-size:.8em">기본설정</button>
-                <button onclick="event.stopPropagation(); selectTourpass(${l.id})" style="background:#111827;color:#fff;border:none;border-radius:10px;padding:8px 10px;cursor:pointer;font-size:.8em">열기</button>
-              </div>
-            </div>`).join('')}
-        </div>
-      </div>
-    </div>`;
+  const items = (links || []).map(l => {
+    return (
+      '<div style="display:flex;justify-content:space-between;align-items:center;padding:12px;border:1px solid #eee;border-radius:12px;margin-bottom:10px">' +
+        '<div style="min-width:0">' +
+          '<div style="font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + (l.title || '') + '</div>' +
+          '<div style="font-size:.82em;color:#666;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + (l.url || '') + '</div>' +
+        '</div>' +
+        '<div style="display:flex;gap:6px;margin-left:8px">' +
+          '<button onclick="event.stopPropagation(); setDefaultTourpass(' + l.id + ')" style="background:#2ecc71;color:#fff;border:none;border-radius:10px;padding:8px 10px;cursor:pointer;font-size:.8em">기본설정</button>' +
+          '<button onclick="event.stopPropagation(); selectTourpass(' + l.id + ')" style="background:#111827;color:#fff;border:none;border-radius:10px;padding:8px 10px;cursor:pointer;font-size:.8em">열기</button>' +
+        '</div>' +
+      '</div>'
+    );
+  }).join('');
+
+  const html =
+    '<div class="modal" id="tourpassSelectorModal" style="display:block">' +
+      '<div class="modal-content" style="width:560px;max-width:96%">' +
+        '<button class="close-btn" onclick="closeTourpassSelector()">&times;</button>' +
+        '<div class="modal-header"><h3>🎫 투어패스 선택</h3></div>' +
+        '<div style="padding:16px">' + items + '</div>' +
+      '</div>' +
+    '</div>';
+
   document.body.insertAdjacentHTML('beforeend', html);
 }
 function selectTourpass(id){ openLink(id); closeTourpassSelector(); }
