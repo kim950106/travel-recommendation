@@ -26,7 +26,6 @@
   .user-details h4{font-size:.98em}
   .user-details p{font-size:.78em;color:#666}
 
-  /* ---- 메뉴 타일 ---- */
   .menu-grid{display:none;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0 8px}
   .menu-item{
     position:relative;border:1px solid #eee;border-radius:14px;padding:16px;
@@ -54,19 +53,16 @@
 
   .app-translate{background:#fff;border:1px solid #eee;border-radius:12px;padding:14px}
 
-  /* 모달 */
   .modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:1000}
   .modal-content{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:#fff;border-radius:14px;max-width:92%;width:360px;max-height:88%;overflow:auto;box-shadow:0 24px 48px rgba(16,24,40,.24)}
   .modal-header{padding:18px 18px 0}
   .close-btn{position:absolute;top:10px;right:12px;background:#fff;border:1px solid #eee;border-radius:8px;font-size:1rem;padding:4px 8px;cursor:pointer}
 
-  /* 참가자 */
   .participants-list{max-height:360px;overflow:auto;padding:0 16px 16px}
   .participant-item{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #f0f0f0}
   .participant-avatar{width:30px;height:30px;border-radius:50%;background:#111827;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.85em}
   .sync-btn{background:#111827;color:#fff;border:none;border-radius:10px;padding:10px 12px;cursor:pointer}
 
-  /* MBTI */
   .mbti-test{padding:18px}
   .question-card{background:#f7f7fb;border:1px solid #eee;border-radius:12px;padding:16px}
   .question-number{color:#111827;font-weight:800;margin-bottom:8px}
@@ -77,7 +73,6 @@
   .progress-bar{height:4px;background:#eee;border-radius:2px;margin-bottom:12px}
   .progress-fill{height:100%;width:0;background:#111827;border-radius:2px;transition:width .3s}
 
-  /* 관계도(카테고리 카드) */
   .rel-cat{margin-bottom:18px}
   .rel-head{display:flex;align-items:center;gap:8px;color:#fff;padding:10px 12px;border-radius:10px;margin-bottom:10px;font-weight:900}
   .rel-box{background:#fafbff;border:1px solid #eee;border-radius:10px;padding:12px}
@@ -87,14 +82,12 @@
   .badge{background:#111827;color:#fff;padding:4px 8px;border-radius:6px;font-size:.78em;font-weight:800}
   .muted{font-size:.8em;color:#666;margin-top:6px}
 
-  /* 일정(간단) */
   .schedule-item{display:flex;align-items:flex-start;padding:10px 0;border-bottom:1px solid #eee}
   .schedule-item:last-child{border-bottom:none}
   .schedule-item .time{width:60px;font-weight:800;color:#111827}
   .schedule-item .activity{flex:1;margin:0 10px}
   .schedule-item .location{width:120px;color:#666;text-align:right}
 
-  /* 작은 화면 */
   @media (max-width:480px){.app-container{max-width:100%}.menu-icon{font-size:1.8em}}
 </style>
 </head>
@@ -146,7 +139,6 @@
           <div class="menu-desc">MBTI 및 팀 구성 보기</div>
         </div>
 
-        <!-- 변경: 일정 클릭 시 상세 일정 바로 오픈 -->
         <div class="menu-item" data-action="schedule" data-mark="📅" onclick="showDetailedSchedule()">
           <div class="menu-icon">📅</div>
           <div class="menu-title">워크샵 일정</div>
@@ -159,7 +151,6 @@
           <div class="menu-desc">성격 유형 검사 실시</div>
         </div>
 
-        <!-- 변경: 4번째 자리에 '투어패스 보관함' 이동 -->
         <div class="menu-item" data-action="tourpassbox" data-mark="📦" onclick="openModal('tourpassBoxModal')">
           <div class="menu-icon">📦</div>
           <div class="menu-title">투어패스 보관함</div>
@@ -172,7 +163,6 @@
           <div class="menu-desc">워크샵 만족도</div>
         </div>
 
-        <!-- 변경: 기존 '투어패스 보관함' 자리(6번째)에 '워크숍 챗봇' 생성 -->
         <div class="menu-item" data-action="chatbot" data-mark="🤖" onclick="openWorkshopChatbot()">
           <div class="menu-icon">🤖</div>
           <div class="menu-title">워크숍 챗봇</div>
@@ -218,9 +208,7 @@
           <div id="questionText" class="question-text">새로운 사람을 만났을 때</div>
           <div id="answerOptions"></div>
         </div>
-        <button id="nextBtn" onclick="nextQuestion()" style="display:none;background:#111827;color:#fff;border:none;border-radius:8px;padding:12px 18px;cursor:pointer;margin-top:14px">
-          다음 질문
-        </button>
+        <button id="nextBtn" onclick="nextQuestion()" style="display:none;background:#111827;color:#fff;border:none;border-radius:8px;padding:12px 18px;cursor:pointer;margin-top:14px">다음 질문</button>
       </div>
     </div>
   </div>
@@ -257,16 +245,6 @@
       </div>
     </div>
   </div>
-
-  <script>
-  // 워크숍 챗봇 링크 오픈 (UI 변경 없음)
-  function openWorkshopChatbot() {
-    window.open(
-      'https://chatgpt.com/g/g-6899821cd87481919c7a20d26b89f0ce-tueopaeseusaeobbu-weokeusyob-aieosiseuteonteu',
-      '_blank'
-    );
-  }
-  </script>
 
   <!-- 투어패스 보관함 모달 -->
   <div id="tourpassBoxModal" class="modal">
@@ -310,7 +288,7 @@ const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyQyuXtoF6LOh7A
 let currentUser = null;
 let isOnline = false;
 let currentQuestion = 0;
-let mbtiAnswers = [];
+let mbtiAnswers = []; // (사용 안함: 여행심리용 별도 answers 사용)
 
 /* =========================
    1) 이름 → 부서/직급 매핑
@@ -332,10 +310,7 @@ const DIRECTORY = {
 };
 function applyDirectoryToUser(u){
   const dir = DIRECTORY[u.name];
-  if (dir){
-    u.team = dir.team;
-    u.position = dir.position;
-  }
+  if (dir){ u.team = dir.team; u.position = dir.position; }
   return u;
 }
 
@@ -343,43 +318,29 @@ function applyDirectoryToUser(u){
    2) 통신 헬퍼
 ========================= */
 async function callGoogleAppsScript(data, method='GET'){
-  const bust = `_=${Date.now()}`; // 캐시 버스터
+  const bust = `_=${Date.now()}`;
   let url = GAS_WEB_APP_URL;
-  const opts = {
-    method,
-    mode: 'cors',           // ← CORS 명시
-    redirect: 'follow',
-    credentials: 'omit'     // 쿠키 제거
-  };
+  const opts = { method, mode:'cors', redirect:'follow', credentials:'omit' };
 
   if (method === 'GET'){
     const qs = new URLSearchParams({...data, [bust]: ''}).toString();
     url += (url.includes('?') ? '&' : '?') + qs;
   } else {
-    opts.headers = { 'Content-Type':'application/x-www-form-urlencoded' }; 
+    opts.headers = { 'Content-Type':'application/x-www-form-urlencoded' };
     const payload = new URLSearchParams({ payload: JSON.stringify(data) }).toString();
     url += (url.includes('?') ? '&' : '?') + bust;
     opts.body = payload;
   }
 
   let res;
-  try {
-    res = await fetch(url, opts);
-  } catch (err) {
-    throw new Error(`네트워크 오류: ${err?.message || err}`);
-  }
+  try { res = await fetch(url, opts); }
+  catch (err) { throw new Error(`네트워크 오류: ${err?.message || err}`); }
 
   const text = await res.text().catch(()=> '');
-  if (!res.ok){
-    throw new Error(`HTTP ${res.status} ${res.statusText} / body: ${text?.slice(0,200)}`);
-  }
+  if (!res.ok){ throw new Error(`HTTP ${res.status} ${res.statusText} / body: ${text?.slice(0,200)}`); }
 
   let json;
-  try{
-    json = JSON.parse(text);
-  }catch(_){
-    throw new Error(`JSON 파싱 실패 / body: ${text?.slice(0,200)}`);
-  }
+  try{ json = JSON.parse(text); }catch(_){ throw new Error(`JSON 파싱 실패 / body: ${text?.slice(0,200)}`); }
 
   if (!json.success){
     const detail = (json.data && json.data.error) ? ` / ${json.data.error}` : '';
@@ -387,22 +348,36 @@ async function callGoogleAppsScript(data, method='GET'){
   }
   return json.data;
 }
+
 /* =========================
    3) 연결/초기화
 ========================= */
 function updateConnectionStatus(){
   const dict = (typeof getLangMap==='function')
     ? getLangMap()
-    : {online:'온라인', offline:'오프라인'};
+    : {online:'온라인', offline:'오프라인', sync:'동기화: '};
   const dot = document.getElementById('connectionDot');
   const text = document.getElementById('connectionText');
   if (isOnline){ dot.className='status-dot status-online'; text.textContent=dict.online; }
   else { dot.className='status-dot status-offline'; text.textContent=dict.offline; }
 }
-
 function syncData(){
   const prefix = (typeof getLangMap==='function') ? getLangMap().sync : '동기화: ';
   document.getElementById('lastSync').textContent = prefix + new Date().toLocaleTimeString();
+}
+async function checkBackendConnection(){
+  try{
+    await callGoogleAppsScript({ action:'healthCheck' }, 'GET');
+    isOnline = true; updateConnectionStatus(); return true;
+  }catch(e){
+    isOnline = false; updateConnectionStatus(); return false;
+  }
+}
+function checkConnection(){
+  const set = ()=>{ isOnline = navigator.onLine; updateConnectionStatus(); };
+  window.addEventListener('online', set);
+  window.addEventListener('offline', set);
+  set();
 }
 
 /* =========================
@@ -414,26 +389,15 @@ function logout(){
   document.getElementById('mainMenu').style.display='none';
   document.getElementById('loginSection').style.display='block';
 }
-
-/* 이름 + MBTI 로그인 */
 async function googleLogin(){
   const btn=document.getElementById('googleLoginBtn');
   try{
     btn.innerHTML='⏳ 로그인 중...';
-
-    let name = prompt('이름을 입력하세요:');
-    if (!name){ btn.innerHTML='<i class="fab fa-google"></i> 이름+MBTI로 로그인'; return; }
+    let name = prompt('이름을 입력하세요:'); if (!name){ btn.innerHTML='<i class="fab fa-google"></i> 이름+MBTI로 로그인'; return; }
     name = name.trim();
-
-    let mbti = prompt('MBTI를 입력하세요 (예: ENTP, INFJ 등 4자리):');
-    if (!mbti){ btn.innerHTML='<i class="fab fa-google"></i> 이름+MBTI로 로그인'; return; }
+    let mbti = prompt('MBTI를 입력하세요 (예: ENTP, INFJ 등 4자리):'); if (!mbti){ btn.innerHTML='<i class="fab fa-google"></i> 이름+MBTI로 로그인'; return; }
     mbti = mbti.trim().toUpperCase();
-
-    if (!/^(E|I)(S|N)(T|F)(J|P)$/.test(mbti)){
-      alert('MBTI 형식이 올바르지 않습니다. 예: ENFP, ISTJ');
-      btn.innerHTML='<i class="fab fa-google"></i> 이름+MBTI로 로그인';
-      return;
-    }
+    if (!/^(E|I)(S|N)(T|F)(J|P)$/.test(mbti)){ alert('MBTI 형식이 올바르지 않습니다. 예: ENFP, ISTJ'); btn.innerHTML='<i class="fab fa-google"></i> 이름+MBTI로 로그인'; return; }
 
     const savedRaw = localStorage.getItem('tourpassUser');
     if (savedRaw){
@@ -444,45 +408,27 @@ async function googleLogin(){
         return;
       }
     }
-
     const pseudoEmail = `${name}+${mbti}@local`;
-
-    let u = {
-      name,
-      mbti,
-      email: pseudoEmail,
-      team: '투어패스사업부',
-      position: '직원',
-      avatar: name.substring(0,1)
-    };
-
+    let u = { name, mbti, email:pseudoEmail, team:'투어패스사업부', position:'직원', avatar:name.substring(0,1) };
     u = applyDirectoryToUser(u);
-
     currentUser = u;
     localStorage.setItem('tourpassUser', JSON.stringify(currentUser));
     showMainApp();
     btn.innerHTML='<i class="fab fa-google"></i> 이름+MBTI로 로그인';
   }catch(err){
-    console.error(err); alert('로그인 오류: '+(err.message||err));
+    alert('로그인 오류: '+(err.message||err));
     btn.innerHTML='<i class="fab fa-google"></i> 이름+MBTI로 로그인';
   }
 }
-
-/* 기존 사용자로 이어서 접속 */
 function checkLoginStatus(){
   const saved = localStorage.getItem('tourpassUser');
   if (saved){
     const u = JSON.parse(saved);
     if (confirm(`${u.name} (MBTI: ${u.mbti||'-'}) 사용자로 이어서 이용하시겠어요?`)){
-      currentUser=u;
-      showMainApp();
-    }else{
-      logout();
-    }
+      currentUser=u; showMainApp();
+    }else{ logout(); }
   }
 }
-
-/* 상단 사용자 카드에 MBTI 노출, email 숨김 */
 function showMainApp(){
   document.getElementById('loginSection').style.display='none';
   document.getElementById('userInfo').style.display='flex';
@@ -492,38 +438,47 @@ function showMainApp(){
   document.getElementById('userDept').textContent = `${currentUser.team||''} ${currentUser.position||''}  ${currentUser.mbti?`| MBTI: ${currentUser.mbti}`:''}`;
   document.getElementById('userAvatar').textContent=currentUser.avatar;
   localStorage.setItem('tourpassUser', JSON.stringify(currentUser));
-  setTimeout(updateMBTIButtonState, 60); // 안전한 no-op
+  setTimeout(()=>{}, 60);
   syncData();
 }
-
-/* 없는 함수 호출 방지용 no-op */
-function updateMBTIButtonState(){}
 
 /* =========================
    5) 모달/메뉴
 ========================= */
-function activateMenuButton(a){ document.querySelectorAll('.menu-item').forEach(i=>i.classList.remove('active')); const t=document.querySelector(`[data-action="${a}"]`); if (t) t.classList.add('active'); }
-function deactivateMenuButton(a){ const t=document.querySelector(`[data-action="${a}"]`); if (t) t.classList.remove('active'); }
+function anyOpenModal(){
+  return Array.from(document.querySelectorAll('.modal')).some(m => m.style.display==='block');
+}
+function activateMenuButton(a){
+  document.querySelectorAll('.menu-item').forEach(i=>i.classList.remove('active'));
+  const t=document.querySelector(`[data-action="${a}"]`); if (t) t.classList.add('active');
+}
+function deactivateMenuButton(a){
+  const t=document.querySelector(`[data-action="${a}"]`); if (t) t.classList.remove('active');
+}
 function openModal(id){
   const action=id.replace('Modal',''); activateMenuButton(action);
-  document.getElementById(id).style.display='block';
+  const el=document.getElementById(id); if (!el) return;
+  el.style.display='block';
   if (id==='participantsModal') renderParticipants();
   if (id==='tourpassBoxModal') updateLinksList();
 }
-function closeModal(id){ const action=id.replace('Modal',''); deactivateMenuButton(action); document.getElementById(id).style.display='none'; }
+function closeModal(id){
+  const action=id.replace('Modal',''); deactivateMenuButton(action);
+  const el=document.getElementById(id); if (el) el.style.display='none';
+  if (!anyOpenModal()){
+    // 메인화면으로 자연 복귀(상태 리셋)
+    document.querySelector('.app-container')?.scrollTo?.({top:0, behavior:'smooth'});
+  }
+}
 
 /* =========================
-   6) 참가자/관계도// 교체본
+   6) 참가자/관계도
 ========================= */
 async function renderParticipants(){
   const listEl = document.getElementById('participantsList');
   listEl.innerHTML = '<div style="text-align:center;color:#666;padding:20px">불러오는 중…</div>';
-
   try {
-    // Apps Script 에서 action:'getMBTIResults'가 참가자 배열을 반환해야 합니다.
-    // 기대형태: [{ name:'김현철', mbtiType:'INTP', team:'...', position:'...' }, ...]
     const data = await callGoogleAppsScript({ action:'getMBTIResults' });
-
     const rows = (data || []).map(r => {
       const d = DIRECTORY[r.name] || {};
       return {
@@ -538,7 +493,6 @@ async function renderParticipants(){
       listEl.innerHTML = '<div style="text-align:center;color:#666;padding:20px">표시할 참가자 데이터가 없습니다.</div>';
       return;
     }
-
     listEl.innerHTML = rows
       .sort((a,b)=>(a.name||'').localeCompare(b.name||'','ko'))
       .map(p=>`
@@ -555,7 +509,6 @@ async function renderParticipants(){
     listEl.innerHTML = '<div style="text-align:center;color:#c00;padding:20px">불러오기에 실패했습니다.</div>';
   }
 }
-
 
 function mbtiCompatibility(a,b){
   const perfect = {
@@ -579,21 +532,14 @@ function mbtiCompatibility(a,b){
   return {score:s, level};
 }
 
-// ▼ 기존 showMBTIRelationship() 전체 교체
 async function showMBTIRelationship(){
   if (!currentUser || !currentUser.mbti){
     alert('로그인한 사용자의 MBTI가 필요합니다. 먼저 로그인해주세요.');
     return;
   }
-
-  // 1) 백엔드에서 참가자 목록 가져오기
   let others = [];
   try {
-    // Apps Script는 action:'getMBTIResults'로 아래 형태를 반환해야 합니다:
-    // [{ name:'김현철', mbtiType:'INFP', team:'...', position:'...' }, ...]
     const data = await callGoogleAppsScript({ action: 'getMBTIResults' });
-
-    // 본인 제외 + 사전에 정의한 DIRECTORY에 있는 사람만 보강해서 사용
     others = (data || [])
       .filter(r => r.name && r.name !== currentUser.name && DIRECTORY[r.name])
       .map(r => ({
@@ -607,15 +553,9 @@ async function showMBTIRelationship(){
     alert('관계도 데이터를 불러오지 못했습니다.');
     return;
   }
-
-  if (others.length === 0){
-    alert('관계도를 표시할 참가자 데이터가 없습니다.');
-    return;
-  }
+  if (others.length === 0){ alert('관계도를 표시할 참가자 데이터가 없습니다.'); return; }
 
   const me = { name: currentUser.name, mbtiType: currentUser.mbti };
-
-  // 2) 궁합 버킷화
   const buckets = { perfect:[], great:[], good:[], okay:[], challenging:[] };
   others.forEach(o=>{
     if (!o.mbtiType) return;
@@ -623,7 +563,6 @@ async function showMBTIRelationship(){
     buckets[level].push({...o, score});
   });
 
-  // 3) 렌더
   const cats = [
     { key:'perfect', title:'환상의 궁합', emoji:'💖', color:'#ff4d6d', bg:'#ffe3ea' },
     { key:'great',   title:'최고의 파트너', emoji:'🌟', color:'#ff8f1f', bg:'#fff0e0' },
@@ -670,22 +609,19 @@ async function showMBTIRelationship(){
           }).join('')}
         </div>
       </div>
-    </div>
-  `;
+    </div>`;
   document.body.insertAdjacentHTML('beforeend', html);
 }
-
 function closeMBTIRelationship(){
   const m = document.getElementById('mbtiRelationshipModal');
   if (m) m.remove();
+  if (!anyOpenModal()) document.querySelector('.app-container')?.scrollTo?.({top:0, behavior:'smooth'});
 }
 
 /* =========================
-   7) 여행심리테스트 (제공 모듈 호환 어댑터)
+   7) 여행심리테스트
 ========================= */
-
 let psychologyAnswers = [];
-
 const psychologyQuestions = [
   { q:'선호하는 휴가 방식은?', a:[
     { t:'🏖️ 해변에서 여유롭게 휴식', type:'calm', emoji:'🏖️' },
@@ -730,10 +666,8 @@ const psychologyQuestions = [
     { t:'😊 마음이 평온할 때',   type:'peace',     emoji:'😊' }
   ]}
 ];
-
 function analyzePsychologyType(answers){
-  const typeCount={};
-  answers.forEach(a=>{ typeCount[a.type]=(typeCount[a.type]||0)+1; });
+  const typeCount={}; answers.forEach(a=>{ typeCount[a.type]=(typeCount[a.type]||0)+1; });
   const top = Object.entries(typeCount).sort((a,b)=>b[1]-a[1])[0]?.[0];
   const map={
     calm:{ name:'🐨 코알라형', desc:'평온하고 여유로운' },
@@ -765,8 +699,7 @@ function analyzePsychologyType(answers){
   };
   return map[top] || { name:'🦄 유니콘형', desc:'특별하고 신비로운' };
 }
-
-function generateFortune(psychologyTypeName, name){
+function generateFortune(psychologyTypeName){
   const fortunes={
     '🐨 코알라형':{ today:'🌿 오늘은 마음의 평화를…', lucky:'🟢 초록색', number:'7️⃣', advice:'천천히 한 걸음씩…' },
     '🦅 독수리형':{ today:'⚡ 새로운 도전이…', lucky:'🟠 주황색', number:'3️⃣', advice:'직감을 믿고…' },
@@ -779,7 +712,6 @@ function generateFortune(psychologyTypeName, name){
   };
   return fortunes[psychologyTypeName] || { today:'🌟 특별한 하루', lucky:'🌈 무지개색', number:'0️⃣', advice:'자신만의 길' };
 }
-
 function getTravelStyle(psychologyTypeName){
   const styles={
     '🐨 코알라형':{ style:'힐링 여행러', preference:'자연 속 휴양', destinations:['제주 숲길','강원 펜션','온천 리조트','한적한 해변'], activities:['산책','독서','온천','요가','명상'], accommodation:'조용한 펜션/리조트', planning:'여유 일정', companion:'가족/연인 소규모', motto:'여행은 마음의 재충전' },
@@ -789,7 +721,6 @@ function getTravelStyle(psychologyTypeName){
   };
   return styles[psychologyTypeName] || { style:'자유로운 여행러', preference:'다양한 스타일 시도', destinations:['어디든지'], activities:['새로운 경험'], accommodation:'상황 맞춤', planning:'유연 계획', companion:'누구든지', motto:'새로운 나를 발견' };
 }
-
 function travelPartnerCompatibility(a,b){
   const map={
     '🐨 코알라형':{ perfect:['🦌 사슴형','🐳 고래형','🕊️ 비둘기형'], challenging:['🦅 독수리형','🐿️ 다람쥐형','🦈 상어형'] },
@@ -804,18 +735,18 @@ function travelPartnerCompatibility(a,b){
   const level = s>=90?'perfect':s>=80?'great':s>=70?'good':s>=50?'okay':'challenging';
   return {score:s, level};
 }
-
 function getCompleteResult(answers, userName){
   const type = analyzePsychologyType(answers);
-  const fortune = generateFortune(type.name, userName);
-  const travel = getTravelStyle(type.name);
   return {
-    user:userName, type, fortune, travel,
+    user:userName,
+    type,
+    fortune: generateFortune(type.name, userName),
+    travel: getTravelStyle(type.name),
     compatibility:(otherType)=> travelPartnerCompatibility(type.name, otherType)
   };
 }
 
-/* ---- (2) 앱 계약 어댑터 ---- */
+/* 어댑터 */
 function startMBTITest(){
   window.travelTestStart = Date.now();
   currentQuestion = 0;
@@ -823,14 +754,11 @@ function startMBTITest(){
   updateMBTIQuestion();
   openModal('mbtiModal');
 }
-
 function updateMBTIQuestion(){
   if (currentQuestion >= psychologyQuestions.length){ showMBTIResult(); return; }
   const q = psychologyQuestions[currentQuestion];
-
   document.getElementById('questionNumber').textContent = `질문 ${currentQuestion+1}/${psychologyQuestions.length}`;
   document.getElementById('questionText').textContent = q.q;
-
   const box = document.getElementById('answerOptions');
   box.innerHTML = '';
   q.a.forEach((opt,i)=>{
@@ -840,65 +768,48 @@ function updateMBTIQuestion(){
     btn.onclick = ()=> selectAnswer(i);
     box.appendChild(btn);
   });
-
   document.getElementById('progressBar').style.width = (currentQuestion/psychologyQuestions.length*100)+'%';
   document.getElementById('nextBtn').style.display='none';
 }
-
 function selectAnswer(answerIndex){
   document.querySelectorAll('.answer-btn').forEach(b=>b.classList.remove('selected'));
   const selected = document.querySelectorAll('.answer-btn')[answerIndex];
   if (selected) selected.classList.add('selected');
-
   psychologyAnswers[currentQuestion] = psychologyQuestions[currentQuestion].a[answerIndex];
   document.getElementById('nextBtn').style.display='inline-block';
 }
-
-function nextQuestion(){
-  currentQuestion++;
-  updateMBTIQuestion();
-}
-
+function nextQuestion(){ currentQuestion++; updateMBTIQuestion(); }
 async function showMBTIResult(){
   const result = getCompleteResult(psychologyAnswers, (currentUser?.name||'사용자'));
   const durationSec = Math.floor((Date.now()-(window.travelTestStart||Date.now()))/1000);
 
-  // ❌ 이 로컬 저장 블록을 지우거나 주석 처리하세요.
-  // try{
-  //   const arr = JSON.parse(localStorage.getItem('travelTestResults')||'[]')
-  //     .filter(r=> !currentUser || r.email !== (currentUser.email||''));
-  //   arr.push({ ... });
-  //   localStorage.setItem('travelTestResults', JSON.stringify(arr));
-  // }catch(_){}
-
-  // ✅ 백엔드 저장만 유지
+  // 백엔드 저장
   try{
     await callGoogleAppsScript({
       action:'saveMBTIResult',
       name: currentUser?.name || '사용자',
       email: currentUser?.email || '',
       mbtiType: currentUser?.mbti || '',
+      answers: psychologyAnswers,                 // ✔ 답안 저장
       travelPersona: { name: result.type.name, desc: result.type.desc },
       travelStyle: result.travel,
       travelFortune: result.fortune,
       testDuration: durationSec,
       testKind: 'travel-animal'
     }, 'POST');
-  }catch(e){
-    console.error(e); // 실패해도 UI는 진행
-  }
+  }catch(e){ console.error(e); }
 
   openTravelResultModal(result.type, result.travel, result.fortune, durationSec);
   closeMBTITest();
 }
-/* ===== 결과 모달 (최종 정상 버전) ===== */
+
+/* 결과 모달 */
 const ALL_ANIMAL_TYPES = [
   '🐨 코알라형','🦅 독수리형','🦉 올빼미형','🐿️ 다람쥐형','🦋 나비형','🐎 말형',
   '🐬 돌고래형','🐺 늑대형','🐻 곰형','🦊 여우형','🐼 판다형','🐅 호랑이형',
   '🐘 코끼리형','🐢 거북이형','🦌 사슴형','🐃 황소형','🐰 토끼형','🦁 사자형',
   '🐦 새형','🦈 상어형','🐙 문어형','🐳 고래형','🐣 병아리형','🐕 개형','🐜 개미형','🕊️ 비둘기형'
 ];
-
 function getCompatibilityBuckets(selfType){
   const buckets = { perfect:[], great:[], good:[], okay:[], challenging:[] };
   ALL_ANIMAL_TYPES.forEach(t=>{
@@ -913,11 +824,9 @@ const levelClass = (l)=>({perfect:'lv-perfect',great:'lv-great',good:'lv-good',o
 const levelColor = (l)=>({perfect:'#ff4d6d',great:'#ff8f1f',good:'#22c55e',okay:'#2563eb',challenging:'#7c3aed'}[l]||'#22c55e');
 const levelCopy  = (l)=>({perfect:'찰떡궁합! 시너지가 폭발해요',great:'아주 잘 맞아요. 함께하면 든든!',good:'무난하게 잘 맞는 편',okay:'서로 배려하면 충분히 좋아요',challenging:'관점 차이가 커요. 역할/속도 조율 필수'}[l]||'');
 
-// ▼ 기존 openTravelResultModal() 전부 교체
 function openTravelResultModal(type, travel, fortune, sec){
   const emoji = (type.name||'').split(' ')[0] || '🧭';
   const selfType = type.name;
-
   const defaultPartner = (ALL_ANIMAL_TYPES.find(t => t!==selfType)) || ALL_ANIMAL_TYPES[0];
 
   const html = `
@@ -929,40 +838,29 @@ function openTravelResultModal(type, travel, fortune, sec){
       .vres-sub{color:#6b7280;margin-top:4px}
       .vres-pill{background:#111827;color:#fff;border-radius:999px;padding:6px 10px;font-size:.78em;display:inline-flex;gap:6px;align-items:center}
       .vres-time{color:#6b7280;margin:6px 0 12px}
-
       .card{background:#fff;border:1px solid #eee;border-radius:14px;padding:14px;margin-bottom:12px}
       .card h3{margin-bottom:8px;font-size:1.02rem;color:#111827}
       .kv{display:flex;gap:10px;margin:6px 0}
       .kv>strong{min-width:58px;color:#374151}
-
       .chips{display:flex;flex-wrap:wrap;gap:6px}
       .chip{display:inline-block;border:1px solid #eee;border-radius:999px;padding:6px 10px;font-size:.82em;background:#fafbff}
-
       .level-badge{display:inline-flex;gap:6px;align-items:center;border-radius:999px;padding:6px 10px;font-size:.78em;border:1px solid #eee}
       .lv-perfect{background:#ffe3ea;border-color:#ffd1dc}
       .lv-great{background:#fff0e0;border-color:#ffd7b0}
       .lv-good{background:#eaf7ef;border-color:#d6f0df}
       .lv-okay{background:#e8f0fe;border-color:#d5e4fd}
       .lv-challenging{background:#efe7ff;border-color:#e2d8ff}
-
       .meter{width:100%;height:10px;background:#f0f2f5;border-radius:6px;overflow:hidden;margin-top:6px}
       .meter-fill{height:10px;width:0}
-
       .actions{display:flex;gap:8px;margin-top:10px}
       .btn{flex:1;background:#111827;color:#fff;border:none;border-radius:12px;padding:10px;cursor:pointer}
       .btn.secondary{background:#e5e7eb;color:#111827}
-
-      @media (min-width:720px){
-        .vres-wrap{max-width:560px}
-      }
+      @media (min-width:720px){ .vres-wrap{max-width:560px} }
     </style>
-
     <div class="modal" id="travelResultModal" style="display:block">
       <div class="modal-content" style="width:860px;max-width:96%">
         <button class="close-btn" onclick="closeTravelResultModal()">&times;</button>
-
         <div class="vres-wrap">
-          <!-- 헤더 -->
           <div class="vres-head">
             <div class="vres-emoji">${emoji}</div>
             <div style="flex:1;min-width:0">
@@ -972,24 +870,16 @@ function openTravelResultModal(type, travel, fortune, sec){
             <span class="vres-pill"><span>여행 스타일</span><span>·</span><span>${travel.style||'-'}</span></span>
           </div>
           <div class="vres-time">소요시간: ${sec}초</div>
-
-          <!-- 1) 여행 스타일 (세로 카드) -->
           <div class="card">
             <h3>여행 스타일</h3>
             <div class="kv"><strong>선호</strong><div>${travel.preference||'-'}</div></div>
-            <div class="kv"><strong>목적지</strong>
-              <div class="chips">${(travel.destinations||[]).map(d=>`<span class="chip">${d}</span>`).join('')}</div>
-            </div>
-            <div class="kv"><strong>활동</strong>
-              <div class="chips">${(travel.activities||[]).map(d=>`<span class="chip">${d}</span>`).join('')}</div>
-            </div>
+            <div class="kv"><strong>목적지</strong><div class="chips">${(travel.destinations||[]).map(d=>`<span class="chip">${d}</span>`).join('')}</div></div>
+            <div class="kv"><strong>활동</strong><div class="chips">${(travel.activities||[]).map(d=>`<span class="chip">${d}</span>`).join('')}</div></div>
             <div class="kv"><strong>숙소</strong><div>${travel.accommodation||'-'}</div></div>
             <div class="kv"><strong>동행</strong><div>${travel.companion||'-'}</div></div>
             <div class="kv"><strong>기획</strong><div>${travel.planning||'-'}</div></div>
             <div class="kv"><strong>모토</strong><div>“${travel.motto||'-'}”</div></div>
           </div>
-
-          <!-- 2) 오늘의 운세 (세로 카드) -->
           <div class="card">
             <h3>오늘의 운세 (부여 에디션)</h3>
             <div class="kv"><strong>메시지</strong><div>${fortune.today}</div></div>
@@ -997,8 +887,6 @@ function openTravelResultModal(type, travel, fortune, sec){
             <div class="kv"><strong>럭키 넘버</strong><div>${fortune.number}</div></div>
             <div class="kv"><strong>조언</strong><div>${fortune.advice}</div></div>
           </div>
-
-          <!-- 3) 여행 파트너 궁합도 (세로 카드) -->
           <div class="card">
             <h3>여행 파트너 궁합도</h3>
             <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
@@ -1008,10 +896,7 @@ function openTravelResultModal(type, travel, fortune, sec){
               </select>
             </div>
             <div id="compMeterBox"></div>
-
             <div style="height:1px;background:#eee;margin:12px 0"></div>
-
-            <!-- 추천/주의를 세로로 -->
             <div>
               <div class="level-badge lv-perfect">찰떡 궁합</div>
               <div id="perfectList" class="chips" style="margin-top:8px"></div>
@@ -1021,21 +906,16 @@ function openTravelResultModal(type, travel, fortune, sec){
               <div id="challengingList" class="chips" style="margin-top:8px"></div>
             </div>
           </div>
-
           <div class="actions">
             <button class="btn" onclick="navigator.clipboard.writeText('[여행심리테스트] ${type.name} | ${travel.style||''}')">결과 복사</button>
-            <button class="btn secondary" onclick="closeModal('travelResultModal', event)">닫기</button>
+            <button class="btn secondary" onclick="closeTravelResultModal()">닫기</button>
           </div>
         </div>
       </div>
     </div>`;
-
   document.body.insertAdjacentHTML('beforeend', html);
 
-  // 파트너 미터 초기화
   updateCompatibilityView(selfType);
-
-  // 추천/주의 리스트 채우기 (세로형)
   const buckets = getCompatibilityBuckets(selfType);
   const chip = (label)=>`<span class="chip" onclick="document.getElementById('compSelect').value='${label}'; updateCompatibilityView('${selfType}')">${label}</span>`;
   document.getElementById('perfectList').innerHTML =
@@ -1043,6 +923,35 @@ function openTravelResultModal(type, travel, fortune, sec){
   document.getElementById('challengingList').innerHTML =
     (buckets.challenging||[]).slice(0,8).map(x=>chip(x.name||x)).join('') || '<span style="color:#666">-</span>';
 }
+
+/* 누락 함수들 */
+function updateCompatibilityView(selfType){
+  const select = document.getElementById('compSelect');
+  if (!select) return;
+  const partner = select.value;
+  const { score, level } = travelPartnerCompatibility(selfType, partner);
+  const meter = `
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <div class="level-badge ${levelClass(level)}">${level.toUpperCase()} · ${score}%</div>
+      <div style="font-size:.9em;color:#6b7280">${partner}</div>
+    </div>
+    <div class="meter"><div class="meter-fill" style="width:${score}%; background:${levelColor(level)}"></div></div>
+    <div style="margin-top:8px;color:#374151">${levelCopy(level)}</div>`;
+  const box = document.getElementById('compMeterBox');
+  if (box) box.innerHTML = meter;
+  select.onchange = () => updateCompatibilityView(selfType);
+}
+function closeMBTITest(){
+  const m = document.getElementById('mbtiModal');
+  if (m) m.style.display = 'none';
+  if (!anyOpenModal()) document.querySelector('.app-container')?.scrollTo?.({top:0, behavior:'smooth'});
+}
+function closeTravelResultModal(){
+  const m = document.getElementById('travelResultModal');
+  if (m) m.remove();
+  if (!anyOpenModal()) document.querySelector('.app-container')?.scrollTo?.({top:0, behavior:'smooth'});
+}
+
 /* =========================
    8) 설문
 ========================= */
@@ -1052,7 +961,14 @@ async function submitWorkshopSurvey(){
   const feedback=document.getElementById('feedback').value;
   if (!bestActivity){ alert('가장 만족했던 활동을 선택해주세요.'); return; }
   try{
-    await callGoogleAppsScript({action:'saveSurvey',name:currentUser.name,email:currentUser.email,satisfaction:parseInt(satisfaction,10),feedback,answers:{bestActivity,satisfactionLevel:satisfaction}},'POST');
+    await callGoogleAppsScript({
+      action:'saveSurvey',
+      name:currentUser.name,
+      email:currentUser.email,
+      satisfaction:parseInt(satisfaction,10),
+      feedback,
+      answers:{bestActivity,satisfactionLevel:satisfaction}
+    },'POST');
     alert('설문이 저장되었습니다. 감사합니다!');
   }catch(e){ alert('설문 저장 실패: '+(e.message||e)); }
   closeModal('surveyModal');
@@ -1061,35 +977,6 @@ async function submitWorkshopSurvey(){
 /* =========================
    9) 일정
 ========================= */
-function openScheduleOptions(){
-  activateMenuButton('schedule');
-  const html=`
-    <div class="modal" id="scheduleOptionsModal" style="display:block">
-      <div class="modal-content" style="width:440px">
-        <button class="close-btn" onclick="closeScheduleOptions()">&times;</button>
-        <div class="modal-header"><h3>워크샵 일정 선택</h3></div>
-        <div style="padding:16px">
-          <div onclick="openScheduleLink('phase1')" style="display:flex;gap:12px;align-items:center;padding:12px;border:1px solid #eee;border-radius:12px;margin-bottom:12px;cursor:pointer">
-            <i class="fas fa-graduation-cap" style="color:#2ecc71;font-size:1.2em"></i><div><div style="font-weight:800">1차 역량강화 워크샵</div></div>
-          </div>
-          <div onclick="openScheduleLink('phase2')" style="display:flex;gap:12px;align-items:center;padding:12px;border:1px solid #eee;border-radius:12px;margin-bottom:12px;cursor:pointer">
-            <i class="fas fa-users" style="color:#111827;font-size:1.2em"></i><div><div style="font-weight:800">2차 소통강화 워크샵(상세)</div></div>
-          </div>
-          <div onclick="openScheduleLink('phase3')" style="display:flex;gap:12px;align-items:center;padding:12px;border:1px solid #eee;border-radius:12px;cursor:pointer">
-            <i class="fas fa-rocket" style="color:#ff8f1f;font-size:1.2em"></i><div><div style="font-weight:800">3차 서밋/엑스포 세미나</div></div>
-          </div>
-        </div>
-      </div>
-    </div>`;
-  document.body.insertAdjacentHTML('beforeend', html);
-}
-function closeScheduleOptions(){ const m=document.getElementById('scheduleOptionsModal'); if (m) m.remove(); deactivateMenuButton('schedule'); }
-function openScheduleLink(phase){
-  const links={ phase1:'https://form.naver.com/response/ktPwJoHoW2VFRo8AUa6yrg', phase2:'detailed', phase3:'https://www.aisummit.co.kr/' };
-  if (phase==='phase2') showDetailedSchedule();
-  else if (links[phase]) window.open(links[phase],'_blank'); else alert('준비 중입니다.');
-  closeScheduleOptions();
-}
 function showDetailedSchedule(){
   const html=`
     <div class="modal" id="detailedScheduleModal" style="display:block">
@@ -1115,18 +1002,13 @@ function showDetailedSchedule(){
     </div>`;
   document.body.insertAdjacentHTML('beforeend', html);
 }
-function closeDetailedSchedule(){ const m=document.getElementById('detailedScheduleModal'); if (m) m.remove(); }
+function closeDetailedSchedule(){ const m=document.getElementById('detailedScheduleModal'); if (m) m.remove(); if (!anyOpenModal()) document.querySelector('.app-container')?.scrollTo?.({top:0, behavior:'smooth'}); }
 
 /* =========================
    10) 투어패스 보관함
 ========================= */
 function showAddLinkForm(){ document.getElementById('addLinkForm').style.display='block'; document.getElementById('linkTitle').focus(); }
-function cancelAddLink(){
-  document.getElementById('addLinkForm').style.display='none';
-  document.getElementById('linkTitle').value='';
-  document.getElementById('linkUrl').value='';
-  document.getElementById('linkPassword').value='';
-}
+function cancelAddLink(){ document.getElementById('addLinkForm').style.display='none'; document.getElementById('linkTitle').value=''; document.getElementById('linkUrl').value=''; document.getElementById('linkPassword').value=''; }
 function isValidUrl(s){ try{ new URL(s); return true; }catch{return false;} }
 function saveNewLink(){
   const title=document.getElementById('linkTitle').value.trim();
@@ -1158,46 +1040,6 @@ function updateLinksList(){
 }
 function openLink(id){ const links=JSON.parse(localStorage.getItem('tourpassLinks')||'[]'); const l=links.find(x=>x.id===id); if (l) window.open(l.url,'_blank'); }
 function setDefaultTourpass(id){ localStorage.setItem('defaultTourpass', id); alert('기본 투어패스로 설정되었습니다!'); }
-function openTourpassTicket(){
-  activateMenuButton('ticket');
-  const links=JSON.parse(localStorage.getItem('tourpassLinks')||'[]');
-  if (links.length===0){ alert('보관함에 링크를 먼저 추가해주세요.'); deactivateMenuButton('ticket'); return; }
-  const def=localStorage.getItem('defaultTourpass');
-  if (def){
-    const d=links.find(l=> l.id==def);
-    if (d && confirm(`기본 투어패스를 열까요?\n${d.title}`)){ openLink(d.id); deactivateMenuButton('ticket'); return; }
-  }
-  showTourpassSelector(links);
-}
-function showTourpassSelector(links){
-  const items = (links || []).map(l => {
-    return (
-      '<div style="display:flex;justify-content:space-between;align-items:center;padding:12px;border:1px solid #eee;border-radius:12px;margin-bottom:10px">' +
-        '<div style="min-width:0">' +
-          '<div style="font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + (l.title || '') + '</div>' +
-          '<div style="font-size:.82em;color:#666;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + (l.url || '') + '</div>' +
-        '</div>' +
-        '<div style="display:flex;gap:6px;margin-left:8px">' +
-          '<button onclick="event.stopPropagation(); setDefaultTourpass(' + l.id + ')" style="background:#2ecc71;color:#fff;border:none;border-radius:10px;padding:8px 10px;cursor:pointer;font-size:.8em">기본설정</button>' +
-          '<button onclick="event.stopPropagation(); selectTourpass(' + l.id + ')" style="background:#111827;color:#fff;border:none;border-radius:10px;padding:8px 10px;cursor:pointer;font-size:.8em">열기</button>' +
-        '</div>' +
-      '</div>'
-    );
-  }).join('');
-
-  const html =
-    '<div class="modal" id="tourpassSelectorModal" style="display:block">' +
-      '<div class="modal-content" style="width:560px;max-width:96%">' +
-        '<button class="close-btn" onclick="closeTourpassSelector()">&times;</button>' +
-        '<div class="modal-header"><h3>🎫 투어패스 선택</h3></div>' +
-        '<div style="padding:16px">' + items + '</div>' +
-      '</div>' +
-    '</div>';
-
-  document.body.insertAdjacentHTML('beforeend', html);
-}
-function selectTourpass(id){ openLink(id); closeTourpassSelector(); }
-function closeTourpassSelector(){ const m=document.getElementById('tourpassSelectorModal'); if (m) m.remove(); deactivateMenuButton('ticket'); }
 
 /* =========================
    11) 번역(간단)
@@ -1210,7 +1052,16 @@ function translateApp(){
     ja:{title:'ツアーパス事業部 2025 ワークショップ',sub:'TRAVEL SHIFT',login:'名前+MBTIでログイン',online:'オンライン',offline:'オフライン',checking:'接続確認中...',sync:'同期: '},
     zh:{title:'旅游通行证事业部 2025 研习班',sub:'TRAVEL SHIFT',login:'用姓名+MBTI登录',online:'在线',offline:'离线',checking:'检查连接中...',sync:'同步: '}
   };
-  // 이하 동일
+  const m=map[lang]||map.ko;
+  document.querySelector('.app-title').textContent=m.title;
+  document.querySelector('.app-subtitle').textContent=m.sub;
+  document.getElementById('googleLoginBtn').innerHTML=`<i class="fab fa-google"></i> ${m.login}`;
+  const dotText=document.getElementById('connectionText');
+  dotText.textContent = isOnline? m.online : m.offline;
+  document.getElementById('lastSync').textContent = m.sync + new Date().toLocaleTimeString();
+}
+function openWorkshopChatbot(){
+  window.open('https://chatgpt.com/g/g-6899821cd87481919c7a20d26b89f0ce-tueopaeseusaeobbu-weokeusyob-aieosiseuteonteu','_blank');
 }
 
 /* =========================
