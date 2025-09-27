@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>투어패스사업부 2025 워크숍</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&display=swap');
+        @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
         
         :root {
             /* 투어패스 브랜드 컬러 */
@@ -69,7 +69,7 @@
         }
 
         body {
-            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Malgun Gothic', '맑은 고딕', sans-serif;
             background: var(--surface-secondary);
             color: var(--text-primary);
             line-height: 1.7;
@@ -86,7 +86,7 @@
             position: relative;
         }
 
-        /* 헤더 디자인 개선 */
+        /* 헤더 디자인 */
         .header {
             text-align: center;
             margin-bottom: var(--space-12);
@@ -122,7 +122,7 @@
             letter-spacing: -0.01em;
         }
 
-        /* 카드 시스템 개선 */
+        /* 카드 시스템 */
         .card {
             background: var(--surface-primary);
             border-radius: 24px;
@@ -151,7 +151,7 @@
             border-color: rgba(59, 130, 246, 0.2);
         }
 
-        /* 폼 디자인 개선 */
+        /* 폼 디자인 */
         .login-form {
             display: flex;
             flex-direction: column;
@@ -190,7 +190,7 @@
             transform: translateY(-1px);
         }
 
-        /* 버튼 시스템 개선 */
+        /* 버튼 시스템 */
         .btn {
             padding: var(--space-4) var(--space-6);
             border: none;
@@ -252,7 +252,7 @@
             transform: none !important;
         }
 
-        /* 그리드 시스템 개선 - 비대칭 레이아웃 */
+        /* 메뉴 그리드 */
         .menu-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -270,7 +270,7 @@
             aspect-ratio: 3/1;
         }
 
-        /* 메뉴 아이템 개선 */
+        /* 메뉴 아이템 */
         .menu-item {
             background: var(--surface-primary);
             border: 1.5px solid rgba(59, 130, 246, 0.1);
@@ -352,7 +352,7 @@
             font-weight: 500;
         }
 
-        /* 타이머 디자인 개선 */
+        /* 타이머 디자인 */
         .timer-card {
             background: var(--gradient-brand);
             color: white;
@@ -397,7 +397,7 @@
             z-index: 1;
         }
 
-        /* 사용자 정보 개선 */
+        /* 사용자 정보 */
         .user-info {
             background: var(--gradient-surface);
             border: 1.5px solid rgba(59, 130, 246, 0.1);
@@ -453,7 +453,7 @@
             letter-spacing: 0.025em;
         }
 
-        /* 알림 시스템 개선 */
+        /* 알림 시스템 */
         .alert {
             padding: var(--space-4) var(--space-5);
             border-radius: 16px;
@@ -488,7 +488,7 @@
             border-color: rgba(239, 68, 68, 0.3);
         }
 
-        /* 모달 개선 */
+        /* 모달 시스템 */
         .modal {
             display: none;
             position: fixed;
@@ -567,7 +567,7 @@
             padding: var(--space-8);
         }
 
-        /* 차트 스타일 */
+        /* 차트 및 통계 */
         .chart-container {
             background: var(--surface-primary);
             padding: var(--space-6);
@@ -647,7 +647,7 @@
             font-weight: 500;
         }
 
-        /* 일정 스타일 */
+        /* 일정 타임라인 */
         .schedule-timeline {
             position: relative;
             margin-left: var(--space-6);
@@ -744,373 +744,7 @@
             border-color: var(--secondary-brand);
         }
 
-        /* 관리자 대시보드 스타일 */
-        .admin-tabs {
-            display: flex;
-            border-bottom: 2px solid #f1f5f9;
-            margin-bottom: var(--space-6);
-            gap: var(--space-2);
-        }
-
-        .admin-tab {
-            padding: var(--space-3) var(--space-5);
-            border: none;
-            background: transparent;
-            color: var(--text-secondary);
-            cursor: pointer;
-            border-radius: 8px 8px 0 0;
-            font-weight: 500;
-            transition: all 0.2s ease;
-            font-size: var(--text-sm);
-        }
-
-        .admin-tab:hover {
-            background: var(--surface-elevated);
-            color: var(--text-primary);
-        }
-
-        .admin-tab.active {
-            background: var(--gradient-brand);
-            color: white;
-            font-weight: 600;
-        }
-
-        .admin-tab-content {
-            min-height: 400px;
-        }
-
-        .admin-stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: var(--space-4);
-            margin-bottom: var(--space-8);
-        }
-
-        .admin-stat-card {
-            background: var(--surface-elevated);
-            padding: var(--space-5);
-            border-radius: 16px;
-            text-align: center;
-            border: 1px solid #e2e8f0;
-            transition: all 0.2s ease;
-        }
-
-        .admin-stat-card:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-        }
-
-        .admin-stat-icon {
-            font-size: var(--text-2xl);
-            margin-bottom: var(--space-2);
-        }
-
-        .admin-stat-number {
-            font-size: var(--text-2xl);
-            font-weight: 800;
-            color: var(--primary-brand);
-            margin-bottom: var(--space-1);
-        }
-
-        .admin-stat-label {
-            font-size: var(--text-sm);
-            color: var(--text-secondary);
-            font-weight: 500;
-        }
-
-        .admin-chart-container {
-            background: var(--surface-elevated);
-            padding: var(--space-6);
-            border-radius: 16px;
-            border: 1px solid #e2e8f0;
-        }
-
-        .admin-chart-container h3 {
-            margin-bottom: var(--space-4);
-            color: var(--text-primary);
-            font-size: var(--text-lg);
-            font-weight: 700;
-        }
-
-        .activity-log {
-            max-height: 300px;
-            overflow-y: auto;
-        }
-
-        .activity-item {
-            display: flex;
-            align-items: center;
-            padding: var(--space-3);
-            border-bottom: 1px solid #f1f5f9;
-            gap: var(--space-4);
-        }
-
-        .activity-item:last-child {
-            border-bottom: none;
-        }
-
-        .activity-time {
-            font-size: var(--text-sm);
-            color: var(--text-muted);
-            font-weight: 500;
-            min-width: 50px;
-        }
-
-        .activity-user {
-            font-weight: 600;
-            color: var(--primary-brand);
-            min-width: 80px;
-        }
-
-        .activity-action {
-            font-size: var(--text-sm);
-            color: var(--text-secondary);
-        }
-
-        .participant-controls {
-            display: flex;
-            gap: var(--space-3);
-            margin-bottom: var(--space-6);
-            flex-wrap: wrap;
-        }
-
-        .participant-table {
-            overflow-x: auto;
-        }
-
-        .participant-table table {
-            width: 100%;
-            border-collapse: collapse;
-            background: var(--surface-primary);
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .participant-table th,
-        .participant-table td {
-            padding: var(--space-3) var(--space-4);
-            text-align: left;
-            border-bottom: 1px solid #f1f5f9;
-        }
-
-        .participant-table th {
-            background: var(--surface-elevated);
-            font-weight: 600;
-            color: var(--text-primary);
-            font-size: var(--text-sm);
-        }
-
-        .participant-table td {
-            font-size: var(--text-sm);
-            color: var(--text-secondary);
-        }
-
-        .participant-table tr:hover {
-            background: var(--surface-elevated);
-        }
-
-        .status-badge {
-            padding: var(--space-1) var(--space-2);
-            border-radius: 8px;
-            font-size: var(--text-xs);
-            font-weight: 600;
-        }
-
-        .status-online {
-            background: rgba(16, 185, 129, 0.1);
-            color: #047857;
-        }
-
-        .status-offline {
-            background: rgba(107, 114, 128, 0.1);
-            color: #374151;
-        }
-
-        .survey-stats {
-            display: grid;
-            gap: var(--space-6);
-        }
-
-        .survey-chart,
-        .survey-feedback {
-            background: var(--surface-elevated);
-            padding: var(--space-6);
-            border-radius: 16px;
-            border: 1px solid #e2e8f0;
-        }
-
-        .survey-chart h3,
-        .survey-feedback h3 {
-            margin-bottom: var(--space-4);
-            color: var(--text-primary);
-            font-size: var(--text-lg);
-            font-weight: 700;
-        }
-
-        .satisfaction-bars {
-            display: flex;
-            flex-direction: column;
-            gap: var(--space-3);
-        }
-
-        .satisfaction-bar {
-            display: flex;
-            align-items: center;
-            gap: var(--space-3);
-        }
-
-        .satisfaction-label {
-            min-width: 80px;
-            font-size: var(--text-sm);
-            font-weight: 500;
-        }
-
-        .satisfaction-progress {
-            flex: 1;
-            height: 20px;
-            background: #f1f5f9;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-
-        .satisfaction-fill {
-            height: 100%;
-            background: var(--gradient-brand);
-            transition: width 0.3s ease;
-        }
-
-        .satisfaction-count {
-            min-width: 30px;
-            font-size: var(--text-sm);
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-
-        .feedback-list {
-            max-height: 300px;
-            overflow-y: auto;
-        }
-
-        .feedback-item {
-            padding: var(--space-4);
-            border-bottom: 1px solid #f1f5f9;
-            border-left: 3px solid var(--secondary-brand);
-            margin-bottom: var(--space-3);
-            background: var(--surface-primary);
-            border-radius: 0 8px 8px 0;
-        }
-
-        .feedback-item:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-        }
-
-        .feedback-user {
-            font-weight: 600;
-            color: var(--primary-brand);
-            font-size: var(--text-sm);
-            margin-bottom: var(--space-2);
-        }
-
-        .feedback-text {
-            font-size: var(--text-sm);
-            color: var(--text-secondary);
-            line-height: 1.6;
-        }
-
-        .settings-section {
-            background: var(--surface-elevated);
-            padding: var(--space-6);
-            border-radius: 16px;
-            border: 1px solid #e2e8f0;
-            margin-bottom: var(--space-6);
-        }
-
-        .settings-section h3 {
-            margin-bottom: var(--space-4);
-            color: var(--text-primary);
-            font-size: var(--text-lg);
-            font-weight: 700;
-        }
-
-        .setting-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: var(--space-4);
-            flex-wrap: wrap;
-            gap: var(--space-3);
-        }
-
-        .setting-item label {
-            font-weight: 500;
-            color: var(--text-primary);
-        }
-
-        .setting-item input[type="text"],
-        .setting-item input[type="number"] {
-            max-width: 200px;
-        }
-
-        .switch {
-            position: relative;
-            display: inline-block;
-            width: 50px;
-            height: 24px;
-        }
-
-        .switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #ccc;
-            transition: 0.4s;
-            border-radius: 24px;
-        }
-
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 18px;
-            width: 18px;
-            left: 3px;
-            bottom: 3px;
-            background-color: white;
-            transition: 0.4s;
-            border-radius: 50%;
-        }
-
-        input:checked + .slider {
-            background-color: var(--secondary-brand);
-        }
-
-        input:checked + .slider:before {
-            transform: translateX(26px);
-        }
-
-        .btn-danger {
-            background: linear-gradient(135deg, #ef4444, #dc2626);
-            color: white;
-            border: none;
-        }
-
-        .btn-danger:hover {
-            background: linear-gradient(135deg, #dc2626, #b91c1c);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        /* 링크 아이템 스타일 */
+        /* 링크 아이템 */
         .link-item {
             background: var(--surface-elevated);
             padding: var(--space-4);
@@ -1208,7 +842,81 @@
             display: none;
         }
 
-        /* 반응형 개선 */
+        /* 관리자 대시보드 스타일 */
+        .admin-tabs {
+            display: flex;
+            border-bottom: 2px solid #f1f5f9;
+            margin-bottom: var(--space-6);
+            gap: var(--space-2);
+        }
+
+        .admin-tab {
+            padding: var(--space-3) var(--space-5);
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            cursor: pointer;
+            border-radius: 8px 8px 0 0;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            font-size: var(--text-sm);
+        }
+
+        .admin-tab:hover {
+            background: var(--surface-elevated);
+            color: var(--text-primary);
+        }
+
+        .admin-tab.active {
+            background: var(--gradient-brand);
+            color: white;
+            font-weight: 600;
+        }
+
+        .admin-tab-content {
+            min-height: 400px;
+        }
+
+        .admin-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: var(--space-4);
+            margin-bottom: var(--space-8);
+        }
+
+        .admin-stat-card {
+            background: var(--surface-elevated);
+            padding: var(--space-5);
+            border-radius: 16px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+            transition: all 0.2s ease;
+        }
+
+        .admin-stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .admin-stat-icon {
+            font-size: var(--text-2xl);
+            margin-bottom: var(--space-2);
+        }
+
+        .admin-stat-number {
+            font-size: var(--text-2xl);
+            font-weight: 800;
+            color: var(--primary-brand);
+            margin-bottom: var(--space-1);
+        }
+
+        .admin-stat-label {
+            font-size: var(--text-sm);
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* 반응형 디자인 */
         @media (max-width: 480px) {
             .container {
                 padding: var(--space-4);
@@ -1813,6 +1521,8 @@
             </div>
         </div>
     </div>
+
+    <!-- 관리자 대시보드 모달 -->
     <div id="adminModal" class="modal">
         <div class="modal-content" style="max-width: 800px;">
             <div class="modal-header">
@@ -1833,130 +1543,86 @@
                     <div class="admin-stats-grid">
                         <div class="admin-stat-card">
                             <div class="admin-stat-icon">👥</div>
-                            <div class="admin-stat-number" id="adminTotalUsers">13</div>
+                            <div class="admin-stat-number" id="adminTotalUsers">0</div>
                             <div class="admin-stat-label">총 참가자</div>
                         </div>
                         <div class="admin-stat-card">
                             <div class="admin-stat-icon">🟢</div>
-                            <div class="admin-stat-number" id="adminOnlineUsers">8</div>
+                            <div class="admin-stat-number" id="adminOnlineUsers">0</div>
                             <div class="admin-stat-label">현재 접속</div>
                         </div>
                         <div class="admin-stat-card">
                             <div class="admin-stat-icon">✅</div>
-                            <div class="admin-stat-number" id="adminCompletedSurveys">5</div>
+                            <div class="admin-stat-number" id="adminCompletedSurveys">0</div>
                             <div class="admin-stat-label">설문 완료</div>
                         </div>
                         <div class="admin-stat-card">
                             <div class="admin-stat-icon">⏱️</div>
-                            <div class="admin-stat-number" id="adminAvgSession">24분</div>
+                            <div class="admin-stat-number" id="adminAvgSession">0분</div>
                             <div class="admin-stat-label">평균 이용시간</div>
                         </div>
                     </div>
 
-                    <div class="admin-chart-container">
-                        <h3>실시간 활동 로그</h3>
-                        <div class="activity-log" id="activityLog">
-                            <div class="activity-item">
-                                <span class="activity-time">14:32</span>
-                                <span class="activity-user">고다현</span>
-                                <span class="activity-action">설문조사 완료</span>
-                            </div>
-                            <div class="activity-item">
-                                <span class="activity-time">14:28</span>
-                                <span class="activity-user">심재희</span>
-                                <span class="activity-action">MBTI 현황 조회</span>
-                            </div>
-                            <div class="activity-item">
-                                <span class="activity-time">14:25</span>
-                                <span class="activity-user">판티니안</span>
-                                <span class="activity-action">로그인</span>
-                            </div>
+                    <div class="chart-container">
+                        <div class="chart-title">실시간 활동 로그</div>
+                        <div id="activityLog" style="max-height: 300px; overflow-y: auto;">
+                            <div class="loading">활동 로그를 불러오는 중</div>
                         </div>
                     </div>
                 </div>
 
                 <!-- 참가자 관리 탭 -->
                 <div id="adminParticipants" class="admin-tab-content hidden">
-                    <div class="participant-controls">
+                    <div style="display: flex; gap: var(--space-3); margin-bottom: var(--space-6); flex-wrap: wrap;">
                         <button class="btn btn-secondary" onclick="exportParticipantData()">📊 데이터 내보내기</button>
                         <button class="btn btn-secondary" onclick="sendNotificationToAll()">📢 전체 공지</button>
                     </div>
                     
-                    <div class="participant-table">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>이름</th>
-                                    <th>팀</th>
-                                    <th>MBTI</th>
-                                    <th>상태</th>
-                                    <th>마지막 접속</th>
-                                    <th>관리</th>
-                                </tr>
-                            </thead>
-                            <tbody id="participantTableBody">
-                                <!-- 동적으로 생성 -->
-                            </tbody>
-                        </table>
+                    <div class="chart-container">
+                        <div class="chart-title">참가자 목록</div>
+                        <div id="participantsList">
+                            <div class="loading">참가자 목록을 불러오는 중</div>
+                        </div>
                     </div>
                 </div>
 
                 <!-- 설문 결과 탭 -->
                 <div id="adminSurvey" class="admin-tab-content hidden">
-                    <div class="survey-stats">
-                        <div class="survey-chart">
-                            <h3>만족도 분포</h3>
-                            <div class="satisfaction-bars" id="satisfactionChart">
-                                <!-- 동적으로 생성 -->
-                            </div>
+                    <div class="chart-container">
+                        <div class="chart-title">만족도 분포</div>
+                        <div id="satisfactionChart">
+                            <div class="loading">설문 결과를 불러오는 중</div>
                         </div>
-                        
-                        <div class="survey-feedback">
-                            <h3>참가자 피드백</h3>
-                            <div class="feedback-list" id="feedbackList">
-                                <!-- 동적으로 생성 -->
-                            </div>
+                    </div>
+                    
+                    <div class="chart-container">
+                        <div class="chart-title">참가자 피드백</div>
+                        <div id="feedbackList">
+                            <div class="loading">피드백을 불러오는 중</div>
                         </div>
                     </div>
                 </div>
 
                 <!-- 설정 탭 -->
                 <div id="adminSettings" class="admin-tab-content hidden">
-                    <div class="settings-section">
-                        <h3>워크숍 설정</h3>
-                        <div class="setting-item">
+                    <div class="chart-container">
+                        <div class="chart-title">워크숍 설정</div>
+                        <div class="form-group">
                             <label>워크숍 제목</label>
                             <input type="text" value="투어패스사업부 2025 워크숍" id="workshopTitle">
                         </div>
-                        <div class="setting-item">
+                        <div class="form-group">
                             <label>워크숍 기간 (시간)</label>
                             <input type="number" value="48" id="workshopDuration">
                         </div>
-                        <div class="setting-item">
-                            <label>자동 알림</label>
-                            <label class="switch">
-                                <input type="checkbox" id="autoNotifications" checked>
-                                <span class="slider"></span>
-                            </label>
-                        </div>
                     </div>
 
-                    <div class="settings-section">
-                        <h3>사용자 관리</h3>
-                        <div class="setting-item">
-                            <label>참가자 강제 로그아웃</label>
-                            <button class="btn btn-secondary" onclick="forceLogoutUser()">🚪 사용자 로그아웃</button>
+                    <div class="chart-container">
+                        <div class="chart-title">위험 구역</div>
+                        <div style="display: flex; gap: var(--space-3); flex-wrap: wrap;">
+                            <button class="btn" style="background: var(--error); color: white;" onclick="resetAllData()">🗑️ 모든 데이터 초기화</button>
+                            <button class="btn" style="background: var(--warning); color: white;" onclick="endWorkshopEarly()">⏹️ 워크숍 조기 종료</button>
                         </div>
-                        <div class="setting-item">
-                            <label>전체 참가자 로그아웃</label>
-                            <button class="btn btn-secondary" onclick="forceLogoutAll()">🚪 전체 로그아웃</button>
-                        </div>
-                    </div>
-
-                    <div class="settings-section">
-                        <h3>위험 구역</h3>
-                        <button class="btn btn-danger" onclick="resetAllData()">🗑️ 모든 데이터 초기화</button>
-                        <button class="btn btn-danger" onclick="endWorkshopEarly()">⏹️ 워크숍 조기 종료</button>
                     </div>
                 </div>
             </div>
@@ -1970,11 +1636,10 @@
         let workshopStartTime = null;
         let timerInterval = null;
 
-        // API 설정
+        // API URL - 실제 배포된 URL로 변경하세요
         const API_URL = 'https://script.google.com/macros/s/AKfycbxsBXR4dGvNp_BVIpHrTnTXQPrBpu20pLOVTVkSv9WQMQs85YhAGuKEmGoF5w6wIowB/exec';
-        const DEVELOPMENT_MODE = false; // 실제 운영 모드
 
-        // 사용자 데이터 (서버에서 관리)
+        // 사용자 데이터
         const TEMP_USER_DATA = {
             "남도현": { team:"투어패스사업부", position:"이사" },
             "김수인": { team:"투어패스사업부 영업 1팀", position:"팀장" },
@@ -1996,6 +1661,7 @@
             constructor() {
                 this.baseURL = API_URL;
                 this.retryCount = 3;
+                this.timeout = 30000;
             }
             
             async request(action, data = {}) {
@@ -2006,40 +1672,48 @@
                     ...data
                 };
                 
+                console.log('API 요청:', action, payload);
+                
                 for(let i = 0; i < this.retryCount; i++) {
                     try {
+                        const controller = new AbortController();
+                        const timeoutId = setTimeout(() => controller.abort(), this.timeout);
+                        
                         const response = await fetch(this.baseURL, {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',
                             },
-                            body: JSON.stringify(payload)
+                            body: JSON.stringify(payload),
+                            signal: controller.signal
                         });
                         
+                        clearTimeout(timeoutId);
+                        
+                        if (!response.ok) {
+                            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                        }
+                        
                         const result = await response.json();
+                        console.log('API 응답:', result);
+                        
                         if(result.success) {
                             return result;
                         } else {
-                            throw new Error(result.error || 'API 오류');
+                            throw new Error(result.message || 'API 오류');
                         }
                         
                     } catch(error) {
+                        console.error(`API 요청 실패 (시도 ${i + 1}/${this.retryCount}):`, error);
+                        
                         if(i === this.retryCount - 1) {
                             throw error;
                         }
+                        
                         await new Promise(resolve => setTimeout(resolve, 1000 * (i + 1)));
                     }
                 }
-                }
             }
-            
-            getMockData(action, data) {
-                // 개발 모드가 아니므로 실제 서버만 사용
-                throw new Error('서버에 연결할 수 없습니다. 관리자에게 문의하세요.');
-            }
-            
-            // 제거된 임시 데이터 관련 함수
-            // generateMockMBTIStats() 함수 제거됨 - 실제 서버 데이터만 사용
             
             async login(userName, mbti) {
                 return this.request('login', {
@@ -2061,6 +1735,22 @@
             async saveLink(linkData) {
                 return this.request('saveLink', linkData);
             }
+
+            async getLinks(user) {
+                return this.request('getLinks', { user });
+            }
+
+            async getUserList() {
+                return this.request('getUserList');
+            }
+
+            async getActivityLog() {
+                return this.request('getActivityLog');
+            }
+
+            async getSurveyStats() {
+                return this.request('getSurveyStats');
+            }
         }
 
         const api = new WorkshopAPI();
@@ -2076,6 +1766,7 @@
             }
 
             const loginBtn = document.getElementById('loginBtn');
+            const originalText = loginBtn.innerHTML;
             loginBtn.disabled = true;
             loginBtn.innerHTML = '로그인 중...';
 
@@ -2084,21 +1775,24 @@
                 
                 if(result.success) {
                     currentUser = userName;
-                    sessionId = result.sessionId;
+                    sessionId = result.data.sessionId;
                     
                     localStorage.setItem('sessionId', sessionId);
                     localStorage.setItem('currentUser', userName);
                     localStorage.setItem('userMBTI', userMBTI);
                     
-                    showMainScreen(result.userData);
+                    showMainScreen(result.data.userData);
                     showWorkshopAlert();
                     showAlert('로그인이 완료되었습니다.', 'success');
+                } else {
+                    throw new Error(result.message || '로그인 실패');
                 }
             } catch(error) {
+                console.error('로그인 오류:', error);
                 showAlert('로그인 중 오류가 발생했습니다: ' + error.message, 'error');
             } finally {
                 loginBtn.disabled = false;
-                loginBtn.innerHTML = '로그인';
+                loginBtn.innerHTML = originalText;
             }
         }
 
@@ -2122,7 +1816,7 @@
         }
 
         // 워크숍 시작
-        async function startWorkshop() {
+        function startWorkshop() {
             workshopStartTime = new Date();
             localStorage.setItem('workshopStartTime', workshopStartTime.toISOString());
             
@@ -2163,29 +1857,39 @@
             document.getElementById('timerDisplay').textContent = timeString;
         }
 
-        // MBTI 현황 모달 열기
+        // MBTI 현황 모달
         async function openMBTIRelations() {
             try {
-                showLoading('mbtiModal');
                 document.getElementById('mbtiModal').style.display = 'block';
+                
+                document.getElementById('mbtiDistribution').innerHTML = '<div class="loading">데이터를 불러오는 중</div>';
                 
                 const stats = await api.getMBTIStats();
                 
                 if(stats.success) {
-                    renderMBTIStats(stats);
+                    renderMBTIStats(stats.data);
+                } else {
+                    throw new Error(stats.message || 'MBTI 통계 조회 실패');
                 }
             } catch(error) {
-                showAlert('MBTI 현황을 불러오는 중 오류가 발생했습니다.', 'error');
+                console.error('MBTI 현황 조회 오류:', error);
+                showAlert('MBTI 현황을 불러오는 중 오류가 발생했습니다: ' + error.message, 'error');
                 closeModal('mbtiModal');
             }
         }
 
         // MBTI 통계 렌더링
-        function renderMBTIStats(stats) {
+        function renderMBTIStats(data) {
+            const stats = {
+                totalParticipants: data.totalParticipants || 0,
+                onlineUsers: data.onlineUsers || 0,
+                mbtiDistribution: data.mbtiDistribution || {},
+                teamDistribution: data.teamDistribution || {}
+            };
+
             document.getElementById('totalParticipants').textContent = stats.totalParticipants;
             document.getElementById('onlineCount').textContent = stats.onlineUsers;
             
-            // MBTI 분포 렌더링
             const mbtiGrid = document.getElementById('mbtiDistribution');
             mbtiGrid.innerHTML = '';
             
@@ -2202,7 +1906,7 @@
                 `;
                 mbtiGrid.appendChild(mbtiItem);
             });
-            
+
             // 팀별 분포 렌더링
             const teamDiv = document.getElementById('teamDistribution');
             teamDiv.innerHTML = '';
@@ -2225,24 +1929,254 @@
             });
         }
 
-        // 워크숍 일정 모달 열기
+        // 워크숍 일정
         function openSchedule() {
             document.getElementById('scheduleModal').style.display = 'block';
         }
 
-        // 심리테스트 (준비 중)
+        // 심리테스트
         function openPsychTest() {
             document.getElementById('psychTestModal').style.display = 'block';
             setupPsychTestListeners();
         }
 
-        // 보관함 (준비 중)
+        // 심리테스트 리스너 설정
+        function setupPsychTestListeners() {
+            const radioItems = document.querySelectorAll('#psychTestModal .radio-item');
+            radioItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const input = this.querySelector('input[type="radio"]');
+                    input.checked = true;
+                    
+                    const groupName = input.name;
+                    document.querySelectorAll(`#psychTestModal input[name="${groupName}"]`).forEach(radio => {
+                        radio.closest('.radio-item').classList.remove('selected');
+                    });
+                    
+                    this.classList.add('selected');
+                });
+            });
+        }
+
+        // 심리테스트 제출
+        function submitPsychTest() {
+            const form = document.getElementById('psychTestModal');
+            const answers = {};
+            
+            for(let i = 1; i <= 10; i++) {
+                const answer = form.querySelector(`input[name="q${i}"]:checked`);
+                if(!answer) {
+                    showAlert('모든 질문에 답변해주세요.', 'error');
+                    return;
+                }
+                answers[`q${i}`] = answer.value;
+            }
+            
+            const result = calculateAnimalPsychTestResult(answers);
+            
+            document.getElementById('psychTestContent').classList.add('hidden');
+            document.getElementById('psychTestResult').classList.remove('hidden');
+            document.getElementById('resultTitle').textContent = result.title;
+            document.getElementById('resultContent').innerHTML = result.content;
+            
+            savePsychTestResult(result);
+        }
+
+        // 동물 심리테스트 결과 계산
+        function calculateAnimalPsychTestResult(answers) {
+            let scores = {
+                planning: 0,
+                social: 0,
+                adventure: 0,
+                relaxed: 0
+            };
+            
+            const scoring = {
+                q1: { O: 'planning', X: 'adventure' },
+                q2: { O: 'adventure', X: 'planning' },
+                q3: { O: 'planning', X: 'relaxed' },
+                q4: { O: 'social', X: 'relaxed' },
+                q5: { O: 'social', X: 'adventure' },
+                q6: { O: 'relaxed', X: 'adventure' },
+                q7: { O: 'adventure', X: 'planning' },
+                q8: { O: 'social', X: 'relaxed' },
+                q9: { O: 'social', X: 'planning' },
+                q10: { O: 'planning', X: 'adventure' }
+            };
+            
+            Object.keys(answers).forEach(question => {
+                const answerValue = answers[question];
+                const scoreType = scoring[question][answerValue];
+                if(scoreType) {
+                    scores[scoreType]++;
+                }
+            });
+            
+            const maxScore = Math.max(...Object.values(scores));
+            const resultType = Object.keys(scores).find(key => scores[key] === maxScore);
+            
+            const animalResults = {
+                planning: {
+                    title: '계획쟁이 다람쥐 🐿️',
+                    content: `
+                        <div style="font-size: 6rem; margin-bottom: var(--space-4);">🐿️</div>
+                        <h3 style="color: var(--primary-brand); margin-bottom: var(--space-4);">꼼꼼하고 체계적인 여행의 달인!</h3>
+                        <div style="background: rgba(59, 130, 246, 0.1); padding: var(--space-4); border-radius: 12px; margin-bottom: var(--space-4);">
+                            <p style="margin-bottom: var(--space-2);"><strong>💪 장점:</strong> 계획적이고 안전한 여행, 시간 활용 효율성</p>
+                            <p style="margin-bottom: var(--space-2);"><strong>✈️ 여행 스타일:</strong> 미리 예약하고 일정 짜는 완벽주의자</p>
+                            <p><strong>🌟 추천:</strong> 가끔은 계획 없이 떠나는 여행도 해보세요!</p>
+                        </div>
+                        <p style="font-size: var(--text-sm); color: var(--text-secondary);">당신은 견과류처럼 알찬 여행을 만드는 다람쥐입니다!</p>
+                    `
+                },
+                social: {
+                    title: '친화력 만점 강아지 🐕',
+                    content: `
+                        <div style="font-size: 6rem; margin-bottom: var(--space-4);">🐕</div>
+                        <h3 style="color: var(--primary-brand); margin-bottom: var(--space-4);">사람들과 함께하는 즐거운 여행러!</h3>
+                        <div style="background: rgba(59, 130, 246, 0.1); padding: var(--space-4); border-radius: 12px; margin-bottom: var(--space-4);">
+                            <p style="margin-bottom: var(--space-2);"><strong>💪 장점:</strong> 소통 능력, 현지 문화 체험 적극성</p>
+                            <p style="margin-bottom: var(--space-2);"><strong>✈️ 여행 스타일:</strong> 사람들과 어울리며 추억 만들기</p>
+                            <p><strong>🌟 추천:</strong> 로컬 투어나 요리 클래스에 참여해보세요!</p>
+                        </div>
+                        <p style="font-size: var(--text-sm); color: var(--text-secondary);">당신은 어디서든 친구를 만드는 사랑스러운 강아지입니다!</p>
+                    `
+                },
+                adventure: {
+                    title: '자유로운 영혼 고양이 🐱',
+                    content: `
+                        <div style="font-size: 6rem; margin-bottom: var(--space-4);">🐱</div>
+                        <h3 style="color: var(--primary-brand); margin-bottom: var(--space-4);">예측불가한 매력의 탐험가!</h3>
+                        <div style="background: rgba(59, 130, 246, 0.1); padding: var(--space-4); border-radius: 12px; margin-bottom: var(--space-4);">
+                            <p style="margin-bottom: var(--space-2);"><strong>💪 장점:</strong> 적응력, 독립성, 새로운 발견 능력</p>
+                            <p style="margin-bottom: var(--space-2);"><strong>✈️ 여행 스타일:</strong> 즉흥적이고 자유로운 탐험</p>
+                            <p><strong>🌟 추천:</strong> 배낭여행이나 혼자만의 여행을 도전해보세요!</p>
+                        </div>
+                        <p style="font-size: var(--text-sm); color: var(--text-secondary);">당신은 어디든 자신만의 길을 찾는 멋진 고양이입니다!</p>
+                    `
+                },
+                relaxed: {
+                    title: '여유만만 판다 🐼',
+                    content: `
+                        <div style="font-size: 6rem; margin-bottom: var(--space-4);">🐼</div>
+                        <h3 style="color: var(--primary-brand); margin-bottom: var(--space-4);">힐링과 휴식의 전문가!</h3>
+                        <div style="background: rgba(59, 130, 246, 0.1); padding: var(--space-4); border-radius: 12px; margin-bottom: var(--space-4);">
+                            <p style="margin-bottom: var(--space-2);"><strong>💪 장점:</strong> 스트레스 관리, 여유로운 관찰력</p>
+                            <p style="margin-bottom: var(--space-2);"><strong>✈️ 여행 스타일:</strong> 느긋하고 평화로운 힐링 여행</p>
+                            <p><strong>🌟 추천:</strong> 온천이나 자연 속 리조트를 즐겨보세요!</p>
+                        </div>
+                        <p style="font-size: var(--text-sm); color: var(--text-secondary);">당신은 대나무처럼 느긋한 마음의 판다입니다!</p>
+                    `
+                }
+            };
+            
+            return animalResults[resultType] || animalResults.relaxed;
+        }
+
+        // 심리테스트 결과 저장
+        async function savePsychTestResult(result) {
+            try {
+                await api.saveLink({
+                    user: currentUser,
+                    title: `${currentUser}님의 여행 성향 결과`,
+                    url: '#',
+                    category: '심리테스트 결과',
+                    description: result.title
+                });
+            } catch(error) {
+                console.error('심리테스트 결과 저장 오류:', error);
+            }
+        }
+
+        // 심리테스트 다시하기
+        function restartPsychTest() {
+            document.getElementById('psychTestResult').classList.add('hidden');
+            document.getElementById('psychTestContent').classList.remove('hidden');
+            
+            document.querySelectorAll('#psychTestModal input[type="radio"]').forEach(radio => {
+                radio.checked = false;
+                radio.closest('.radio-item').classList.remove('selected');
+            });
+        }
+
+        // 링크 보관함
         function openLinkStorage() {
             document.getElementById('linkStorageModal').style.display = 'block';
             loadSavedLinks();
         }
 
-        // 설문조사 모달 열기
+        // 링크 저장
+        async function saveLink() {
+            const title = document.getElementById('linkTitle').value;
+            const url = document.getElementById('linkUrl').value;
+            const category = document.getElementById('linkCategory').value;
+            const description = document.getElementById('linkDescription').value;
+            
+            if(!title || !url) {
+                showAlert('제목과 URL을 모두 입력해주세요.', 'error');
+                return;
+            }
+            
+            try {
+                const result = await api.saveLink({
+                    user: currentUser,
+                    title: title,
+                    url: url,
+                    category: category,
+                    description: description
+                });
+                
+                if(result.success) {
+                    showAlert('링크가 저장되었습니다.', 'success');
+                    document.getElementById('linkForm').reset();
+                    loadSavedLinks();
+                }
+            } catch(error) {
+                showAlert('링크 저장 중 오류가 발생했습니다.', 'error');
+            }
+        }
+
+        // 저장된 링크 로드
+        async function loadSavedLinks() {
+            const linksList = document.getElementById('linksList');
+            linksList.innerHTML = '<div class="loading">링크를 불러오는 중</div>';
+            
+            try {
+                const result = await api.getLinks(currentUser);
+                
+                if(result.success && result.data.links.length > 0) {
+                    const links = result.data.links;
+                    linksList.innerHTML = links.map(link => `
+                        <div class="link-item">
+                            <div class="link-title">${link.title}</div>
+                            <a href="${link.url}" target="_blank" class="link-url">${link.url}</a>
+                            <div class="link-meta">
+                                <span class="link-category">${link.category}</span>
+                                <span>${new Date(link.timestamp).toLocaleDateString()}</span>
+                            </div>
+                            ${link.description ? `<div class="link-description">${link.description}</div>` : ''}
+                        </div>
+                    `).join('');
+                } else {
+                    linksList.innerHTML = `
+                        <div class="empty-state">
+                            <div class="empty-state-icon">🔗</div>
+                            <p>저장된 링크가 없습니다.<br>새로운 링크를 추가해보세요!</p>
+                        </div>
+                    `;
+                }
+            } catch(error) {
+                console.error('링크 로드 오류:', error);
+                linksList.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">⚠️</div>
+                        <p>링크를 불러올 수 없습니다.<br>서버 연결을 확인해주세요.</p>
+                    </div>
+                `;
+            }
+        }
+
+        // 설문조사
         function openSurvey() {
             document.getElementById('surveyModal').style.display = 'block';
             setupSurveyListeners();
@@ -2250,19 +2184,17 @@
 
         // 설문조사 리스너 설정
         function setupSurveyListeners() {
-            const radioItems = document.querySelectorAll('.radio-item');
+            const radioItems = document.querySelectorAll('#surveyModal .radio-item');
             radioItems.forEach(item => {
                 item.addEventListener('click', function() {
                     const input = this.querySelector('input[type="radio"]');
                     input.checked = true;
                     
-                    // 같은 그룹의 다른 항목들에서 selected 클래스 제거
                     const groupName = input.name;
-                    document.querySelectorAll(`input[name="${groupName}"]`).forEach(radio => {
+                    document.querySelectorAll(`#surveyModal input[name="${groupName}"]`).forEach(radio => {
                         radio.closest('.radio-item').classList.remove('selected');
                     });
                     
-                    // 현재 항목에 selected 클래스 추가
                     this.classList.add('selected');
                 });
             });
@@ -2295,18 +2227,6 @@
             }
         }
 
-        // 모달 닫기
-        function closeModal(modalId) {
-            document.getElementById(modalId).style.display = 'none';
-        }
-
-        // 모달 외부 클릭 시 닫기
-        window.addEventListener('click', function(event) {
-            if (event.target.classList.contains('modal')) {
-                event.target.style.display = 'none';
-            }
-        });
-
         // 관리자 메뉴 추가
         function addAdminMenu() {
             const menuGrid = document.querySelector('.menu-grid');
@@ -2329,76 +2249,9 @@
             adminBadge.className = 'admin-badge';
             adminBadge.textContent = '관리자';
             nameDisplay.appendChild(adminBadge);
-            
-            // 관리자 로그아웃 버튼 추가
-            addAdminLogoutButton();
         }
 
-        // 관리자 전용 로그아웃 버튼 추가
-        function addAdminLogoutButton() {
-            const userInfo = document.getElementById('userInfo');
-            const logoutBtn = document.createElement('button');
-            logoutBtn.className = 'btn btn-secondary';
-            logoutBtn.style.cssText = 'margin-top: var(--space-3); font-size: var(--text-sm); padding: var(--space-2) var(--space-4);';
-            logoutBtn.innerHTML = '🚪 로그아웃';
-            logoutBtn.onclick = handleAdminLogout;
-            userInfo.appendChild(logoutBtn);
-        }
-
-        // 관리자 로그아웃 처리
-        async function handleAdminLogout() {
-            if(confirm('관리자 로그아웃하시겠습니까?')) {
-                try {
-                    // 서버에 로그아웃 상태 전송
-                    await api.request('updateUserStatus', {
-                        userName: currentUser,
-                        status: 'offline'
-                    });
-                    
-                    // 활동 로그 기록
-                    await api.request('logActivity', {
-                        userName: currentUser,
-                        action: '관리자 로그아웃',
-                        details: '수동 로그아웃'
-                    });
-                } catch(error) {
-                    console.error('로그아웃 처리 오류:', error);
-                }
-                
-                // 로컬 데이터 정리
-                localStorage.clear();
-                
-                // 전역 변수 초기화
-                const prevUser = currentUser;
-                currentUser = null;
-                sessionId = null;
-                workshopStartTime = null;
-                
-                // 타이머 정리
-                if(timerInterval) {
-                    clearInterval(timerInterval);
-                    timerInterval = null;
-                }
-                
-                // 열린 모달들 모두 닫기
-                const modals = document.querySelectorAll('.modal');
-                modals.forEach(modal => {
-                    modal.style.display = 'none';
-                });
-                
-                // 로그인 화면으로 돌아가기
-                document.getElementById('mainScreen').classList.add('hidden');
-                document.getElementById('loginScreen').classList.remove('hidden');
-                
-                // 폼 초기화
-                document.getElementById('userName').value = '';
-                document.getElementById('userMBTI').value = '';
-                
-                showAlert(`${prevUser} 관리자님이 로그아웃되었습니다.`, 'success');
-            }
-        }
-
-        // 관리자 대시보드 열기
+        // 관리자 대시보드
         async function openAdminDashboard() {
             try {
                 document.getElementById('adminModal').style.display = 'block';
@@ -2411,98 +2264,178 @@
         // 관리자 데이터 로드
         async function loadAdminData() {
             try {
-                // 서버에서 실제 통계 로드
+                // MBTI 통계
                 const stats = await api.getMBTIStats();
                 if(stats.success) {
                     document.getElementById('adminTotalUsers').textContent = stats.data.totalParticipants;
                     document.getElementById('adminOnlineUsers').textContent = stats.data.onlineUsers;
                 }
 
-                // 서버에서 실제 사용자 목록 로드
-                const userList = await api.request('getUserList');
-                if(userList.success) {
-                    renderParticipantTable(userList.data.users);
+                // 활동 로그
+                const activityLog = await api.getActivityLog();
+                if(activityLog.success) {
+                    updateActivityLog(activityLog.data.activities);
                 }
-                
-                // 서버에서 실제 설문 결과 로드
-                const surveyStats = await api.request('getSurveyStats');
+
+                // 참가자 목록
+                const userList = await api.getUserList();
+                if(userList.success) {
+                    renderParticipantsList(userList.data.users);
+                }
+
+                // 설문 통계
+                const surveyStats = await api.getSurveyStats();
                 if(surveyStats.success) {
                     renderSurveyResults(surveyStats.data);
                 }
                 
-                // 서버에서 실제 활동 로그 로드
-                const activityLog = await api.request('getActivityLog');
-                if(activityLog.success) {
-                    updateActivityLog(activityLog.data.activities);
-                }
-                
             } catch(error) {
                 console.error('관리자 데이터 로드 오류:', error);
-                showAlert('서버에서 데이터를 불러올 수 없습니다.', 'error');
             }
         }
 
         // 관리자 탭 전환
         function switchAdminTab(tabName) {
-            // 모든 탭 버튼에서 active 클래스 제거
             document.querySelectorAll('.admin-tab').forEach(tab => {
                 tab.classList.remove('active');
             });
             
-            // 클릭된 탭에 active 클래스 추가
             event.target.classList.add('active');
             
-            // 모든 탭 컨텐츠 숨김
             document.querySelectorAll('.admin-tab-content').forEach(content => {
                 content.classList.add('hidden');
             });
             
-            // 선택된 탭 컨텐츠 표시
             const targetTab = document.getElementById(`admin${tabName.charAt(0).toUpperCase() + tabName.slice(1)}`);
             if(targetTab) {
                 targetTab.classList.remove('hidden');
             }
         }
 
-        // 참가자 테이블 렌더링
-        function renderParticipantTable(users = []) {
-            const tbody = document.getElementById('participantTableBody');
-            tbody.innerHTML = '';
+        // 활동 로그 업데이트
+        function updateActivityLog(activities = []) {
+            const logContainer = document.getElementById('activityLog');
             
-            if(users.length === 0) {
-                tbody.innerHTML = `
-                    <tr>
-                        <td colspan="6" style="text-align: center; padding: var(--space-8); color: var(--text-muted);">
-                            참가자 데이터를 불러오는 중입니다...
-                        </td>
-                    </tr>
-                `;
+            if(activities.length === 0) {
+                logContainer.innerHTML = '<p style="text-align: center; color: var(--text-muted); padding: var(--space-8);">활동 기록이 없습니다.</p>';
                 return;
             }
             
-            users.forEach(user => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td style="font-weight: 600; color: var(--text-primary);">${user.name}</td>
-                    <td>${user.team}</td>
-                    <td style="font-weight: 600; color: var(--primary-brand);">${user.mbti || '미입력'}</td>
-                    <td>
-                        <span class="status-badge ${user.status === 'online' ? 'status-online' : 'status-offline'}">
-                            ${user.status === 'online' ? '온라인' : '오프라인'}
-                        </span>
-                    </td>
-                    <td>${formatLastLogin(user.lastLogin)}</td>
-                    <td>
-                        <button class="btn btn-secondary" style="font-size: var(--text-xs); padding: var(--space-1) var(--space-2);" onclick="viewUserDetail('${user.name}')">
-                            상세보기
-                        </button>
-                    </td>
+            logContainer.innerHTML = activities.map(activity => `
+                <div style="display: flex; align-items: center; padding: var(--space-3); border-bottom: 1px solid #f1f5f9; gap: var(--space-4);">
+                    <span style="font-size: var(--text-sm); color: var(--text-muted); min-width: 50px;">${formatTime(activity.timestamp)}</span>
+                    <span style="font-weight: 600; color: var(--primary-brand); min-width: 80px;">${activity.user}</span>
+                    <span style="font-size: var(--text-sm); color: var(--text-secondary);">${activity.action}</span>
+                </div>
+            `).join('');
+        }
+
+        // 참가자 목록 렌더링
+        function renderParticipantsList(users = []) {
+            const container = document.getElementById('participantsList');
+            
+            if(users.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: var(--text-muted); padding: var(--space-8);">참가자가 없습니다.</p>';
+                return;
+            }
+            
+            container.innerHTML = users.map(user => `
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: var(--space-4); border: 1px solid #e2e8f0; border-radius: 12px; margin-bottom: var(--space-3);">
+                    <div>
+                        <div style="font-weight: 600; color: var(--text-primary);">${user.name}</div>
+                        <div style="font-size: var(--text-sm); color: var(--text-secondary);">${user.team} | ${user.mbti || '미입력'}</div>
+                    </div>
+                    <div style="text-align: right;">
+                        <span style="padding: var(--space-1) var(--space-2); border-radius: 8px; font-size: var(--text-xs); font-weight: 600; ${user.status === 'online' ? 'background: rgba(16, 185, 129, 0.1); color: #047857;' : 'background: rgba(107, 114, 128, 0.1); color: #374151;'}">${user.status === 'online' ? '온라인' : '오프라인'}</span>
+                        <div style="font-size: var(--text-xs); color: var(--text-muted); margin-top: var(--space-1);">${formatLastLogin(user.lastLogin)}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // 설문 결과 렌더링
+        function renderSurveyResults(surveyData = null) {
+            const chartContainer = document.getElementById('satisfactionChart');
+            const feedbackList = document.getElementById('feedbackList');
+            
+            if(!surveyData) {
+                chartContainer.innerHTML = '<p style="text-align: center; color: var(--text-muted);">설문 데이터가 없습니다.</p>';
+                feedbackList.innerHTML = '<p style="text-align: center; color: var(--text-muted);">피드백이 없습니다.</p>';
+                return;
+            }
+            
+            // 만족도 차트
+            const satisfaction = surveyData.satisfaction || {};
+            const total = Object.values(satisfaction).reduce((a, b) => a + b, 0);
+            
+            chartContainer.innerHTML = Object.entries(satisfaction).map(([label, count]) => {
+                const percentage = total > 0 ? (count / total) * 100 : 0;
+                return `
+                    <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-3);">
+                        <div style="min-width: 80px; font-size: var(--text-sm); font-weight: 500;">${label}</div>
+                        <div style="flex: 1; height: 20px; background: #f1f5f9; border-radius: 10px; overflow: hidden;">
+                            <div style="height: 100%; background: var(--gradient-brand); width: ${percentage}%; transition: width 0.3s ease;"></div>
+                        </div>
+                        <div style="min-width: 30px; font-size: var(--text-sm); font-weight: 600; color: var(--text-primary);">${count}</div>
+                    </div>
                 `;
-                tbody.appendChild(row);
+            }).join('');
+            
+            // 피드백 리스트
+            const feedbacks = surveyData.feedbacks || [];
+            
+            if(feedbacks.length === 0) {
+                feedbackList.innerHTML = '<p style="text-align: center; color: var(--text-muted);">피드백이 없습니다.</p>';
+                return;
+            }
+            
+            feedbackList.innerHTML = feedbacks.map(feedback => `
+                <div style="padding: var(--space-4); border-bottom: 1px solid #f1f5f9; border-left: 3px solid var(--secondary-brand); margin-bottom: var(--space-3); background: var(--surface-primary); border-radius: 0 8px 8px 0;">
+                    <div style="font-weight: 600; color: var(--primary-brand); font-size: var(--text-sm); margin-bottom: var(--space-2);">${feedback.user}</div>
+                    <div style="font-size: var(--text-sm); color: var(--text-secondary); line-height: 1.6;">${feedback.text}</div>
+                </div>
+            `).join('');
+            
+            // 완료된 설문 수 업데이트
+            document.getElementById('adminCompletedSurveys').textContent = total;
+        }
+
+        // 관리자 기능들
+        function exportParticipantData() {
+            showAlert('참가자 데이터를 내보냅니다. (준비 중)', 'success');
+        }
+
+        function sendNotificationToAll() {
+            const message = prompt('전체 참가자에게 보낼 메시지를 입력하세요:');
+            if(message) {
+                showAlert(`전체 참가자에게 알림이 전송되었습니다: "${message}"`, 'success');
+            }
+        }
+
+        function resetAllData() {
+            if(confirm('정말로 모든 데이터를 초기화하시겠습니까?')) {
+                showAlert('데이터 초기화 기능은 준비 중입니다.', 'success');
+            }
+        }
+
+        function endWorkshopEarly() {
+            if(confirm('워크숍을 조기 종료하시겠습니까?')) {
+                clearInterval(timerInterval);
+                document.getElementById('timerDisplay').textContent = '00:00:00';
+                showAlert('워크숍이 조기 종료되었습니다.', 'success');
+                closeModal('adminModal');
+            }
+        }
+
+        // 유틸리티 함수들
+        function formatTime(timestamp) {
+            const date = new Date(timestamp);
+            return date.toLocaleTimeString('ko-KR', { 
+                hour: '2-digit', 
+                minute: '2-digit' 
             });
         }
 
-        // 마지막 로그인 시간 포맷
         function formatLastLogin(lastLogin) {
             if(!lastLogin) return '없음';
             
@@ -2516,496 +2449,17 @@
             return `${Math.floor(diffMinutes / 1440)}일 전`;
         }
 
-        // 설문 결과 렌더링
-        function renderSurveyResults(surveyData = null) {
-            const chartContainer = document.getElementById('satisfactionChart');
-            const feedbackList = document.getElementById('feedbackList');
-            
-            if(!surveyData) {
-                chartContainer.innerHTML = '<p style="text-align: center; color: var(--text-muted);">설문 데이터를 불러오는 중입니다...</p>';
-                feedbackList.innerHTML = '<p style="text-align: center; color: var(--text-muted);">피드백을 불러오는 중입니다...</p>';
-                return;
+        // 모달 닫기
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        // 모달 외부 클릭 시 닫기
+        window.addEventListener('click', function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
             }
-            
-            // 만족도 차트 렌더링
-            chartContainer.innerHTML = '';
-            const satisfactionData = surveyData.satisfaction || {};
-            const total = Object.values(satisfactionData).reduce((a, b) => a + b, 0);
-            
-            Object.entries(satisfactionData).forEach(([label, count]) => {
-                const percentage = total > 0 ? (count / total) * 100 : 0;
-                
-                const barDiv = document.createElement('div');
-                barDiv.className = 'satisfaction-bar';
-                barDiv.innerHTML = `
-                    <div class="satisfaction-label">${label}</div>
-                    <div class="satisfaction-progress">
-                        <div class="satisfaction-fill" style="width: ${percentage}%"></div>
-                    </div>
-                    <div class="satisfaction-count">${count}</div>
-                `;
-                chartContainer.appendChild(barDiv);
-            });
-            
-            // 피드백 리스트 렌더링
-            feedbackList.innerHTML = '';
-            const feedbacks = surveyData.feedbacks || [];
-            
-            if(feedbacks.length === 0) {
-                feedbackList.innerHTML = '<p style="text-align: center; color: var(--text-muted);">아직 피드백이 없습니다.</p>';
-                return;
-            }
-            
-            feedbacks.forEach(feedback => {
-                const feedbackDiv = document.createElement('div');
-                feedbackDiv.className = 'feedback-item';
-                feedbackDiv.innerHTML = `
-                    <div class="feedback-user">${feedback.user}</div>
-                    <div class="feedback-text">${feedback.text}</div>
-                `;
-                feedbackList.appendChild(feedbackDiv);
-            });
-            
-            // 완료된 설문 수 업데이트
-            document.getElementById('adminCompletedSurveys').textContent = total;
-        }
-
-        // 활동 로그 업데이트
-        function updateActivityLog(activities = []) {
-            const logContainer = document.getElementById('activityLog');
-            logContainer.innerHTML = '';
-            
-            if(activities.length === 0) {
-                logContainer.innerHTML = '<p style="text-align: center; color: var(--text-muted); padding: var(--space-8);">활동 기록이 없습니다.</p>';
-                return;
-            }
-            
-            activities.forEach(activity => {
-                const activityDiv = document.createElement('div');
-                activityDiv.className = 'activity-item';
-                activityDiv.innerHTML = `
-                    <span class="activity-time">${formatTime(activity.timestamp)}</span>
-                    <span class="activity-user">${activity.user}</span>
-                    <span class="activity-action">${activity.action}</span>
-                `;
-                logContainer.appendChild(activityDiv);
-            });
-        }
-
-        // 시간 포맷 함수
-        function formatTime(timestamp) {
-            const date = new Date(timestamp);
-            return date.toLocaleTimeString('ko-KR', { 
-                hour: '2-digit', 
-                minute: '2-digit' 
-            });
-        }
-
-        // 관리자 기능들
-        function exportParticipantData() {
-            const data = Object.entries(TEMP_USER_DATA).map(([name, userData]) => ({
-                name,
-                team: userData.team,
-                position: userData.position,
-                mbti: TEMP_MBTI_DATA[name] || '미입력'
-            }));
-            
-            const csvContent = "data:text/csv;charset=utf-8," 
-                + "이름,팀,직급,MBTI\n"
-                + data.map(row => `${row.name},${row.team},${row.position},${row.mbti}`).join("\n");
-            
-            const encodedUri = encodeURI(csvContent);
-            const link = document.createElement("a");
-            link.setAttribute("href", encodedUri);
-            link.setAttribute("download", "participants_data.csv");
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            
-            showAlert('참가자 데이터가 다운로드되었습니다.', 'success');
-        }
-
-        function sendNotificationToAll() {
-            const message = prompt('전체 참가자에게 보낼 메시지를 입력하세요:');
-            if(message) {
-                // 실제로는 서버를 통해 알림 전송
-                showAlert(`전체 참가자에게 알림이 전송되었습니다: "${message}"`, 'success');
-            }
-        }
-
-        function viewUserDetail(userName) {
-            const userData = TEMP_USER_DATA[userName];
-            const mbti = TEMP_MBTI_DATA[userName];
-            
-            alert(`사용자 정보:
-이름: ${userName}
-팀: ${userData.team}
-직급: ${userData.position}
-MBTI: ${mbti || '미입력'}
-            
-※ 상세 사용자 관리 기능은 추후 구현 예정입니다.`);
-        }
-
-        function resetAllData() {
-            if(confirm('정말로 모든 데이터를 초기화하시겠습니까? 이 작업은 되돌릴 수 없습니다.')) {
-                if(confirm('다시 한 번 확인합니다. 모든 참가자 데이터와 설문 결과가 삭제됩니다.')) {
-                    // 실제로는 서버 API 호출
-                    localStorage.clear();
-                    showAlert('모든 데이터가 초기화되었습니다.', 'success');
-                    setTimeout(() => {
-                        window.location.reload();
-                    }, 2000);
-                }
-            }
-        }
-
-        function endWorkshopEarly() {
-            if(confirm('워크숍을 조기 종료하시겠습니까?')) {
-                clearInterval(timerInterval);
-                document.getElementById('timerDisplay').textContent = '00:00:00';
-                showAlert('워크숍이 조기 종료되었습니다.', 'success');
-                closeModal('adminModal');
-            }
-        }
-
-        // 특정 사용자 강제 로그아웃
-        async function forceLogoutUser() {
-            const userName = prompt('로그아웃시킬 사용자 이름을 입력하세요:');
-            if(userName && TEMP_USER_DATA[userName]) {
-                if(confirm(`${userName}님을 강제 로그아웃하시겠습니까?`)) {
-                    try {
-                        await api.request('updateUserStatus', {
-                            userName: userName,
-                            status: 'offline'
-                        });
-                        
-                        // 활동 로그 기록
-                        await api.request('logActivity', {
-                            userName: currentUser,
-                            action: '사용자 강제 로그아웃',
-                            details: `${userName} 로그아웃 처리`
-                        });
-                        
-                        showAlert(`${userName}님이 로그아웃되었습니다.`, 'success');
-                        
-                        // 참가자 테이블 새로고침
-                        renderParticipantTable();
-                        
-                    } catch(error) {
-                        showAlert('로그아웃 처리 중 오류가 발생했습니다.', 'error');
-                    }
-                }
-            } else if(userName) {
-                showAlert('존재하지 않는 사용자입니다.', 'error');
-            }
-        }
-
-        // 전체 사용자 강제 로그아웃
-        async function forceLogoutAll() {
-            if(confirm('모든 참가자를 강제 로그아웃하시겠습니까?')) {
-                if(confirm('정말로 모든 사용자를 로그아웃하시겠습니까? 이 작업은 되돌릴 수 없습니다.')) {
-                    try {
-                        // 모든 사용자를 오프라인으로 변경
-                        const userList = Object.keys(TEMP_USER_DATA);
-                        for(const userName of userList) {
-                            if(userName !== currentUser) { // 관리자 제외
-                                await api.request('updateUserStatus', {
-                                    userName: userName,
-                                    status: 'offline'
-                                });
-                            }
-                        }
-                        
-                        // 활동 로그 기록
-                        await api.request('logActivity', {
-                            userName: currentUser,
-                            action: '전체 강제 로그아웃',
-                            details: '모든 참가자 로그아웃 처리'
-                        });
-                        
-                        showAlert('모든 참가자가 로그아웃되었습니다.', 'success');
-                        
-                        // 통계 새로고침
-                        await loadAdminData();
-                        
-                    } catch(error) {
-                        showAlert('전체 로그아웃 처리 중 오류가 발생했습니다.', 'error');
-                    }
-                }
-            }
-        }
-
-        // 심리테스트 리스너 설정
-        function setupPsychTestListeners() {
-            const radioItems = document.querySelectorAll('#psychTestModal .radio-item');
-            radioItems.forEach(item => {
-                item.addEventListener('click', function() {
-                    const input = this.querySelector('input[type="radio"]');
-                    input.checked = true;
-                    
-                    // 같은 그룹의 다른 항목들에서 selected 클래스 제거
-                    const groupName = input.name;
-                    document.querySelectorAll(`#psychTestModal input[name="${groupName}"]`).forEach(radio => {
-                        radio.closest('.radio-item').classList.remove('selected');
-                    });
-                    
-                    // 현재 항목에 selected 클래스 추가
-                    this.classList.add('selected');
-                });
-            });
-        }
-
-        // 심리테스트 제출
-        function submitPsychTest() {
-            const form = document.getElementById('psychTestModal');
-            const answers = {};
-            
-            // 모든 답변 수집 (1~10번 문항)
-            for(let i = 1; i <= 10; i++) {
-                const answer = form.querySelector(`input[name="q${i}"]:checked`);
-                if(!answer) {
-                    showAlert('모든 질문에 답변해주세요.', 'error');
-                    return;
-                }
-                answers[`q${i}`] = answer.value;
-            }
-            
-            // 결과 계산
-            const result = calculateAnimalPsychTestResult(answers);
-            
-            // 결과 표시
-            document.getElementById('psychTestContent').classList.add('hidden');
-            document.getElementById('psychTestResult').classList.remove('hidden');
-            document.getElementById('resultTitle').textContent = result.title;
-            document.getElementById('resultContent').innerHTML = result.content;
-            
-            // 서버에 결과 저장
-            savePsychTestResult(result);
-        }
-
-        // 동물 심리테스트 결과 계산
-        function calculateAnimalPsychTestResult(answers) {
-            let scores = {
-                planning: 0,    // 계획형 (다람쥐)
-                social: 0,      // 사교형 (강아지)
-                adventure: 0,   // 모험형 (고양이)
-                relaxed: 0      // 여유형 (판다)
-            };
-            
-            // 각 답변에 따른 점수 계산
-            const scoring = {
-                q1: { O: 'planning', X: 'adventure' },      // 미리 짐 싸기
-                q2: { O: 'adventure', X: 'planning' },      // 현지에서 맛집 발견
-                q3: { O: 'planning', X: 'relaxed' },        // 아침 일찍 일어나기
-                q4: { O: 'social', X: 'relaxed' },          // SNS 실시간 공유
-                q5: { O: 'social', X: 'adventure' },        // 함께 vs 혼자 여행
-                q6: { O: 'relaxed', X: 'adventure' },       // 카페 vs 액티비티
-                q7: { O: 'adventure', X: 'planning' },      // 변수에 대한 대응
-                q8: { O: 'social', X: 'relaxed' },          // 현지인과 대화
-                q9: { O: 'social', X: 'planning' },         // 음식의 중요성
-                q10: { O: 'planning', X: 'adventure' }      // 여행 후 정리
-            };
-            
-            // 점수 계산
-            Object.keys(answers).forEach(question => {
-                const answerValue = answers[question];
-                const scoreType = scoring[question][answerValue];
-                if(scoreType) {
-                    scores[scoreType]++;
-                }
-            });
-            
-            // 가장 높은 점수의 타입 찾기
-            const maxScore = Math.max(...Object.values(scores));
-            const resultType = Object.keys(scores).find(key => scores[key] === maxScore);
-            
-            const animalResults = {
-                planning: {
-                    title: '계획쟁이 다람쥐 🐿️',
-                    content: `
-                        <div style="font-size: 6rem; margin-bottom: var(--space-4);">🐿️</div>
-                        <h3 style="color: var(--primary-brand); margin-bottom: var(--space-4);">꼼꼼하고 체계적인 여행의 달인!</h3>
-                        <div style="background: rgba(59, 130, 246, 0.1); padding: var(--space-4); border-radius: 12px; margin-bottom: var(--space-4);">
-                            <p style="margin-bottom: var(--space-2);"><strong>💪 장점:</strong> 계획적이고 안전한 여행, 시간 활용 효율성</p>
-                            <p style="margin-bottom: var(--space-2);"><strong>✈️ 여행 스타일:</strong> 미리 예약하고 일정 짜는 완벽주의자</p>
-                            <p><strong>🌟 추천:</strong> 가끔은 계획 없이 떠나는 여행도 해보세요!</p>
-                        </div>
-                        <p style="font-size: var(--text-sm); color: var(--text-secondary);">당신은 견과류처럼 알찬 여행을 만드는 다람쥐입니다! 🥜</p>
-                    `
-                },
-                social: {
-                    title: '친화력 만점 강아지 🐕',
-                    content: `
-                        <div style="font-size: 6rem; margin-bottom: var(--space-4);">🐕</div>
-                        <h3 style="color: var(--primary-brand); margin-bottom: var(--space-4);">사람들과 함께하는 즐거운 여행러!</h3>
-                        <div style="background: rgba(59, 130, 246, 0.1); padding: var(--space-4); border-radius: 12px; margin-bottom: var(--space-4);">
-                            <p style="margin-bottom: var(--space-2);"><strong>💪 장점:</strong> 소통 능력, 현지 문화 체험 적극성</p>
-                            <p style="margin-bottom: var(--space-2);"><strong>✈️ 여행 스타일:</strong> 사람들과 어울리며 추억 만들기</p>
-                            <p><strong>🌟 추천:</strong> 로컬 투어나 요리 클래스에 참여해보세요!</p>
-                        </div>
-                        <p style="font-size: var(--text-sm); color: var(--text-secondary);">당신은 어디서든 친구를 만드는 사랑스러운 강아지입니다! 🦴</p>
-                    `
-                },
-                adventure: {
-                    title: '자유로운 영혼 고양이 🐱',
-                    content: `
-                        <div style="font-size: 6rem; margin-bottom: var(--space-4);">🐱</div>
-                        <h3 style="color: var(--primary-brand); margin-bottom: var(--space-4);">예측불가한 매력의 탐험가!</h3>
-                        <div style="background: rgba(59, 130, 246, 0.1); padding: var(--space-4); border-radius: 12px; margin-bottom: var(--space-4);">
-                            <p style="margin-bottom: var(--space-2);"><strong>💪 장점:</strong> 적응력, 독립성, 새로운 발견 능력</p>
-                            <p style="margin-bottom: var(--space-2);"><strong>✈️ 여행 스타일:</strong> 즉흥적이고 자유로운 탐험</p>
-                            <p><strong>🌟 추천:</strong> 배낭여행이나 혼자만의 여행을 도전해보세요!</p>
-                        </div>
-                        <p style="font-size: var(--text-sm); color: var(--text-secondary);">당신은 어디든 자신만의 길을 찾는 멋진 고양이입니다! 🐾</p>
-                    `
-                },
-                relaxed: {
-                    title: '여유만만 판다 🐼',
-                    content: `
-                        <div style="font-size: 6rem; margin-bottom: var(--space-4);">🐼</div>
-                        <h3 style="color: var(--primary-brand); margin-bottom: var(--space-4);">힐링과 휴식의 전문가!</h3>
-                        <div style="background: rgba(59, 130, 246, 0.1); padding: var(--space-4); border-radius: 12px; margin-bottom: var(--space-4);">
-                            <p style="margin-bottom: var(--space-2);"><strong>💪 장점:</strong> 스트레스 관리, 여유로운 관찰력</p>
-                            <p style="margin-bottom: var(--space-2);"><strong>✈️ 여행 스타일:</strong> 느긋하고 평화로운 힐링 여행</p>
-                            <p><strong>🌟 추천:</strong> 온천이나 자연 속 리조트를 즐겨보세요!</p>
-                        </div>
-                        <p style="font-size: var(--text-sm); color: var(--text-secondary);">당신은 대나무처럼 느긋한 마음의 판다입니다! 🎋</p>
-                    `
-                }
-            };
-            
-            return animalResults[resultType] || animalResults.relaxed;
-        }
-
-        // 심리테스트 결과 저장
-        async function savePsychTestResult(result) {
-            try {
-                await api.saveLink({
-                    user: currentUser,
-                    title: `${currentUser}님의 여행 성향 결과`,
-                    url: '#',
-                    category: '심리테스트 결과',
-                    description: result.title
-                });
-            } catch(error) {
-                console.error('심리테스트 결과 저장 오류:', error);
-            }
-        }
-
-        // 심리테스트 다시하기
-        function restartPsychTest() {
-            document.getElementById('psychTestResult').classList.add('hidden');
-            document.getElementById('psychTestContent').classList.remove('hidden');
-            
-            // 모든 선택 초기화
-            document.querySelectorAll('#psychTestModal input[type="radio"]').forEach(radio => {
-                radio.checked = false;
-                radio.closest('.radio-item').classList.remove('selected');
-            });
-        }
-
-        // 링크 저장
-        async function saveLink() {
-            const title = document.getElementById('linkTitle').value;
-            const url = document.getElementById('linkUrl').value;
-            const category = document.getElementById('linkCategory').value;
-            const description = document.getElementById('linkDescription').value;
-            
-            if(!title || !url) {
-                showAlert('제목과 URL을 모두 입력해주세요.', 'error');
-                return;
-            }
-            
-            try {
-                const result = await api.saveLink({
-                    user: currentUser,
-                    title: title,
-                    url: url,
-                    category: category,
-                    description: description
-                });
-                
-                if(result.success) {
-                    showAlert('링크가 저장되었습니다.', 'success');
-                    
-                    // 폼 초기화
-                    document.getElementById('linkForm').reset();
-                    
-                    // 링크 목록 새로고침
-                    loadSavedLinks();
-                }
-            } catch(error) {
-                showAlert('링크 저장 중 오류가 발생했습니다.', 'error');
-            }
-        }
-
-        // 로컬 스토리지에서 링크 목록 로드 (서버 연동 대기)
-        function loadSavedLinks() {
-            const linksList = document.getElementById('linksList');
-            linksList.innerHTML = `
-                <div class="empty-state">
-                    <div class="empty-state-icon">🔗</div>
-                    <p>서버에서 링크 데이터를 불러오는 중입니다...</p>
-                </div>
-            `;
-            
-            // 서버에서 링크 목록 가져오기 시도
-            api.request('getLinks', { user: currentUser })
-                .then(result => {
-                    if(result.success && result.data.links.length > 0) {
-                        const links = result.data.links;
-                        linksList.innerHTML = links.map(link => `
-                            <div class="link-item">
-                                <div class="link-title">${link.title}</div>
-                                <a href="${link.url}" target="_blank" class="link-url">${link.url}</a>
-                                <div class="link-meta">
-                                    <span class="link-category">${link.category}</span>
-                                    <span>${new Date(link.timestamp).toLocaleDateString()}</span>
-                                </div>
-                                ${link.description ? `<div class="link-description">${link.description}</div>` : ''}
-                            </div>
-                        `).join('');
-                    } else {
-                        linksList.innerHTML = `
-                            <div class="empty-state">
-                                <div class="empty-state-icon">🔗</div>
-                                <p>저장된 링크가 없습니다.<br>새로운 링크를 추가해보세요!</p>
-                            </div>
-                        `;
-                    }
-                })
-                .catch(error => {
-                    console.error('링크 로드 오류:', error);
-                    linksList.innerHTML = `
-                        <div class="empty-state">
-                            <div class="empty-state-icon">⚠️</div>
-                            <p>링크를 불러올 수 없습니다.<br>서버 연결을 확인해주세요.</p>
-                        </div>
-                    `;
-                });
-        }
-
-        // API 클래스에 saveLink 메서드 수정 (서버 연동만)
-        WorkshopAPI.prototype.saveLink = async function(linkData) {
-            return this.request('saveLink', linkData);
-        };
-
-        // 로딩 표시
-        function showLoading(containerId) {
-            const container = document.getElementById(containerId);
-            if(container) {
-                const loadingDiv = document.createElement('div');
-                loadingDiv.className = 'loading';
-                loadingDiv.textContent = '데이터를 불러오는 중';
-                loadingDiv.id = 'loadingIndicator';
-                
-                const modalBody = container.querySelector('.modal-body');
-                if(modalBody) {
-                    modalBody.innerHTML = '';
-                    modalBody.appendChild(loadingDiv);
-                }
-            }
-        }
+        });
 
         // 알림 메시지 표시
         function showAlert(message, type) {
@@ -3023,15 +2477,18 @@ MBTI: ${mbti || '미입력'}
         window.addEventListener('load', function() {
             const savedSessionId = localStorage.getItem('sessionId');
             const savedUser = localStorage.getItem('currentUser');
+            const savedMBTI = localStorage.getItem('userMBTI');
             const savedWorkshopStart = localStorage.getItem('workshopStartTime');
 
-            if (savedSessionId && savedUser) {
+            if (savedSessionId && savedUser && TEMP_USER_DATA[savedUser]) {
                 sessionId = savedSessionId;
                 currentUser = savedUser;
                 
-                if (DEVELOPMENT_MODE && TEMP_USER_DATA[savedUser]) {
-                    showMainScreen(TEMP_USER_DATA[savedUser]);
-                }
+                showMainScreen({
+                    team: TEMP_USER_DATA[savedUser].team,
+                    position: TEMP_USER_DATA[savedUser].position,
+                    mbti: savedMBTI
+                });
                 
                 if (savedWorkshopStart) {
                     workshopStartTime = new Date(savedWorkshopStart);
