@@ -1224,7 +1224,7 @@
             <div id="userInfo" class="user-info">
                 <h3 id="userNameDisplay"></h3>
                 <p id="userTeamDisplay"></p>
-                <button class="btn btn-secondary" onclick="handleLogout()" style="margin-top: var(--space-3); font-size: var(--text-sm); padding: var(--space-2) var(--space-4);">
+                <button class="btn btn-secondary" id="logoutBtn" style="margin-top: var(--space-3); font-size: var(--text-sm); padding: var(--space-2) var(--space-4);">
                     🚪 로그아웃
                 </button>
             </div>
@@ -1236,7 +1236,7 @@
                     투어패스사업부 2025 워크숍이 시작됩니다.<br>
                     48시간의 특별한 여정을 시작해보세요.
                 </p>
-                <button class="btn btn-primary" onclick="startWorkshop()">
+                <button class="btn btn-primary" id="startWorkshopBtn">
                     워크숍 참여하기
                 </button>
             </div>
@@ -1249,27 +1249,27 @@
 
             <!-- 메뉴 그리드 -->
             <div class="menu-grid">
-                <div class="menu-item" data-emoji="👥" onclick="openMBTIRelations()">
+                <div class="menu-item" data-emoji="👥" id="mbtiMenu">
                     <div class="menu-title">참가자 현황</div>
                     <div class="menu-desc">MBTI 분포 및 팀 분석</div>
                 </div>
 
-                <div class="menu-item" data-emoji="📅" onclick="openSchedule()">
+                <div class="menu-item" data-emoji="📅" id="scheduleMenu">
                     <div class="menu-title">워크샵 일정</div>
                     <div class="menu-desc">상세 프로그램</div>
                 </div>
 
-                <div class="menu-item" data-emoji="🧠" onclick="openPsychTest()">
+                <div class="menu-item" data-emoji="🧠" id="psychMenu">
                     <div class="menu-title">심리테스트</div>
                     <div class="menu-desc">여행 성향 분석</div>
                 </div>
 
-                <div class="menu-item" data-emoji="📦" onclick="openLinkStorage()">
+                <div class="menu-item" data-emoji="📦" id="linkMenu">
                     <div class="menu-title">보관함</div>
                     <div class="menu-desc">링크 저장소</div>
                 </div>
 
-                <div class="menu-item" data-emoji="📝" onclick="openSurvey()">
+                <div class="menu-item" data-emoji="📝" id="surveyMenu">
                     <div class="menu-title">설문조사</div>
                     <div class="menu-desc">만족도 조사</div>
                 </div>
@@ -2738,8 +2738,49 @@
                 }
             }
 
-            // 로그인 버튼 이벤트 리스너 추가
-            document.getElementById('loginBtn').addEventListener('click', handleLogin);
+            // 이벤트 리스너 추가
+            const loginBtn = document.getElementById('loginBtn');
+            if (loginBtn) {
+                loginBtn.addEventListener('click', handleLogin);
+            }
+
+            // 워크숍 시작 버튼
+            const startWorkshopBtn = document.getElementById('startWorkshopBtn');
+            if (startWorkshopBtn) {
+                startWorkshopBtn.addEventListener('click', startWorkshop);
+            }
+
+            // 로그아웃 버튼
+            const logoutBtn = document.getElementById('logoutBtn');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', handleLogout);
+            }
+
+            // 메뉴 아이템 이벤트 리스너
+            const mbtiMenu = document.getElementById('mbtiMenu');
+            if (mbtiMenu) {
+                mbtiMenu.addEventListener('click', openMBTIRelations);
+            }
+
+            const scheduleMenu = document.getElementById('scheduleMenu');
+            if (scheduleMenu) {
+                scheduleMenu.addEventListener('click', openSchedule);
+            }
+
+            const psychMenu = document.getElementById('psychMenu');
+            if (psychMenu) {
+                psychMenu.addEventListener('click', openPsychTest);
+            }
+
+            const linkMenu = document.getElementById('linkMenu');
+            if (linkMenu) {
+                linkMenu.addEventListener('click', openLinkStorage);
+            }
+
+            const surveyMenu = document.getElementById('surveyMenu');
+            if (surveyMenu) {
+                surveyMenu.addEventListener('click', openSurvey);
+            }
 
             // ESC 키로 모달 닫기
             document.addEventListener('keydown', function(event) {
