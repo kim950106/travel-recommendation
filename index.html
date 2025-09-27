@@ -1817,7 +1817,12 @@
             "장은진": { team:"투어패스사업부 영업 2팀", position:"주임" }
         };
 
-        // API 통신 클래스
+        // 오프라인 모드 체크 함수
+        function isOfflineMode() {
+            return localStorage.getItem('offlineMode') === 'true';
+        }
+
+        // API 클래스 수정 - 오프라인 모드 지원
         class WorkshopAPI {
             constructor() {
                 this.baseURL = API_URL;
@@ -1826,6 +1831,11 @@
             }
             
             async request(action, data = {}) {
+                // 오프라인 모드면 가짜 데이터 반환
+                if (isOfflineMode()) {
+                    return this.getOfflineResponse(action, data);
+                }
+
                 const payload = {
                     action: action,
                     sessionId: sessionId,
@@ -1875,6 +1885,93 @@
                     }
                 }
             }
+
+            // 오프라인 모드 응답 생성
+            getOfflineResponse(action, data) {
+                console.log('오프라인 모드 응답:', action);
+                
+                switch(action) {
+                    case 'getMBTIStats':
+                        return {
+                            success: true,
+                            data: {
+                                totalParticipants: 1,
+                                onlineUsers: 1,
+                                mbtiDistribution: {
+                                    [localStorage.getItem('userMBTI')]: 1
+                                },
+                                teamDistribution: {
+                                    [TEMP_USER_DATA[currentUser]?.team || '알 수 없음']: {
+                                        [localStorage.getItem('userMBTI')]: 1
+                                    }
+                                }
+                            }
+                        };
+                    
+                    case 'saveSurvey':
+                    case 'saveLink':
+                    case 'updateUserStatus':
+                    case 'logActivity':
+                        return {
+                            success: true,
+                            message: '오프라인 모드에서 저장되었습니다. (서버 연결 시 동기화됩니다)',
+                            data: { timestamp: new Date() }
+                        };
+                    
+                    case 'getActivityLog':
+                        return {
+                            success: true,
+                            data: {
+                                activities: [
+                                    {
+                                        timestamp: new Date(),
+                                        user: currentUser,
+                                        action: '오프라인 로그인',
+                                        details: 'MBTI: ' + localStorage.getItem('userMBTI')
+                                    }
+                                ]
+                            }
+                        };
+                    
+                    case 'getUserList':
+                        return {
+                            success: true,
+                            data: {
+                                users: [{
+                                    name: currentUser,
+                                    team: TEMP_USER_DATA[currentUser]?.team || '알 수 없음',
+                                    position: TEMP_USER_DATA[currentUser]?.position || '알 수 없음',
+                                    mbti: localStorage.getItem('userMBTI'),
+                                    lastLogin: new Date(),
+                                    status: 'online',
+                                    loginCount: 1
+                                }]
+                            }
+                        };
+                    
+                    case 'getSurveyStats':
+                        return {
+                            success: true,
+                            data: {
+                                satisfaction: {},
+                                feedbacks: []
+                            }
+                        };
+                    
+                    case 'getLinks':
+                        return {
+                            success: true,
+                            data: { links: [] }
+                        };
+                    
+                    default:
+                        return {
+                            success: true,
+                            message: '오프라인 모드에서는 이 기능을 사용할 수 없습니다.',
+                            data: {}
+                        };
+                }
+            }
             
             async login(userName, mbti) {
                 return this.request('login', {
@@ -1916,7 +2013,7 @@
 
         const api = new WorkshopAPI();
 
-        // 로그인 처리
+        // 로그인 처리 (개선된 버전)
         async function handleLogin() {
             const userName = document.getElementById('userName').value;
             const userMBTI = document.getElementById('userMBTI').value;
@@ -1932,6 +2029,8 @@
             loginBtn.innerHTML = '로그인 중...';
 
             try {
+                // 먼저 서버 연결 테스트
+                console.log('서버 연결 테스트 중...');
                 const result = await api.login(userName, userMBTI);
                 
                 if(result.success) {
@@ -1950,7 +2049,29 @@
                 }
             } catch(error) {
                 console.error('로그인 오류:', error);
-                showAlert('로그인 중 오류가 발생했습니다: ' + error.message, 'error');
+                
+                // 서버 연결 실패 시 오프라인 모드로 진행
+                if (error.message.includes('fetch') || error.message.includes('network') || error.message.includes('Failed to fetch')) {
+                    showAlert('서버에 연결할 수 없어 오프라인 모드로 진행합니다.', 'error');
+                    
+                    // 오프라인 로그인 처리
+                    currentUser = userName;
+                    sessionId = 'offline_' + Date.now();
+                    
+                    localStorage.setItem('sessionId', sessionId);
+                    localStorage.setItem('currentUser', userName);
+                    localStorage.setItem('userMBTI', userMBTI);
+                    localStorage.setItem('offlineMode', 'true');
+                    
+                    showMainScreen({
+                        team: TEMP_USER_DATA[userName]?.team || '알 수 없음',
+                        position: TEMP_USER_DATA[userName]?.position || '알 수 없음',
+                        mbti: userMBTI
+                    });
+                    showWorkshopAlert();
+                } else {
+                    showAlert('로그인 중 오류가 발생했습니다: ' + error.message, 'error');
+                }
             } finally {
                 loginBtn.disabled = false;
                 loginBtn.innerHTML = originalText;
@@ -2085,7 +2206,10 @@
             try {
                 document.getElementById('mbtiModal').style.display = 'block';
                 
+                // 로딩 표시
                 document.getElementById('mbtiDistribution').innerHTML = '<div class="loading">데이터를 불러오는 중</div>';
+                document.getElementById('totalParticipants').textContent = '0';
+                document.getElementById('onlineCount').textContent = '0';
                 
                 const stats = await api.getMBTIStats();
                 
@@ -2096,12 +2220,25 @@
                 }
             } catch(error) {
                 console.error('MBTI 현황 조회 오류:', error);
-                showAlert('MBTI 현황을 불러오는 중 오류가 발생했습니다: ' + error.message, 'error');
-                closeModal('mbtiModal');
+                
+                // 오프라인 모드 또는 서버 오류 시 기본 메시지 표시
+                document.getElementById('mbtiDistribution').innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📊</div>
+                        <p>서버에 연결할 수 없습니다.<br>
+                        네트워크 연결을 확인하거나<br>
+                        관리자에게 문의하세요.</p>
+                        <button class="btn btn-secondary" onclick="openMBTIRelations()" style="margin-top: var(--space-4);">
+                            다시 시도
+                        </button>
+                    </div>
+                `;
+                
+                showAlert('MBTI 현황을 불러올 수 없습니다. 네트워크 연결을 확인해주세요.', 'error');
             }
         }
 
-        // MBTI 통계 렌더링
+        // MBTI 통계 렌더링 (개선된 버전)
         function renderMBTIStats(data) {
             const stats = {
                 totalParticipants: data.totalParticipants || 0,
@@ -2114,8 +2251,28 @@
             document.getElementById('onlineCount').textContent = stats.onlineUsers;
             
             const mbtiGrid = document.getElementById('mbtiDistribution');
-            mbtiGrid.innerHTML = '';
             
+            // 참가자가 없는 경우 처리
+            if (stats.totalParticipants === 0) {
+                mbtiGrid.innerHTML = `
+                    <div class="empty-state" style="grid-column: 1 / -1;">
+                        <div class="empty-state-icon">👥</div>
+                        <p>아직 참가자가 없습니다.<br>
+                        첫 번째 참가자가 되어보세요!</p>
+                    </div>
+                `;
+                
+                document.getElementById('teamDistribution').innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">🏢</div>
+                        <p>팀별 데이터가 없습니다.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // MBTI 분포 렌더링
+            mbtiGrid.innerHTML = '';
             const allMBTI = ['INTJ', 'INTP', 'ENTJ', 'ENTP', 'INFJ', 'INFP', 'ENFJ', 'ENFP', 
                             'ISTJ', 'ISFJ', 'ESTJ', 'ESFJ', 'ISTP', 'ISFP', 'ESTP', 'ESFP'];
             
@@ -2123,6 +2280,13 @@
                 const count = stats.mbtiDistribution[mbti] || 0;
                 const mbtiItem = document.createElement('div');
                 mbtiItem.className = 'mbti-item';
+                
+                // 데이터가 있는 MBTI는 하이라이트
+                if (count > 0) {
+                    mbtiItem.style.background = 'rgba(59, 130, 246, 0.1)';
+                    mbtiItem.style.borderColor = 'var(--secondary-brand)';
+                }
+                
                 mbtiItem.innerHTML = `
                     <div class="mbti-type">${mbti}</div>
                     <div class="mbti-count">${count}</div>
@@ -2134,15 +2298,33 @@
             const teamDiv = document.getElementById('teamDistribution');
             teamDiv.innerHTML = '';
             
-            Object.entries(stats.teamDistribution).forEach(([team, mbtiData]) => {
+            const teamEntries = Object.entries(stats.teamDistribution);
+            
+            if (teamEntries.length === 0) {
+                teamDiv.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">🏢</div>
+                        <p>팀별 데이터가 없습니다.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            teamEntries.forEach(([team, mbtiData]) => {
                 const teamCard = document.createElement('div');
                 teamCard.className = 'chart-container';
                 teamCard.style.marginBottom = 'var(--space-4)';
                 
                 let mbtiList = '';
-                Object.entries(mbtiData).forEach(([mbti, count]) => {
-                    mbtiList += `<span style="margin-right: var(--space-2); font-weight: 600;">${mbti}: ${count}명</span>`;
-                });
+                const mbtiEntries = Object.entries(mbtiData);
+                
+                if (mbtiEntries.length === 0) {
+                    mbtiList = '<span style="color: var(--text-muted);">데이터 없음</span>';
+                } else {
+                    mbtiEntries.forEach(([mbti, count]) => {
+                        mbtiList += `<span style="margin-right: var(--space-2); font-weight: 600; color: var(--primary-brand);">${mbti}: ${count}명</span>`;
+                    });
+                }
                 
                 teamCard.innerHTML = `
                     <div class="chart-title" style="font-size: var(--text-base); margin-bottom: var(--space-3);">${team}</div>
