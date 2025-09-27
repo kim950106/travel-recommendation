@@ -8,37 +8,26 @@
         @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
         
         :root {
-            /* 투어패스 브랜드 컬러 */
             --primary-brand: #1e40af;
             --secondary-brand: #3b82f6;
             --accent-warm: #f59e0b;
             --accent-cool: #06b6d4;
-            
-            /* 시멘틱 컬러 */
             --text-primary: #0f172a;
             --text-secondary: #475569;
             --text-muted: #64748b;
             --surface-primary: #ffffff;
             --surface-secondary: #f8fafc;
             --surface-elevated: #f1f5f9;
-            
-            /* 상태 컬러 */
             --success: #10b981;
             --warning: #f59e0b;
             --error: #ef4444;
-            
-            /* 그라디언트 */
             --gradient-brand: linear-gradient(135deg, var(--primary-brand), var(--secondary-brand));
             --gradient-warm: linear-gradient(135deg, #fbbf24, #f59e0b);
             --gradient-surface: linear-gradient(135deg, #f8fafc, #ffffff);
-            
-            /* 그림자 */
             --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
             --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
             --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
             --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-            
-            /* 타이포그래피 스케일 */
             --text-xs: 0.75rem;
             --text-sm: 0.875rem;
             --text-base: 1rem;
@@ -47,8 +36,6 @@
             --text-2xl: 1.5rem;
             --text-3xl: 1.875rem;
             --text-4xl: 2.25rem;
-            
-            /* 간격 시스템 */
             --space-1: 0.25rem;
             --space-2: 0.5rem;
             --space-3: 0.75rem;
@@ -450,10 +437,10 @@
             width: 200%;
             height: 200%;
             background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
-            animation: pulse 4s ease-in-out infinite;
+            animation: pulseTimer 4s ease-in-out infinite;
         }
 
-        @keyframes pulse {
+        @keyframes pulseTimer {
             0%, 100% { transform: scale(1); opacity: 0.5; }
             50% { transform: scale(1.1); opacity: 0.8; }
         }
@@ -1155,10 +1142,8 @@
 
     <!-- 배경음악 오디오 요소 -->
     <audio id="backgroundMusic" loop preload="none">
-        <!-- 무료 배경음악 대안들 -->
         <source src="https://www.soundjay.com/misc/sounds/bell-ringing-05.wav" type="audio/wav">
         <source src="https://freesound.org/data/previews/316/316847_5265617-lq.mp3" type="audio/mpeg">
-        <!-- 음악 파일이 없어도 앱은 정상 작동합니다 -->
     </audio>
 
     <div class="container">
@@ -1624,3 +1609,17 @@
                         <div class="question-title">4. 여행 중에는 SNS에 실시간으로 사진을 올리며 공유한다 📸</div>
                         <div class="radio-group" style="flex-direction: row; gap: var(--space-8); justify-content: center;">
                             <label class="radio-item" style="flex: none; width: 80px;">
+                                <input type="radio" name="q4" value="O">
+                                ⭕ O
+                            </label>
+                            <label class="radio-item" style="flex: none; width: 80px;">
+                                <input type="radio" name="q4" value="X">
+                                ❌ X
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="survey-question">
+                        <div class="question-title">5. 혼자 여행하는 것보다 친구나 가족과 함께하는 게 좋다 👨‍👩‍👧‍👦</div>
+                        <div class="radio-group" style="flex-direction: row; gap: var(--space-8); justify-content: center;">
+                            <label
