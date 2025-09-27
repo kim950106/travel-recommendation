@@ -1896,7 +1896,7 @@
                             success: true,
                             data: {
                                 totalParticipants: 1,
-                                onlineUsers: 1,
+                                onlineUsers: 1, // 현재 접속자는 나 혼자
                                 mbtiDistribution: {
                                     [localStorage.getItem('userMBTI')]: 1
                                 },
@@ -1914,7 +1914,7 @@
                     case 'logActivity':
                         return {
                             success: true,
-                            message: '오프라인 모드에서 저장되었습니다. (서버 연결 시 동기화됩니다)',
+                            message: '오프라인 모드에서 저장되었습니다.',
                             data: { timestamp: new Date() }
                         };
                     
@@ -1967,7 +1967,7 @@
                     default:
                         return {
                             success: true,
-                            message: '오프라인 모드에서는 이 기능을 사용할 수 없습니다.',
+                            message: '오프라인 모드입니다.',
                             data: {}
                         };
                 }
@@ -2238,7 +2238,7 @@
             }
         }
 
-        // MBTI 통계 렌더링 (개선된 버전)
+        // MBTI 통계 렌더링 (디버깅 정보 추가)
         function renderMBTIStats(data) {
             const stats = {
                 totalParticipants: data.totalParticipants || 0,
@@ -2246,6 +2246,11 @@
                 mbtiDistribution: data.mbtiDistribution || {},
                 teamDistribution: data.teamDistribution || {}
             };
+
+            // 디버깅 정보 표시
+            console.log('MBTI 통계 데이터:', stats);
+            console.log('현재 사용자:', currentUser);
+            console.log('오프라인 모드:', isOfflineMode());
 
             document.getElementById('totalParticipants').textContent = stats.totalParticipants;
             document.getElementById('onlineCount').textContent = stats.onlineUsers;
@@ -2259,6 +2264,9 @@
                         <div class="empty-state-icon">👥</div>
                         <p>아직 참가자가 없습니다.<br>
                         첫 번째 참가자가 되어보세요!</p>
+                        <div style="margin-top: var(--space-4); font-size: var(--text-xs); color: var(--text-muted);">
+                            디버그: ${isOfflineMode() ? '오프라인 모드' : '온라인 모드'}
+                        </div>
                     </div>
                 `;
                 
@@ -2305,6 +2313,10 @@
                     <div class="empty-state">
                         <div class="empty-state-icon">🏢</div>
                         <p>팀별 데이터가 없습니다.</p>
+                        <div style="margin-top: var(--space-2); font-size: var(--text-xs); color: var(--text-muted);">
+                            현재 사용자: ${currentUser}<br>
+                            모드: ${isOfflineMode() ? '오프라인' : '온라인'}
+                        </div>
                     </div>
                 `;
                 return;
