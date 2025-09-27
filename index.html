@@ -2111,7 +2111,7 @@
 
         const api = new WorkshopAPI();
 
-        // 로그인 처리 (개선된 버전)
+        // 로그인 처리 (임시 로그인, 참가자 등록은 워크숍 참여 시)
         async function handleLogin() {
             const userName = document.getElementById('userName').value;
             const userMBTI = document.getElementById('userMBTI').value;
@@ -2127,49 +2127,26 @@
             loginBtn.innerHTML = '로그인 중...';
 
             try {
-                // 먼저 서버 연결 테스트
-                console.log('서버 연결 테스트 중...');
-                const result = await api.login(userName, userMBTI);
+                // 임시 세션 생성 (서버에 참가자로 등록하지 않음)
+                currentUser = userName;
+                sessionId = 'temp_' + Date.now();
                 
-                if(result.success) {
-                    currentUser = userName;
-                    sessionId = result.data.sessionId;
-                    
-                    localStorage.setItem('sessionId', sessionId);
-                    localStorage.setItem('currentUser', userName);
-                    localStorage.setItem('userMBTI', userMBTI);
-                    
-                    showMainScreen(result.data.userData);
-                    showWorkshopAlert();
-                    showAlert('로그인이 완료되었습니다.', 'success');
-                } else {
-                    throw new Error(result.message || '로그인 실패');
-                }
+                localStorage.setItem('sessionId', sessionId);
+                localStorage.setItem('currentUser', userName);
+                localStorage.setItem('userMBTI', userMBTI);
+                localStorage.setItem('participantRegistered', 'false'); // 아직 참가자로 등록되지 않음
+                
+                showMainScreen({
+                    team: TEMP_USER_DATA[userName]?.team || '알 수 없음',
+                    position: TEMP_USER_DATA[userName]?.position || '알 수 없음',
+                    mbti: userMBTI
+                });
+                showWorkshopAlert();
+                showAlert('로그인이 완료되었습니다. "워크숍 참여하기"를 눌러 참가자로 등록하세요.', 'success');
+                
             } catch(error) {
                 console.error('로그인 오류:', error);
-                
-                // 서버 연결 실패 시 오프라인 모드로 진행
-                if (error.message.includes('fetch') || error.message.includes('network') || error.message.includes('Failed to fetch')) {
-                    showAlert('서버에 연결할 수 없어 오프라인 모드로 진행합니다.', 'error');
-                    
-                    // 오프라인 로그인 처리
-                    currentUser = userName;
-                    sessionId = 'offline_' + Date.now();
-                    
-                    localStorage.setItem('sessionId', sessionId);
-                    localStorage.setItem('currentUser', userName);
-                    localStorage.setItem('userMBTI', userMBTI);
-                    localStorage.setItem('offlineMode', 'true');
-                    
-                    showMainScreen({
-                        team: TEMP_USER_DATA[userName]?.team || '알 수 없음',
-                        position: TEMP_USER_DATA[userName]?.position || '알 수 없음',
-                        mbti: userMBTI
-                    });
-                    showWorkshopAlert();
-                } else {
-                    showAlert('로그인 중 오류가 발생했습니다: ' + error.message, 'error');
-                }
+                showAlert('로그인 중 오류가 발생했습니다: ' + error.message, 'error');
             } finally {
                 loginBtn.disabled = false;
                 loginBtn.innerHTML = originalText;
@@ -2257,16 +2234,41 @@
             document.getElementById('workshopAlert').classList.remove('hidden');
         }
 
-        // 워크숍 시작
-        function startWorkshop() {
-            workshopStartTime = new Date();
-            localStorage.setItem('workshopStartTime', workshopStartTime.toISOString());
-            
-            document.getElementById('workshopAlert').classList.add('hidden');
-            document.getElementById('timerCard').classList.remove('hidden');
-            
-            startTimer();
-            showAlert('워크숍이 시작되었습니다!', 'success');
+        // 워크숍 시작 (참가자 등록 시점)
+        async function startWorkshop() {
+            try {
+                // 이 시점에서 서버에 실제 참가자로 등록
+                const result = await api.login(currentUser, localStorage.getItem('userMBTI'));
+                
+                if (result.success) {
+                    sessionId = result.data.sessionId;
+                    localStorage.setItem('sessionId', sessionId);
+                    
+                    workshopStartTime = new Date();
+                    localStorage.setItem('workshopStartTime', workshopStartTime.toISOString());
+                    
+                    document.getElementById('workshopAlert').classList.add('hidden');
+                    document.getElementById('timerCard').classList.remove('hidden');
+                    
+                    startTimer();
+                    showAlert('워크숍에 참여하셨습니다! 참가자로 등록되었습니다.', 'success');
+                } else {
+                    throw new Error('참가자 등록 실패');
+                }
+            } catch(error) {
+                console.error('워크숍 참여 오류:', error);
+                
+                // 오프라인 모드로라도 진행
+                workshopStartTime = new Date();
+                localStorage.setItem('workshopStartTime', workshopStartTime.toISOString());
+                localStorage.setItem('offlineMode', 'true');
+                
+                document.getElementById('workshopAlert').classList.add('hidden');
+                document.getElementById('timerCard').classList.remove('hidden');
+                
+                startTimer();
+                showAlert('오프라인 모드로 워크숍에 참여합니다.', 'success');
+            }
         }
 
         // 타이머 시작
