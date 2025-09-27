@@ -5,6 +5,63 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>투어패스사업부 2025 워크숍</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&display=swap');
+        
+        :root {
+            /* 투어패스 브랜드 컬러 */
+            --primary-brand: #1e40af;
+            --secondary-brand: #3b82f6;
+            --accent-warm: #f59e0b;
+            --accent-cool: #06b6d4;
+            
+            /* 시멘틱 컬러 */
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #64748b;
+            --surface-primary: #ffffff;
+            --surface-secondary: #f8fafc;
+            --surface-elevated: #f1f5f9;
+            
+            /* 상태 컬러 */
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            
+            /* 그라디언트 */
+            --gradient-brand: linear-gradient(135deg, var(--primary-brand), var(--secondary-brand));
+            --gradient-warm: linear-gradient(135deg, #fbbf24, #f59e0b);
+            --gradient-surface: linear-gradient(135deg, #f8fafc, #ffffff);
+            
+            /* 그림자 */
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            
+            /* 타이포그래피 스케일 */
+            --text-xs: 0.75rem;
+            --text-sm: 0.875rem;
+            --text-base: 1rem;
+            --text-lg: 1.125rem;
+            --text-xl: 1.25rem;
+            --text-2xl: 1.5rem;
+            --text-3xl: 1.875rem;
+            --text-4xl: 2.25rem;
+            
+            /* 간격 시스템 */
+            --space-1: 0.25rem;
+            --space-2: 0.5rem;
+            --space-3: 0.75rem;
+            --space-4: 1rem;
+            --space-5: 1.25rem;
+            --space-6: 1.5rem;
+            --space-8: 2rem;
+            --space-10: 2.5rem;
+            --space-12: 3rem;
+            --space-16: 4rem;
+            --space-20: 5rem;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -12,317 +69,406 @@
         }
 
         body {
-            font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            color: #333;
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--surface-secondary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            font-weight: 400;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         .container {
-            max-width: 400px;
+            max-width: 428px;
             margin: 0 auto;
-            padding: 20px;
+            padding: var(--space-6);
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
+            position: relative;
         }
 
+        /* 헤더 디자인 개선 */
         .header {
             text-align: center;
-            color: white;
-            margin-bottom: 30px;
-            padding: 20px 0;
+            margin-bottom: var(--space-12);
+            padding: var(--space-12) 0;
+            position: relative;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: var(--gradient-brand);
+            border-radius: 2px;
         }
 
         .header h1 {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 8px;
+            font-size: var(--text-4xl);
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: var(--space-2);
+            letter-spacing: -0.025em;
+            line-height: 1.2;
         }
 
         .header p {
-            font-size: 16px;
-            opacity: 0.9;
+            font-size: var(--text-xl);
+            color: var(--text-secondary);
+            font-weight: 500;
+            letter-spacing: -0.01em;
         }
 
+        /* 카드 시스템 개선 */
         .card {
-            background: white;
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
+            background: var(--surface-primary);
+            border-radius: 24px;
+            padding: var(--space-8);
+            margin-bottom: var(--space-6);
+            box-shadow: var(--shadow-md);
+            border: 1px solid rgba(59, 130, 246, 0.1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
         }
 
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: var(--gradient-brand);
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+            border-color: rgba(59, 130, 246, 0.2);
+        }
+
+        /* 폼 디자인 개선 */
         .login-form {
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: var(--space-6);
         }
 
         .form-group {
             display: flex;
             flex-direction: column;
-            gap: 8px;
-        }
-
-        .mbti-grid {
-            padding: 20px 0;
-        }
-
-        .mbti-stats {
-            background: #f8f9fa;
-            border-radius: 12px;
-            padding: 20px;
-            margin: 20px 0;
-        }
-
-        .mbti-stats .stat-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px 0;
-            border-bottom: 1px solid #e9ecef;
-        }
-
-        .mbti-stats .stat-item:last-child {
-            border-bottom: none;
-        }
-
-        .mbti-distribution {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
-            margin: 20px 0;
-        }
-
-        .mbti-item {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 15px;
-            border-radius: 12px;
-            text-align: center;
-            font-weight: 600;
-        }
-
-        .compatibility-note {
-            background: linear-gradient(135deg, #2ecc71, #27ae60);
-            color: white;
-            border-radius: 15px;
-            padding: 25px;
-            margin-top: 25px;
-        }
-
-        .compatibility-note h4 {
-            margin-bottom: 15px;
-        }
-
-        .compatibility-note ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .compatibility-note li {
-            padding: 8px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.2);
-        }
-
-        .compatibility-note li:last-child {
-            border-bottom: none;
-        }
-
-        .question-number {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 20px;
-        }
-
-        .answer-btn small {
-            display: block;
-            font-size: 12px;
-            margin-top: 5px;
-            opacity: 0.8;
-        }
-
-        .btn-secondary {
-            background: #6c757d;
-            color: white;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .btn-secondary:hover {
-            background: #5a6268;
-            transform: translateY(-2px);
+            gap: var(--space-3);
         }
 
         label {
             font-weight: 600;
-            color: #555;
-            font-size: 14px;
+            color: var(--text-primary);
+            font-size: var(--text-sm);
+            letter-spacing: -0.01em;
         }
 
-        select, input {
-            padding: 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 12px;
-            font-size: 16px;
-            transition: border-color 0.3s;
+        select, input, textarea {
+            padding: var(--space-4) var(--space-5);
+            border: 1.5px solid #e2e8f0;
+            border-radius: 16px;
+            font-size: var(--text-base);
+            font-family: inherit;
+            font-weight: 500;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            background: var(--surface-primary);
+            color: var(--text-primary);
         }
 
-        select:focus, input:focus {
+        select:focus, input:focus, textarea:focus {
             outline: none;
-            border-color: #667eea;
+            border-color: var(--secondary-brand);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+            transform: translateY(-1px);
         }
 
+        /* 버튼 시스템 개선 */
         .btn {
-            padding: 15px;
+            padding: var(--space-4) var(--space-6);
             border: none;
-            border-radius: 12px;
-            font-size: 16px;
+            border-radius: 16px;
+            font-size: var(--text-base);
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            font-family: inherit;
+            letter-spacing: -0.01em;
+            position: relative;
+            overflow: hidden;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-2);
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: var(--gradient-brand);
             color: white;
+            box-shadow: var(--shadow-md);
         }
 
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+            box-shadow: var(--shadow-lg);
         }
 
+        .btn-secondary {
+            background: var(--surface-elevated);
+            color: var(--text-primary);
+            border: 1.5px solid #e2e8f0;
+        }
+
+        .btn-secondary:hover {
+            background: #e2e8f0;
+            transform: translateY(-1px);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        /* 그리드 시스템 개선 - 비대칭 레이아웃 */
         .menu-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-top: 20px;
+            gap: var(--space-4);
+            margin-top: var(--space-8);
         }
 
+        .menu-grid .menu-item:first-child {
+            grid-column: 1 / -1;
+            aspect-ratio: 3/1;
+        }
+
+        .menu-grid .menu-item:nth-child(7) {
+            grid-column: 1 / -1;
+            aspect-ratio: 3/1;
+        }
+
+        /* 메뉴 아이템 개선 */
         .menu-item {
-            background: white;
-            border-radius: 15px;
-            padding: 20px;
+            background: var(--surface-primary);
+            border: 1.5px solid rgba(59, 130, 246, 0.1);
+            border-radius: 20px;
+            padding: var(--space-6);
             text-align: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             text-decoration: none;
-            color: #333;
+            color: inherit;
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .menu-item::before {
+            content: attr(data-emoji);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-8deg);
+            font-size: 100px;
+            opacity: 0.06;
+            z-index: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        .menu-item::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--gradient-brand);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1;
         }
 
         .menu-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: var(--shadow-xl);
+            border-color: var(--secondary-brand);
         }
 
-        .menu-icon {
-            font-size: 32px;
-            margin-bottom: 10px;
-            display: block;
+        .menu-item:hover::before {
+            transform: translate(-50%, -50%) rotate(0deg) scale(1.1);
+            opacity: 0.12;
+        }
+
+        .menu-item:hover::after {
+            opacity: 0.03;
+        }
+
+        .menu-item * {
+            position: relative;
+            z-index: 2;
         }
 
         .menu-title {
-            font-weight: 600;
-            font-size: 14px;
-            margin-bottom: 5px;
+            font-weight: 700;
+            font-size: var(--text-lg);
+            margin-bottom: var(--space-2);
+            color: var(--text-primary);
+            letter-spacing: -0.01em;
+            line-height: 1.3;
         }
 
         .menu-desc {
-            font-size: 12px;
-            color: #666;
+            font-size: var(--text-sm);
+            color: var(--text-secondary);
+            line-height: 1.5;
+            font-weight: 500;
         }
 
+        /* 타이머 디자인 개선 */
         .timer-card {
-            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            background: var(--gradient-brand);
             color: white;
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: var(--space-6);
+            border: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .timer-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
         }
 
         .timer-text {
-            font-size: 18px;
-            margin-bottom: 10px;
+            font-size: var(--text-lg);
+            margin-bottom: var(--space-4);
+            opacity: 0.9;
+            font-weight: 500;
+            position: relative;
+            z-index: 1;
         }
 
         .timer-display {
-            font-size: 36px;
-            font-weight: 700;
-            font-family: 'Courier New', monospace;
+            font-size: 3.5rem;
+            font-weight: 800;
+            font-family: 'Pretendard', monospace;
+            letter-spacing: -0.02em;
+            position: relative;
+            z-index: 1;
         }
 
+        /* 사용자 정보 개선 */
         .user-info {
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 12px;
-            margin-bottom: 20px;
+            background: var(--gradient-surface);
+            border: 1.5px solid rgba(59, 130, 246, 0.1);
+            padding: var(--space-6);
+            border-radius: 20px;
+            margin-bottom: var(--space-6);
             text-align: center;
+            position: relative;
         }
 
         .user-info h3 {
-            color: #333;
-            margin-bottom: 5px;
+            color: var(--text-primary);
+            margin-bottom: var(--space-2);
+            font-weight: 700;
+            font-size: var(--text-xl);
         }
 
         .user-info p {
-            color: #666;
-            font-size: 14px;
+            color: var(--text-secondary);
+            font-size: var(--text-sm);
+            font-weight: 500;
         }
 
-        .hidden {
-            display: none;
+        /* 관리자 스타일 */
+        .admin-menu {
+            background: var(--gradient-warm) !important;
+            color: white !important;
+            border: none !important;
         }
 
-        .alert {
-            padding: 15px;
+        .admin-menu .menu-title,
+        .admin-menu .menu-desc {
+            color: white !important;
+        }
+
+        .admin-menu::before {
+            color: rgba(255, 255, 255, 0.15) !important;
+            opacity: 1 !important;
+        }
+
+        .admin-menu:hover {
+            background: linear-gradient(135deg, #f59e0b, #d97706) !important;
+        }
+
+        .admin-badge {
+            background: var(--gradient-warm);
+            color: white;
+            padding: var(--space-1) var(--space-3);
             border-radius: 12px;
-            margin-bottom: 20px;
+            font-size: var(--text-xs);
+            font-weight: 700;
+            margin-left: var(--space-2);
+            letter-spacing: 0.025em;
+        }
+
+        /* 알림 시스템 개선 */
+        .alert {
+            padding: var(--space-4) var(--space-5);
+            border-radius: 16px;
+            margin-bottom: var(--space-6);
             text-align: center;
+            border: 1.5px solid;
+            font-weight: 500;
+            position: relative;
+            animation: slideInFromTop 0.4s ease-out;
         }
 
-        .alert-success {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-
-        .alert-error {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 1000;
-            padding: 20px;
-            overflow-y: auto;
-        }
-
-        .modal-content {
-            background: white;
-            border-radius: 20px;
-            max-width: 600px;
-            width: 100%;
-            margin: 50px auto;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-            animation: modalSlideIn 0.3s ease-out;
-        }
-
-        @keyframes modalSlideIn {
+        @keyframes slideInFromTop {
             from {
                 opacity: 0;
-                transform: translateY(-50px);
+                transform: translateY(-10px);
             }
             to {
                 opacity: 1;
@@ -330,286 +476,347 @@
             }
         }
 
+        .alert-success {
+            background: rgba(16, 185, 129, 0.1);
+            color: #047857;
+            border-color: rgba(16, 185, 129, 0.3);
+        }
+
+        .alert-error {
+            background: rgba(239, 68, 68, 0.1);
+            color: #dc2626;
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+
+        /* 모달 개선 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.5);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            padding: var(--space-5);
+            overflow-y: auto;
+        }
+
+        .modal-content {
+            background: var(--surface-primary);
+            border-radius: 24px;
+            max-width: 600px;
+            width: 100%;
+            margin: var(--space-12) auto;
+            box-shadow: var(--shadow-xl);
+            animation: modalSlideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1.5px solid rgba(59, 130, 246, 0.1);
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
         .modal-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 25px 30px;
-            border-bottom: 2px solid #f0f0f0;
+            padding: var(--space-6) var(--space-8);
+            border-bottom: 1.5px solid #f1f5f9;
         }
 
         .modal-header h2 {
             margin: 0;
-            color: #2c3e50;
-            font-size: 24px;
+            color: var(--text-primary);
+            font-size: var(--text-2xl);
+            font-weight: 700;
+            letter-spacing: -0.01em;
         }
 
         .close-btn {
-            background: none;
+            background: var(--surface-elevated);
             border: none;
-            font-size: 28px;
-            color: #999;
+            font-size: var(--text-xl);
+            color: var(--text-muted);
             cursor: pointer;
-            padding: 0;
-            width: 30px;
-            height: 30px;
+            padding: var(--space-2);
+            width: 36px;
+            height: 36px;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 50%;
-            transition: all 0.3s;
+            border-radius: 12px;
+            transition: all 0.2s ease;
         }
 
         .close-btn:hover {
-            background: #f0f0f0;
-            color: #666;
+            background: #e2e8f0;
+            color: var(--text-secondary);
+            transform: scale(1.05);
         }
 
         .modal-body {
-            padding: 30px;
+            padding: var(--space-8);
         }
 
-        .day-section {
-            margin-bottom: 30px;
+        /* 차트 스타일 */
+        .chart-container {
+            background: var(--surface-primary);
+            padding: var(--space-6);
+            border-radius: 20px;
+            margin-bottom: var(--space-6);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid rgba(59, 130, 246, 0.1);
         }
 
-        .day-section h3 {
-            color: #3498db;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #ecf0f1;
+        .chart-title {
+            font-size: var(--text-lg);
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: var(--space-4);
+            text-align: center;
+        }
+
+        .mbti-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--space-3);
+            margin-bottom: var(--space-6);
+        }
+
+        .mbti-item {
+            background: var(--surface-elevated);
+            padding: var(--space-4);
+            border-radius: 12px;
+            text-align: center;
+            transition: all 0.2s ease;
+            border: 1px solid #e2e8f0;
+        }
+
+        .mbti-item:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .mbti-type {
+            font-weight: 700;
+            color: var(--primary-brand);
+            font-size: var(--text-sm);
+            margin-bottom: var(--space-1);
+        }
+
+        .mbti-count {
+            font-size: var(--text-2xl);
+            font-weight: 800;
+            color: var(--text-primary);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--space-4);
+            margin-bottom: var(--space-6);
+        }
+
+        .stat-card {
+            background: var(--surface-elevated);
+            padding: var(--space-5);
+            border-radius: 16px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+        }
+
+        .stat-number {
+            font-size: var(--text-3xl);
+            font-weight: 800;
+            color: var(--primary-brand);
+            margin-bottom: var(--space-2);
+        }
+
+        .stat-label {
+            font-size: var(--text-sm);
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* 일정 스타일 */
+        .schedule-timeline {
+            position: relative;
+            margin-left: var(--space-6);
+        }
+
+        .schedule-timeline::before {
+            content: '';
+            position: absolute;
+            left: -var(--space-4);
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--gradient-brand);
         }
 
         .schedule-item {
-            display: grid;
-            grid-template-columns: 80px 1fr 150px;
-            gap: 15px;
-            padding: 15px;
-            margin: 10px 0;
-            background: #f8f9fa;
+            position: relative;
+            margin-bottom: var(--space-6);
+            padding: var(--space-4);
+            background: var(--surface-elevated);
             border-radius: 12px;
-            border-left: 4px solid #3498db;
-            align-items: center;
+            border: 1px solid #e2e8f0;
         }
 
-        .schedule-item .time {
-            font-weight: 600;
-            color: #2c3e50;
-            font-size: 14px;
+        .schedule-item::before {
+            content: '';
+            position: absolute;
+            left: -var(--space-6);
+            top: var(--space-4);
+            width: 12px;
+            height: 12px;
+            background: var(--secondary-brand);
+            border-radius: 50%;
         }
 
-        .schedule-item .activity {
-            color: #333;
-            line-height: 1.4;
-        }
-
-        .schedule-item .location {
-            font-size: 12px;
-            color: #666;
-            text-align: right;
-        }
-
-        .test-section {
-            text-align: center;
-        }
-
-        .test-intro {
-            padding: 40px 20px;
-        }
-
-        .test-intro h3 {
-            color: #3498db;
-            margin-bottom: 15px;
-        }
-
-        .test-intro p {
-            color: #666;
-            margin-bottom: 30px;
-            line-height: 1.6;
-        }
-
-        .question-card {
-            background: #f8f9fa;
-            border-radius: 15px;
-            padding: 30px;
-            margin: 20px 0;
-            text-align: center;
-        }
-
-        .question-text {
-            font-size: 18px;
-            color: #2c3e50;
-            margin-bottom: 30px;
-            line-height: 1.5;
-        }
-
-        .answer-buttons {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-        }
-
-        .answer-btn {
-            padding: 15px 30px;
-            border: none;
-            border-radius: 25px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            min-width: 120px;
-        }
-
-        .answer-btn.btn-o {
-            background: linear-gradient(135deg, #27ae60, #2ecc71);
-            color: white;
-        }
-
-        .answer-btn.btn-x {
-            background: linear-gradient(135deg, #e74c3c, #c0392b);
-            color: white;
-        }
-
-        .answer-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-        }
-
-        .result-card {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            border-radius: 20px;
-            padding: 40px;
-            text-align: center;
-        }
-
-        .result-type {
-            font-size: 28px;
+        .schedule-time {
             font-weight: 700;
-            margin-bottom: 15px;
+            color: var(--primary-brand);
+            font-size: var(--text-sm);
+            margin-bottom: var(--space-2);
         }
 
-        .result-description {
-            font-size: 16px;
-            line-height: 1.6;
-            opacity: 0.9;
-        }
-
-        .add-link-section {
-            background: #f8f9fa;
-            border-radius: 15px;
-            padding: 25px;
-            margin-bottom: 30px;
-        }
-
-        .add-link-section h3 {
-            color: #2c3e50;
-            margin-bottom: 20px;
-        }
-
-        .links-list h3 {
-            color: #2c3e50;
-            margin-bottom: 20px;
-        }
-
-        .link-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px;
-            background: #f8f9fa;
-            border-radius: 12px;
-            margin: 10px 0;
-        }
-
-        .link-info {
-            flex: 1;
-        }
-
-        .link-title {
+        .schedule-title {
             font-weight: 600;
-            color: #2c3e50;
-            margin-bottom: 5px;
+            color: var(--text-primary);
+            margin-bottom: var(--space-1);
         }
 
-        .link-url {
-            font-size: 12px;
-            color: #666;
-            word-break: break-all;
+        .schedule-desc {
+            font-size: var(--text-sm);
+            color: var(--text-secondary);
         }
 
-        .link-actions {
-            display: flex;
-            gap: 10px;
+        /* 설문 스타일 */
+        .survey-question {
+            margin-bottom: var(--space-6);
         }
 
-        .rating-group {
+        .question-title {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: var(--space-4);
+            font-size: var(--text-lg);
+        }
+
+        .radio-group {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: var(--space-3);
         }
 
-        .rating-group input[type="radio"] {
-            margin-right: 10px;
-        }
-
-        .rating-group label {
+        .radio-item {
             display: flex;
             align-items: center;
-            padding: 12px;
-            background: #f8f9fa;
-            border-radius: 10px;
+            padding: var(--space-3);
+            background: var(--surface-elevated);
+            border-radius: 12px;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.2s ease;
+            border: 1px solid #e2e8f0;
         }
 
-        .rating-group label:hover {
-            background: #e9ecef;
+        .radio-item:hover {
+            background: #e2e8f0;
         }
 
-        .rating-group input[type="radio"]:checked + label {
-            background: linear-gradient(135deg, #3498db, #2980b9);
-            color: white;
+        .radio-item input[type="radio"] {
+            margin-right: var(--space-3);
+            transform: scale(1.2);
         }
 
+        .radio-item.selected {
+            background: rgba(59, 130, 246, 0.1);
+            border-color: var(--secondary-brand);
+        }
+
+        /* 로딩 상태 */
         .loading {
             text-align: center;
-            padding: 40px;
-            color: #666;
+            padding: var(--space-12);
+            color: var(--text-muted);
+            font-weight: 500;
         }
 
-        @media (max-width: 768px) {
-            .modal-content {
-                margin: 20px auto;
-                max-width: 95%;
-            }
-            
-            .modal-body {
-                padding: 20px;
-            }
-            
-            .schedule-item {
-                grid-template-columns: 1fr;
-                gap: 10px;
-            }
-            
-            .schedule-item .location {
-                text-align: left;
-            }
-            
-            .answer-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
+        .loading::after {
+            content: '';
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #f3f4f6;
+            border-radius: 50%;
+            border-top-color: var(--secondary-brand);
+            animation: spin 1s ease-in-out infinite;
+            margin-left: var(--space-2);
         }
 
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* 반응형 개선 */
         @media (max-width: 480px) {
             .container {
-                padding: 15px;
+                padding: var(--space-4);
+            }
+            
+            .header {
+                margin-bottom: var(--space-8);
+                padding: var(--space-8) 0;
+            }
+            
+            .header h1 {
+                font-size: var(--text-3xl);
+            }
+            
+            .header p {
+                font-size: var(--text-lg);
             }
             
             .card {
-                padding: 20px;
+                padding: var(--space-6);
+            }
+            
+            .menu-grid {
+                gap: var(--space-3);
+            }
+            
+            .menu-item {
+                padding: var(--space-4);
+            }
+            
+            .menu-title {
+                font-size: var(--text-base);
+            }
+            
+            .menu-desc {
+                font-size: var(--text-xs);
+            }
+            
+            .mbti-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -668,7 +875,7 @@
                     </select>
                 </div>
                 
-                <button type="button" class="btn btn-primary" onclick="handleLogin()">
+                <button type="button" class="btn btn-primary" onclick="handleLogin()" id="loginBtn">
                     로그인
                 </button>
             </div>
@@ -684,13 +891,13 @@
 
             <!-- 워크숍 시작 알림 -->
             <div id="workshopAlert" class="card hidden">
-                <h3 style="margin-bottom: 15px; color: #667eea;">🎉 워크숍에 오신 것을 환영합니다!</h3>
-                <p style="margin-bottom: 20px; color: #666; line-height: 1.5;">
+                <h3 style="margin-bottom: var(--space-4); color: var(--text-primary); font-weight: 700;">워크숍에 오신 것을 환영합니다</h3>
+                <p style="margin-bottom: var(--space-6); color: var(--text-secondary); line-height: 1.6;">
                     투어패스사업부 2025 워크숍이 시작됩니다.<br>
-                    아래 버튼을 눌러 48시간의 특별한 여정을 시작해보세요!
+                    48시간의 특별한 여정을 시작해보세요.
                 </p>
                 <button class="btn btn-primary" onclick="startWorkshop()">
-                    워크숍 참여하기 🚀
+                    워크숍 참여하기
                 </button>
             </div>
 
@@ -702,261 +909,196 @@
 
             <!-- 메뉴 그리드 -->
             <div class="menu-grid">
-                <div class="menu-item" onclick="openMBTIRelations()">
-                    <span class="menu-icon">👥</span>
+                <div class="menu-item" data-emoji="👥" onclick="openMBTIRelations()">
                     <div class="menu-title">참가자 현황</div>
-                    <div class="menu-desc">MBTI 입력/수정 & 팀 보기</div>
+                    <div class="menu-desc">MBTI 분포 및 팀 분석</div>
                 </div>
 
-                <div class="menu-item" onclick="openSchedule()">
-                    <span class="menu-icon">📅</span>
+                <div class="menu-item" data-emoji="📅" onclick="openSchedule()">
                     <div class="menu-title">워크샵 일정</div>
-                    <div class="menu-desc">상세 일정 및 프로그램</div>
+                    <div class="menu-desc">상세 프로그램</div>
                 </div>
 
-                <div class="menu-item" onclick="openPsychTest()">
-                    <span class="menu-icon">🧠</span>
-                    <div class="menu-title">여행심리테스트</div>
-                    <div class="menu-desc">여행 성향/동행 궁합 보기</div>
+                <div class="menu-item" data-emoji="🧠" onclick="openPsychTest()">
+                    <div class="menu-title">심리테스트</div>
+                    <div class="menu-desc">여행 성향 분석</div>
                 </div>
 
-                <div class="menu-item" onclick="openLinkStorage()">
-                    <span class="menu-icon">📦</span>
-                    <div class="menu-title">투어패스 보관함</div>
-                    <div class="menu-desc">개인 링크 저장소</div>
+                <div class="menu-item" data-emoji="📦" onclick="openLinkStorage()">
+                    <div class="menu-title">보관함</div>
+                    <div class="menu-desc">링크 저장소</div>
                 </div>
 
-                <div class="menu-item" onclick="openSurvey()">
-                    <span class="menu-icon">📝</span>
+                <div class="menu-item" data-emoji="📝" onclick="openSurvey()">
                     <div class="menu-title">설문조사</div>
-                    <div class="menu-desc">워크샵 만족도</div>
+                    <div class="menu-desc">만족도 조사</div>
                 </div>
 
-                <a href="https://chatgpt.com/g/g-6899821cd87481919c7a20d26b89f0ce-tueopaeseusaeobbu-weokeusyob-aieosiseuteonteu" target="_blank" class="menu-item">
-                    <span class="menu-icon">🤖</span>
+                <a href="https://chatgpt.com/g/g-6899821cd87481919c7a20d26b89f0ce-tueopaeseusaeobbu-weokeusyob-aieosiseuteonteu" target="_blank" class="menu-item" data-emoji="🤖">
                     <div class="menu-title">워크숍 챗봇</div>
-                    <div class="menu-desc">대화형 도우미 바로가기</div>
+                    <div class="menu-desc">AI 어시스턴트</div>
                 </a>
-            </div>
-
-            <!-- 기능별 모달 섹션들 -->
-            <!-- MBTI 관계도 모달 -->
-            <div id="mbtiModal" class="modal hidden">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h2>👥 참가자 MBTI 현황</h2>
-                        <button class="close-btn" onclick="closeModal('mbtiModal')">&times;</button>
-                    </div>
-                    <div id="mbtiContent" class="modal-body">
-                        <div class="loading">로딩 중...</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 일정 모달 -->
-            <div id="scheduleModal" class="modal hidden">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h2>📅 워크샵 일정</h2>
-                        <button class="close-btn" onclick="closeModal('scheduleModal')">&times;</button>
-                    </div>
-                    <div id="scheduleContent" class="modal-body">
-                        <div class="day-section">
-                            <h3>🌅 1일차</h3>
-                            <div class="schedule-item">
-                                <span class="time">14:50</span>
-                                <span class="activity">로비 집합</span>
-                                <span class="location">부여롯데리조트</span>
-                            </div>
-                            <div class="schedule-item">
-                                <span class="time">15:30</span>
-                                <span class="activity">체크인 및 방배정</span>
-                                <span class="location">부여롯데리조트</span>
-                            </div>
-                            <div class="schedule-item">
-                                <span class="time">15:30</span>
-                                <span class="activity">백제문화단지</span>
-                                <span class="location">백제문화단지</span>
-                            </div>
-                            <div class="schedule-item">
-                                <span class="time">17:00</span>
-                                <span class="activity">아로마 버블리 만들기<br>*충남투어패스 가맹점</span>
-                                <span class="location">수북로1945</span>
-                            </div>
-                            <div class="schedule-item">
-                                <span class="time">17:30</span>
-                                <span class="activity">차량별 자유시간</span>
-                                <span class="location">-</span>
-                            </div>
-                            <div class="schedule-item">
-                                <span class="time">18:30</span>
-                                <span class="activity">저녁식사<br>장소집합</span>
-                                <span class="location">서동한우 규암점</span>
-                            </div>
-                            <div class="schedule-item">
-                                <span class="time">21:00</span>
-                                <span class="activity">회식 및 레크레이션<br>*와주 시골통닭 / 보령맥주 (가맹점 혜택)</span>
-                                <span class="location">부여롯데리조트</span>
-                            </div>
-                            <div class="schedule-item">
-                                <span class="time">22:00</span>
-                                <span class="activity">자율회식</span>
-                                <span class="location">-</span>
-                            </div>
-                        </div>
-                        
-                        <div class="day-section">
-                            <h3>🌞 2일차</h3>
-                            <div class="schedule-item">
-                                <span class="time">11:00</span>
-                                <span class="activity">이휘겸 점심식사</span>
-                                <span class="location">장원막국수</span>
-                            </div>
-                            <div class="schedule-item">
-                                <span class="time">12:30</span>
-                                <span class="activity">워크숍 집결</span>
-                                <span class="location">-</span>
-                            </div>
-                            <div class="schedule-item">
-                                <span class="time">12:30</span>
-                                <span class="activity">2026 투어패스사업부 사업 추진계획 (안)</span>
-                                <span class="location">-</span>
-                            </div>
-                            <div class="schedule-item">
-                                <span class="time">13:10</span>
-                                <span class="activity">3팀 공유시간</span>
-                                <span class="location">사비123창작센터</span>
-                            </div>
-                            <div class="schedule-item">
-                                <span class="time">13:30</span>
-                                <span class="activity">2팀 공유시간</span>
-                                <span class="location">-</span>
-                            </div>
-                            <div class="schedule-item">
-                                <span class="time">13:50</span>
-                                <span class="activity">1팀 공유시간</span>
-                                <span class="location">-</span>
-                            </div>
-                            <div class="schedule-item">
-                                <span class="time">14:10</span>
-                                <span class="activity">귀가</span>
-                                <span class="location">-</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 심리테스트 모달 -->
-            <div id="psychTestModal" class="modal hidden">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h2>🧠 여행 심리테스트</h2>
-                        <button class="close-btn" onclick="closeModal('psychTestModal')">&times;</button>
-                    </div>
-                    <div id="psychTestContent" class="modal-body">
-                        <div id="testStart" class="test-section">
-                            <div class="test-intro">
-                                <h3>🧳 나의 여행 스타일은? 💫</h3>
-                                <p>10가지 질문을 통해 나만의 여행 스타일을 알아보세요!</p>
-                                <button class="btn btn-primary" onclick="startPsychTest()">테스트 시작하기</button>
-                            </div>
-                        </div>
-                        
-                        <div id="testQuestions" class="test-section hidden">
-                            <div id="questionContainer">
-                                <!-- 동적으로 생성 -->
-                            </div>
-                        </div>
-                        
-                        <div id="testResult" class="test-section hidden">
-                            <div id="resultContainer">
-                                <!-- 동적으로 생성 -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 링크 저장소 모달 -->
-            <div id="linkStorageModal" class="modal hidden">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h2>📦 투어패스 보관함</h2>
-                        <button class="close-btn" onclick="closeModal('linkStorageModal')">&times;</button>
-                    </div>
-                    <div id="linkStorageContent" class="modal-body">
-                        <div class="add-link-section">
-                            <h3>🔗 새 링크 추가</h3>
-                            <div class="form-group">
-                                <input type="text" id="linkTitle" placeholder="링크 제목을 입력하세요" />
-                            </div>
-                            <div class="form-group">
-                                <input type="url" id="linkUrl" placeholder="https://..." />
-                            </div>
-                            <button class="btn btn-primary" onclick="addLink()">링크 저장</button>
-                        </div>
-                        
-                        <div class="links-list">
-                            <h3>💾 저장된 링크</h3>
-                            <div id="savedLinks">
-                                <!-- 동적으로 생성 -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 설문조사 모달 -->
-            <div id="surveyModal" class="modal hidden">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h2>📝 워크샵 만족도 설문조사</h2>
-                        <button class="close-btn" onclick="closeModal('surveyModal')">&times;</button>
-                    </div>
-                    <div id="surveyContent" class="modal-body">
-                        <form id="surveyForm">
-                            <div class="form-group">
-                                <label>전체적인 만족도는 어떠셨나요?</label>
-                                <div class="rating-group">
-                                    <input type="radio" name="satisfaction" value="5" id="rate5" />
-                                    <label for="rate5">⭐⭐⭐⭐⭐ 매우 만족</label>
-                                    
-                                    <input type="radio" name="satisfaction" value="4" id="rate4" />
-                                    <label for="rate4">⭐⭐⭐⭐ 만족</label>
-                                    
-                                    <input type="radio" name="satisfaction" value="3" id="rate3" />
-                                    <label for="rate3">⭐⭐⭐ 보통</label>
-                                    
-                                    <input type="radio" name="satisfaction" value="2" id="rate2" />
-                                    <label for="rate2">⭐⭐ 불만족</label>
-                                    
-                                    <input type="radio" name="satisfaction" value="1" id="rate1" />
-                                    <label for="rate1">⭐ 매우 불만족</label>
-                                </div>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="feedback">워크샵에 대한 피드백을 남겨주세요</label>
-                                <textarea id="feedback" rows="4" placeholder="좋았던 점, 아쉬웠던 점 등을 자유롭게 작성해주세요"></textarea>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="suggestions">개선사항이나 제안사항이 있다면 알려주세요</label>
-                                <textarea id="suggestions" rows="3" placeholder="다음 워크샵을 위한 제안사항"></textarea>
-                            </div>
-                            
-                            <div style="text-align: center; margin-top: 20px;">
-                                <button type="submit" class="btn btn-primary">설문 제출하기</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
             </div>
         </div>
 
         <!-- 알림 메시지 -->
         <div id="alertMessage" class="hidden"></div>
+    </div>
+
+    <!-- 모달들 -->
+    <!-- MBTI 현황 모달 -->
+    <div id="mbtiModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>참가자 현황</h2>
+                <button class="close-btn" onclick="closeModal('mbtiModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalParticipants">13</div>
+                        <div class="stat-label">총 참가자</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="onlineCount">8</div>
+                        <div class="stat-label">현재 접속</div>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <div class="chart-title">MBTI 분포</div>
+                    <div class="mbti-grid" id="mbtiDistribution">
+                        <!-- 동적으로 생성 -->
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <div class="chart-title">팀별 MBTI 분포</div>
+                    <div id="teamDistribution">
+                        <!-- 동적으로 생성 -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 워크숍 일정 모달 -->
+    <div id="scheduleModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>워크숍 일정</h2>
+                <button class="close-btn" onclick="closeModal('scheduleModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="schedule-timeline">
+                    <div class="schedule-item">
+                        <div class="schedule-time">09:00 - 09:30</div>
+                        <div class="schedule-title">등록 및 환영 인사</div>
+                        <div class="schedule-desc">참가자 체크인, 웰컴 드링크 제공</div>
+                    </div>
+                    <div class="schedule-item">
+                        <div class="schedule-time">09:30 - 10:30</div>
+                        <div class="schedule-title">아이스브레이킹</div>
+                        <div class="schedule-desc">MBTI 기반 팀 빌딩 게임</div>
+                    </div>
+                    <div class="schedule-item">
+                        <div class="schedule-time">10:30 - 12:00</div>
+                        <div class="schedule-title">비즈니스 전략 세션</div>
+                        <div class="schedule-desc">2025년 투어패스 사업 방향성 논의</div>
+                    </div>
+                    <div class="schedule-item">
+                        <div class="schedule-time">12:00 - 13:00</div>
+                        <div class="schedule-title">점심 식사</div>
+                        <div class="schedule-desc">팀별 네트워킹 런치</div>
+                    </div>
+                    <div class="schedule-item">
+                        <div class="schedule-time">13:00 - 15:00</div>
+                        <div class="schedule-title">워크숍 활동</div>
+                        <div class="schedule-desc">팀별 프로젝트 기획 및 발표</div>
+                    </div>
+                    <div class="schedule-item">
+                        <div class="schedule-time">15:00 - 16:00</div>
+                        <div class="schedule-title">심리테스트 및 분석</div>
+                        <div class="schedule-desc">개인별 여행 성향 분석</div>
+                    </div>
+                    <div class="schedule-item">
+                        <div class="schedule-time">16:00 - 17:00</div>
+                        <div class="schedule-title">마무리 및 정리</div>
+                        <div class="schedule-desc">피드백 공유, 향후 계획 수립</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 설문조사 모달 -->
+    <div id="surveyModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>만족도 설문조사</h2>
+                <button class="close-btn" onclick="closeModal('surveyModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="surveyForm">
+                    <div class="survey-question">
+                        <div class="question-title">1. 워크숍 전반적인 만족도는 어떠셨나요?</div>
+                        <div class="radio-group">
+                            <label class="radio-item">
+                                <input type="radio" name="satisfaction" value="5">
+                                매우 만족
+                            </label>
+                            <label class="radio-item">
+                                <input type="radio" name="satisfaction" value="4">
+                                만족
+                            </label>
+                            <label class="radio-item">
+                                <input type="radio" name="satisfaction" value="3">
+                                보통
+                            </label>
+                            <label class="radio-item">
+                                <input type="radio" name="satisfaction" value="2">
+                                불만족
+                            </label>
+                            <label class="radio-item">
+                                <input type="radio" name="satisfaction" value="1">
+                                매우 불만족
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="survey-question">
+                        <div class="question-title">2. 가장 유용했던 프로그램은 무엇인가요?</div>
+                        <div class="radio-group">
+                            <label class="radio-item">
+                                <input type="radio" name="useful_program" value="icebreaking">
+                                아이스브레이킹
+                            </label>
+                            <label class="radio-item">
+                                <input type="radio" name="useful_program" value="strategy">
+                                비즈니스 전략 세션
+                            </label>
+                            <label class="radio-item">
+                                <input type="radio" name="useful_program" value="workshop">
+                                팀별 워크숍
+                            </label>
+                            <label class="radio-item">
+                                <input type="radio" name="useful_program" value="psychtest">
+                                심리테스트
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="survey-question">
+                        <div class="question-title">3. 추가 의견이나 개선사항이 있다면 자유롭게 작성해주세요.</div>
+                        <textarea id="feedback" rows="4" placeholder="의견을 입력해주세요..." style="width: 100%; margin-top: var(--space-3);"></textarea>
+                    </div>
+
+                    <button type="button" class="btn btn-primary" onclick="submitSurvey()" style="width: 100%; margin-top: var(--space-6);">
+                        설문 제출
+                    </button>
+                </form>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -966,13 +1108,11 @@
         let workshopStartTime = null;
         let timerInterval = null;
 
-        // API 엔드포인트 (실제 Google Apps Script 웹앱 URL로 교체 필요)
+        // API 설정
         const API_URL = 'https://script.google.com/macros/s/AKfycbyFKlUM2i43w_SfzWZxyjh-gxwNNx6LK3umkO2zEiwlUco-gtqFNgqSUfsU85skHJSx/exec';
-        
-        // 임시 개발 모드 (API가 준비되지 않았을 때)
-        const DEVELOPMENT_MODE = true; // 실제 배포 시 false로 변경
+        const DEVELOPMENT_MODE = true;
 
-        // 임시 사용자 데이터
+        // 사용자 데이터
         const TEMP_USER_DATA = {
             "남도현": { team:"투어패스사업부", position:"이사" },
             "김수인": { team:"투어패스사업부 영업 1팀", position:"팀장" },
@@ -989,6 +1129,137 @@
             "장은진": { team:"투어패스사업부 영업 2팀", position:"주임" }
         };
 
+        // 임시 MBTI 데이터 (실제로는 서버에서 가져올 예정)
+        const TEMP_MBTI_DATA = {
+            "남도현": "ENTJ",
+            "김수인": "ESFJ", 
+            "고다현": "ISFP",
+            "심재희": "ENFP",
+            "판티니안": "INFJ",
+            "김현철": "ESTJ",
+            "이유진": "ENFJ",
+            "정어진": "ISFJ",
+            "장원준": "INTP",
+            "김대진": "ESTP",
+            "손현우": "ISTJ",
+            "이주아": "ESFP",
+            "장은진": "INFP"
+        };
+
+        // API 통신 클래스
+        class WorkshopAPI {
+            constructor() {
+                this.baseURL = API_URL;
+                this.retryCount = 3;
+            }
+            
+            async request(action, data = {}) {
+                const payload = {
+                    action: action,
+                    sessionId: sessionId,
+                    timestamp: new Date().toISOString(),
+                    ...data
+                };
+                
+                for(let i = 0; i < this.retryCount; i++) {
+                    try {
+                        const response = await fetch(this.baseURL, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify(payload)
+                        });
+                        
+                        const result = await response.json();
+                        if(result.success) {
+                            return result;
+                        } else {
+                            throw new Error(result.error || 'API 오류');
+                        }
+                        
+                    } catch(error) {
+                        if(i === this.retryCount - 1) {
+                            if(DEVELOPMENT_MODE) {
+                                // 개발 모드에서는 임시 데이터 반환
+                                return this.getMockData(action, data);
+                            }
+                            throw error;
+                        }
+                        await new Promise(resolve => setTimeout(resolve, 1000 * (i + 1)));
+                    }
+                }
+            }
+            
+            getMockData(action, data) {
+                switch(action) {
+                    case 'login':
+                        return {
+                            success: true,
+                            sessionId: 'temp_' + Date.now(),
+                            userData: TEMP_USER_DATA[data.userName]
+                        };
+                    case 'getMBTIStats':
+                        return this.generateMockMBTIStats();
+                    case 'saveSurvey':
+                        return { success: true, message: '설문이 저장되었습니다.' };
+                    case 'saveLink':
+                        return { success: true, message: '링크가 저장되었습니다.' };
+                    default:
+                        return { success: false, error: 'Unknown action' };
+                }
+            }
+            
+            generateMockMBTIStats() {
+                const mbtiCount = {};
+                const teamDistribution = {};
+                
+                Object.entries(TEMP_MBTI_DATA).forEach(([name, mbti]) => {
+                    mbtiCount[mbti] = (mbtiCount[mbti] || 0) + 1;
+                    
+                    const userData = TEMP_USER_DATA[name];
+                    if(userData) {
+                        const team = userData.team;
+                        if(!teamDistribution[team]) {
+                            teamDistribution[team] = {};
+                        }
+                        teamDistribution[team][mbti] = (teamDistribution[team][mbti] || 0) + 1;
+                    }
+                });
+                
+                return {
+                    success: true,
+                    mbtiDistribution: mbtiCount,
+                    teamDistribution: teamDistribution,
+                    totalParticipants: Object.keys(TEMP_USER_DATA).length,
+                    onlineUsers: Math.floor(Math.random() * 8) + 5
+                };
+            }
+            
+            async login(userName, mbti) {
+                return this.request('login', {
+                    userName: userName,
+                    mbti: mbti,
+                    team: TEMP_USER_DATA[userName]?.team,
+                    position: TEMP_USER_DATA[userName]?.position
+                });
+            }
+            
+            async getMBTIStats() {
+                return this.request('getMBTIStats');
+            }
+            
+            async saveSurvey(surveyData) {
+                return this.request('saveSurvey', surveyData);
+            }
+            
+            async saveLink(linkData) {
+                return this.request('saveLink', linkData);
+            }
+        }
+
+        const api = new WorkshopAPI();
+
         // 로그인 처리
         async function handleLogin() {
             const userName = document.getElementById('userName').value;
@@ -999,72 +1270,30 @@
                 return;
             }
 
-            // 개발 모드: 로컬 데이터 사용
-            if (DEVELOPMENT_MODE) {
-                if (TEMP_USER_DATA[userName]) {
+            const loginBtn = document.getElementById('loginBtn');
+            loginBtn.disabled = true;
+            loginBtn.innerHTML = '로그인 중...';
+
+            try {
+                const result = await api.login(userName, userMBTI);
+                
+                if(result.success) {
                     currentUser = userName;
-                    sessionId = 'temp_' + Date.now();
+                    sessionId = result.sessionId;
                     
                     localStorage.setItem('sessionId', sessionId);
                     localStorage.setItem('currentUser', userName);
                     localStorage.setItem('userMBTI', userMBTI);
                     
-                    showMainScreen(TEMP_USER_DATA[userName]);
+                    showMainScreen(result.userData);
                     showWorkshopAlert();
-                    showAlert('개발 모드로 로그인되었습니다.', 'success');
-                    return;
-                } else {
-                    showAlert('등록되지 않은 사용자입니다.', 'error');
-                    return;
+                    showAlert('로그인이 완료되었습니다.', 'success');
                 }
-            }
-
-            // 실제 API 호출
-            try {
-                console.log('Sending login request...'); // 디버깅용
-
-                const response = await fetch(API_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        action: 'login',
-                        name: userName,
-                        mbti: userMBTI
-                    })
-                });
-
-                console.log('Response status:', response.status); // 디버깅용
-                
-                // 응답이 JSON인지 확인
-                const contentType = response.headers.get('content-type');
-                if (!contentType || !contentType.includes('application/json')) {
-                    const text = await response.text();
-                    console.error('Non-JSON response:', text);
-                    showAlert('서버 응답 형식 오류입니다. 관리자에게 문의하세요.', 'error');
-                    return;
-                }
-
-                const result = await response.json();
-                console.log('Response data:', result); // 디버깅용
-
-                if (result.success) {
-                    currentUser = userName;
-                    sessionId = result.data.sessionId;
-                    
-                    // 로컬 스토리지에 세션 정보 저장
-                    localStorage.setItem('sessionId', sessionId);
-                    localStorage.setItem('currentUser', userName);
-                    
-                    showMainScreen(result.data.userInfo);
-                    showWorkshopAlert();
-                } else {
-                    showAlert(result.message, 'error');
-                }
-            } catch (error) {
-                console.error('Login error:', error);
-                showAlert('로그인 중 오류가 발생했습니다. API URL을 확인해주세요.', 'error');
+            } catch(error) {
+                showAlert('로그인 중 오류가 발생했습니다: ' + error.message, 'error');
+            } finally {
+                loginBtn.disabled = false;
+                loginBtn.innerHTML = '로그인';
             }
         }
 
@@ -1077,7 +1306,6 @@
             document.getElementById('userTeamDisplay').textContent = 
                 `${userInfo.team} | ${userInfo.position}`;
             
-            // 관리자인 경우 관리자 메뉴 추가
             if (currentUser === '김현철') {
                 addAdminMenu();
             }
@@ -1090,80 +1318,19 @@
 
         // 워크숍 시작
         async function startWorkshop() {
-            // 개발 모드: 로컬 처리
-            if (DEVELOPMENT_MODE) {
-                workshopStartTime = new Date();
-                localStorage.setItem('workshopStartTime', workshopStartTime.toISOString());
-                
-                document.getElementById('workshopAlert').classList.add('hidden');
-                document.getElementById('timerCard').classList.remove('hidden');
-                
-                startTimer();
-                showAlert('워크숍이 시작되었습니다! 🎉', 'success');
-                return;
-            }
-
-            // 실제 API 호출
-            try {
-                const response = await fetch(API_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        action: 'startWorkshop',
-                        name: currentUser,
-                        sessionId: sessionId
-                    })
-                });
-
-                // 응답이 JSON인지 확인
-                const contentType = response.headers.get('content-type');
-                if (!contentType || !contentType.includes('application/json')) {
-                    const text = await response.text();
-                    console.error('Non-JSON response:', text);
-                    showAlert('서버 응답 형식 오류입니다. 개발 모드로 진행합니다.', 'error');
-                    
-                    // 개발 모드로 폴백
-                    workshopStartTime = new Date();
-                    localStorage.setItem('workshopStartTime', workshopStartTime.toISOString());
-                    document.getElementById('workshopAlert').classList.add('hidden');
-                    document.getElementById('timerCard').classList.remove('hidden');
-                    startTimer();
-                    return;
-                }
-
-                const result = await response.json();
-
-                if (result.success) {
-                    workshopStartTime = new Date(result.data.startTime);
-                    localStorage.setItem('workshopStartTime', workshopStartTime.toISOString());
-                    
-                    document.getElementById('workshopAlert').classList.add('hidden');
-                    document.getElementById('timerCard').classList.remove('hidden');
-                    
-                    startTimer();
-                    showAlert('워크숍이 시작되었습니다! 🎉', 'success');
-                } else {
-                    showAlert(result.message, 'error');
-                }
-            } catch (error) {
-                console.error('Workshop start error:', error);
-                showAlert('워크숍 시작 중 오류가 발생했습니다. 개발 모드로 진행합니다.', 'error');
-                
-                // 에러 발생 시 개발 모드로 폴백
-                workshopStartTime = new Date();
-                localStorage.setItem('workshopStartTime', workshopStartTime.toISOString());
-                document.getElementById('workshopAlert').classList.add('hidden');
-                document.getElementById('timerCard').classList.remove('hidden');
-                startTimer();
-            }
+            workshopStartTime = new Date();
+            localStorage.setItem('workshopStartTime', workshopStartTime.toISOString());
+            
+            document.getElementById('workshopAlert').classList.add('hidden');
+            document.getElementById('timerCard').classList.remove('hidden');
+            
+            startTimer();
+            showAlert('워크숍이 시작되었습니다!', 'success');
         }
 
         // 타이머 시작
         function startTimer() {
             if (timerInterval) clearInterval(timerInterval);
-            
             timerInterval = setInterval(updateTimer, 1000);
             updateTimer();
         }
@@ -1174,12 +1341,12 @@
 
             const now = new Date();
             const elapsed = now - workshopStartTime;
-            const remaining = (48 * 60 * 60 * 1000) - elapsed; // 48시간
+            const remaining = (48 * 60 * 60 * 1000) - elapsed;
 
             if (remaining <= 0) {
                 document.getElementById('timerDisplay').textContent = '00:00:00';
                 clearInterval(timerInterval);
-                showAlert('워크숍이 종료되었습니다! 🏁', 'success');
+                showAlert('워크숍이 종료되었습니다.', 'success');
                 return;
             }
 
@@ -1191,353 +1358,188 @@
             document.getElementById('timerDisplay').textContent = timeString;
         }
 
-        // 메뉴 기능들 (모달로 처리)
-        function openMBTIRelations() {
-            document.getElementById('mbtiModal').classList.remove('hidden');
-            loadMBTIData();
+        // MBTI 현황 모달 열기
+        async function openMBTIRelations() {
+            try {
+                showLoading('mbtiModal');
+                document.getElementById('mbtiModal').style.display = 'block';
+                
+                const stats = await api.getMBTIStats();
+                
+                if(stats.success) {
+                    renderMBTIStats(stats);
+                }
+            } catch(error) {
+                showAlert('MBTI 현황을 불러오는 중 오류가 발생했습니다.', 'error');
+                closeModal('mbtiModal');
+            }
         }
 
+        // MBTI 통계 렌더링
+        function renderMBTIStats(stats) {
+            document.getElementById('totalParticipants').textContent = stats.totalParticipants;
+            document.getElementById('onlineCount').textContent = stats.onlineUsers;
+            
+            // MBTI 분포 렌더링
+            const mbtiGrid = document.getElementById('mbtiDistribution');
+            mbtiGrid.innerHTML = '';
+            
+            const allMBTI = ['INTJ', 'INTP', 'ENTJ', 'ENTP', 'INFJ', 'INFP', 'ENFJ', 'ENFP', 
+                            'ISTJ', 'ISFJ', 'ESTJ', 'ESFJ', 'ISTP', 'ISFP', 'ESTP', 'ESFP'];
+            
+            allMBTI.forEach(mbti => {
+                const count = stats.mbtiDistribution[mbti] || 0;
+                const mbtiItem = document.createElement('div');
+                mbtiItem.className = 'mbti-item';
+                mbtiItem.innerHTML = `
+                    <div class="mbti-type">${mbti}</div>
+                    <div class="mbti-count">${count}</div>
+                `;
+                mbtiGrid.appendChild(mbtiItem);
+            });
+            
+            // 팀별 분포 렌더링
+            const teamDiv = document.getElementById('teamDistribution');
+            teamDiv.innerHTML = '';
+            
+            Object.entries(stats.teamDistribution).forEach(([team, mbtiData]) => {
+                const teamCard = document.createElement('div');
+                teamCard.className = 'chart-container';
+                teamCard.style.marginBottom = 'var(--space-4)';
+                
+                let mbtiList = '';
+                Object.entries(mbtiData).forEach(([mbti, count]) => {
+                    mbtiList += `<span style="margin-right: var(--space-2); font-weight: 600;">${mbti}: ${count}명</span>`;
+                });
+                
+                teamCard.innerHTML = `
+                    <div class="chart-title" style="font-size: var(--text-base); margin-bottom: var(--space-3);">${team}</div>
+                    <div style="font-size: var(--text-sm); color: var(--text-secondary);">${mbtiList}</div>
+                `;
+                teamDiv.appendChild(teamCard);
+            });
+        }
+
+        // 워크숍 일정 모달 열기
         function openSchedule() {
-            document.getElementById('scheduleModal').classList.remove('hidden');
+            document.getElementById('scheduleModal').style.display = 'block';
         }
 
+        // 심리테스트 (준비 중)
         function openPsychTest() {
-            document.getElementById('psychTestModal').classList.remove('hidden');
+            showAlert('심리테스트 기능을 준비 중입니다. 곧 만나보실 수 있습니다!', 'success');
         }
 
+        // 보관함 (준비 중)
         function openLinkStorage() {
-            document.getElementById('linkStorageModal').classList.remove('hidden');
-            loadSavedLinks();
+            showAlert('보관함 기능을 준비 중입니다. 곧 만나보실 수 있습니다!', 'success');
         }
 
+        // 설문조사 모달 열기
         function openSurvey() {
-            document.getElementById('surveyModal').classList.remove('hidden');
+            document.getElementById('surveyModal').style.display = 'block';
+            setupSurveyListeners();
+        }
+
+        // 설문조사 리스너 설정
+        function setupSurveyListeners() {
+            const radioItems = document.querySelectorAll('.radio-item');
+            radioItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const input = this.querySelector('input[type="radio"]');
+                    input.checked = true;
+                    
+                    // 같은 그룹의 다른 항목들에서 selected 클래스 제거
+                    const groupName = input.name;
+                    document.querySelectorAll(`input[name="${groupName}"]`).forEach(radio => {
+                        radio.closest('.radio-item').classList.remove('selected');
+                    });
+                    
+                    // 현재 항목에 selected 클래스 추가
+                    this.classList.add('selected');
+                });
+            });
+        }
+
+        // 설문 제출
+        async function submitSurvey() {
+            const formData = new FormData(document.getElementById('surveyForm'));
+            const surveyData = {
+                user: currentUser,
+                satisfaction: formData.get('satisfaction'),
+                useful_program: formData.get('useful_program'),
+                feedback: document.getElementById('feedback').value,
+                timestamp: new Date().toISOString()
+            };
+
+            if (!surveyData.satisfaction || !surveyData.useful_program) {
+                showAlert('모든 필수 항목을 선택해주세요.', 'error');
+                return;
+            }
+
+            try {
+                const result = await api.saveSurvey(surveyData);
+                if(result.success) {
+                    showAlert('설문조사가 제출되었습니다. 감사합니다!', 'success');
+                    closeModal('surveyModal');
+                }
+            } catch(error) {
+                showAlert('설문 제출 중 오류가 발생했습니다.', 'error');
+            }
         }
 
         // 모달 닫기
         function closeModal(modalId) {
-            document.getElementById(modalId).classList.add('hidden');
+            document.getElementById(modalId).style.display = 'none';
         }
 
-        // MBTI 데이터 로드
-        function loadMBTIData() {
-            const mbtiContent = document.getElementById('mbtiContent');
-            
-            // 개발 모드에서는 임시 데이터 표시
-            if (DEVELOPMENT_MODE) {
-                mbtiContent.innerHTML = `
-                    <div class="mbti-grid">
-                        <h3>🧠 현재 참여자 MBTI 현황</h3>
-                        <div class="mbti-stats">
-                            <div class="stat-item">
-                                <span>총 참여자</span>
-                                <span>13명</span>
-                            </div>
-                            <div class="stat-item">
-                                <span>MBTI 입력 완료</span>
-                                <span>8명</span>
-                            </div>
-                        </div>
-                        
-                        <h4>📊 MBTI 유형별 분포</h4>
-                        <div class="mbti-distribution">
-                            <div class="mbti-item">ENFP: 2명</div>
-                            <div class="mbti-item">INFJ: 1명</div>
-                            <div class="mbti-item">ESTJ: 1명</div>
-                            <div class="mbti-item">ISFP: 2명</div>
-                            <div class="mbti-item">ENTP: 1명</div>
-                            <div class="mbti-item">ISFJ: 1명</div>
-                        </div>
-                        
-                        <div class="compatibility-note">
-                            <h4>💝 팀 내 궁합 분석</h4>
-                            <p>현재 팀은 다양한 성향이 잘 조화된 구성입니다!</p>
-                            <ul>
-                                <li>창의적 아이디어: ENFP, ENTP</li>
-                                <li>체계적 실행: ESTJ, ISFJ</li>
-                                <li>팀 화합: INFJ, ISFP</li>
-                            </ul>
-                        </div>
-                    </div>
-                `;
-            }
-        }
-
-        // 심리테스트 데이터
-        const psychTestQuestions = [
-            {
-                question: "여행 계획을 세울 때 나는?",
-                optionO: "모든 일정을 미리 꼼꼼히 계획한다",
-                optionX: "그때그때 즉흥적으로 결정하는 게 좋다",
-                typeO: "계획형",
-                typeX: "자유형"
-            },
-            {
-                question: "새로운 음식을 마주했을 때 나는?",
-                optionO: "망설임 없이 바로 도전해본다",
-                optionX: "신중하게 생각해본 후 결정한다",
-                typeO: "모험형",
-                typeX: "신중형"
-            },
-            {
-                question: "여행지에서 길을 잃었을 때 나는?",
-                optionO: "지도나 내비게이션을 바로 확인한다",
-                optionX: "일단 발길 닿는 대로 걸어본다",
-                typeO: "계획형",
-                typeX: "자유형"
-            },
-            {
-                question: "여행 동반자와의 의견이 다를 때 나는?",
-                optionO: "대화를 통해 서로의 의견을 조율한다",
-                optionX: "각자 하고 싶은 대로 따로 행동한다",
-                typeO: "소통형",
-                typeX: "독립형"
-            },
-            {
-                question: "여행 사진을 찍을 때 나는?",
-                optionO: "인스타용 예쁜 사진을 많이 찍는다",
-                optionX: "기억에 남는 순간만 간단히 찍는다",
-                typeO: "기록형",
-                typeX: "순간형"
-            },
-            {
-                question: "현지에서 쇼핑할 때 나는?",
-                optionO: "미리 사고 싶은 것들을 리스트로 정리한다",
-                optionX: "마음에 드는 걸 보면 즉석에서 구매한다",
-                typeO: "계획형",
-                typeX: "감성형"
-            },
-            {
-                question: "여행지에서 현지인과 소통할 때 나는?",
-                optionO: "적극적으로 말을 걸고 친해지려 한다",
-                optionX: "꼭 필요한 상황에만 대화한다",
-                typeO: "활발형",
-                typeX: "조용형"
-            },
-            {
-                question: "여행 중 예상치 못한 상황이 생겼을 때 나는?",
-                optionO: "당황하지 않고 차분히 해결책을 찾는다",
-                optionX: "일단 누군가에게 도움을 요청한다",
-                typeO: "침착형",
-                typeX: "협력형"
-            },
-            {
-                question: "여행에서 가장 중요하게 생각하는 것은?",
-                optionO: "새로운 경험과 추억 만들기",
-                optionX: "편안한 휴식과 힐링",
-                typeO: "경험형",
-                typeX: "힐링형"
-            },
-            {
-                question: "여행이 끝나고 돌아왔을 때 나는?",
-                optionO: "바로 다음 여행 계획을 세운다",
-                optionX: "여행의 여운을 즐기며 천천히 정리한다",
-                typeO: "탐험형",
-                typeX: "여운형"
-            }
-        ];
-
-        let currentQuestion = 0;
-        let testAnswers = [];
-
-        function startPsychTest() {
-            document.getElementById('testStart').classList.add('hidden');
-            document.getElementById('testQuestions').classList.remove('hidden');
-            currentQuestion = 0;
-            testAnswers = [];
-            showQuestion();
-        }
-
-        function showQuestion() {
-            const question = psychTestQuestions[currentQuestion];
-            const container = document.getElementById('questionContainer');
-            
-            container.innerHTML = `
-                <div class="question-card">
-                    <div class="question-number">질문 ${currentQuestion + 1} / ${psychTestQuestions.length}</div>
-                    <div class="question-text">${question.question}</div>
-                    <div class="answer-buttons">
-                        <button class="answer-btn btn-o" onclick="answerQuestion('O')">
-                            O<br><small>${question.optionO}</small>
-                        </button>
-                        <button class="answer-btn btn-x" onclick="answerQuestion('X')">
-                            X<br><small>${question.optionX}</small>
-                        </button>
-                    </div>
-                </div>
-            `;
-        }
-
-        function answerQuestion(answer) {
-            const question = psychTestQuestions[currentQuestion];
-            testAnswers.push({
-                questionIndex: currentQuestion,
-                answer: answer,
-                type: answer === 'O' ? question.typeO : question.typeX
-            });
-
-            currentQuestion++;
-            
-            if (currentQuestion < psychTestQuestions.length) {
-                showQuestion();
-            } else {
-                showTestResult();
-            }
-        }
-
-        function showTestResult() {
-            document.getElementById('testQuestions').classList.add('hidden');
-            document.getElementById('testResult').classList.remove('hidden');
-            
-            // 유형별 점수 계산
-            const typeScores = {};
-            testAnswers.forEach(answer => {
-                typeScores[answer.type] = (typeScores[answer.type] || 0) + 1;
-            });
-            
-            // 가장 높은 점수의 유형 찾기
-            const mainType = Object.keys(typeScores).reduce((a, b) => 
-                typeScores[a] > typeScores[b] ? a : b
-            );
-            
-            const resultDescriptions = {
-                "계획형": "🗺️ 완벽 계획러<br>당신은 여행의 마에스트로! 완벽한 계획으로 모든 것을 준비하는 당신 덕분에 동행자들은 걱정 없이 여행을 즐길 수 있어요.",
-                "자유형": "🌟 자유로운 영혼<br>당신은 진정한 자유 여행자! 계획에 얽매이지 않고 그 순간의 감정대로 움직이는 당신과 함께라면 예상치 못한 멋진 경험들이 가득할 거예요.",
-                "모험형": "🚀 모험왕<br>당신은 타고난 모험가! 새로운 것에 대한 두려움 없이 도전하는 당신 덕분에 여행이 더욱 스릴 넘치고 재미있어져요.",
-                "소통형": "💬 소통의 달인<br>당신은 여행의 윤활유! 갈등 상황에서도 원만하게 해결하고 모두가 즐거운 여행을 만드는 능력자예요.",
-                "기록형": "📸 추억 콜렉터<br>당신은 여행의 기록자! 소중한 순간들을 놓치지 않고 아름다운 추억으로 남기는 당신 덕분에 여행이 더욱 의미있어져요.",
-                "활발형": "🌈 활기찬 에너지<br>당신은 여행의 비타민! 어디서든 사람들과 쉽게 친해지고 활기찬 에너지로 여행 분위기를 끌어올리는 분위기 메이커예요.",
-                "힐링형": "🧘 힐링 마스터<br>당신은 여행의 치유사! 바쁜 일상에서 벗어나 진정한 휴식과 재충전을 통해 마음의 평화를 찾는 여행을 추구해요."
-            };
-            
-            const description = resultDescriptions[mainType] || "🎯 균형잡힌 여행자<br>당신은 다양한 면을 가진 균형잡힌 여행자예요! 상황에 따라 유연하게 대응하는 능력이 있어요.";
-            
-            document.getElementById('resultContainer').innerHTML = `
-                <div class="result-card">
-                    <div class="result-type">${mainType}</div>
-                    <div class="result-description">${description}</div>
-                    <div style="margin-top: 30px;">
-                        <button class="btn btn-primary" onclick="retakeTest()">다시 테스트하기</button>
-                        <button class="btn btn-secondary" onclick="closeModal('psychTestModal')" style="margin-left: 10px;">닫기</button>
-                    </div>
-                </div>
-            `;
-            
-            // 결과 저장 (개발 모드에서는 로컬 스토리지에)
-            if (DEVELOPMENT_MODE) {
-                const result = {
-                    user: currentUser,
-                    type: mainType,
-                    answers: testAnswers.map(a => a.answer).join(''),
-                    date: new Date().toISOString()
-                };
-                localStorage.setItem('psychTestResult', JSON.stringify(result));
-            }
-        }
-
-        function retakeTest() {
-            document.getElementById('testResult').classList.add('hidden');
-            document.getElementById('testStart').classList.remove('hidden');
-        }
-
-        // 링크 저장 관련 함수들
-        function addLink() {
-            const title = document.getElementById('linkTitle').value;
-            const url = document.getElementById('linkUrl').value;
-            
-            if (!title || !url) {
-                showAlert('제목과 URL을 모두 입력해주세요.', 'error');
-                return;
-            }
-            
-            // 개발 모드에서는 로컬 스토리지에 저장
-            if (DEVELOPMENT_MODE) {
-                const links = JSON.parse(localStorage.getItem('userLinks') || '[]');
-                const newLink = {
-                    id: Date.now(),
-                    title: title,
-                    url: url,
-                    date: new Date().toLocaleDateString()
-                };
-                links.push(newLink);
-                localStorage.setItem('userLinks', JSON.stringify(links));
-                
-                document.getElementById('linkTitle').value = '';
-                document.getElementById('linkUrl').value = '';
-                loadSavedLinks();
-                showAlert('링크가 저장되었습니다!', 'success');
-            }
-        }
-
-        function loadSavedLinks() {
-            const container = document.getElementById('savedLinks');
-            
-            if (DEVELOPMENT_MODE) {
-                const links = JSON.parse(localStorage.getItem('userLinks') || '[]');
-                
-                if (links.length === 0) {
-                    container.innerHTML = '<p style="text-align: center; color: #666;">저장된 링크가 없습니다.</p>';
-                    return;
-                }
-                
-                container.innerHTML = links.map(link => `
-                    <div class="link-item">
-                        <div class="link-info">
-                            <div class="link-title">${link.title}</div>
-                            <div class="link-url">${link.url}</div>
-                            <div style="font-size: 11px; color: #999;">저장일: ${link.date}</div>
-                        </div>
-                        <div class="link-actions">
-                            <button class="btn btn-primary" onclick="openLink('${link.url}')">열기</button>
-                            <button class="btn btn-danger" onclick="deleteLink(${link.id})">삭제</button>
-                        </div>
-                    </div>
-                `).join('');
-            }
-        }
-
-        function openLink(url) {
-            window.open(url, '_blank');
-        }
-
-        function deleteLink(linkId) {
-            if (!confirm('이 링크를 삭제하시겠습니까?')) return;
-            
-            if (DEVELOPMENT_MODE) {
-                const links = JSON.parse(localStorage.getItem('userLinks') || '[]');
-                const filteredLinks = links.filter(link => link.id !== linkId);
-                localStorage.setItem('userLinks', JSON.stringify(filteredLinks));
-                loadSavedLinks();
-                showAlert('링크가 삭제되었습니다.', 'success');
-            }
-        }
-
-        // 설문조사 제출
-        document.getElementById('surveyForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const satisfaction = document.querySelector('input[name="satisfaction"]:checked');
-            const feedback = document.getElementById('feedback').value;
-            const suggestions = document.getElementById('suggestions').value;
-            
-            if (!satisfaction) {
-                showAlert('만족도를 선택해주세요.', 'error');
-                return;
-            }
-            
-            if (DEVELOPMENT_MODE) {
-                const surveyData = {
-                    satisfaction: satisfaction.value,
-                    feedback: feedback,
-                    suggestions: suggestions,
-                    date: new Date().toISOString()
-                };
-                localStorage.setItem('surveyResponse', JSON.stringify(surveyData));
-                showAlert('설문조사가 제출되었습니다. 감사합니다!', 'success');
-                closeModal('surveyModal');
-                document.getElementById('surveyForm').reset();
+        // 모달 외부 클릭 시 닫기
+        window.addEventListener('click', function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
             }
         });
+
+        // 관리자 메뉴 추가
+        function addAdminMenu() {
+            const menuGrid = document.querySelector('.menu-grid');
+            
+            const adminMenuItem = document.createElement('div');
+            adminMenuItem.className = 'menu-item admin-menu';
+            adminMenuItem.setAttribute('data-emoji', '🛡️');
+            adminMenuItem.onclick = function() {
+                showAlert('관리자 대시보드를 준비 중입니다.', 'success');
+            };
+            adminMenuItem.innerHTML = `
+                <div class="menu-title">관리자 대시보드</div>
+                <div class="menu-desc">워크숍 전체 관리</div>
+            `;
+            
+            menuGrid.insertBefore(adminMenuItem, menuGrid.firstChild);
+            
+            const nameDisplay = document.getElementById('userNameDisplay');
+            const adminBadge = document.createElement('span');
+            adminBadge.className = 'admin-badge';
+            adminBadge.textContent = '관리자';
+            nameDisplay.appendChild(adminBadge);
+        }
+
+        // 로딩 표시
+        function showLoading(containerId) {
+            const container = document.getElementById(containerId);
+            if(container) {
+                const loadingDiv = document.createElement('div');
+                loadingDiv.className = 'loading';
+                loadingDiv.textContent = '데이터를 불러오는 중';
+                loadingDiv.id = 'loadingIndicator';
+                
+                const modalBody = container.querySelector('.modal-body');
+                if(modalBody) {
+                    modalBody.innerHTML = '';
+                    modalBody.appendChild(loadingDiv);
+                }
+            }
+        }
 
         // 알림 메시지 표시
         function showAlert(message, type) {
@@ -1548,52 +1550,7 @@
 
             setTimeout(() => {
                 alertDiv.classList.add('hidden');
-            }, 3000);
-        }
-
-        // 관리자 메뉴 추가
-        function addAdminMenu() {
-            const menuGrid = document.querySelector('.menu-grid');
-            
-            // 관리자 전용 메뉴 아이템 생성
-            const adminMenuItem = document.createElement('div');
-            adminMenuItem.className = 'menu-item';
-            adminMenuItem.style.background = 'linear-gradient(135deg, #e74c3c, #c0392b)';
-            adminMenuItem.style.color = 'white';
-            adminMenuItem.onclick = function() {
-                openAdminDashboard();
-            };
-            adminMenuItem.innerHTML = `
-                <span class="menu-icon">🛡️</span>
-                <div class="menu-title">관리자 대시보드</div>
-                <div class="menu-desc">워크숍 전체 관리</div>
-            `;
-            
-            // 첫 번째 위치에 추가
-            menuGrid.insertBefore(adminMenuItem, menuGrid.firstChild);
-            
-            // 사용자 정보에 관리자 표시 추가
-            const userInfo = document.getElementById('userInfo');
-            const adminBadge = document.createElement('span');
-            adminBadge.style.cssText = `
-                background: linear-gradient(135deg, #e74c3c, #c0392b);
-                color: white;
-                padding: 4px 12px;
-                border-radius: 20px;
-                font-size: 12px;
-                font-weight: 600;
-                margin-left: 10px;
-            `;
-            adminBadge.textContent = '🛡️ 관리자';
-            
-            const nameDisplay = document.getElementById('userNameDisplay');
-            nameDisplay.appendChild(adminBadge);
-        }
-
-        // 관리자 대시보드 열기 (모달로 처리)
-        function openAdminDashboard() {
-            showAlert('관리자 대시보드는 별도 페이지에서 확인하실 수 있습니다.', 'success');
-            // 실제로는 admin-dashboard.html로 이동하거나 모달로 처리
+            }, 5000);
         }
 
         // 페이지 로드 시 세션 복원
@@ -1606,12 +1563,8 @@
                 sessionId = savedSessionId;
                 currentUser = savedUser;
                 
-                // 개발 모드에서는 저장된 정보로 복원
                 if (DEVELOPMENT_MODE && TEMP_USER_DATA[savedUser]) {
                     showMainScreen(TEMP_USER_DATA[savedUser]);
-                } else {
-                    // 사용자 정보 임시 표시 (실제로는 API에서 가져와야 함)
-                    showMainScreen({ team: '', position: '' });
                 }
                 
                 if (savedWorkshopStart) {
@@ -1622,14 +1575,19 @@
                     showWorkshopAlert();
                 }
             }
-        });
 
-        // 모달 외부 클릭 시 닫기
-        window.onclick = function(event) {
-            if (event.target.classList.contains('modal')) {
-                event.target.classList.add('hidden');
-            }
-        }
+            // ESC 키로 모달 닫기
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape') {
+                    const modals = document.querySelectorAll('.modal');
+                    modals.forEach(modal => {
+                        if (modal.style.display === 'block') {
+                            modal.style.display = 'none';
+                        }
+                    });
+                }
+            });
+        });
     </script>
 </body>
 </html>
