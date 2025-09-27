@@ -1110,6 +1110,76 @@
             box-shadow: var(--shadow-lg);
         }
 
+        /* 링크 아이템 스타일 */
+        .link-item {
+            background: var(--surface-elevated);
+            padding: var(--space-4);
+            border-radius: 12px;
+            margin-bottom: var(--space-3);
+            border: 1px solid #e2e8f0;
+            transition: all 0.2s ease;
+        }
+
+        .link-item:hover {
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .link-title {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: var(--space-1);
+            font-size: var(--text-base);
+        }
+
+        .link-url {
+            color: var(--secondary-brand);
+            text-decoration: none;
+            font-size: var(--text-sm);
+            margin-bottom: var(--space-2);
+            display: block;
+            word-break: break-all;
+        }
+
+        .link-url:hover {
+            text-decoration: underline;
+        }
+
+        .link-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: var(--text-xs);
+            color: var(--text-muted);
+            margin-bottom: var(--space-2);
+        }
+
+        .link-category {
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--primary-brand);
+            padding: var(--space-1) var(--space-2);
+            border-radius: 6px;
+            font-weight: 500;
+        }
+
+        .link-description {
+            font-size: var(--text-sm);
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: var(--space-8);
+            color: var(--text-muted);
+        }
+
+        .empty-state-icon {
+            font-size: 3rem;
+            margin-bottom: var(--space-4);
+            opacity: 0.5;
+        }
+
         /* 로딩 상태 */
         .loading {
             text-align: center;
@@ -1357,40 +1427,92 @@
             </div>
             <div class="modal-body">
                 <div class="schedule-timeline">
+                    <div style="text-align: center; margin-bottom: var(--space-6); padding: var(--space-4); background: var(--gradient-brand); color: white; border-radius: 12px;">
+                        <h3 style="margin: 0; font-size: var(--text-xl);">1day</h3>
+                    </div>
+
                     <div class="schedule-item">
-                        <div class="schedule-time">09:00 - 09:30</div>
-                        <div class="schedule-title">등록 및 환영 인사</div>
-                        <div class="schedule-desc">참가자 체크인, 웰컴 드링크 제공</div>
+                        <div class="schedule-time">14:50</div>
+                        <div class="schedule-title">로비 집합</div>
+                        <div class="schedule-desc">부여롯데리조트</div>
                     </div>
                     <div class="schedule-item">
-                        <div class="schedule-time">09:30 - 10:30</div>
-                        <div class="schedule-title">아이스브레이킹</div>
-                        <div class="schedule-desc">MBTI 기반 팀 빌딩 게임</div>
+                        <div class="schedule-time">15:30</div>
+                        <div class="schedule-title">체크인 및 방배정</div>
+                        <div class="schedule-desc">부여롯데리조트</div>
                     </div>
                     <div class="schedule-item">
-                        <div class="schedule-time">10:30 - 12:00</div>
-                        <div class="schedule-title">비즈니스 전략 세션</div>
-                        <div class="schedule-desc">2025년 투어패스 사업 방향성 논의</div>
+                        <div class="schedule-time">15:30</div>
+                        <div class="schedule-title">백제문화단지</div>
+                        <div class="schedule-desc">백제문화단지</div>
                     </div>
                     <div class="schedule-item">
-                        <div class="schedule-time">12:00 - 13:00</div>
-                        <div class="schedule-title">점심 식사</div>
-                        <div class="schedule-desc">팀별 네트워킹 런치</div>
+                        <div class="schedule-time">17:00</div>
+                        <div class="schedule-title">아르마 보물리 마을키</div>
+                        <div class="schedule-desc">수덕문1945</div>
+                        <div style="font-size: var(--text-sm); color: rgba(255,255,255,0.8); margin-top: var(--space-1);">*충남투어패스 가맹점</div>
                     </div>
                     <div class="schedule-item">
-                        <div class="schedule-time">13:00 - 15:00</div>
-                        <div class="schedule-title">워크숍 활동</div>
-                        <div class="schedule-desc">팀별 프로젝트 기획 및 발표</div>
+                        <div class="schedule-time">17:30</div>
+                        <div class="schedule-title">차량별 자유시간</div>
+                        <div class="schedule-desc">-</div>
                     </div>
                     <div class="schedule-item">
-                        <div class="schedule-time">15:00 - 16:00</div>
-                        <div class="schedule-title">심리테스트 및 분석</div>
-                        <div class="schedule-desc">개인별 여행 성향 분석</div>
+                        <div class="schedule-time">18:30</div>
+                        <div class="schedule-title">저녁식사</div>
+                        <div class="schedule-desc">서동한우 구양점</div>
+                        <div style="font-size: var(--text-sm); color: rgba(255,255,255,0.8); margin-top: var(--space-1);">장소집합</div>
                     </div>
                     <div class="schedule-item">
-                        <div class="schedule-time">16:00 - 17:00</div>
-                        <div class="schedule-title">마무리 및 정리</div>
-                        <div class="schedule-desc">피드백 공유, 향후 계획 수립</div>
+                        <div class="schedule-time">21:00</div>
+                        <div class="schedule-title">회식 및 레크레이션</div>
+                        <div class="schedule-desc">부여롯데리조트</div>
+                        <div style="font-size: var(--text-sm); color: rgba(255,255,255,0.8); margin-top: var(--space-1);">*안주 시골통닭 / 보령맥주 (가맹점 혜택)</div>
+                    </div>
+                    <div class="schedule-item">
+                        <div class="schedule-time">22:00</div>
+                        <div class="schedule-title">자율회식</div>
+                        <div class="schedule-desc">-</div>
+                    </div>
+
+                    <div style="text-align: center; margin: var(--space-8) 0 var(--space-6) 0; padding: var(--space-4); background: var(--gradient-brand); color: white; border-radius: 12px;">
+                        <h3 style="margin: 0; font-size: var(--text-xl);">2day</h3>
+                    </div>
+
+                    <div class="schedule-item">
+                        <div class="schedule-time">11:00</div>
+                        <div class="schedule-title">아침겸 점심식사</div>
+                        <div class="schedule-desc">장원막국수</div>
+                    </div>
+                    <div class="schedule-item">
+                        <div class="schedule-time">12:30</div>
+                        <div class="schedule-title">워크숍 집결</div>
+                        <div class="schedule-desc">사비123창작센터</div>
+                    </div>
+                    <div class="schedule-item">
+                        <div class="schedule-time">12:30</div>
+                        <div class="schedule-title">2026 투어패스사업부 사업 추진계획 (안)</div>
+                        <div class="schedule-desc">사비123창작센터</div>
+                    </div>
+                    <div class="schedule-item">
+                        <div class="schedule-time">13:10</div>
+                        <div class="schedule-title">3팀 공유시간</div>
+                        <div class="schedule-desc">사비123창작센터</div>
+                    </div>
+                    <div class="schedule-item">
+                        <div class="schedule-time">13:30</div>
+                        <div class="schedule-title">2팀 공유시간</div>
+                        <div class="schedule-desc">사비123창작센터</div>
+                    </div>
+                    <div class="schedule-item">
+                        <div class="schedule-time">13:50</div>
+                        <div class="schedule-title">1팀 공유시간</div>
+                        <div class="schedule-desc">사비123창작센터</div>
+                    </div>
+                    <div class="schedule-item">
+                        <div class="schedule-time">14:10</div>
+                        <div class="schedule-title">귀가</div>
+                        <div class="schedule-desc">-</div>
                     </div>
                 </div>
             </div>
@@ -1467,7 +1589,230 @@
         </div>
     </div>
 
-    <!-- 관리자 대시보드 모달 -->
+    <!-- 심리테스트 모달 -->
+    <div id="psychTestModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>여행 성향 심리테스트</h2>
+                <button class="close-btn" onclick="closeModal('psychTestModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="psychTestContent">
+                    <div style="text-align: center; margin-bottom: var(--space-6);">
+                        <div style="font-size: 3rem; margin-bottom: var(--space-3);">🐾</div>
+                        <h3 style="color: var(--primary-brand);">귀여운 동물 여행심리테스트</h3>
+                        <p style="color: var(--text-secondary); margin-top: var(--space-2);">O 또는 X로 답해주세요!</p>
+                    </div>
+
+                    <div class="survey-question">
+                        <div class="question-title">1. 여행을 떠나기 전 일주일 전부터 짐을 싸기 시작한다 🎒</div>
+                        <div class="radio-group" style="flex-direction: row; gap: var(--space-8); justify-content: center;">
+                            <label class="radio-item" style="flex: none; width: 80px;">
+                                <input type="radio" name="q1" value="O">
+                                ⭕ O
+                            </label>
+                            <label class="radio-item" style="flex: none; width: 80px;">
+                                <input type="radio" name="q1" value="X">
+                                ❌ X
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="survey-question">
+                        <div class="question-title">2. 여행지에서 맛집은 미리 찾아보지 않고 현지에서 발견하는 게 좋다 🍜</div>
+                        <div class="radio-group" style="flex-direction: row; gap: var(--space-8); justify-content: center;">
+                            <label class="radio-item" style="flex: none; width: 80px;">
+                                <input type="radio" name="q2" value="O">
+                                ⭕ O
+                            </label>
+                            <label class="radio-item" style="flex: none; width: 80px;">
+                                <input type="radio" name="q2" value="X">
+                                ❌ X
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="survey-question">
+                        <div class="question-title">3. 여행에서는 아침 일찍 일어나서 하루를 알차게 보내야 한다 🌅</div>
+                        <div class="radio-group" style="flex-direction: row; gap: var(--space-8); justify-content: center;">
+                            <label class="radio-item" style="flex: none; width: 80px;">
+                                <input type="radio" name="q3" value="O">
+                                ⭕ O
+                            </label>
+                            <label class="radio-item" style="flex: none; width: 80px;">
+                                <input type="radio" name="q3" value="X">
+                                ❌ X
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="survey-question">
+                        <div class="question-title">4. 여행 중에는 SNS에 실시간으로 사진을 올리며 공유한다 📸</div>
+                        <div class="radio-group" style="flex-direction: row; gap: var(--space-8); justify-content: center;">
+                            <label class="radio-item" style="flex: none; width: 80px;">
+                                <input type="radio" name="q4" value="O">
+                                ⭕ O
+                            </label>
+                            <label class="radio-item" style="flex: none; width: 80px;">
+                                <input type="radio" name="q4" value="X">
+                                ❌ X
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="survey-question">
+                        <div class="question-title">5. 혼자 여행하는 것보다 친구나 가족과 함께하는 게 좋다 👨‍👩‍👧‍👦</div>
+                        <div class="radio-group" style="flex-direction: row; gap: var(--space-8); justify-content: center;">
+                            <label class="radio-item" style="flex: none; width: 80px;">
+                                <input type="radio" name="q5" value="O">
+                                ⭕ O
+                            </label>
+                            <label class="radio-item" style="flex: none; width: 80px;">
+                                <input type="radio" name="q5" value="X">
+                                ❌ X
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="survey-question">
+                        <div class="question-title">6. 여행지에서 액티비티보다는 카페에 앉아 여유롭게 보내는 게 좋다 ☕</div>
+                        <div class="radio-group" style="flex-direction: row; gap: var(--space-8); justify-content: center;">
+                            <label class="radio-item" style="flex: none; width: 80px;">
+                                <input type="radio" name="q6" value="O">
+                                ⭕ O
+                            </label>
+                            <label class="radio-item" style="flex: none; width: 80px;">
+                                <input type="radio" name="q6" value="X">
+                                ❌ X
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="survey-question">
+                        <div class="question-title">7. 여행 중 예상치 못한 변수가 생겨도 당황하지 않는다 🔄</div>
+                        <div class="radio-group" style="flex-direction: row; gap: var(--space-8); justify-content: center;">
+                            <label class="radio-item" style="flex: none; width: 80px;">
+                                <input type="radio" name="q7" value="O">
+                                ⭕ O
+                            </label>
+                            <label class="radio-item" style="flex: none; width: 80px;">
+                                <input type="radio" name="q7" value="X">
+                                ❌ X
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="survey-question">
+                        <div class="question-title">8. 여행지에서는 현지인들과 적극적으로 대화를 나누려고 한다 💬</div>
+                        <div class="radio-group" style="flex-direction: row; gap: var(--space-8); justify-content: center;">
+                            <label class="radio-item" style="flex: none; width: 80px;">
+                                <input type="radio" name="q8" value="O">
+                                ⭕ O
+                            </label>
+                            <label class="radio-item" style="flex: none; width: 80px;">
+                                <input type="radio" name="q8" value="X">
+                                ❌ X
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="survey-question">
+                        <div class="question-title">9. 여행에서 가장 중요한 것은 맛있는 음식을 먹는 것이다 🍽️</div>
+                        <div class="radio-group" style="flex-direction: row; gap: var(--space-8); justify-content: center;">
+                            <label class="radio-item" style="flex: none; width: 80px;">
+                                <input type="radio" name="q9" value="O">
+                                ⭕ O
+                            </label>
+                            <label class="radio-item" style="flex: none; width: 80px;">
+                                <input type="radio" name="q9" value="X">
+                                ❌ X
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="survey-question">
+                        <div class="question-title">10. 여행에서 돌아온 후에는 사진을 정리해서 앨범을 만든다 📚</div>
+                        <div class="radio-group" style="flex-direction: row; gap: var(--space-8); justify-content: center;">
+                            <label class="radio-item" style="flex: none; width: 80px;">
+                                <input type="radio" name="q10" value="O">
+                                ⭕ O
+                            </label>
+                            <label class="radio-item" style="flex: none; width: 80px;">
+                                <input type="radio" name="q10" value="X">
+                                ❌ X
+                            </label>
+                        </div>
+                    </div>
+
+                    <button type="button" class="btn btn-primary" onclick="submitPsychTest()" style="width: 100%; margin-top: var(--space-6);">
+                        결과 확인하기
+                    </button>
+                </div>
+
+                <div id="psychTestResult" class="hidden">
+                    <div class="chart-container">
+                        <div class="chart-title" id="resultTitle">당신의 여행 성향</div>
+                        <div id="resultContent" style="text-align: center; padding: var(--space-6);">
+                            <!-- 결과 내용이 여기에 표시됩니다 -->
+                        </div>
+                        <button class="btn btn-secondary" onclick="restartPsychTest()" style="width: 100%; margin-top: var(--space-4);">
+                            다시 테스트하기
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 링크 저장소 모달 -->
+    <div id="linkStorageModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>링크 보관함</h2>
+                <button class="close-btn" onclick="closeModal('linkStorageModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <!-- 링크 추가 폼 -->
+                <div class="chart-container" style="margin-bottom: var(--space-6);">
+                    <div class="chart-title">새 링크 추가</div>
+                    <form id="linkForm">
+                        <div class="form-group">
+                            <label for="linkTitle">제목</label>
+                            <input type="text" id="linkTitle" placeholder="링크 제목을 입력하세요" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="linkUrl">URL</label>
+                            <input type="url" id="linkUrl" placeholder="https://" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="linkCategory">카테고리</label>
+                            <select id="linkCategory">
+                                <option value="워크숍 자료">워크숍 자료</option>
+                                <option value="업무 도구">업무 도구</option>
+                                <option value="참고 자료">참고 자료</option>
+                                <option value="기타">기타</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="linkDescription">설명 (선택)</label>
+                            <textarea id="linkDescription" rows="3" placeholder="링크에 대한 간단한 설명"></textarea>
+                        </div>
+                        <button type="button" class="btn btn-primary" onclick="saveLink()" style="width: 100%;">
+                            링크 저장
+                        </button>
+                    </form>
+                </div>
+
+                <!-- 저장된 링크 목록 -->
+                <div class="chart-container">
+                    <div class="chart-title">저장된 링크</div>
+                    <div id="linksList">
+                        <!-- 링크 목록이 여기에 표시됩니다 -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div id="adminModal" class="modal">
         <div class="modal-content" style="max-width: 800px;">
             <div class="modal-header">
@@ -1597,6 +1942,18 @@
                     </div>
 
                     <div class="settings-section">
+                        <h3>사용자 관리</h3>
+                        <div class="setting-item">
+                            <label>참가자 강제 로그아웃</label>
+                            <button class="btn btn-secondary" onclick="forceLogoutUser()">🚪 사용자 로그아웃</button>
+                        </div>
+                        <div class="setting-item">
+                            <label>전체 참가자 로그아웃</label>
+                            <button class="btn btn-secondary" onclick="forceLogoutAll()">🚪 전체 로그아웃</button>
+                        </div>
+                    </div>
+
+                    <div class="settings-section">
                         <h3>위험 구역</h3>
                         <button class="btn btn-danger" onclick="resetAllData()">🗑️ 모든 데이터 초기화</button>
                         <button class="btn btn-danger" onclick="endWorkshopEarly()">⏹️ 워크숍 조기 종료</button>
@@ -1615,9 +1972,9 @@
 
         // API 설정
         const API_URL = 'https://script.google.com/macros/s/AKfycbyFKlUM2i43w_SfzWZxyjh-gxwNNx6LK3umkO2zEiwlUco-gtqFNgqSUfsU85skHJSx/exec';
-        const DEVELOPMENT_MODE = false;
+        const DEVELOPMENT_MODE = false; // 실제 운영 모드
 
-        // 사용자 데이터
+        // 사용자 데이터 (서버에서 관리)
         const TEMP_USER_DATA = {
             "남도현": { team:"투어패스사업부", position:"이사" },
             "김수인": { team:"투어패스사업부 영업 1팀", position:"팀장" },
@@ -1632,23 +1989,6 @@
             "손현우": { team:"투어패스사업부 영업 2팀", position:"대리" },
             "이주아": { team:"투어패스사업부 영업 2팀", position:"주임" },
             "장은진": { team:"투어패스사업부 영업 2팀", position:"주임" }
-        };
-
-        // 임시 MBTI 데이터 (실제로는 서버에서 가져올 예정)
-        const TEMP_MBTI_DATA = {
-            "남도현": "ENTJ",
-            "김수인": "ESFJ", 
-            "고다현": "ISFP",
-            "심재희": "ENFP",
-            "판티니안": "INFJ",
-            "김현철": "ESTJ",
-            "이유진": "ENFJ",
-            "정어진": "ISFJ",
-            "장원준": "INTP",
-            "김대진": "ESTP",
-            "손현우": "ISTJ",
-            "이주아": "ESFP",
-            "장은진": "INFP"
         };
 
         // API 통신 클래스
@@ -1685,61 +2025,21 @@
                         
                     } catch(error) {
                         if(i === this.retryCount - 1) {
-                            if(DEVELOPMENT_MODE) {
-                                // 개발 모드에서는 임시 데이터 반환
-                                return this.getMockData(action, data);
-                            }
                             throw error;
                         }
                         await new Promise(resolve => setTimeout(resolve, 1000 * (i + 1)));
                     }
                 }
-            }
-            
-            getMockData(action, data) {
-                switch(action) {
-                    case 'login':
-                        return {
-                            success: true,
-                            sessionId: 'temp_' + Date.now(),
-                            userData: TEMP_USER_DATA[data.userName]
-                        };
-                    case 'getMBTIStats':
-                        return this.generateMockMBTIStats();
-                    case 'saveSurvey':
-                        return { success: true, message: '설문이 저장되었습니다.' };
-                    case 'saveLink':
-                        return { success: true, message: '링크가 저장되었습니다.' };
-                    default:
-                        return { success: false, error: 'Unknown action' };
                 }
             }
             
-            generateMockMBTIStats() {
-                const mbtiCount = {};
-                const teamDistribution = {};
-                
-                Object.entries(TEMP_MBTI_DATA).forEach(([name, mbti]) => {
-                    mbtiCount[mbti] = (mbtiCount[mbti] || 0) + 1;
-                    
-                    const userData = TEMP_USER_DATA[name];
-                    if(userData) {
-                        const team = userData.team;
-                        if(!teamDistribution[team]) {
-                            teamDistribution[team] = {};
-                        }
-                        teamDistribution[team][mbti] = (teamDistribution[team][mbti] || 0) + 1;
-                    }
-                });
-                
-                return {
-                    success: true,
-                    mbtiDistribution: mbtiCount,
-                    teamDistribution: teamDistribution,
-                    totalParticipants: Object.keys(TEMP_USER_DATA).length,
-                    onlineUsers: Math.floor(Math.random() * 8) + 5
-                };
+            getMockData(action, data) {
+                // 개발 모드가 아니므로 실제 서버만 사용
+                throw new Error('서버에 연결할 수 없습니다. 관리자에게 문의하세요.');
             }
+            
+            // 제거된 임시 데이터 관련 함수
+            // generateMockMBTIStats() 함수 제거됨 - 실제 서버 데이터만 사용
             
             async login(userName, mbti) {
                 return this.request('login', {
@@ -1932,12 +2232,14 @@
 
         // 심리테스트 (준비 중)
         function openPsychTest() {
-            showAlert('심리테스트 기능을 준비 중입니다. 곧 만나보실 수 있습니다!', 'success');
+            document.getElementById('psychTestModal').style.display = 'block';
+            setupPsychTestListeners();
         }
 
         // 보관함 (준비 중)
         function openLinkStorage() {
-            showAlert('보관함 기능을 준비 중입니다. 곧 만나보실 수 있습니다!', 'success');
+            document.getElementById('linkStorageModal').style.display = 'block';
+            loadSavedLinks();
         }
 
         // 설문조사 모달 열기
@@ -2027,6 +2329,73 @@
             adminBadge.className = 'admin-badge';
             adminBadge.textContent = '관리자';
             nameDisplay.appendChild(adminBadge);
+            
+            // 관리자 로그아웃 버튼 추가
+            addAdminLogoutButton();
+        }
+
+        // 관리자 전용 로그아웃 버튼 추가
+        function addAdminLogoutButton() {
+            const userInfo = document.getElementById('userInfo');
+            const logoutBtn = document.createElement('button');
+            logoutBtn.className = 'btn btn-secondary';
+            logoutBtn.style.cssText = 'margin-top: var(--space-3); font-size: var(--text-sm); padding: var(--space-2) var(--space-4);';
+            logoutBtn.innerHTML = '🚪 로그아웃';
+            logoutBtn.onclick = handleAdminLogout;
+            userInfo.appendChild(logoutBtn);
+        }
+
+        // 관리자 로그아웃 처리
+        async function handleAdminLogout() {
+            if(confirm('관리자 로그아웃하시겠습니까?')) {
+                try {
+                    // 서버에 로그아웃 상태 전송
+                    await api.request('updateUserStatus', {
+                        userName: currentUser,
+                        status: 'offline'
+                    });
+                    
+                    // 활동 로그 기록
+                    await api.request('logActivity', {
+                        userName: currentUser,
+                        action: '관리자 로그아웃',
+                        details: '수동 로그아웃'
+                    });
+                } catch(error) {
+                    console.error('로그아웃 처리 오류:', error);
+                }
+                
+                // 로컬 데이터 정리
+                localStorage.clear();
+                
+                // 전역 변수 초기화
+                const prevUser = currentUser;
+                currentUser = null;
+                sessionId = null;
+                workshopStartTime = null;
+                
+                // 타이머 정리
+                if(timerInterval) {
+                    clearInterval(timerInterval);
+                    timerInterval = null;
+                }
+                
+                // 열린 모달들 모두 닫기
+                const modals = document.querySelectorAll('.modal');
+                modals.forEach(modal => {
+                    modal.style.display = 'none';
+                });
+                
+                // 로그인 화면으로 돌아가기
+                document.getElementById('mainScreen').classList.add('hidden');
+                document.getElementById('loginScreen').classList.remove('hidden');
+                
+                // 폼 초기화
+                document.getElementById('userName').value = '';
+                document.getElementById('userMBTI').value = '';
+                
+                showAlert(`${prevUser} 관리자님이 로그아웃되었습니다.`, 'success');
+            }
         }
 
         // 관리자 대시보드 열기
@@ -2042,24 +2411,34 @@
         // 관리자 데이터 로드
         async function loadAdminData() {
             try {
-                // 전체 통계 로드
+                // 서버에서 실제 통계 로드
                 const stats = await api.getMBTIStats();
                 if(stats.success) {
-                    document.getElementById('adminTotalUsers').textContent = stats.totalParticipants;
-                    document.getElementById('adminOnlineUsers').textContent = stats.onlineUsers;
+                    document.getElementById('adminTotalUsers').textContent = stats.data.totalParticipants;
+                    document.getElementById('adminOnlineUsers').textContent = stats.data.onlineUsers;
                 }
 
-                // 참가자 테이블 렌더링
-                renderParticipantTable();
+                // 서버에서 실제 사용자 목록 로드
+                const userList = await api.request('getUserList');
+                if(userList.success) {
+                    renderParticipantTable(userList.data.users);
+                }
                 
-                // 설문 결과 렌더링
-                renderSurveyResults();
+                // 서버에서 실제 설문 결과 로드
+                const surveyStats = await api.request('getSurveyStats');
+                if(surveyStats.success) {
+                    renderSurveyResults(surveyStats.data);
+                }
                 
-                // 활동 로그 업데이트
-                updateActivityLog();
+                // 서버에서 실제 활동 로그 로드
+                const activityLog = await api.request('getActivityLog');
+                if(activityLog.success) {
+                    updateActivityLog(activityLog.data.activities);
+                }
                 
             } catch(error) {
                 console.error('관리자 데이터 로드 오류:', error);
+                showAlert('서버에서 데이터를 불러올 수 없습니다.', 'error');
             }
         }
 
@@ -2086,28 +2465,35 @@
         }
 
         // 참가자 테이블 렌더링
-        function renderParticipantTable() {
+        function renderParticipantTable(users = []) {
             const tbody = document.getElementById('participantTableBody');
             tbody.innerHTML = '';
             
-            Object.entries(TEMP_USER_DATA).forEach(([name, userData]) => {
-                const isOnline = Math.random() > 0.4; // 임시로 랜덤하게 온라인 상태 결정
-                const lastSeen = isOnline ? '현재' : `${Math.floor(Math.random() * 30) + 1}분 전`;
-                const mbti = TEMP_MBTI_DATA[name] || '미입력';
-                
+            if(users.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="6" style="text-align: center; padding: var(--space-8); color: var(--text-muted);">
+                            참가자 데이터를 불러오는 중입니다...
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            users.forEach(user => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                    <td style="font-weight: 600; color: var(--text-primary);">${name}</td>
-                    <td>${userData.team}</td>
-                    <td style="font-weight: 600; color: var(--primary-brand);">${mbti}</td>
+                    <td style="font-weight: 600; color: var(--text-primary);">${user.name}</td>
+                    <td>${user.team}</td>
+                    <td style="font-weight: 600; color: var(--primary-brand);">${user.mbti || '미입력'}</td>
                     <td>
-                        <span class="status-badge ${isOnline ? 'status-online' : 'status-offline'}">
-                            ${isOnline ? '온라인' : '오프라인'}
+                        <span class="status-badge ${user.status === 'online' ? 'status-online' : 'status-offline'}">
+                            ${user.status === 'online' ? '온라인' : '오프라인'}
                         </span>
                     </td>
-                    <td>${lastSeen}</td>
+                    <td>${formatLastLogin(user.lastLogin)}</td>
                     <td>
-                        <button class="btn btn-secondary" style="font-size: var(--text-xs); padding: var(--space-1) var(--space-2);" onclick="viewUserDetail('${name}')">
+                        <button class="btn btn-secondary" style="font-size: var(--text-xs); padding: var(--space-1) var(--space-2);" onclick="viewUserDetail('${user.name}')">
                             상세보기
                         </button>
                     </td>
@@ -2116,20 +2502,34 @@
             });
         }
 
+        // 마지막 로그인 시간 포맷
+        function formatLastLogin(lastLogin) {
+            if(!lastLogin) return '없음';
+            
+            const now = new Date();
+            const loginTime = new Date(lastLogin);
+            const diffMinutes = Math.floor((now - loginTime) / (1000 * 60));
+            
+            if(diffMinutes < 1) return '방금 전';
+            if(diffMinutes < 60) return `${diffMinutes}분 전`;
+            if(diffMinutes < 1440) return `${Math.floor(diffMinutes / 60)}시간 전`;
+            return `${Math.floor(diffMinutes / 1440)}일 전`;
+        }
+
         // 설문 결과 렌더링
-        function renderSurveyResults() {
-            // 만족도 차트 렌더링
-            const satisfactionData = {
-                '매우 만족': 3,
-                '만족': 2,
-                '보통': 0,
-                '불만족': 0,
-                '매우 불만족': 0
-            };
-            
+        function renderSurveyResults(surveyData = null) {
             const chartContainer = document.getElementById('satisfactionChart');
-            chartContainer.innerHTML = '';
+            const feedbackList = document.getElementById('feedbackList');
             
+            if(!surveyData) {
+                chartContainer.innerHTML = '<p style="text-align: center; color: var(--text-muted);">설문 데이터를 불러오는 중입니다...</p>';
+                feedbackList.innerHTML = '<p style="text-align: center; color: var(--text-muted);">피드백을 불러오는 중입니다...</p>';
+                return;
+            }
+            
+            // 만족도 차트 렌더링
+            chartContainer.innerHTML = '';
+            const satisfactionData = surveyData.satisfaction || {};
             const total = Object.values(satisfactionData).reduce((a, b) => a + b, 0);
             
             Object.entries(satisfactionData).forEach(([label, count]) => {
@@ -2148,16 +2548,15 @@
             });
             
             // 피드백 리스트 렌더링
-            const feedbackList = document.getElementById('feedbackList');
             feedbackList.innerHTML = '';
+            const feedbacks = surveyData.feedbacks || [];
             
-            const sampleFeedbacks = [
-                { user: '고다현', text: '아이스브레이킹이 정말 재미있었어요! 팀원들과 더 가까워진 느낌입니다.' },
-                { user: '심재희', text: 'MBTI 분석이 흥미로웠습니다. 다음에는 더 다양한 심리테스트도 해보면 좋겠어요.' },
-                { user: '장원준', text: '전체적으로 만족스럽습니다. 다만 점심시간이 조금 짧게 느껴졌어요.' }
-            ];
+            if(feedbacks.length === 0) {
+                feedbackList.innerHTML = '<p style="text-align: center; color: var(--text-muted);">아직 피드백이 없습니다.</p>';
+                return;
+            }
             
-            sampleFeedbacks.forEach(feedback => {
+            feedbacks.forEach(feedback => {
                 const feedbackDiv = document.createElement('div');
                 feedbackDiv.className = 'feedback-item';
                 feedbackDiv.innerHTML = `
@@ -2172,29 +2571,33 @@
         }
 
         // 활동 로그 업데이트
-        function updateActivityLog() {
-            const activities = [
-                { time: '14:35', user: '이주아', action: 'MBTI 현황 조회' },
-                { time: '14:32', user: '고다현', action: '설문조사 완료' },
-                { time: '14:28', user: '심재희', action: 'MBTI 현황 조회' },
-                { time: '14:25', user: '판티니안', action: '로그인' },
-                { time: '14:22', user: '장원준', action: '워크숍 일정 조회' },
-                { time: '14:18', user: '정어진', action: '설문조사 완료' },
-                { time: '14:15', user: '손현우', action: '로그인' }
-            ];
-            
+        function updateActivityLog(activities = []) {
             const logContainer = document.getElementById('activityLog');
             logContainer.innerHTML = '';
+            
+            if(activities.length === 0) {
+                logContainer.innerHTML = '<p style="text-align: center; color: var(--text-muted); padding: var(--space-8);">활동 기록이 없습니다.</p>';
+                return;
+            }
             
             activities.forEach(activity => {
                 const activityDiv = document.createElement('div');
                 activityDiv.className = 'activity-item';
                 activityDiv.innerHTML = `
-                    <span class="activity-time">${activity.time}</span>
+                    <span class="activity-time">${formatTime(activity.timestamp)}</span>
                     <span class="activity-user">${activity.user}</span>
                     <span class="activity-action">${activity.action}</span>
                 `;
                 logContainer.appendChild(activityDiv);
+            });
+        }
+
+        // 시간 포맷 함수
+        function formatTime(timestamp) {
+            const date = new Date(timestamp);
+            return date.toLocaleTimeString('ko-KR', { 
+                hour: '2-digit', 
+                minute: '2-digit' 
             });
         }
 
@@ -2264,6 +2667,328 @@ MBTI: ${mbti || '미입력'}
                 closeModal('adminModal');
             }
         }
+
+        // 특정 사용자 강제 로그아웃
+        async function forceLogoutUser() {
+            const userName = prompt('로그아웃시킬 사용자 이름을 입력하세요:');
+            if(userName && TEMP_USER_DATA[userName]) {
+                if(confirm(`${userName}님을 강제 로그아웃하시겠습니까?`)) {
+                    try {
+                        await api.request('updateUserStatus', {
+                            userName: userName,
+                            status: 'offline'
+                        });
+                        
+                        // 활동 로그 기록
+                        await api.request('logActivity', {
+                            userName: currentUser,
+                            action: '사용자 강제 로그아웃',
+                            details: `${userName} 로그아웃 처리`
+                        });
+                        
+                        showAlert(`${userName}님이 로그아웃되었습니다.`, 'success');
+                        
+                        // 참가자 테이블 새로고침
+                        renderParticipantTable();
+                        
+                    } catch(error) {
+                        showAlert('로그아웃 처리 중 오류가 발생했습니다.', 'error');
+                    }
+                }
+            } else if(userName) {
+                showAlert('존재하지 않는 사용자입니다.', 'error');
+            }
+        }
+
+        // 전체 사용자 강제 로그아웃
+        async function forceLogoutAll() {
+            if(confirm('모든 참가자를 강제 로그아웃하시겠습니까?')) {
+                if(confirm('정말로 모든 사용자를 로그아웃하시겠습니까? 이 작업은 되돌릴 수 없습니다.')) {
+                    try {
+                        // 모든 사용자를 오프라인으로 변경
+                        const userList = Object.keys(TEMP_USER_DATA);
+                        for(const userName of userList) {
+                            if(userName !== currentUser) { // 관리자 제외
+                                await api.request('updateUserStatus', {
+                                    userName: userName,
+                                    status: 'offline'
+                                });
+                            }
+                        }
+                        
+                        // 활동 로그 기록
+                        await api.request('logActivity', {
+                            userName: currentUser,
+                            action: '전체 강제 로그아웃',
+                            details: '모든 참가자 로그아웃 처리'
+                        });
+                        
+                        showAlert('모든 참가자가 로그아웃되었습니다.', 'success');
+                        
+                        // 통계 새로고침
+                        await loadAdminData();
+                        
+                    } catch(error) {
+                        showAlert('전체 로그아웃 처리 중 오류가 발생했습니다.', 'error');
+                    }
+                }
+            }
+        }
+
+        // 심리테스트 리스너 설정
+        function setupPsychTestListeners() {
+            const radioItems = document.querySelectorAll('#psychTestModal .radio-item');
+            radioItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const input = this.querySelector('input[type="radio"]');
+                    input.checked = true;
+                    
+                    // 같은 그룹의 다른 항목들에서 selected 클래스 제거
+                    const groupName = input.name;
+                    document.querySelectorAll(`#psychTestModal input[name="${groupName}"]`).forEach(radio => {
+                        radio.closest('.radio-item').classList.remove('selected');
+                    });
+                    
+                    // 현재 항목에 selected 클래스 추가
+                    this.classList.add('selected');
+                });
+            });
+        }
+
+        // 심리테스트 제출
+        function submitPsychTest() {
+            const form = document.getElementById('psychTestModal');
+            const answers = {};
+            
+            // 모든 답변 수집 (1~10번 문항)
+            for(let i = 1; i <= 10; i++) {
+                const answer = form.querySelector(`input[name="q${i}"]:checked`);
+                if(!answer) {
+                    showAlert('모든 질문에 답변해주세요.', 'error');
+                    return;
+                }
+                answers[`q${i}`] = answer.value;
+            }
+            
+            // 결과 계산
+            const result = calculateAnimalPsychTestResult(answers);
+            
+            // 결과 표시
+            document.getElementById('psychTestContent').classList.add('hidden');
+            document.getElementById('psychTestResult').classList.remove('hidden');
+            document.getElementById('resultTitle').textContent = result.title;
+            document.getElementById('resultContent').innerHTML = result.content;
+            
+            // 서버에 결과 저장
+            savePsychTestResult(result);
+        }
+
+        // 동물 심리테스트 결과 계산
+        function calculateAnimalPsychTestResult(answers) {
+            let scores = {
+                planning: 0,    // 계획형 (다람쥐)
+                social: 0,      // 사교형 (강아지)
+                adventure: 0,   // 모험형 (고양이)
+                relaxed: 0      // 여유형 (판다)
+            };
+            
+            // 각 답변에 따른 점수 계산
+            const scoring = {
+                q1: { O: 'planning', X: 'adventure' },      // 미리 짐 싸기
+                q2: { O: 'adventure', X: 'planning' },      // 현지에서 맛집 발견
+                q3: { O: 'planning', X: 'relaxed' },        // 아침 일찍 일어나기
+                q4: { O: 'social', X: 'relaxed' },          // SNS 실시간 공유
+                q5: { O: 'social', X: 'adventure' },        // 함께 vs 혼자 여행
+                q6: { O: 'relaxed', X: 'adventure' },       // 카페 vs 액티비티
+                q7: { O: 'adventure', X: 'planning' },      // 변수에 대한 대응
+                q8: { O: 'social', X: 'relaxed' },          // 현지인과 대화
+                q9: { O: 'social', X: 'planning' },         // 음식의 중요성
+                q10: { O: 'planning', X: 'adventure' }      // 여행 후 정리
+            };
+            
+            // 점수 계산
+            Object.keys(answers).forEach(question => {
+                const answerValue = answers[question];
+                const scoreType = scoring[question][answerValue];
+                if(scoreType) {
+                    scores[scoreType]++;
+                }
+            });
+            
+            // 가장 높은 점수의 타입 찾기
+            const maxScore = Math.max(...Object.values(scores));
+            const resultType = Object.keys(scores).find(key => scores[key] === maxScore);
+            
+            const animalResults = {
+                planning: {
+                    title: '계획쟁이 다람쥐 🐿️',
+                    content: `
+                        <div style="font-size: 6rem; margin-bottom: var(--space-4);">🐿️</div>
+                        <h3 style="color: var(--primary-brand); margin-bottom: var(--space-4);">꼼꼼하고 체계적인 여행의 달인!</h3>
+                        <div style="background: rgba(59, 130, 246, 0.1); padding: var(--space-4); border-radius: 12px; margin-bottom: var(--space-4);">
+                            <p style="margin-bottom: var(--space-2);"><strong>💪 장점:</strong> 계획적이고 안전한 여행, 시간 활용 효율성</p>
+                            <p style="margin-bottom: var(--space-2);"><strong>✈️ 여행 스타일:</strong> 미리 예약하고 일정 짜는 완벽주의자</p>
+                            <p><strong>🌟 추천:</strong> 가끔은 계획 없이 떠나는 여행도 해보세요!</p>
+                        </div>
+                        <p style="font-size: var(--text-sm); color: var(--text-secondary);">당신은 견과류처럼 알찬 여행을 만드는 다람쥐입니다! 🥜</p>
+                    `
+                },
+                social: {
+                    title: '친화력 만점 강아지 🐕',
+                    content: `
+                        <div style="font-size: 6rem; margin-bottom: var(--space-4);">🐕</div>
+                        <h3 style="color: var(--primary-brand); margin-bottom: var(--space-4);">사람들과 함께하는 즐거운 여행러!</h3>
+                        <div style="background: rgba(59, 130, 246, 0.1); padding: var(--space-4); border-radius: 12px; margin-bottom: var(--space-4);">
+                            <p style="margin-bottom: var(--space-2);"><strong>💪 장점:</strong> 소통 능력, 현지 문화 체험 적극성</p>
+                            <p style="margin-bottom: var(--space-2);"><strong>✈️ 여행 스타일:</strong> 사람들과 어울리며 추억 만들기</p>
+                            <p><strong>🌟 추천:</strong> 로컬 투어나 요리 클래스에 참여해보세요!</p>
+                        </div>
+                        <p style="font-size: var(--text-sm); color: var(--text-secondary);">당신은 어디서든 친구를 만드는 사랑스러운 강아지입니다! 🦴</p>
+                    `
+                },
+                adventure: {
+                    title: '자유로운 영혼 고양이 🐱',
+                    content: `
+                        <div style="font-size: 6rem; margin-bottom: var(--space-4);">🐱</div>
+                        <h3 style="color: var(--primary-brand); margin-bottom: var(--space-4);">예측불가한 매력의 탐험가!</h3>
+                        <div style="background: rgba(59, 130, 246, 0.1); padding: var(--space-4); border-radius: 12px; margin-bottom: var(--space-4);">
+                            <p style="margin-bottom: var(--space-2);"><strong>💪 장점:</strong> 적응력, 독립성, 새로운 발견 능력</p>
+                            <p style="margin-bottom: var(--space-2);"><strong>✈️ 여행 스타일:</strong> 즉흥적이고 자유로운 탐험</p>
+                            <p><strong>🌟 추천:</strong> 배낭여행이나 혼자만의 여행을 도전해보세요!</p>
+                        </div>
+                        <p style="font-size: var(--text-sm); color: var(--text-secondary);">당신은 어디든 자신만의 길을 찾는 멋진 고양이입니다! 🐾</p>
+                    `
+                },
+                relaxed: {
+                    title: '여유만만 판다 🐼',
+                    content: `
+                        <div style="font-size: 6rem; margin-bottom: var(--space-4);">🐼</div>
+                        <h3 style="color: var(--primary-brand); margin-bottom: var(--space-4);">힐링과 휴식의 전문가!</h3>
+                        <div style="background: rgba(59, 130, 246, 0.1); padding: var(--space-4); border-radius: 12px; margin-bottom: var(--space-4);">
+                            <p style="margin-bottom: var(--space-2);"><strong>💪 장점:</strong> 스트레스 관리, 여유로운 관찰력</p>
+                            <p style="margin-bottom: var(--space-2);"><strong>✈️ 여행 스타일:</strong> 느긋하고 평화로운 힐링 여행</p>
+                            <p><strong>🌟 추천:</strong> 온천이나 자연 속 리조트를 즐겨보세요!</p>
+                        </div>
+                        <p style="font-size: var(--text-sm); color: var(--text-secondary);">당신은 대나무처럼 느긋한 마음의 판다입니다! 🎋</p>
+                    `
+                }
+            };
+            
+            return animalResults[resultType] || animalResults.relaxed;
+        }
+
+        // 심리테스트 결과 저장
+        async function savePsychTestResult(result) {
+            try {
+                await api.saveLink({
+                    user: currentUser,
+                    title: `${currentUser}님의 여행 성향 결과`,
+                    url: '#',
+                    category: '심리테스트 결과',
+                    description: result.title
+                });
+            } catch(error) {
+                console.error('심리테스트 결과 저장 오류:', error);
+            }
+        }
+
+        // 심리테스트 다시하기
+        function restartPsychTest() {
+            document.getElementById('psychTestResult').classList.add('hidden');
+            document.getElementById('psychTestContent').classList.remove('hidden');
+            
+            // 모든 선택 초기화
+            document.querySelectorAll('#psychTestModal input[type="radio"]').forEach(radio => {
+                radio.checked = false;
+                radio.closest('.radio-item').classList.remove('selected');
+            });
+        }
+
+        // 링크 저장
+        async function saveLink() {
+            const title = document.getElementById('linkTitle').value;
+            const url = document.getElementById('linkUrl').value;
+            const category = document.getElementById('linkCategory').value;
+            const description = document.getElementById('linkDescription').value;
+            
+            if(!title || !url) {
+                showAlert('제목과 URL을 모두 입력해주세요.', 'error');
+                return;
+            }
+            
+            try {
+                const result = await api.saveLink({
+                    user: currentUser,
+                    title: title,
+                    url: url,
+                    category: category,
+                    description: description
+                });
+                
+                if(result.success) {
+                    showAlert('링크가 저장되었습니다.', 'success');
+                    
+                    // 폼 초기화
+                    document.getElementById('linkForm').reset();
+                    
+                    // 링크 목록 새로고침
+                    loadSavedLinks();
+                }
+            } catch(error) {
+                showAlert('링크 저장 중 오류가 발생했습니다.', 'error');
+            }
+        }
+
+        // 로컬 스토리지에서 링크 목록 로드 (서버 연동 대기)
+        function loadSavedLinks() {
+            const linksList = document.getElementById('linksList');
+            linksList.innerHTML = `
+                <div class="empty-state">
+                    <div class="empty-state-icon">🔗</div>
+                    <p>서버에서 링크 데이터를 불러오는 중입니다...</p>
+                </div>
+            `;
+            
+            // 서버에서 링크 목록 가져오기 시도
+            api.request('getLinks', { user: currentUser })
+                .then(result => {
+                    if(result.success && result.data.links.length > 0) {
+                        const links = result.data.links;
+                        linksList.innerHTML = links.map(link => `
+                            <div class="link-item">
+                                <div class="link-title">${link.title}</div>
+                                <a href="${link.url}" target="_blank" class="link-url">${link.url}</a>
+                                <div class="link-meta">
+                                    <span class="link-category">${link.category}</span>
+                                    <span>${new Date(link.timestamp).toLocaleDateString()}</span>
+                                </div>
+                                ${link.description ? `<div class="link-description">${link.description}</div>` : ''}
+                            </div>
+                        `).join('');
+                    } else {
+                        linksList.innerHTML = `
+                            <div class="empty-state">
+                                <div class="empty-state-icon">🔗</div>
+                                <p>저장된 링크가 없습니다.<br>새로운 링크를 추가해보세요!</p>
+                            </div>
+                        `;
+                    }
+                })
+                .catch(error => {
+                    console.error('링크 로드 오류:', error);
+                    linksList.innerHTML = `
+                        <div class="empty-state">
+                            <div class="empty-state-icon">⚠️</div>
+                            <p>링크를 불러올 수 없습니다.<br>서버 연결을 확인해주세요.</p>
+                        </div>
+                    `;
+                });
+        }
+
+        // API 클래스에 saveLink 메서드 수정 (서버 연동만)
+        WorkshopAPI.prototype.saveLink = async function(linkData) {
+            return this.request('saveLink', linkData);
+        };
 
         // 로딩 표시
         function showLoading(containerId) {
