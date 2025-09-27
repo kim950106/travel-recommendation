@@ -1212,7 +1212,7 @@
                     </select>
                 </div>
                 
-                <button type="button" class="btn btn-primary" onclick="handleLogin()" id="loginBtn">
+                <button type="button" class="btn btn-primary" id="loginBtn">
                     로그인
                 </button>
             </div>
@@ -2738,6 +2738,10 @@
                 }
             }
 
+            // 로그인 버튼 이벤트 리스너 추가
+            document.getElementById('loginBtn').addEventListener('click', handleLogin);
+
+            // ESC 키로 모달 닫기
             document.addEventListener('keydown', function(event) {
                 if (event.key === 'Escape') {
                     const modals = document.querySelectorAll('.modal');
