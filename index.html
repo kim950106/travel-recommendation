@@ -641,10 +641,101 @@
             margin-bottom: var(--space-2);
         }
 
-        .stat-label {
+        /* MBTI 관계도 스타일 */
+        .relationship-container {
+            padding: var(--space-4);
+            background: var(--surface-elevated);
+            border-radius: 16px;
+            margin-bottom: var(--space-4);
+        }
+
+        .relationship-header {
+            text-align: center;
+            margin-bottom: var(--space-4);
+        }
+
+        .relationship-title {
+            font-size: var(--text-lg);
+            font-weight: 700;
+            color: var(--primary-brand);
+            margin-bottom: var(--space-2);
+        }
+
+        .relationship-subtitle {
             font-size: var(--text-sm);
             color: var(--text-secondary);
-            font-weight: 500;
+        }
+
+        .relationship-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--space-3);
+        }
+
+        .relationship-card {
+            background: white;
+            padding: var(--space-4);
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            text-align: center;
+            transition: all 0.2s ease;
+        }
+
+        .relationship-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .relationship-type {
+            font-size: var(--text-xs);
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: var(--space-1);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .relationship-pair {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-2);
+            margin-bottom: var(--space-2);
+        }
+
+        .mbti-tag {
+            background: var(--gradient-brand);
+            color: white;
+            padding: var(--space-1) var(--space-3);
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: var(--text-sm);
+        }
+
+        .relationship-desc {
+            font-size: var(--text-xs);
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        .compatibility-excellent {
+            border-left: 4px solid #10b981;
+            background: rgba(16, 185, 129, 0.05);
+        }
+
+        .compatibility-good {
+            border-left: 4px solid #3b82f6;
+            background: rgba(59, 130, 246, 0.05);
+        }
+
+        .compatibility-ok {
+            border-left: 4px solid #f59e0b;
+            background: rgba(245, 158, 11, 0.05);
+        }
+
+        .compatibility-challenging {
+            border-left: 4px solid #ef4444;
+            background: rgba(239, 68, 68, 0.05);
         }
 
         /* 일정 타임라인 - 개선된 버전 */
@@ -1211,6 +1302,13 @@
                 <div class="chart-container">
                     <div class="chart-title">MBTI 분포</div>
                     <div class="mbti-grid" id="mbtiDistribution">
+                        <!-- 동적으로 생성 -->
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <div class="chart-title">MBTI 관계도</div>
+                    <div id="mbtiRelationship">
                         <!-- 동적으로 생성 -->
                     </div>
                 </div>
@@ -2343,7 +2441,204 @@
                     <div style="font-size: var(--text-sm); color: var(--text-secondary);">${mbtiList}</div>
                 `;
                 teamDiv.appendChild(teamCard);
+        // MBTI 관계도 데이터
+        const MBTI_RELATIONSHIPS = {
+            // 완벽한 궁합 (Ideal Match)
+            excellent: [
+                { types: ['INTJ', 'ENFP'], desc: '비전과 열정의 만남' },
+                { types: ['INTP', 'ENFJ'], desc: '논리와 감정의 균형' },
+                { types: ['ENTJ', 'INFP'], desc: '리더십과 창의성' },
+                { types: ['ENTP', 'INFJ'], desc: '혁신과 통찰력' },
+                { types: ['ISTJ', 'ESFP'], desc: '안정성과 활력' },
+                { types: ['ISFJ', 'ESTP'], desc: '배려와 행동력' },
+                { types: ['ESTJ', 'ISFP'], desc: '체계와 유연성' },
+                { types: ['ESFJ', 'ISTP'], desc: '따뜻함과 실용성' }
+            ],
+            
+            // 좋은 궁합 (Good Match)
+            good: [
+                { types: ['INTJ', 'ENTP'], desc: '전략적 사고 공유' },
+                { types: ['INFJ', 'ENFP'], desc: '직관적 이해' },
+                { types: ['ISTJ', 'ESTJ'], desc: '체계적 협력' },
+                { types: ['ISFP', 'INFP'], desc: '가치관 공유' }
+            ],
+            
+            // 보통 궁합 (Okay Match)
+            ok: [
+                { types: ['INTJ', 'INFJ'], desc: '깊은 사고 공유' },
+                { types: ['ESTP', 'ESFP'], desc: '현재 중심적 사고' },
+                { types: ['ENTJ', 'ESTJ'], desc: '목표 지향적' },
+                { types: ['ISFJ', 'ISFP'], desc: '조화로운 관계' }
+            ],
+            
+            // 도전적 궁합 (Challenging Match)
+            challenging: [
+                { types: ['INTJ', 'ESFJ'], desc: '서로 다른 접근법' },
+                { types: ['INTP', 'ESTJ'], desc: '구조 vs 유연성' },
+                { types: ['ENFP', 'ISTJ'], desc: '변화 vs 안정성' },
+                { types: ['ISTP', 'ENFJ'], desc: '독립성 vs 조화' }
+            ]
+        };
+
+        // MBTI 관계도 렌더링
+        function renderMBTIRelationship(mbtiDistribution) {
+            const relationshipDiv = document.getElementById('mbtiRelationship');
+            
+            // 현재 참가자들의 MBTI 추출
+            const participantMBTIs = Object.keys(mbtiDistribution).filter(mbti => mbtiDistribution[mbti] > 0);
+            
+            if (participantMBTIs.length === 0) {
+                relationshipDiv.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">💫</div>
+                        <p>참가자 MBTI 데이터가 있을 때<br>관계도를 보여드립니다!</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            if (participantMBTIs.length === 1) {
+                relationshipDiv.innerHTML = `
+                    <div class="relationship-container">
+                        <div class="relationship-header">
+                            <div class="relationship-title">${participantMBTIs[0]} 특성</div>
+                            <div class="relationship-subtitle">다른 참가자가 참여하면 관계도를 보여드립니다</div>
+                        </div>
+                        <div style="text-align: center; padding: var(--space-4); background: white; border-radius: 12px;">
+                            <div class="mbti-tag" style="display: inline-block; margin-bottom: var(--space-3);">${participantMBTIs[0]}</div>
+                            <div style="font-size: var(--text-sm); color: var(--text-secondary);">
+                                ${getMBTIDescription(participantMBTIs[0])}
+                            </div>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+            
+            // 참가자들 간의 관계 찾기
+            const relationships = findRelationships(participantMBTIs);
+            
+            if (relationships.length === 0) {
+                relationshipDiv.innerHTML = `
+                    <div class="relationship-container">
+                        <div class="relationship-header">
+                            <div class="relationship-title">팀 다양성</div>
+                            <div class="relationship-subtitle">${participantMBTIs.length}가지 다양한 MBTI 유형</div>
+                        </div>
+                        <div style="display: flex; flex-wrap: wrap; gap: var(--space-2); justify-content: center;">
+                            ${participantMBTIs.map(mbti => `<div class="mbti-tag">${mbti}</div>`).join('')}
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+            
+            // 관계도 렌더링
+            let html = `<div class="relationship-container">
+                <div class="relationship-header">
+                    <div class="relationship-title">팀 내 MBTI 관계도</div>
+                    <div class="relationship-subtitle">${participantMBTIs.length}가지 유형 간의 궁합</div>
+                </div>
+                <div class="relationship-grid">`;
+            
+            relationships.forEach(rel => {
+                const compatibilityClass = `compatibility-${rel.compatibility}`;
+                const emoji = getCompatibilityEmoji(rel.compatibility);
+                
+                html += `
+                    <div class="relationship-card ${compatibilityClass}">
+                        <div class="relationship-type">${getCompatibilityText(rel.compatibility)} ${emoji}</div>
+                        <div class="relationship-pair">
+                            <div class="mbti-tag">${rel.types[0]}</div>
+                            <span style="font-size: var(--text-lg);">↔</span>
+                            <div class="mbti-tag">${rel.types[1]}</div>
+                        </div>
+                        <div class="relationship-desc">${rel.desc}</div>
+                    </div>
+                `;
             });
+            
+            html += `</div></div>`;
+            relationshipDiv.innerHTML = html;
+        }
+
+        // 참가자 간 관계 찾기
+        function findRelationships(participantMBTIs) {
+            const relationships = [];
+            
+            // 모든 가능한 조합 확인
+            for (let i = 0; i < participantMBTIs.length; i++) {
+                for (let j = i + 1; j < participantMBTIs.length; j++) {
+                    const mbti1 = participantMBTIs[i];
+                    const mbti2 = participantMBTIs[j];
+                    
+                    // 각 궁합 타입에서 관계 찾기
+                    for (const [compatibility, pairs] of Object.entries(MBTI_RELATIONSHIPS)) {
+                        const match = pairs.find(pair => 
+                            (pair.types[0] === mbti1 && pair.types[1] === mbti2) ||
+                            (pair.types[0] === mbti2 && pair.types[1] === mbti1)
+                        );
+                        
+                        if (match) {
+                            relationships.push({
+                                types: [mbti1, mbti2],
+                                compatibility: compatibility,
+                                desc: match.desc
+                            });
+                            break;
+                        }
+                    }
+                }
+            }
+            
+            // 궁합 좋은 순으로 정렬
+            const order = { excellent: 0, good: 1, ok: 2, challenging: 3 };
+            relationships.sort((a, b) => order[a.compatibility] - order[b.compatibility]);
+            
+            return relationships.slice(0, 6); // 최대 6개까지만 표시
+        }
+
+        // MBTI 설명 가져오기
+        function getMBTIDescription(mbti) {
+            const descriptions = {
+                'INTJ': '전략적 사고가와 완벽주의자',
+                'INTP': '논리적 사고가와 발명가',
+                'ENTJ': '자연스러운 리더와 지휘관',
+                'ENTP': '혁신가와 영감을 주는 사람',
+                'INFJ': '이상주의자와 조력자',
+                'INFP': '중재자와 치료자',
+                'ENFJ': '영감을 주는 선생님',
+                'ENFP': '열정적인 활동가',
+                'ISTJ': '실용적이고 책임감 있는 사람',
+                'ISFJ': '따뜻하고 헌신적인 보호자',
+                'ESTJ': '효율적인 관리자',
+                'ESFJ': '사교적이고 인기 있는 사람',
+                'ISTP': '손재주 있는 장인',
+                'ISFP': '유연하고 매력적인 예술가',
+                'ESTP': '활동적이고 실용적인 사람',
+                'ESFP': '자유로운 영혼의 연예인'
+            };
+            return descriptions[mbti] || '독특한 성격의 소유자';
+        }
+
+        // 궁합 타입별 텍스트
+        function getCompatibilityText(compatibility) {
+            return {
+                excellent: '완벽한 궁합',
+                good: '좋은 궁합',
+                ok: '무난한 관계',
+                challenging: '성장 기회'
+            }[compatibility];
+        }
+
+        // 궁합 타입별 이모지
+        function getCompatibilityEmoji(compatibility) {
+            return {
+                excellent: '💖',
+                good: '😊',
+                ok: '👍',
+                challenging: '💪'
+            }[compatibility];
         }
 
         // 워크숍 일정
