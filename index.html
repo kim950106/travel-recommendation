@@ -1,1187 +1,595 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>투어패스사업부 2025 워크샵 | TRAVEL SHIFT</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
-<style>
-  *{margin:0;padding:0;box-sizing:border-box}
-  body{font-family:'Noto Sans KR',sans-serif;background:#f2f4f9;min-height:100vh;color:#222}
-  .app-container{max-width:420px;margin:0 auto;background:#fff;min-height:100vh;border-left:1px solid #eee;border-right:1px solid #eee}
-  .app-header{background:#ffffff;border-bottom:1px solid #eee;text-align:center;padding:18px 12px;position:sticky;top:0;z-index:5}
-  .app-title{font-size:1.05rem;font-weight:800;letter-spacing:.2px}
-  .app-subtitle{font-size:.82rem;color:#667;}
-  .status-bar{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-bottom:1px solid #eee;background:#fafbff}
-  .connection-status{display:flex;align-items:center;gap:8px;font-size:.85em}
-  .status-dot{width:8px;height:8px;border-radius:50%}
-  .status-online{background:#2ecc71}.status-offline{background:#ff6b6b}
-  .main-content{padding:16px}
-  .google-login{background:#fff;border:1px solid #eee;border-radius:12px;padding:18px}
-  .login-btn{width:100%;background:#111827;color:#fff;border:none;border-radius:10px;padding:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px}
-  .login-btn:hover{opacity:.92}
-  .user-info{display:none;align-items:center;gap:12px;padding:14px;background:#f6f7fb;border:1px solid #eee;border-radius:10px;margin-top:12px}
-  .user-avatar{width:40px;height:40px;border-radius:50%;background:#111827;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800}
-  .user-details h4{font-size:.98em}
-  .user-details p{font-size:.78em;color:#666}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>투어패스사업부 2025 워크숍</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-  .menu-grid{display:none;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0 8px}
-  .menu-item{
-    position:relative;border:1px solid #eee;border-radius:14px;padding:16px;
-    cursor:pointer;transition:transform .18s ease, box-shadow .18s ease;background:#fff;overflow:hidden;
-    box-shadow:0 4px 14px rgba(16,24,40,.04);
-  }
-  .menu-item:hover{transform:translateY(-2px);box-shadow:0 10px 20px rgba(16,24,40,.08)}
-  .menu-item:active{transform:scale(.98)}
-  .menu-item::before{
-    content:"";position:absolute;inset:0;z-index:0;
-    background:
-      radial-gradient(30% 40% at 90% 10%, rgba(0,0,0,.04), transparent 60%),
-      radial-gradient(25% 35% at 0% 100%, rgba(0,0,0,.04), transparent 60%),
-      linear-gradient(180deg,#ffffff 0%,#f8fafc 100%);
-  }
-  .menu-item::after{
-    content:attr(data-mark);
-    position:absolute;right:-6px;bottom:-10px;z-index:0;
-    font-size:56px;opacity:.08;color:#000;font-weight:900;pointer-events:none;
-  }
-  .menu-item > *{position:relative;z-index:1}
-  .menu-icon{font-size:2em;margin-bottom:6px;color:#111827}
-  .menu-title{font-size:.92em;font-weight:800}
-  .menu-desc{font-size:.72em;color:#606}
+        body {
+            font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
 
-  .app-translate{background:#fff;border:1px solid #eee;border-radius:12px;padding:14px}
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
 
-  .modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:1000}
-  .modal-content{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:#fff;border-radius:14px;max-width:92%;width:360px;max-height:88%;overflow:auto;box-shadow:0 24px 48px rgba(16,24,40,.24)}
-  .modal-header{padding:18px 18px 0}
-  .close-btn{position:absolute;top:10px;right:12px;background:#fff;border:1px solid #eee;border-radius:8px;font-size:1rem;padding:4px 8px;cursor:pointer}
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+            padding: 20px 0;
+        }
 
-  .participants-list{max-height:360px;overflow:auto;padding:0 16px 16px}
-  .participant-item{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #f0f0f0}
-  .participant-avatar{width:30px;height:30px;border-radius:50%;background:#111827;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.85em}
-  .sync-btn{background:#111827;color:#fff;border:none;border-radius:10px;padding:10px 12px;cursor:pointer}
+        .header h1 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
 
-  .mbti-test{padding:18px}
-  .question-card{background:#f7f7fb;border:1px solid #eee;border-radius:12px;padding:16px}
-  .question-number{color:#111827;font-weight:800;margin-bottom:8px}
-  .question-text{line-height:1.5;margin-bottom:14px}
-  .answer-btn{width:100%;background:#fff;border:2px solid #eee;border-radius:10px;padding:12px;text-align:left;margin-top:10px;cursor:pointer}
-  .answer-btn:hover{border-color:#111827;background:#f4f5f7}
-  .answer-btn.selected{border-color:#111827;background:#111827;color:#fff}
-  .progress-bar{height:4px;background:#eee;border-radius:2px;margin-bottom:12px}
-  .progress-fill{height:100%;width:0;background:#111827;border-radius:2px;transition:width .3s}
+        .header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
 
-  .rel-cat{margin-bottom:18px}
-  .rel-head{display:flex;align-items:center;gap:8px;color:#fff;padding:10px 12px;border-radius:10px;margin-bottom:10px;font-weight:900}
-  .rel-box{background:#fafbff;border:1px solid #eee;border-radius:10px;padding:12px}
-  .rel-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}
-  .rel-card{background:#fff;border:1px solid #eee;border-left:4px solid #000;border-radius:8px;padding:10px}
-  .rel-row{display:flex;justify-content:space-between;align-items:center;gap:8px}
-  .badge{background:#111827;color:#fff;padding:4px 8px;border-radius:6px;font-size:.78em;font-weight:800}
-  .muted{font-size:.8em;color:#666;margin-top:6px}
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
 
-  .schedule-item{display:flex;align-items:flex-start;padding:10px 0;border-bottom:1px solid #eee}
-  .schedule-item:last-child{border-bottom:none}
-  .schedule-item .time{width:60px;font-weight:800;color:#111827}
-  .schedule-item .activity{flex:1;margin:0 10px}
-  .schedule-item .location{width:120px;color:#666;text-align:right}
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
 
-  @media (max-width:480px){.app-container{max-width:100%}.menu-icon{font-size:1.8em}}
-</style>
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        label {
+            font-weight: 600;
+            color: #555;
+            font-size: 14px;
+        }
+
+        select, input {
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        select:focus, input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn {
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .menu-item {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .menu-icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .menu-title {
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .menu-desc {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .timer-card {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .timer-text {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .timer-display {
+            font-size: 36px;
+            font-weight: 700;
+            font-family: 'Courier New', monospace;
+        }
+
+        .user-info {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .user-info h3 {
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .user-info p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .alert {
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .card {
+                padding: 20px;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="app-container">
-    <div class="app-header">
-      <div class="app-title">투어패스사업부 2025 워크샵</div>
-      <div class="app-subtitle">TRAVEL SHIFT</div>
-    </div>
-
-    <div class="status-bar">
-      <div class="connection-status">
-        <div id="connectionDot" class="status-dot"></div>
-        <span id="connectionText">연결 확인 중...</span>
-      </div>
-      <div style="display:flex;align-items:center;gap:8px">
-        <div id="lastSync">동기화: -</div>
-        <button onclick="syncData()" title="데이터 동기화" style="background:none;border:none;cursor:pointer;font-size:1.05em">🔄</button>
-        <button id="logoutBtn" onclick="logout()" style="background:#fff;border:1px solid #ddd;border-radius:8px;padding:6px 10px;cursor:pointer">로그아웃</button>
-      </div>
-    </div>
-
-    <div class="main-content">
-      <!-- 로그인 (이름만) -->
-      <div id="loginSection" class="google-login">
-        <h4 style="font-weight:800;margin-bottom:10px">로그인</h4>
-        <div style="display:grid;gap:10px">
-          <input id="loginName" type="text" placeholder="이름" autocomplete="username"
-                 style="width:100%;padding:12px;border:1px solid #ddd;border-radius:10px">
-          <button id="nameLoginBtn" class="login-btn" onclick="nameLogin()">
-            <i class="fa-solid fa-right-to-bracket"></i> 이름으로 로그인
-          </button>
-        </div>
-        <p style="font-size:.82em;color:#666;margin-top:10px;text-align:center">
-          등록된 참가자만 로그인할 수 있습니다.
-        </p>
-      </div>
-
-      <!-- 사용자 정보 -->
-      <div id="userInfo" class="user-info">
-        <div id="userAvatar" class="user-avatar">U</div>
-        <div class="user-details">
-          <h4 id="userName">사용자</h4>
-          <p id="userEmail"></p>
-          <p id="userDept" style="margin-top:2px"></p>
-        </div>
-      </div>
-
-      <!-- 메뉴 -->
-      <div id="mainMenu" class="menu-grid">
-        <div class="menu-item" data-action="participants" data-mark="👥" onclick="openModal('participantsModal')">
-          <div class="menu-icon">👥</div>
-          <div class="menu-title">참가자 현황</div>
-          <div class="menu-desc">MBTI 입력/수정 & 팀 보기</div>
+    <div class="container">
+        <!-- 헤더 -->
+        <div class="header">
+            <h1>투어패스사업부</h1>
+            <p>2025 워크숍</p>
         </div>
 
-        <div class="menu-item" data-action="schedule" data-mark="📅" onclick="showDetailedSchedule()">
-          <div class="menu-icon">📅</div>
-          <div class="menu-title">워크샵 일정</div>
-          <div class="menu-desc">상세 일정 및 프로그램</div>
-        </div>
-
-        <!-- MBTI 검사 → 여행심리테스트로 변경 -->
-        <div class="menu-item" data-action="traveltest" data-mark="🧭" onclick="startTravelTest()">
-          <div class="menu-icon">🧭</div>
-          <div class="menu-title">여행심리테스트</div>
-          <div class="menu-desc">여행 성향/동행 궁합 보기</div>
-        </div>
-
-        <div class="menu-item" data-action="tourpassbox" data-mark="📦" onclick="openModal('tourpassBoxModal')">
-          <div class="menu-icon">📦</div>
-          <div class="menu-title">투어패스 보관함</div>
-          <div class="menu-desc">개인 링크 저장소</div>
-        </div>
-
-        <div class="menu-item" data-action="survey" data-mark="📝" onclick="openModal('surveyModal')">
-          <div class="menu-icon">📝</div>
-          <div class="menu-title">설문조사</div>
-          <div class="menu-desc">워크샵 만족도</div>
-        </div>
-
-        <div class="menu-item" data-action="chatbot" data-mark="🤖" onclick="openWorkshopChatbot()">
-          <div class="menu-icon">🤖</div>
-          <div class="menu-title">워크숍 챗봇</div>
-          <div class="menu-desc">대화형 도우미 바로가기</div>
-        </div>
-      </div>
-
-      <!-- 번역 -->
-      <div class="app-translate">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
-          <h4>🌐 앱 번역하기</h4>
-          <select id="languageSelect" onchange="translateApp()" style="padding:6px;border-radius:8px;border:1px solid #ddd">
-            <option value="ko">한국어</option><option value="en">English</option><option value="ja">日本語</option><option value="zh">中文</option>
-          </select>
-        </div>
-        <div style="font-size:.82em;color:#666">언어를 선택하면 앱 전체가 번역됩니다</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 참가자 모달 -->
-  <div id="participantsModal" class="modal">
-    <div class="modal-content" style="width:760px;max-width:95%">
-      <button class="close-btn" onclick="closeModal('participantsModal')">&times;</button>
-      <div class="modal-header"><h3>참가자 현황</h3></div>
-      <div style="padding:10px 0 6px 0">
-        <div class="participants-list" id="participantsList"></div>
-        <div style="display:flex;gap:8px;align-items:center;padding:0 16px 16px">
-          <button class="sync-btn" style="flex:1" onclick="showMBTIRelationship()">MBTI 관계도 보기</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- 여행심리테스트 모달 (기존 mbtiModal 아이디 유지) -->
-  <div id="mbtiModal" class="modal">
-    <div class="modal-content" style="width:760px;max-width:95%">
-      <button class="close-btn" onclick="closeMBTITest()">&times;</button>
-      <div class="mbti-test">
-        <div class="progress-bar"><div id="progressBar" class="progress-fill"></div></div>
-        <div class="question-card">
-          <div id="questionNumber" class="question-number">질문 1/10</div>
-          <div id="questionText" class="question-text">여행심리테스트 시작</div>
-          <div id="answerOptions"></div>
-        </div>
-        <button id="nextBtn" onclick="nextQuestion()" style="display:none;background:#111827;color:#fff;border:none;border-radius:8px;padding:12px 18px;cursor:pointer;margin-top:14px">다음</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- 설문 모달 -->
-  <div id="surveyModal" class="modal">
-    <div class="modal-content" style="width:760px;max-width:95%">
-      <button class="close-btn" onclick="closeModal('surveyModal')">&times;</button>
-      <div class="modal-header"><h3>워크샵 만족도 조사</h3></div>
-      <div style="padding:16px 18px 22px">
-        <div id="surveyForm">
-          <div style="margin-bottom:16px">
-            <label style="display:block;margin-bottom:8px;font-weight:700">전체적인 만족도</label>
-            <input id="satisfaction" type="range" min="1" max="5" value="3" style="width:100%" oninput="document.getElementById('satisfactionValue').textContent=this.value">
-            <div style="text-align:center;margin-top:6px"><span id="satisfactionValue">3</span>/5</div>
-          </div>
-          <div style="margin-bottom:16px">
-            <label style="display:block;margin-bottom:8px;font-weight:700">가장 만족했던 활동</label>
-            <select id="bestActivity" style="width:100%;padding:10px;border:1px solid #ddd;border-radius:10px">
-              <option value="">선택해주세요</option>
-              <option value="wonjun-tour">원준님의 도슨트 투어</option>
-              <option value="accommodation">숙소</option>
-              <option value="chungnam-tourpass">충남투어패스 체험</option>
-              <option value="food">음식</option>
-              <option value="performance-sharing">성과공유 및 비전공유</option>
-            </select>
-          </div>
-          <div style="margin-bottom:16px">
-            <label style="display:block;margin-bottom:8px;font-weight:700">개선 의견 및 피드백</label>
-            <textarea id="feedback" placeholder="자유롭게 의견을 작성해주세요..." style="width:100%;height:90px;padding:10px;border:1px solid #ddd;border-radius:10px;resize:vertical"></textarea>
-          </div>
-          <button onclick="submitWorkshopSurvey()" class="sync-btn" style="width:100%">설문조사 제출</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 투어패스 보관함 모달 -->
-  <div id="tourpassBoxModal" class="modal">
-    <div class="modal-content" style="width:760px;max-width:95%">
-      <button class="close-btn" onclick="closeModal('tourpassBoxModal')">&times;</button>
-      <div class="modal-header"><h3>📦 투어패스 보관함</h3></div>
-      <div style="padding:16px 18px 22px">
-        <div style="margin-bottom:14px">
-          <button onclick="showAddLinkForm()" style="background:#2ecc71;color:#fff;border:none;border-radius:10px;padding:10px 14px;cursor:pointer">➕ 새 링크 추가</button>
-        </div>
-        <div id="addLinkForm" style="display:none;background:#f8f9fb;border:1px solid #eee;padding:14px;border-radius:12px;margin-bottom:14px">
-          <h4 style="margin-bottom:10px">🔗 새 링크 추가</h4>
-          <div style="margin-bottom:8px">
-            <label style="display:block;margin-bottom:6px;font-weight:700">제목</label>
-            <input id="linkTitle" type="text" style="width:100%;padding:10px;border:1px solid #ddd;border-radius:10px">
-          </div>
-          <div style="margin-bottom:8px">
-            <label style="display:block;margin-bottom:6px;font-weight:700">URL</label>
-            <input id="linkUrl" type="url" placeholder="https://example.com" style="width:100%;padding:10px;border:1px solid #ddd;border-radius:10px">
-          </div>
-          <div style="margin-bottom:10px">
-            <label style="display:block;margin-bottom:6px;font-weight:700">비밀번호(선택)</label>
-            <input id="linkPassword" type="password" style="width:100%;padding:10px;border:1px solid #ddd;border-radius:10px">
-          </div>
-          <div style="display:flex;gap:8px">
-            <button onclick="saveNewLink()" class="sync-btn">💾 저장</button>
-            <button onclick="cancelAddLink()" style="background:#9aa0a6;color:#fff;border:none;border-radius:10px;padding:10px 12px;cursor:pointer">❌ 취소</button>
-          </div>
-        </div>
-        <div id="linksList" style="max-height:340px;overflow:auto"></div>
-      </div>
-    </div>
-  </div>
-
-<script>
-/* =========================
-   0) 상수/전역
-========================= */
-const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyQyuXtoF6LOh7Ag8w1N9yVbTV9MecJSg16UyP5VSb1kt2SDplndvsxX6OpDgGIXiv8/exec';
-
-let currentUser = null;
-let isOnline = false;
-let currentQuestion = 0;
-let mbtiAnswers = []; // (미사용)
-
-/* =========================
-   1) 이름 → 부서/직급 매핑 + 화이트리스트
-========================= */
-const DIRECTORY = {
-  "남도현": { team:"투어패스사업부", position:"이사" },
-  "김수인": { team:"투어패스사업부 영업 1팀", position:"팀장" },
-  "고다현": { team:"투어패스사업부 영업 1팀", position:"사원" },
-  "심재희": { team:"투어패스사업부 영업 1팀", position:"매니저" },
-  "판티니안": { team:"투어패스사업부 영업 1팀", position:"매니저" },
-  "김현철": { team:"투어패스사업부 영업 2팀", position:"팀장" },
-  "이유진": { team:"투어패스사업부 영업 2팀", position:"사원" },
-  "정어진": { team:"투어패스사업부 영업 2팀", position:"사원" },
-  "장원준": { team:"투어패스사업부 영업 2팀", position:"사원" },
-  "김대진": { team:"투어패스사업부 영업 2팀", position:"팀장" },
-  "손현우": { team:"투어패스사업부 영업 2팀", position:"대리" },
-  "이주아": { team:"투어패스사업부 영업 2팀", position:"주임" },
-  "장은진": { team:"투어패스사업부 영업 2팀", position:"주임" },
-};
-function applyDirectoryToUser(u){
-  const dir = DIRECTORY[u.name];
-  if (dir){ u.team = dir.team; u.position = dir.position; }
-  return u;
-}
-const ALLOWED_NAMES = Object.keys(DIRECTORY);
-
-/* =========================
-   2) 통신 헬퍼
-========================= */
-async function callGoogleAppsScript(data, method='GET'){
-  const bust = `_=${Date.now()}`;
-  let url = GAS_WEB_APP_URL;
-  const opts = { method, mode:'cors', redirect:'follow', credentials:'omit' };
-
-  if (method === 'GET'){
-    const qs = new URLSearchParams({...data, [bust]: ''}).toString();
-    url += (url.includes('?') ? '&' : '?') + qs;
-  } else {
-    opts.headers = { 'Content-Type':'application/x-www-form-urlencoded' };
-    const payload = new URLSearchParams({ payload: JSON.stringify(data) }).toString();
-    url += (url.includes('?') ? '&' : '?') + bust;
-    opts.body = payload;
-  }
-
-  let res;
-  try { res = await fetch(url, opts); }
-  catch (err) { throw new Error(`네트워크 오류: ${err?.message || err}`); }
-
-  const text = await res.text().catch(()=> '');
-  if (!res.ok){ throw new Error(`HTTP ${res.status} ${res.statusText} / body: ${text?.slice(0,200)}`); }
-
-  let json;
-  try{ json = JSON.parse(text); }catch(_){ throw new Error(`JSON 파싱 실패 / body: ${text?.slice(0,200)}`); }
-
-  if (!json.success){
-    const detail = (json.data && json.data.error) ? ` / ${json.data.error}` : '';
-    throw new Error(`백엔드 오류: success=false${detail}`);
-  }
-  return json.data;
-}
-
-/* =========================
-   3) 연결/초기화
-========================= */
-function updateConnectionStatus(){
-  const dict = (typeof getLangMap==='function')
-    ? getLangMap()
-    : {online:'온라인', offline:'오프라인', sync:'동기화: '};
-  const dot = document.getElementById('connectionDot');
-  const text = document.getElementById('connectionText');
-  if (isOnline){ dot.className='status-dot status-online'; text.textContent=dict.online; }
-  else { dot.className='status-dot status-offline'; text.textContent=dict.offline; }
-}
-function syncData(){
-  const prefix = (typeof getLangMap==='function') ? getLangMap().sync : '동기화: ';
-  document.getElementById('lastSync').textContent = prefix + new Date().toLocaleTimeString();
-}
-async function checkBackendConnection(){
-  try{
-    await callGoogleAppsScript({ action:'healthCheck' }, 'GET');
-    isOnline = true; updateConnectionStatus(); return true;
-  }catch(e){
-    isOnline = false; updateConnectionStatus(); return false;
-  }
-}
-function checkConnection(){
-  const set = ()=>{ isOnline = navigator.onLine; updateConnectionStatus(); };
-  window.addEventListener('online', set);
-  window.addEventListener('offline', set);
-  set();
-}
-
-/* =========================
-   4) 세션/로그인 (이름만)
-========================= */
-function logout(){
-  localStorage.removeItem('tourpassUser'); currentUser=null;
-  document.getElementById('userInfo').style.display='none';
-  document.getElementById('mainMenu').style.display='none';
-  document.getElementById('loginSection').style.display='block';
-}
-function nameLogin(){
-  const nameEl = document.getElementById('loginName');
-  const btn    = document.getElementById('nameLoginBtn');
-  const name   = (nameEl.value||'').trim();
-
-  if (!name){ alert('이름을 입력하세요.'); nameEl.focus(); return; }
-  if (!ALLOWED_NAMES.includes(name)){
-    alert('등록된 참가자만 로그인할 수 있습니다.\n\n허용 이름: ' + ALLOWED_NAMES.join(', '));
-    return;
-  }
-
-  btn.innerHTML = '⏳ 확인 중...';
-  btn.disabled = true;
-  try{
-    let u = { name, email:`${name}@local`, mbti:'', team:'투어패스사업부', position:'직원', avatar:name.substring(0,1) };
-    u = applyDirectoryToUser(u);
-    currentUser = u;
-    localStorage.setItem('tourpassUser', JSON.stringify(currentUser));
-    showMainApp();
-  }catch(err){
-    alert('로그인 오류: '+(err.message||err));
-  }finally{
-    btn.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> 이름으로 로그인';
-    btn.disabled = false;
-  }
-}
-function checkLoginStatus(){
-  const saved = localStorage.getItem('tourpassUser');
-  if (saved){
-    const u = JSON.parse(saved);
-    if (confirm(`${u.name} 사용자로 이어서 이용하시겠어요?`)){
-      currentUser=u; showMainApp();
-    }else{ logout(); }
-  }
-}
-function showMainApp(){
-  document.getElementById('loginSection').style.display='none';
-  document.getElementById('userInfo').style.display='flex';
-  document.getElementById('mainMenu').style.display='grid';
-  document.getElementById('userName').textContent=currentUser.name;
-  document.getElementById('userEmail').textContent='';
-  document.getElementById('userDept').textContent =
-    `${currentUser.team||''} ${currentUser.position||''}  ${currentUser.mbti?`| MBTI: ${currentUser.mbti}`:''}`;
-  document.getElementById('userAvatar').textContent=currentUser.avatar;
-  localStorage.setItem('tourpassUser', JSON.stringify(currentUser));
-  setTimeout(()=>{}, 60);
-  syncData();
-}
-/* =========================
-   5) 모달/메뉴
-========================= */
-function anyOpenModal(){
-  return Array.from(document.querySelectorAll('.modal')).some(m => m.style.display==='block');
-}
-function activateMenuButton(a){
-  document.querySelectorAll('.menu-item').forEach(i=>i.classList.remove('active'));
-  const t=document.querySelector(`[data-action="${a}"]`); if (t) t.classList.add('active');
-}
-function deactivateMenuButton(a){
-  const t=document.querySelector(`[data-action="${a}"]`); if (t) t.classList.remove('active');
-}
-function openModal(id){
-  const action=id.replace('Modal',''); activateMenuButton(action);
-  const el=document.getElementById(id); if (!el) return;
-  el.style.display='block';
-  if (id==='participantsModal') renderParticipants();
-  if (id==='tourpassBoxModal') updateLinksList();
-}
-function closeModal(id){
-  const action=id.replace('Modal',''); deactivateMenuButton(action);
-  const el=document.getElementById(id); if (el) el.style.display='none';
-  if (!anyOpenModal()){
-    document.querySelector('.app-container')?.scrollTo?.({top:0, behavior:'smooth'});
-  }
-}
-
-/* =========================
-   6) 참가자/MBTI 입력·수정(드롭다운) + 관계도
-========================= */
-const MBTI_TYPES = [
-  'INTJ','INTP','ENTJ','ENTP',
-  'INFJ','INFP','ENFJ','ENFP',
-  'ISTJ','ISFJ','ESTJ','ESFJ',
-  'ISTP','ISFP','ESTP','ESFP'
-];
-function buildMbtiSelectHTML(selected){
-  const opts = MBTI_TYPES.map(t=>`<option value="${t}" ${t===selected?'selected':''}>${t}</option>`).join('');
-  return `<select class="mbti-select" style="padding:6px 8px;border-radius:8px;border:1px solid #ddd">${opts}</select>`;
-}
-function renderMbtiBadge(mbti, isMe, name){
-  const badge = mbti
-    ? `<span class="badge" style="background:#111827;color:#fff;margin-left:6px">${mbti}</span>`
-    : `<span class="muted" style="margin-left:6px">MBTI 미입력</span>`;
-  const editBtn = isMe
-    ? `<button onclick="toggleEditMBTI('${name}', '${(mbti||'').toUpperCase()}')"
-         style="margin-left:8px;background:#111827;color:#fff;border:none;border-radius:8px;padding:6px 8px;cursor:pointer;font-size:.78em">
-         ${mbti ? '수정' : '입력'}
-       </button>`
-    : '';
-  return badge + editBtn;
-}
-async function upsertMBTI(name, mbti){
-  await callGoogleAppsScript({
-    action:'saveMBTIResult',
-    name,
-    email: (currentUser?.email || ''),
-    mbtiType: mbti.toUpperCase(),
-    answers: [],
-    travelPersona: null,
-    travelStyle: null,
-    travelFortune: null,
-    testDuration: 0,
-    testKind: 'manual-mbti'
-  }, 'POST');
-
-  if (currentUser && currentUser.name === name){
-    currentUser.mbti = mbti.toUpperCase();
-    localStorage.setItem('tourpassUser', JSON.stringify(currentUser));
-  }
-}
-function toggleEditMBTI(name, currentMbti){
-  if (!currentUser || currentUser.name !== name){
-    alert('본인의 MBTI만 수정할 수 있습니다.');
-    return;
-  }
-  const row = document.querySelector(`[data-participant="${CSS.escape(name)}"] .mbti-cell`);
-  if (!row) return;
-
-  if (row.dataset.editing === '1'){
-    row.dataset.editing = '0';
-    row.innerHTML = renderMbtiBadge(currentMbti, true, name);
-    return;
-  }
-
-  row.dataset.editing = '1';
-  row.innerHTML = `
-    ${buildMbtiSelectHTML((currentMbti||'').toUpperCase())}
-    <button class="save-mbti-btn" style="margin-left:6px;background:#111827;color:#fff;border:none;border-radius:8px;padding:6px 8px;cursor:pointer;font-size:.78em">저장</button>
-    <button class="cancel-mbti-btn" style="margin-left:4px;background:#e5e7eb;border:1px solid #ddd;border-radius:8px;padding:6px 8px;cursor:pointer;font-size:.78em">취소</button>
-  `;
-  row.querySelector('.save-mbti-btn').onclick = async ()=>{
-    const sel = row.querySelector('.mbti-select');
-    const val = (sel?.value||'').toUpperCase();
-    if (!MBTI_TYPES.includes(val)){ alert('올바른 MBTI를 선택하세요.'); return; }
-    try{
-      await upsertMBTI(name, val);
-      row.dataset.editing = '0';
-      row.innerHTML = renderMbtiBadge(val, true, name);
-      renderParticipants();
-    }catch(e){
-      alert('MBTI 저장 실패: ' + (e.message||e));
-    }
-  };
-  row.querySelector('.cancel-mbti-btn').onclick = ()=>{
-    row.dataset.editing = '0';
-    row.innerHTML = renderMbtiBadge(currentMbti, true, name);
-  };
-}
-async function renderParticipants(){
-  const listEl = document.getElementById('participantsList');
-  listEl.innerHTML = '<div style="text-align:center;color:#666;padding:20px">불러오는 중…</div>';
-  try {
-    const data = await callGoogleAppsScript({ action:'getMBTIResults' });
-    const rows = (data || []).map(r => {
-      const d = DIRECTORY[r.name] || {};
-      return {
-        name: r.name || '',
-        mbtiType: (r.mbtiType || r.mbti || '').toUpperCase(),
-        team: r.team || d.team || '',
-        position: r.position || d.position || ''
-      };
-    }).filter(r => r.name);
-
-    if (rows.length === 0){
-      listEl.innerHTML = '<div style="text-align:center;color:#666;padding:20px">표시할 참가자 데이터가 없습니다.</div>';
-      return;
-    }
-    listEl.innerHTML = rows
-      .sort((a,b)=>(a.name||'').localeCompare(b.name||'','ko'))
-      .map(p=>{
-        const isMe = (currentUser && p.name === currentUser.name);
-        const mbtiCell = `
-          <div class="mbti-cell" data-editing="0">
-            ${renderMbtiBadge((p.mbtiType||'').toUpperCase(), isMe, p.name)}
-          </div>`;
-        return `
-          <div class="participant-item" data-participant="${p.name}">
-            <div class="participant-avatar">${(p.name||'?').substring(0,1)}</div>
-            <div style="flex:1">
-              <div><strong>${p.name}</strong> ${mbtiCell}</div>
-              <div style="font-size:.8em;color:#666">${p.team||''} ${p.position||''}</div>
+        <!-- 로그인 화면 -->
+        <div id="loginScreen" class="card">
+            <div class="login-form">
+                <div class="form-group">
+                    <label for="userName">이름을 선택하세요</label>
+                    <select id="userName" required>
+                        <option value="">이름을 선택해주세요</option>
+                        <option value="남도현">남도현</option>
+                        <option value="김수인">김수인</option>
+                        <option value="고다현">고다현</option>
+                        <option value="심재희">심재희</option>
+                        <option value="판티니안">판티니안</option>
+                        <option value="김현철">김현철</option>
+                        <option value="이유진">이유진</option>
+                        <option value="정어진">정어진</option>
+                        <option value="장원준">장원준</option>
+                        <option value="김대진">김대진</option>
+                        <option value="손현우">손현우</option>
+                        <option value="이주아">이주아</option>
+                        <option value="장은진">장은진</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="userMBTI">MBTI를 입력하세요</label>
+                    <select id="userMBTI" required>
+                        <option value="">MBTI를 선택해주세요</option>
+                        <option value="INTJ">INTJ - 건축가</option>
+                        <option value="INTP">INTP - 논리술사</option>
+                        <option value="ENTJ">ENTJ - 통솔자</option>
+                        <option value="ENTP">ENTP - 토론가</option>
+                        <option value="INFJ">INFJ - 옹호자</option>
+                        <option value="INFP">INFP - 중재자</option>
+                        <option value="ENFJ">ENFJ - 선도자</option>
+                        <option value="ENFP">ENFP - 활동가</option>
+                        <option value="ISTJ">ISTJ - 현실주의자</option>
+                        <option value="ISFJ">ISFJ - 수호자</option>
+                        <option value="ESTJ">ESTJ - 경영자</option>
+                        <option value="ESFJ">ESFJ - 집정관</option>
+                        <option value="ISTP">ISTP - 만능재주꾼</option>
+                        <option value="ISFP">ISFP - 모험가</option>
+                        <option value="ESTP">ESTP - 사업가</option>
+                        <option value="ESFP">ESFP - 연예인</option>
+                    </select>
+                </div>
+                
+                <button type="button" class="btn btn-primary" onclick="handleLogin()">
+                    로그인
+                </button>
             </div>
-          </div>
-        `;
-      }).join('');
-  } catch (e){
-    console.error(e);
-    listEl.innerHTML = '<div style="text-align:center;color:#c00;padding:20px">불러오기에 실패했습니다.</div>';
-  }
-}
-
-/* 관계도 */
-function mbtiCompatibility(a,b){
-  const perfect = {
-    ENFP:['INTJ','INFJ'], ENTP:['INTJ','INFJ'],
-    INFP:['ENTJ','ENFJ'], INTP:['ENTJ','ENFJ'],
-    ENFJ:['INFP','INTP'], ENTJ:['INFP','INTP'],
-    INFJ:['ENFP','ENTP'], INTJ:['ENFP','ENTP'],
-    ESFP:['ISTJ','ISFJ'], ESTP:['ISTJ','ISFJ'],
-    ISFP:['ESTJ','ESFJ'], ISTP:['ESTJ','ESFJ'],
-    ESFJ:['ISFP','ISTP'], ESTJ:['ISFP','ISTP'],
-    ISFJ:['ESFP','ESTP'], ISTJ:['ESFP','ESTP'],
-  };
-  if (perfect[a]?.includes(b)) return {score:96, level:'perfect'};
-  let s=70;
-  if (a[0]!==b[0]) s+=8; else s+=3;
-  if (a[1]===b[1]) s+=10; else s-=5;
-  if (a[2]!==b[2]) s+=7; else s+=4;
-  if (a[3]!==b[3]) s+=6; else s+=2;
-  s = Math.max(55, Math.min(95, s));
-  const level = s>=95?'perfect':s>=85?'great':s>=70?'good':s>=60?'okay':'challenging';
-  return {score:s, level};
-}
-async function showMBTIRelationship(){
-  if (!currentUser){ alert('로그인이 필요합니다.'); return; }
-  let others = [];
-  let myMbtiFromServer = '';
-
-  try {
-    const data = await callGoogleAppsScript({ action: 'getMBTIResults' });
-    const cleaned = (data || []).filter(r => r.name);
-
-    const meRow = cleaned.find(r => r.name === currentUser.name);
-    myMbtiFromServer = (meRow?.mbtiType || meRow?.mbti || '').toUpperCase();
-
-    others = cleaned
-      .filter(r => r.name !== currentUser.name && DIRECTORY[r.name])
-      .map(r => ({
-        name: r.name,
-        mbtiType: (r.mbtiType || r.mbti || '').toUpperCase(),
-        team: r.team || DIRECTORY[r.name]?.team || '',
-        position: r.position || DIRECTORY[r.name]?.position || ''
-      }));
-  } catch (e){
-    console.error(e);
-    alert('관계도 데이터를 불러오지 못했습니다.');
-    return;
-  }
-
-  if (myMbtiFromServer){
-    currentUser.mbti = myMbtiFromServer;
-    localStorage.setItem('tourpassUser', JSON.stringify(currentUser));
-  }
-  if (!currentUser.mbti){
-    alert('MBTI가 없습니다. 참가자 현황에서 MBTI를 먼저 입력해주세요.');
-    return;
-  }
-  if (others.length === 0){ alert('관계도를 표시할 참가자 데이터가 없습니다.'); return; }
-
-  const me = { name: currentUser.name, mbtiType: currentUser.mbti };
-  const buckets = { perfect:[], great:[], good:[], okay:[], challenging:[] };
-  others.forEach(o=>{
-    if (!o.mbtiType) return;
-    const {score, level} = mbtiCompatibility(me.mbtiType, o.mbtiType);
-    buckets[level].push({...o, score});
-  });
-
-  const cats = [
-    { key:'perfect', title:'환상의 궁합', emoji:'💖', color:'#ff4d6d', bg:'#ffe3ea' },
-    { key:'great',   title:'최고의 파트너', emoji:'🌟', color:'#ff8f1f', bg:'#fff0e0' },
-    { key:'good',    title:'좋은 협력자',   emoji:'🤝', color:'#22c55e', bg:'#eaf7ef' },
-    { key:'okay',    title:'평범한 관계',   emoji:'😊', color:'#2563eb', bg:'#e8f0fe' },
-    { key:'challenging', title:'성장의 기회', emoji:'💪', color:'#7c3aed', bg:'#efe7ff' },
-  ];
-
-  const html = `
-    <div class="modal" id="mbtiRelationshipModal" style="display:block">
-      <div class="modal-content" style="width:860px;max-width:96%">
-        <button class="close-btn" onclick="closeMBTIRelationship()">&times;</button>
-        <div class="modal-header">
-          <h3>${me.name}님의 MBTI 관계도</h3>
-          <p style="color:#111827;font-weight:800;margin-top:6px">당신의 유형: ${me.mbtiType}</p>
         </div>
-        <div style="padding:16px 18px 22px">
-          ${cats.map(c=>{
-            const list = buckets[c.key];
-            if (!list || list.length===0) return '';
-            return `
-              <div class="rel-cat">
-                <div class="rel-head" style="background:${c.color}">
-                  <span style="font-size:1.1em">${c.emoji}</span> ${c.title} <span style="opacity:.85;margin-left:6px">(${list.length}명)</span>
-                </div>
-                <div class="rel-box" style="background:${c.bg}">
-                  <div class="rel-grid">
-                    ${list.sort((a,b)=> b.score-a.score).map(m=>`
-                      <div class="rel-card" style="border-left-color:${c.color}">
-                        <div class="rel-row">
-                          <div>
-                            <strong>${m.name}</strong>
-                            <div class="muted">${m.team||''} ${m.position||''}</div>
-                          </div>
-                          <div class="badge">${m.mbtiType}</div>
-                        </div>
-                        <div class="muted">궁합도: ${m.score}%</div>
-                      </div>
-                    `).join('')}
-                  </div>
-                </div>
-              </div>
+
+        <!-- 메인 화면 -->
+        <div id="mainScreen" class="hidden">
+            <!-- 사용자 정보 -->
+            <div id="userInfo" class="user-info">
+                <h3 id="userNameDisplay"></h3>
+                <p id="userTeamDisplay"></p>
+            </div>
+
+            <!-- 워크숍 시작 알림 -->
+            <div id="workshopAlert" class="card hidden">
+                <h3 style="margin-bottom: 15px; color: #667eea;">🎉 워크숍에 오신 것을 환영합니다!</h3>
+                <p style="margin-bottom: 20px; color: #666; line-height: 1.5;">
+                    투어패스사업부 2025 워크숍이 시작됩니다.<br>
+                    아래 버튼을 눌러 48시간의 특별한 여정을 시작해보세요!
+                </p>
+                <button class="btn btn-primary" onclick="startWorkshop()">
+                    워크숍 참여하기 🚀
+                </button>
+            </div>
+
+            <!-- 타이머 -->
+            <div id="timerCard" class="card timer-card hidden">
+                <div class="timer-text">워크숍 남은 시간</div>
+                <div id="timerDisplay" class="timer-display">48:00:00</div>
+            </div>
+
+            <!-- 메뉴 그리드 -->
+            <div class="menu-grid">
+                <a href="#" class="menu-item" onclick="openMBTIRelations()">
+                    <span class="menu-icon">👥</span>
+                    <div class="menu-title">참가자 현황</div>
+                    <div class="menu-desc">MBTI 입력/수정 & 팀 보기</div>
+                </a>
+
+                <a href="#" class="menu-item" onclick="openSchedule()">
+                    <span class="menu-icon">📅</span>
+                    <div class="menu-title">워크샵 일정</div>
+                    <div class="menu-desc">상세 일정 및 프로그램</div>
+                </a>
+
+                <a href="#" class="menu-item" onclick="openPsychTest()">
+                    <span class="menu-icon">🧠</span>
+                    <div class="menu-title">여행심리테스트</div>
+                    <div class="menu-desc">여행 성향/동행 궁합 보기</div>
+                </a>
+
+                <a href="#" class="menu-item" onclick="openLinkStorage()">
+                    <span class="menu-icon">📦</span>
+                    <div class="menu-title">투어패스 보관함</div>
+                    <div class="menu-desc">개인 링크 저장소</div>
+                </a>
+
+                <a href="#" class="menu-item" onclick="openSurvey()">
+                    <span class="menu-icon">📝</span>
+                    <div class="menu-title">설문조사</div>
+                    <div class="menu-desc">워크샵 만족도</div>
+                </a>
+
+                <a href="https://chatgpt.com/g/g-6899821cd87481919c7a20d26b89f0ce-tueopaeseusaeobbu-weokeusyob-aieosiseuteonteu" target="_blank" class="menu-item">
+                    <span class="menu-icon">🤖</span>
+                    <div class="menu-title">워크숍 챗봇</div>
+                    <div class="menu-desc">대화형 도우미 바로가기</div>
+                </a>
+            </div>
+        </div>
+
+        <!-- 알림 메시지 -->
+        <div id="alertMessage" class="hidden"></div>
+    </div>
+
+    <script>
+        // 전역 변수
+        let currentUser = null;
+        let sessionId = null;
+        let workshopStartTime = null;
+        let timerInterval = null;
+
+        // API 엔드포인트 (실제 Google Apps Script 웹앱 URL로 교체 필요)
+        const API_URL = 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL';
+
+        // 로그인 처리
+        async function handleLogin() {
+            const userName = document.getElementById('userName').value;
+            const userMBTI = document.getElementById('userMBTI').value;
+
+            if (!userName || !userMBTI) {
+                showAlert('이름과 MBTI를 모두 선택해주세요.', 'error');
+                return;
+            }
+
+            try {
+                console.log('Sending login request...'); // 디버깅용
+
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        action: 'login',
+                        name: userName,
+                        mbti: userMBTI
+                    })
+                });
+
+                console.log('Response status:', response.status); // 디버깅용
+                
+                // 응답이 JSON인지 확인
+                const contentType = response.headers.get('content-type');
+                if (!contentType || !contentType.includes('application/json')) {
+                    const text = await response.text();
+                    console.error('Non-JSON response:', text);
+                    showAlert('서버 응답 형식 오류입니다. 관리자에게 문의하세요.', 'error');
+                    return;
+                }
+
+                const result = await response.json();
+                console.log('Response data:', result); // 디버깅용
+
+                if (result.success) {
+                    currentUser = userName;
+                    sessionId = result.data.sessionId;
+                    
+                    // 로컬 스토리지에 세션 정보 저장
+                    localStorage.setItem('sessionId', sessionId);
+                    localStorage.setItem('currentUser', userName);
+                    
+                    showMainScreen(result.data.userInfo);
+                    showWorkshopAlert();
+                } else {
+                    showAlert(result.message, 'error');
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                showAlert('로그인 중 오류가 발생했습니다. API URL을 확인해주세요.', 'error');
+            }
+        }
+
+        // 메인 화면 표시
+        function showMainScreen(userInfo) {
+            document.getElementById('loginScreen').classList.add('hidden');
+            document.getElementById('mainScreen').classList.remove('hidden');
+            
+            document.getElementById('userNameDisplay').textContent = currentUser;
+            document.getElementById('userTeamDisplay').textContent = 
+                `${userInfo.team} | ${userInfo.position}`;
+            
+            // 관리자인 경우 관리자 메뉴 추가
+            if (currentUser === '김현철') {
+                addAdminMenu();
+            }
+        }
+
+        // 워크숍 알림 표시
+        function showWorkshopAlert() {
+            document.getElementById('workshopAlert').classList.remove('hidden');
+        }
+
+        // 워크숍 시작
+        async function startWorkshop() {
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        action: 'startWorkshop',
+                        name: currentUser,
+                        sessionId: sessionId
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    workshopStartTime = new Date(result.data.startTime);
+                    localStorage.setItem('workshopStartTime', workshopStartTime.toISOString());
+                    
+                    document.getElementById('workshopAlert').classList.add('hidden');
+                    document.getElementById('timerCard').classList.remove('hidden');
+                    
+                    startTimer();
+                    showAlert('워크숍이 시작되었습니다! 🎉', 'success');
+                } else {
+                    showAlert(result.message, 'error');
+                }
+            } catch (error) {
+                showAlert('워크숍 시작 중 오류가 발생했습니다.', 'error');
+            }
+        }
+
+        // 타이머 시작
+        function startTimer() {
+            if (timerInterval) clearInterval(timerInterval);
+            
+            timerInterval = setInterval(updateTimer, 1000);
+            updateTimer();
+        }
+
+        // 타이머 업데이트
+        function updateTimer() {
+            if (!workshopStartTime) return;
+
+            const now = new Date();
+            const elapsed = now - workshopStartTime;
+            const remaining = (48 * 60 * 60 * 1000) - elapsed; // 48시간
+
+            if (remaining <= 0) {
+                document.getElementById('timerDisplay').textContent = '00:00:00';
+                clearInterval(timerInterval);
+                showAlert('워크숍이 종료되었습니다! 🏁', 'success');
+                return;
+            }
+
+            const hours = Math.floor(remaining / (1000 * 60 * 60));
+            const minutes = Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((remaining % (1000 * 60)) / 1000);
+
+            const timeString = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            document.getElementById('timerDisplay').textContent = timeString;
+        }
+
+        // 메뉴 기능들 (각각 별도 페이지로 구현)
+        function openMBTIRelations() {
+            window.location.href = 'mbti-relations.html';
+        }
+
+        function openSchedule() {
+            window.location.href = 'schedule.html';
+        }
+
+        function openPsychTest() {
+            window.location.href = 'psych-test.html';
+        }
+
+        function openLinkStorage() {
+            window.location.href = 'link-storage.html';
+        }
+
+        function openSurvey() {
+            window.location.href = 'survey.html';
+        }
+
+        // 알림 메시지 표시
+        function showAlert(message, type) {
+            const alertDiv = document.getElementById('alertMessage');
+            alertDiv.className = `alert alert-${type}`;
+            alertDiv.textContent = message;
+            alertDiv.classList.remove('hidden');
+
+            setTimeout(() => {
+                alertDiv.classList.add('hidden');
+            }, 3000);
+        }
+
+        // 관리자 메뉴 추가
+        function addAdminMenu() {
+            const menuGrid = document.querySelector('.menu-grid');
+            
+            // 관리자 전용 메뉴 아이템 생성
+            const adminMenuItem = document.createElement('a');
+            adminMenuItem.href = 'admin-dashboard.html';
+            adminMenuItem.className = 'menu-item';
+            adminMenuItem.style.background = 'linear-gradient(135deg, #e74c3c, #c0392b)';
+            adminMenuItem.style.color = 'white';
+            adminMenuItem.innerHTML = `
+                <span class="menu-icon">🛡️</span>
+                <div class="menu-title">관리자 대시보드</div>
+                <div class="menu-desc">워크숍 전체 관리</div>
             `;
-          }).join('')}
-        </div>
-      </div>
-    </div>`;
-  document.body.insertAdjacentHTML('beforeend', html);
-}
-function closeMBTIRelationship(){
-  const m = document.getElementById('mbtiRelationshipModal');
-  if (m) m.remove();
-  if (!anyOpenModal()) document.querySelector('.app-container')?.scrollTo?.({top:0, behavior:'smooth'});
-}
-/* =========================
-   7) 여행심리테스트
-========================= */
-let psychologyAnswers = [];
-const psychologyQuestions = [
-  { q:'선호하는 휴가 방식은?', a:[
-    { t:'🏖️ 해변에서 여유롭게 휴식', type:'calm', emoji:'🏖️' },
-    { t:'🏔️ 산과 자연 속에서 모험', type:'adventure', emoji:'🏔️' },
-    { t:'🏛️ 문화와 역사 탐방',     type:'culture', emoji:'🏛️' },
-    { t:'🛍️ 도시에서 쇼핑과 맛집', type:'city', emoji:'🛍️' }
-  ]},
-  { q:'스트레스를 받을 때 해소 방법은?', a:[
-    { t:'🎵 음악을 듣거나 노래하기', type:'artistic', emoji:'🎵' },
-    { t:'🏃‍♀️ 운동으로 몸을 움직이기', type:'active',   emoji:'🏃‍♀️' },
-    { t:'👥 친구들과 수다떨기',      type:'social',   emoji:'👥' },
-    { t:'📚 혼자만의 시간 갖기',     type:'solitary', emoji:'📚' }
-  ]},
-  { q:'이상적인 주말 저녁은?', a:[
-    { t:'🍿 집에서 영화나 드라마 보기', type:'home',     emoji:'🍿' },
-    { t:'🍻 친구들과 외식하며 수다',    type:'social',   emoji:'🍻' },
-    { t:'🎨 취미활동이나 새로운 배움',  type:'creative', emoji:'🎨' },
-    { t:'🛌 푹 쉬면서 에너지 충전',     type:'rest',     emoji:'🛌' }
-  ]},
-  { q:'새로운 도전 앞에서 나는?', a:[
-    { t:'⚡ 즉시 도전하고 경험해보기', type:'impulsive', emoji:'⚡' },
-    { t:'📋 신중하게 계획 세우고 준비', type:'planned',   emoji:'📋' },
-    { t:'👂 다른 사람 경험담 먼저 듣기', type:'cautious',  emoji:'👂' },
-    { t:'💭 충분히 생각한 후 결정',    type:'thoughtful',emoji:'💭' }
-  ]},
-  { q:'가장 중요하게 생각하는 가치는?', a:[
-    { t:'💰 안정적인 경제적 기반',    type:'security',     emoji:'💰' },
-    { t:'❤️ 사랑하는 사람들과의 관계', type:'relationship', emoji:'❤️' },
-    { t:'🏆 개인적 성취와 성공',      type:'achievement',  emoji:'🏆' },
-    { t:'🌟 자유로운 삶과 개성',      type:'freedom',      emoji:'🌟' }
-  ]},
-  { q:'팀 프로젝트에서 내 역할은?', a:[
-    { t:'🎯 목표 설정하고 방향 제시', type:'leader',  emoji:'🎯' },
-    { t:'🔍 자료 조사하고 분석하기',  type:'analyst', emoji:'🔍' },
-    { t:'🤝 팀원들 조율하고 소통',    type:'mediator',emoji:'🤝' },
-    { t:'✨ 창의적 아이디어 제공',    type:'creative',emoji:'✨' }
-  ]},
-  { q:'행운이 찾아올 것 같은 때는?', a:[
-    { t:'🌅 새로운 시작을 할 때', type:'beginning', emoji:'🌅' },
-    { t:'🤲 남을 도와줄 때',     type:'helping',   emoji:'🤲' },
-    { t:'💪 열심히 노력할 때',   type:'effort',    emoji:'💪' },
-    { t:'😊 마음이 평온할 때',   type:'peace',     emoji:'😊' }
-  ]}
-];
-function analyzePsychologyType(answers){
-  const typeCount={}; answers.forEach(a=>{ typeCount[a.type]=(typeCount[a.type]||0)+1; });
-  const top = Object.entries(typeCount).sort((a,b)=>b[1]-a[1])[0]?.[0];
-  const map={
-    calm:{ name:'🐨 코알라형', desc:'평온하고 여유로운' },
-    adventure:{ name:'🦅 독수리형', desc:'모험을 즐기는' },
-    culture:{ name:'🦉 올빼미형', desc:'지혜롭고 탐구하는' },
-    city:{ name:'🐿️ 다람쥐형', desc:'활발하고 바쁜' },
-    artistic:{ name:'🦋 나비형', desc:'아름다움을 추구하는' },
-    active:{ name:'🐎 말형', desc:'에너지 넘치는' },
-    social:{ name:'🐬 돌고래형', desc:'사교적이고 친근한' },
-    solitary:{ name:'🐺 늑대형', desc:'독립적이고 강인한' },
-    home:{ name:'🐻 곰형', desc:'안정을 추구하는' },
-    creative:{ name:'🦊 여우형', desc:'창의적이고 영리한' },
-    rest:{ name:'🐼 판다형', desc:'여유롭고 평화로운' },
-    impulsive:{ name:'🐅 호랑이형', desc:'직감적이고 용맹한' },
-    planned:{ name:'🐘 코끼리형', desc:'신중하고 계획적인' },
-    cautious:{ name:'🐢 거북이형', desc:'신중하고 꾸준한' },
-    thoughtful:{ name:'🦌 사슴형', desc:'사색적이고 우아한' },
-    security:{ name:'🐃 황소형', desc:'안정과 현실을 중시하는' },
-    relationship:{ name:'🐰 토끼형', desc:'감정이 풍부하고 따뜻한' },
-    achievement:{ name:'🦁 사자형', desc:'성취욕이 강한' },
-    freedom:{ name:'🐦 새형', desc:'자유로운 영혼의' },
-    leader:{ name:'🦈 상어형', desc:'리더십 있는' },
-    analyst:{ name:'🐙 문어형', desc:'분석적이고 다재다능한' },
-    mediator:{ name:'🐳 고래형', desc:'조화를 이루는' },
-    beginning:{ name:'🐣 병아리형', desc:'새로운 시작을 좋아하는' },
-    helping:{ name:'🐕 개형', desc:'충성스럽고 도움을 주는' },
-    effort:{ name:'🐜 개미형', desc:'부지런하고 노력하는' },
-    peace:{ name:'🕊️ 비둘기형', desc:'평화로운' }
-  };
-  return map[top] || { name:'🦄 유니콘형', desc:'특별하고 신비로운' };
-}
-function generateFortune(psychologyTypeName){
-  const fortunes={
-    '🐨 코알라형':{ today:'🌿 오늘은 마음의 평화를…', lucky:'🟢 초록색', number:'7️⃣', advice:'천천히 한 걸음씩…' },
-    '🦅 독수리형':{ today:'⚡ 새로운 도전이…', lucky:'🟠 주황색', number:'3️⃣', advice:'직감을 믿고…' },
-    '🦉 올빼미형':{ today:'📚 지적 호기심이…', lucky:'🟣 보라색', number:'9️⃣', advice:'역사 속에서 지혜를…' },
-    '🐿️ 다람쥐형':{ today:'💨 에너지가 넘치는…', lucky:'🔴 빨간색', number:'5️⃣', advice:'팀워크가 중요…' },
-    '🦋 나비형':{ today:'🎨 창조적 영감이…', lucky:'🩷 분홍색', number:'2️⃣', advice:'아름다움에 시간을…' },
-    '🐎 말형':{ today:'🏃‍♀️ 활력이 충만…', lucky:'🟢 초록색', number:'8️⃣', advice:'백마강 산책…' },
-    '🐬 돌고래형':{ today:'👫 인간관계 좋은 소식…', lucky:'🟡 노란색', number:'6️⃣', advice:'진심으로 다가가면…' },
-    '🐺 늑대형':{ today:'🌙 혼자만의 시간이…', lucky:'⚪ 흰색', number:'1️⃣', advice:'고란사 명상…' }
-  };
-  return fortunes[psychologyTypeName] || { today:'🌟 특별한 하루', lucky:'🌈 무지개색', number:'0️⃣', advice:'자신만의 길' };
-}
-function getTravelStyle(psychologyTypeName){
-  const styles={
-    '🐨 코알라형':{ style:'힐링 여행러', preference:'자연 속 휴양', destinations:['제주 숲길','강원 펜션','온천 리조트','한적한 해변'], activities:['산책','독서','온천','요가','명상'], accommodation:'조용한 펜션/리조트', planning:'여유 일정', companion:'가족/연인 소규모', motto:'여행은 마음의 재충전' },
-    '🦅 독수리형':{ style:'어드벤처 여행러', preference:'스릴/도전', destinations:['히말라야','뉴질랜드','사파리','알래스카'], activities:['등산','스카이다이빙','래프팅','암벽','패러'], accommodation:'캠핑/산장', planning:'도전 목표+안전', companion:'모험 동료', motto:'한계를 뛰어넘는 도전' },
-    '🦉 올빼미형':{ style:'문화탐방 여행러', preference:'역사/문화 탐구', destinations:['유럽 박물관','교토','이집트','그리스'], activities:['박물관','유적','공부','공예'], accommodation:'전통/역사 호텔', planning:'사전 조사·세밀 일정', companion:'지적 호기심 소수', motto:'살아있는 역사책' },
-    '🐿️ 다람쥐형':{ style:'도시탐험 여행러', preference:'도시 총체 체험', destinations:['뉴욕','도쿄','런던','파리'], activities:['쇼핑','맛집','클럽/바','뮤지컬','시장'], accommodation:'시내 중심 호텔', planning:'빡빡한 일정', companion:'에너지 넘치는 친구', motto:'도시 매력 흡수' }
-  };
-  return styles[psychologyTypeName] || { style:'자유로운 여행러', preference:'다양한 스타일 시도', destinations:['어디든지'], activities:['새로운 경험'], accommodation:'상황 맞춤', planning:'유연 계획', companion:'누구든지', motto:'새로운 나를 발견' };
-}
-function travelPartnerCompatibility(a,b){
-  const map={
-    '🐨 코알라형':{ perfect:['🦌 사슴형','🐳 고래형','🕊️ 비둘기형'], challenging:['🦅 독수리형','🐿️ 다람쥐형','🦈 상어형'] },
-    '🦅 독수리형':{ perfect:['🐅 호랑이형','🐎 말형','🦈 상어형'], challenging:['🐨 코알라형','🐻 곰형','🐼 판다형'] },
-    '🦉 올빼미형':{ perfect:['🐙 문어형','🦊 여우형','🦌 사슴형'], challenging:['🐬 돌고래형','🐿️ 다람쥐형','🐣 병아리형'] },
-    '🐿️ 다람쥐형':{ perfect:['🐬 돌고래형','🦋 나비형','🦊 여우형'], challenging:['🐨 코알라형','🐺 늑대형','🦉 올빼미형'] }
-  };
-  const prof=map[a]||{perfect:[],challenging:[]};
-  if (prof.perfect.includes(b)) return {score:95, level:'perfect'};
-  if (prof.challenging.includes(b)) return {score:45, level:'challenging'};
-  let s=70; if(a===b) s+=15; else s+=Math.floor(Math.random()*15)+5;
-  const level = s>=90?'perfect':s>=80?'great':s>=70?'good':s>=50?'okay':'challenging';
-  return {score:s, level};
-}
-function getCompleteResult(answers, userName){
-  const type = analyzePsychologyType(answers);
-  return {
-    user:userName,
-    type,
-    fortune: generateFortune(type.name, userName),
-    travel: getTravelStyle(type.name),
-    compatibility:(otherType)=> travelPartnerCompatibility(type.name, otherType)
-  };
-}
-/* 어댑터 */
-function startMBTITest(){
-  window.travelTestStart = Date.now();
-  currentQuestion = 0;
-  psychologyAnswers = [];
-  updateMBTIQuestion();
-  openModal('mbtiModal');
-}
-function startTravelTest(){ startMBTITest(); } // 새 메뉴용 별칭
-function updateMBTIQuestion(){
-  if (currentQuestion >= psychologyQuestions.length){ showMBTIResult(); return; }
-  const q = psychologyQuestions[currentQuestion];
-  document.getElementById('questionNumber').textContent = `질문 ${currentQuestion+1}/${psychologyQuestions.length}`;
-  document.getElementById('questionText').textContent = q.q;
-  const box = document.getElementById('answerOptions');
-  box.innerHTML = '';
-  q.a.forEach((opt,i)=>{
-    const btn = document.createElement('button');
-    btn.className = 'answer-btn';
-    btn.textContent = opt.t;
-    btn.onclick = ()=> selectAnswer(i);
-    box.appendChild(btn);
-  });
-  document.getElementById('progressBar').style.width = (currentQuestion/psychologyQuestions.length*100)+'%';
-  document.getElementById('nextBtn').style.display='none';
-}
-function selectAnswer(answerIndex){
-  document.querySelectorAll('.answer-btn').forEach(b=>b.classList.remove('selected'));
-  const selected = document.querySelectorAll('.answer-btn')[answerIndex];
-  if (selected) selected.classList.add('selected');
-  psychologyAnswers[currentQuestion] = psychologyQuestions[currentQuestion].a[answerIndex];
-  document.getElementById('nextBtn').style.display='inline-block';
-}
-function nextQuestion(){ currentQuestion++; updateMBTIQuestion(); }
-async function showMBTIResult(){
-  const result = getCompleteResult(psychologyAnswers, (currentUser?.name||'사용자'));
-  const durationSec = Math.floor((Date.now()-(window.travelTestStart||Date.now()))/1000);
+            
+            // 첫 번째 위치에 추가
+            menuGrid.insertBefore(adminMenuItem, menuGrid.firstChild);
+            
+            // 사용자 정보에 관리자 표시 추가
+            const userInfo = document.getElementById('userInfo');
+            const adminBadge = document.createElement('span');
+            adminBadge.style.cssText = `
+                background: linear-gradient(135deg, #e74c3c, #c0392b);
+                color: white;
+                padding: 4px 12px;
+                border-radius: 20px;
+                font-size: 12px;
+                font-weight: 600;
+                margin-left: 10px;
+            `;
+            adminBadge.textContent = '🛡️ 관리자';
+            
+            const nameDisplay = document.getElementById('userNameDisplay');
+            nameDisplay.appendChild(adminBadge);
+        }
 
-  try{
-    await callGoogleAppsScript({
-      action:'saveMBTIResult',
-      name: currentUser?.name || '사용자',
-      email: currentUser?.email || '',
-      mbtiType: currentUser?.mbti || '',
-      answers: psychologyAnswers,
-      travelPersona: { name: result.type.name, desc: result.type.desc },
-      travelStyle: result.travel,
-      travelFortune: result.fortune,
-      testDuration: durationSec,
-      testKind: 'travel-animal'
-    }, 'POST');
-  }catch(e){ console.error(e); }
+        // 페이지 로드 시 세션 복원
+        window.addEventListener('load', function() {
+            const savedSessionId = localStorage.getItem('sessionId');
+            const savedUser = localStorage.getItem('currentUser');
+            const savedWorkshopStart = localStorage.getItem('workshopStartTime');
 
-  openTravelResultModal(result.type, result.travel, result.fortune, durationSec);
-  closeMBTITest();
-}
-
-/* 결과 모달 */
-const ALL_ANIMAL_TYPES = [
-  '🐨 코알라형','🦅 독수리형','🦉 올빼미형','🐿️ 다람쥐형','🦋 나비형','🐎 말형',
-  '🐬 돌고래형','🐺 늑대형','🐻 곰형','🦊 여우형','🐼 판다형','🐅 호랑이형',
-  '🐘 코끼리형','🐢 거북이형','🦌 사슴형','🐃 황소형','🐰 토끼형','🦁 사자형',
-  '🐦 새형','🦈 상어형','🐙 문어형','🐳 고래형','🐣 병아리형','🐕 개형','🐜 개미형','🕊️ 비둘기형'
-];
-function getCompatibilityBuckets(selfType){
-  const buckets = { perfect:[], great:[], good:[], okay:[], challenging:[] };
-  ALL_ANIMAL_TYPES.forEach(t=>{
-    if (t===selfType) return;
-    const {score, level} = travelPartnerCompatibility(selfType, t);
-    buckets[level].push({ name:t, score });
-  });
-  Object.keys(buckets).forEach(k=> buckets[k].sort((a,b)=>b.score-a.score));
-  return buckets;
-}
-const levelClass = (l)=>({perfect:'lv-perfect',great:'lv-great',good:'lv-good',okay:'lv-okay',challenging:'lv-challenging'}[l]||'lv-good');
-const levelColor = (l)=>({perfect:'#ff4d6d',great:'#ff8f1f',good:'#22c55e',okay:'#2563eb',challenging:'#7c3aed'}[l]||'#22c55e');
-const levelCopy  = (l)=>({perfect:'찰떡궁합! 시너지가 폭발해요',great:'아주 잘 맞아요. 함께하면 든든!',good:'무난하게 잘 맞는 편',okay:'서로 배려하면 충분히 좋아요',challenging:'관점 차이가 커요. 역할/속도 조율 필수'}[l]||'');
-
-function openTravelResultModal(type, travel, fortune, sec){
-  const emoji = (type.name||'').split(' ')[0] || '🧭';
-  const selfType = type.name;
-  const defaultPartner = (ALL_ANIMAL_TYPES.find(t => t!==selfType)) || ALL_ANIMAL_TYPES[0];
-
-  const html = `
-    <style>
-      .vres-wrap{padding:16px 18px 22px;max-width:520px;margin:0 auto;font-family:'Noto Sans KR',sans-serif}
-      .vres-head{display:flex;gap:10px;align-items:flex-start;margin-bottom:10px}
-      .vres-emoji{font-size:2.2rem;line-height:1}
-      .vres-title{font-weight:900;font-size:1.15rem}
-      .vres-sub{color:#6b7280;margin-top:4px}
-      .vres-pill{background:#111827;color:#fff;border-radius:999px;padding:6px 10px;font-size:.78em;display:inline-flex;gap:6px;align-items:center}
-      .vres-time{color:#6b7280;margin:6px 0 12px}
-      .card{background:#fff;border:1px solid #eee;border-radius:14px;padding:14px;margin-bottom:12px}
-      .card h3{margin-bottom:8px;font-size:1.02rem;color:#111827}
-      .kv{display:flex;gap:10px;margin:6px 0}
-      .kv>strong{min-width:58px;color:#374151}
-      .chips{display:flex;flex-wrap:wrap;gap:6px}
-      .chip{display:inline-block;border:1px solid #eee;border-radius:999px;padding:6px 10px;font-size:.82em;background:#fafbff}
-      .level-badge{display:inline-flex;gap:6px;align-items:center;border-radius:999px;padding:6px 10px;font-size:.78em;border:1px solid #eee}
-      .lv-perfect{background:#ffe3ea;border-color:#ffd1dc}
-      .lv-great{background:#fff0e0;border-color:#ffd7b0}
-      .lv-good{background:#eaf7ef;border-color:#d6f0df}
-      .lv-okay{background:#e8f0fe;border-color:#d5e4fd}
-      .lv-challenging{background:#efe7ff;border-color:#e2d8ff}
-      .meter{width:100%;height:10px;background:#f0f2f5;border-radius:6px;overflow:hidden;margin-top:6px}
-      .meter-fill{height:10px;width:0}
-      .actions{display:flex;gap:8px;margin-top:10px}
-      .btn{flex:1;background:#111827;color:#fff;border:none;border-radius:12px;padding:10px;cursor:pointer}
-      .btn.secondary{background:#e5e7eb;color:#111827}
-      @media (min-width:720px){ .vres-wrap{max-width:560px} }
-    </style>
-    <div class="modal" id="travelResultModal" style="display:block">
-      <div class="modal-content" style="width:860px;max-width:96%">
-        <button class="close-btn" onclick="closeTravelResultModal()">&times;</button>
-        <div class="vres-wrap">
-          <div class="vres-head">
-            <div class="vres-emoji">${emoji}</div>
-            <div style="flex:1;min-width:0">
-              <div class="vres-title">여행심리테스트 결과 · ${type.name}</div>
-              <div class="vres-sub">${type.desc||''}</div>
-            </div>
-            <span class="vres-pill"><span>여행 스타일</span><span>·</span><span>${travel.style||'-'}</span></span>
-          </div>
-          <div class="vres-time">소요시간: ${sec}초</div>
-          <div class="card">
-            <h3>여행 스타일</h3>
-            <div class="kv"><strong>선호</strong><div>${travel.preference||'-'}</div></div>
-            <div class="kv"><strong>목적지</strong><div class="chips">${(travel.destinations||[]).map(d=>`<span class="chip">${d}</span>`).join('')}</div></div>
-            <div class="kv"><strong>활동</strong><div class="chips">${(travel.activities||[]).map(d=>`<span class="chip">${d}</span>`).join('')}</div></div>
-            <div class="kv"><strong>숙소</strong><div>${travel.accommodation||'-'}</div></div>
-            <div class="kv"><strong>동행</strong><div>${travel.companion||'-'}</div></div>
-            <div class="kv"><strong>기획</strong><div>${travel.planning||'-'}</div></div>
-            <div class="kv"><strong>모토</strong><div>“${travel.motto||'-'}”</div></div>
-          </div>
-          <div class="card">
-            <h3>오늘의 여행 운세</h3>
-            <div class="kv"><strong>메시지</strong><div>${fortune.today}</div></div>
-            <div class="kv"><strong>럭키 컬러</strong><div>${fortune.lucky}</div></div>
-            <div class="kv"><strong>럭키 넘버</strong><div>${fortune.number}</div></div>
-            <div class="kv"><strong>조언</strong><div>${fortune.advice}</div></div>
-          </div>
-          <div class="card">
-            <h3>여행 파트너 궁합도</h3>
-            <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
-              <label for="compSelect" style="font-weight:700">파트너 선택</label>
-              <select id="compSelect" style="padding:8px 10px;border-radius:10px;border:1px solid #ddd;flex:1">
-                ${ALL_ANIMAL_TYPES.map(t=>`<option value="${t}" ${t===defaultPartner?'selected':''}>${t}</option>`).join('')}
-              </select>
-            </div>
-            <div id="compMeterBox"></div>
-            <div style="height:1px;background:#eee;margin:12px 0"></div>
-            <div>
-              <div class="level-badge lv-perfect">찰떡 궁합</div>
-              <div id="perfectList" class="chips" style="margin-top:8px"></div>
-            </div>
-            <div style="margin-top:12px">
-              <div class="level-badge lv-challenging">주의 필요</div>
-              <div id="challengingList" class="chips" style="margin-top:8px"></div>
-            </div>
-          </div>
-          <div class="actions">
-            <button class="btn" onclick="navigator.clipboard.writeText('[여행심리테스트] ${type.name} | ${travel.style||''}')">결과 복사</button>
-            <button class="btn secondary" onclick="closeTravelResultModal()">닫기</button>
-          </div>
-        </div>
-      </div>
-    </div>`;
-  document.body.insertAdjacentHTML('beforeend', html);
-
-  updateCompatibilityView(selfType);
-  const buckets = getCompatibilityBuckets(selfType);
-  const chip = (label)=>`<span class="chip" onclick="document.getElementById('compSelect').value='${label}'; updateCompatibilityView('${selfType}')">${label}</span>`;
-  document.getElementById('perfectList').innerHTML =
-    (buckets.perfect||[]).slice(0,8).map(x=>chip(x.name||x)).join('') || '<span style="color:#666">-</span>';
-  document.getElementById('challengingList').innerHTML =
-    (buckets.challenging||[]).slice(0,8).map(x=>chip(x.name||x)).join('') || '<span style="color:#666">-</span>';
-}
-
-/* 누락 함수들 */
-function updateCompatibilityView(selfType){
-  const select = document.getElementById('compSelect');
-  if (!select) return;
-  const partner = select.value;
-  const { score, level } = travelPartnerCompatibility(selfType, partner);
-  const meter = `
-    <div style="display:flex;justify-content:space-between;align-items:center">
-      <div class="level-badge ${levelClass(level)}">${level.toUpperCase()} · ${score}%</div>
-      <div style="font-size:.9em;color:#6b7280">${partner}</div>
-    </div>
-    <div class="meter"><div class="meter-fill" style="width:${score}%; background:${levelColor(level)}"></div></div>
-    <div style="margin-top:8px;color:#374151">${levelCopy(level)}</div>`;
-  const box = document.getElementById('compMeterBox');
-  if (box) box.innerHTML = meter;
-  select.onchange = () => updateCompatibilityView(selfType);
-}
-function closeMBTITest(){
-  const m = document.getElementById('mbtiModal');
-  if (m) m.style.display = 'none';
-  if (!anyOpenModal()) document.querySelector('.app-container')?.scrollTo?.({top:0, behavior:'smooth'});
-}
-function closeTravelResultModal(){
-  const m = document.getElementById('travelResultModal');
-  if (m) m.remove();
-  if (!anyOpenModal()) document.querySelector('.app-container')?.scrollTo?.({top:0, behavior:'smooth'});
-}
-/* =========================
-   8) 설문
-========================= */
-async function submitWorkshopSurvey(){
-  const satisfaction=document.getElementById('satisfaction').value;
-  const bestActivity=document.getElementById('bestActivity').value;
-  const feedback=document.getElementById('feedback').value;
-  if (!bestActivity){ alert('가장 만족했던 활동을 선택해주세요.'); return; }
-  try{
-    await callGoogleAppsScript({
-      action:'saveSurvey',
-      name:currentUser.name,
-      email:currentUser.email,
-      satisfaction:parseInt(satisfaction,10),
-      feedback,
-      answers:{bestActivity,satisfactionLevel:satisfaction}
-    },'POST');
-    alert('설문이 저장되었습니다. 감사합니다!');
-  }catch(e){ alert('설문 저장 실패: '+(e.message||e)); }
-  closeModal('surveyModal');
-}
-
-/* =========================
-   9) 일정
-========================= */
-function showDetailedSchedule(){
-  const html=`
-    <div class="modal" id="detailedScheduleModal" style="display:block">
-      <div class="modal-content" style="width:760px;max-width:96%">
-        <button class="close-btn" onclick="closeDetailedSchedule()">&times;</button>
-        <div class="modal-header"><h3>2차 소통강화 워크샵 상세일정</h3></div>
-        <div style="padding:16px 18px 22px">
-          <div style="margin-bottom:16px;background:#f7f7fb;border:1px solid #eee;border-radius:12px;padding:12px">
-            <h4 style="margin-bottom:8px;color:#111827">1day</h4>
-            <div class="schedule-item"><div class="time">14:50</div><div class="activity">코비 집합</div><div class="location">부여백제마리조트</div></div>
-            <div class="schedule-item"><div class="time">15:10</div><div class="activity">체크인 및 방배정</div><div class="location">구드레선식당</div></div>
-            <div class="schedule-item"><div class="time">15:50</div><div class="activity">민속의 가람골 탐방</div><div class="location">낙화암/고란사</div></div>
-            <div class="schedule-item"><div class="time">18:30</div><div class="activity">저녁식사</div><div class="location">서동한옥</div></div>
-          </div>
-          <div style="background:#f7f7fb;border:1px solid #eee;border-radius:12px;padding:12px">
-            <h4 style="margin-bottom:8px;color:#111827">2day</h4>
-            <div class="schedule-item"><div class="time">11:00</div><div class="activity">브리핑 & 점심</div><div class="location">현장</div></div>
-            <div class="schedule-item"><div class="time">13:10</div><div class="activity">성과 공유 시간</div><div class="location">세션룸</div></div>
-            <div class="schedule-item"><div class="time">14:10</div><div class="activity">마무리</div><div class="location">-</div></div>
-          </div>
-        </div>
-      </div>
-    </div>`;
-  document.body.insertAdjacentHTML('beforeend', html);
-}
-function closeDetailedSchedule(){ const m=document.getElementById('detailedScheduleModal'); if (m) m.remove(); if (!anyOpenModal()) document.querySelector('.app-container')?.scrollTo?.({top:0, behavior:'smooth'}); }
-
-/* =========================
-   10) 투어패스 보관함
-========================= */
-function showAddLinkForm(){ document.getElementById('addLinkForm').style.display='block'; document.getElementById('linkTitle').focus(); }
-function cancelAddLink(){ document.getElementById('addLinkForm').style.display='none'; document.getElementById('linkTitle').value=''; document.getElementById('linkUrl').value=''; document.getElementById('linkPassword').value=''; }
-function isValidUrl(s){ try{ new URL(s); return true; }catch{return false;} }
-function saveNewLink(){
-  const title=document.getElementById('linkTitle').value.trim();
-  const url=document.getElementById('linkUrl').value.trim();
-  const pw=document.getElementById('linkPassword').value.trim();
-  if (!title){ alert('제목을 입력해주세요.'); return; }
-  if (!url || !isValidUrl(url)){ alert('올바른 URL을 입력해주세요.'); return; }
-  const links=JSON.parse(localStorage.getItem('tourpassLinks')||'[]');
-  links.push({id:Date.now(),title,url,password:pw||null,createdAt:new Date().toISOString()});
-  localStorage.setItem('tourpassLinks', JSON.stringify(links)); updateLinksList(); cancelAddLink(); alert('링크가 저장되었습니다!');
-}
-function updateLinksList(){
-  const list=document.getElementById('linksList');
-  const links=JSON.parse(localStorage.getItem('tourpassLinks')||'[]');
-  if (links.length===0){
-    list.innerHTML='<div style="text-align:center;color:#666;padding:28px"><i class="fas fa-inbox" style="font-size:2.2em;margin-bottom:12px"></i><div>저장된 링크가 없습니다.</div></div>'; return;
-  }
-  list.innerHTML = links.map(l=>`
-    <div style="display:flex;justify-content:space-between;align-items:center;padding:12px;border:1px solid #eee;border-radius:12px;margin-bottom:10px">
-      <div style="flex:1;min-width:0">
-        <div style="font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${l.title}</div>
-        <div style="font-size:.82em;color:#666;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${l.url}</div>
-      </div>
-      <div style="display:flex;gap:6px;margin-left:8px">
-        <button onclick="setDefaultTourpass(${l.id})" title="기본설정" style="background:#2ecc71;color:#fff;border:none;border-radius:10px;padding:8px 10px;cursor:pointer;font-size:.82em">기본</button>
-        <button onclick="openLink(${l.id})" title="열기" style="background:#111827;color:#fff;border:none;border-radius:10px;padding:8px 10px;cursor:pointer"><i class="fas fa-external-link-alt"></i></button>
-      </div>
-    </div>`).join('');
-}
-function openLink(id){ const links=JSON.parse(localStorage.getItem('tourpassLinks')||'[]'); const l=links.find(x=>x.id===id); if (l) window.open(l.url,'_blank'); }
-function setDefaultTourpass(id){ localStorage.setItem('defaultTourpass', id); alert('기본 투어패스로 설정되었습니다!'); }
-
-/* =========================
-   11) 번역(간단)
-========================= */
-function translateApp(){
-  const lang=document.getElementById('languageSelect').value;
-  const map={
-    ko:{title:'투어패스사업부 2025 워크샵',sub:'TRAVEL SHIFT',login:'이름으로 로그인',online:'온라인',offline:'오프라인',checking:'연결 확인 중...',sync:'동기화: ', traveltest:'여행심리테스트', traveldesc:'여행 성향/동행 궁합 보기'},
-    en:{title:'TourPass BU 2025 Workshop',sub:'TRAVEL SHIFT',login:'Sign in with Name',online:'Online',offline:'Offline',checking:'Checking connection...',sync:'Sync: ', traveltest:'Travel Psychology Test', traveldesc:'Travel style & partner fit'},
-    ja:{title:'ツアーパス事業部 2025 ワークショップ',sub:'TRAVEL SHIFT',login:'名前でログイン',online:'オンライン',offline:'オフライン',checking:'接続確認中...',sync:'同期: ', traveltest:'旅行心理テスト', traveldesc:'旅行スタイル/相性'},
-    zh:{title:'旅游通行证事业部 2025 研习班',sub:'TRAVEL SHIFT',login:'仅用姓名登录',online:'在线',offline:'离线',checking:'检查连接中...',sync:'同步: ', traveltest:'旅行心理测试', traveldesc:'出行偏好/同伴匹配'}
-  };
-  const m=map[lang]||map.ko;
-  document.querySelector('.app-title').textContent=m.title;
-  document.querySelector('.app-subtitle').textContent=m.sub;
-  document.getElementById('nameLoginBtn').innerHTML=`<i class="fa-solid fa-right-to-bracket"></i> ${m.login}`;
-  const dotText=document.getElementById('connectionText');
-  dotText.textContent = isOnline? m.online : m.offline;
-  document.getElementById('lastSync').textContent = m.sync + new Date().toLocaleTimeString();
-
-  const travelTile = document.querySelector('.menu-item[data-action="traveltest"]');
-  if (travelTile){
-    const titleEl = travelTile.querySelector('.menu-title');
-    const descEl  = travelTile.querySelector('.menu-desc');
-    if (titleEl) titleEl.textContent = m.traveltest;
-    if (descEl)  descEl.textContent  = m.traveldesc;
-  }
-}
-function openWorkshopChatbot(){
-  window.open('https://chatgpt.com/g/g-6899821cd87481919c7a20d26b89f0ce-tueopaeseusaeobbu-weokeusyob-aieosiseuteonteu','_blank');
-}
-
-/* =========================
-   12) 부팅
-========================= */
-async function initializeApp(){
-  checkConnection();
-  const ok=await checkBackendConnection();
-  const dot=document.getElementById('connectionDot'); const text=document.getElementById('connectionText');
-  if (ok){ dot.className='status-dot status-online'; text.textContent='온라인'; } else { dot.className='status-dot status-offline'; text.textContent='오프라인'; }
-  checkLoginStatus();
-}
-document.addEventListener('DOMContentLoaded', ()=>{
-  initializeApp();
-  // 버튼 onClick은 HTML 속성으로 처리
-});
-</script>
+            if (savedSessionId && savedUser) {
+                sessionId = savedSessionId;
+                currentUser = savedUser;
+                
+                // 사용자 정보 임시 표시 (실제로는 API에서 가져와야 함)
+                showMainScreen({ team: '', position: '' });
+                
+                if (savedWorkshopStart) {
+                    workshopStartTime = new Date(savedWorkshopStart);
+                    document.getElementById('timerCard').classList.remove('hidden');
+                    startTimer();
+                } else {
+                    showWorkshopAlert();
+                }
+            }
+        });
+    </script>
 </body>
 </html>
