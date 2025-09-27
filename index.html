@@ -1127,6 +1127,9 @@
             <div id="userInfo" class="user-info">
                 <h3 id="userNameDisplay"></h3>
                 <p id="userTeamDisplay"></p>
+                <button class="btn btn-secondary" onclick="handleLogout()" style="margin-top: var(--space-3); font-size: var(--text-sm); padding: var(--space-2) var(--space-4);">
+                    🚪 로그아웃
+                </button>
             </div>
 
             <!-- 워크숍 시작 알림 -->
@@ -1954,7 +1957,69 @@
             }
         }
 
-        // 메인 화면 표시
+        // 로그아웃 처리
+        async function handleLogout() {
+            if(!confirm('로그아웃하시겠습니까?')) {
+                return;
+            }
+
+            try {
+                // 서버에 오프라인 상태 업데이트
+                if (currentUser && sessionId) {
+                    try {
+                        await api.request('updateUserStatus', {
+                            userName: currentUser,
+                            status: 'offline'
+                        });
+                        
+                        // 활동 로그 기록
+                        await api.request('logActivity', {
+                            userName: currentUser,
+                            action: '로그아웃',
+                            details: '수동 로그아웃'
+                        });
+                    } catch(error) {
+                        console.error('서버 로그아웃 처리 오류:', error);
+                        // 서버 오류가 있어도 로컬 로그아웃은 진행
+                    }
+                }
+
+                // 로컬 데이터 정리
+                localStorage.clear();
+                
+                // 전역 변수 초기화
+                const prevUser = currentUser;
+                currentUser = null;
+                sessionId = null;
+                workshopStartTime = null;
+                
+                // 타이머 정리
+                if(timerInterval) {
+                    clearInterval(timerInterval);
+                    timerInterval = null;
+                }
+                
+                // 열린 모달들 모두 닫기
+                const modals = document.querySelectorAll('.modal');
+                modals.forEach(modal => {
+                    modal.style.display = 'none';
+                });
+                
+                // 로그인 화면으로 돌아가기
+                document.getElementById('mainScreen').classList.add('hidden');
+                document.getElementById('loginScreen').classList.remove('hidden');
+                
+                // 폼 초기화
+                document.getElementById('userName').value = '';
+                document.getElementById('userMBTI').value = '';
+                
+                showAlert(`${prevUser}님이 로그아웃되었습니다.`, 'success');
+                
+            } catch(error) {
+                console.error('로그아웃 오류:', error);
+                showAlert('로그아웃 처리 중 오류가 발생했습니다.', 'error');
+            }
+        }
         function showMainScreen(userInfo) {
             document.getElementById('loginScreen').classList.add('hidden');
             document.getElementById('mainScreen').classList.remove('hidden');
