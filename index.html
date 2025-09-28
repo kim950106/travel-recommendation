@@ -30,15 +30,8 @@
     body{font-family:'Pretendard',-apple-system,BlinkMacSystemFont,'Segoe UI','Malgun Gothic','맑은 고딕',sans-serif;background:var(--surface-secondary);color:var(--text-primary);line-height:1.7}
     .container{max-width:428px;margin:0 auto;padding:1.5rem;min-height:100vh;transition:filter .25s ease}
     .blurred{filter:blur(6px)}
-    .overlay {
-      position: fixed; inset: 0; background: rgba(15,23,42,.45);
-      display: none; align-items: center; justify-content: center; z-index: 2000;
-      backdrop-filter: blur(2px);
-    }
-    .overlay-card {
-      background:#fff;border-radius:20px;padding:1.5rem 1.25rem;max-width:420px;width:90%;text-align:center;
-      box-shadow: var(--shadow-xl);
-    }
+    .overlay {position: fixed; inset: 0; background: rgba(15,23,42,.45); display: none; align-items: center; justify-content: center; z-index: 2000; backdrop-filter: blur(2px);}
+    .overlay-card {background:#fff;border-radius:20px;padding:1.5rem 1.25rem;max-width:420px;width:90%;text-align:center; box-shadow: var(--shadow-xl);}
     .overlay h2{font-size:1.35rem;margin-bottom:.5rem}
     .overlay p{color:var(--text-secondary);margin-bottom:1rem}
 
@@ -75,6 +68,7 @@
     .modal-header h2{margin:0;font-size:1.3rem}
     .close-btn{background:none;border:none;font-size:1.5rem;cursor:pointer;color:var(--text-muted)}
     .modal-body{padding:1.25rem}
+
     .stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
     .stat-card{background:var(--surface-elevated);padding:1.25rem;border-radius:16px;text-align:center}
     .stat-number{font-size:1.75rem;font-weight:900;color:var(--primary-brand)}
@@ -84,20 +78,26 @@
     .mbti-type{font-weight:800;color:var(--primary-brand);font-size:.8rem;margin-bottom:.2rem}
     .mbti-count{font-size:1.25rem;font-weight:900}
 
-    /* 설문 UI 개편 */
+    /* 설문/심리테스트 공통 */
     .q-card{background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:1rem;margin-bottom:1rem}
     .q-title{font-weight:800;margin-bottom:.6rem}
     .scale{display:flex;gap:.5rem;justify-content:space-between}
     .scale input{display:none}
-    .scale label{
-      flex:1; text-align:center; padding:.75rem 0; border:1px solid #e2e8f0; border-radius:12px; cursor:pointer;
-      user-select:none; transition:.15s; font-weight:700;
-    }
+    .scale label{flex:1; text-align:center; padding:.75rem 0; border:1px solid #e2e8f0; border-radius:12px; cursor:pointer; user-select:none; transition:.15s; font-weight:700;}
     .scale input:checked + label{border-color:var(--secondary-brand);box-shadow:0 0 0 3px rgba(59,130,246,.12)}
     .pill-group{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
     .pill{display:block;border:1px solid #e2e8f0;border-radius:999px;padding:.75rem 1rem;text-align:center;cursor:pointer;font-weight:700}
     .radio-hidden{display:none}
     .radio-hidden:checked + .pill{border-color:var(--secondary-brand);box-shadow:0 0 0 3px rgba(59,130,246,.12)}
+
+    /* [NEW] 심리테스트 진행바 */
+    .progress-wrap{display:flex;gap:.25rem;margin:.5rem 0 .75rem}
+    .dot{flex:1;height:6px;border-radius:999px;background:#e2e8f0}
+    .dot.on{background:linear-gradient(90deg, var(--secondary-brand), #93c5fd)}
+    .ox-wrap{display:flex;gap:.6rem}
+    .ox-btn{flex:1;border:1.5px solid #e2e8f0;border-radius:14px;padding:0.9rem 1rem;text-align:center;font-weight:800;cursor:pointer}
+    .ox-btn:hover{box-shadow:0 0 0 3px rgba(59,130,246,.12);border-color:var(--secondary-brand)}
+    .result-badge{display:inline-block;padding:.4rem .7rem;border-radius:999px;background:rgba(59,130,246,.12);color:#1e40af;font-weight:900;font-size:.85rem}
   </style>
 </head>
 <body>
@@ -158,7 +158,6 @@
       </div>
 
       <div class="menu-grid">
-        <!-- [NEW] 참가자 현황 → MBTI 관계도 보기 (새 탭 링크) -->
         <a class="menu-item" id="relationMenu" href="#" target="_blank" rel="noopener">
           <div class="menu-title">🔗 MBTI 관계도</div>
           <div class="menu-desc">상호 궁합 보기</div>
@@ -174,13 +173,22 @@
           <div class="menu-desc">자료 저장</div>
         </div>
 
-        <!-- [NEW] 만족도 설문 아이콘/버튼 (타이머 상관없이 항상 열림) -->
         <div class="menu-item" id="surveyMenu">
           <div class="menu-title">📝 만족도 설문</div>
           <div class="menu-desc">바로 참여</div>
         </div>
 
-        <!-- 기존: AI 챗봇 -->
+        <!-- [NEW] 심리테스트 & 오늘의 운세 -->
+        <div class="menu-item" id="psyMenu">
+          <div class="menu-title">🎯 심리테스트</div>
+          <div class="menu-desc">O / X 10문항</div>
+        </div>
+
+        <div class="menu-item" id="fortuneMenu">
+          <div class="menu-title">🔮 오늘의 운세</div>
+          <div class="menu-desc">럭키 정보</div>
+        </div>
+
         <a class="menu-item" id="aiMenu" href="#" target="_blank" rel="noopener">
           <div class="menu-title">🤖 AI 챗봇</div>
           <div class="menu-desc">워크숍 전용 헬퍼</div>
@@ -201,7 +209,7 @@
     </div>
   </div>
 
-  <!-- (보존) MBTI 모달: 메뉴에서는 더 이상 사용하지 않음 -->
+  <!-- (보존) MBTI 모달 -->
   <div id="mbtiModal" class="modal">
     <div class="modal-content">
       <div class="modal-header">
@@ -221,7 +229,6 @@
         </div>
         <h3>MBTI 분포</h3>
         <div class="mbti-grid" id="mbtiDistribution"></div>
-
         <div style="margin-top:1rem;display:flex;gap:.6rem;">
           <a id="relationBtn" href="#" class="btn btn-link" target="_blank" rel="noopener">MBTI 관계도 보기</a>
         </div>
@@ -317,6 +324,50 @@
     </div>
   </div>
 
+  <!-- [NEW] 심리테스트 모달 -->
+  <div id="psyModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>O / X 심리테스트 (10문항)</h2>
+        <button class="close-btn" data-close="psyModal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="progress-wrap" id="psyProgress"></div>
+        <div class="q-card" id="psyQuestionCard">
+          <div class="q-title" id="psyQuestionText">문항이 로드되는 중...</div>
+          <div class="ox-wrap">
+            <button class="ox-btn" id="btnO">O (그렇다)</button>
+            <button class="ox-btn" id="btnX">X (아니다)</button>
+          </div>
+        </div>
+        <div id="psyResult" class="hidden">
+          <div class="card" style="text-align:center">
+            <div class="result-badge" id="psyType">유형</div>
+            <h3 id="psyHeadline" style="margin:.5rem 0 0.25rem;"></h3>
+            <p id="psyDesc" style="color:var(--text-secondary)"></p>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-top:.8rem;">
+              <button class="btn btn-link" id="psyRetry">다시 하기</button>
+              <button class="btn btn-primary" data-close="psyModal">닫기</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- [NEW] 오늘의 운세 모달 -->
+  <div id="fortuneModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>오늘의 운세</h2>
+        <button class="close-btn" data-close="fortuneModal">&times;</button>
+      </div>
+      <div class="modal-body" id="fortuneBody">
+        <!-- JS에서 채움 -->
+      </div>
+    </div>
+  </div>
+
   <script>
     /***** 설정 *****/
     const API_URL = 'https://script.google.com/macros/s/AKfycbxP7oI1CUK7vvga2HJbUp6r_U5bOsFWwFzcIAhIrRjKfCbUf7Mwlu56Ayqa3EokUJXz/exec';
@@ -328,7 +379,7 @@
     let sessionId = null;
     let timerInterval = null;
     let timerRunning = false;
-    let workshopEndAt = null; // Date
+    let workshopEndAt = null;
 
     const TEMP_USER_DATA = {
       "남도현": { team:"투어패스사업부", position:"이사" },
@@ -362,13 +413,25 @@
       const s = String(total%60).padStart(2,'0');
       return `${h}:${m}:${s}`;
     }
+    // [NEW] 시드 랜덤 (이름+날짜 고정)
+    function seededRng(seedStr='seed'){
+      let t = 0;
+      for (let i=0;i<seedStr.length;i++) t = (t * 31 + seedStr.charCodeAt(i)) >>> 0;
+      return function(){
+        t = (t + 0x6D2B79F5) >>> 0;
+        let r = Math.imul(t ^ (t>>>15), 1 | t);
+        r ^= r + Math.imul(r ^ (r>>>7), 61 | r);
+        return ((r ^ (r>>>14)) >>> 0) / 4294967296;
+      }
+    }
+    function pick(rng, arr){ return arr[Math.floor(rng()*arr.length)] }
 
     /***** API *****/
     async function apiRequest(action, data = {}) {
       try {
         const res = await fetch(API_URL, {
           method: 'POST',
-          headers: { 'Content-Type': 'text/plain' }, // preflight 회피
+          headers: { 'Content-Type': 'text/plain' },
           body: JSON.stringify({ action, sessionId, ...data })
         });
         if (!res.ok) return { success: false, error: `HTTP ${res.status}` };
@@ -430,15 +493,13 @@
       }
       showAlert('카운트다운을 시작합니다.');
     }
-
     function endFlow(){
       document.getElementById('blurTarget').classList.add('blurred');
-      const overlay = document.getElementById('overlay');
-      overlay.style.display = 'flex';
-      openSurvey(); // 자동 오픈
+      document.getElementById('overlay').style.display = 'flex';
+      openSurvey();
     }
 
-    /***** (보존) MBTI 통계 로딩 - 현재 메뉴에서 사용하지 않음 *****/
+    /***** (보존) MBTI 통계 *****/
     async function loadMBTIStats() {
       document.getElementById('mbtiModal').style.display = 'block';
       const res = await apiRequest('getMBTIStats');
@@ -478,7 +539,6 @@
       document.getElementById('linkDescription').value = '';
       loadLinks();
     }
-
     async function loadLinks() {
       const target = document.getElementById('linksList');
       target.innerHTML = '<div class="alert">불러오는 중...</div>';
@@ -498,7 +558,6 @@
 
     /***** 설문 *****/
     function openSurvey(){ document.getElementById('surveyModal').style.display = 'block'; }
-
     async function submitSurvey() {
       const q1 = document.querySelector('input[name="q1"]:checked');
       const q2 = document.querySelector('input[name="q2"]:checked');
@@ -517,6 +576,133 @@
       document.getElementById('surveyModal').style.display = 'none';
     }
 
+    /***** [NEW] 심리테스트 로직 *****/
+    const psyQuestions = [
+      { t:'새로운 장소를 보면 계획 없이도 바로 들어가 본다.', axis:'E' },
+      { t:'여행은 촘촘한 일정표가 있어야 마음이 편하다.', axis:'J' },
+      { t:'메뉴 고를 때 직관적으로 끌리는 걸 고른다.', axis:'N' },
+      { t:'할인/혜택을 꼼꼼히 따져본 뒤 결정한다.', axis:'S' },
+      { t:'팀 의견을 조율하는 역할을 자연스럽게 맡는다.', axis:'E' },
+      { t:'즉흥 제안에도 부담 없이 “가자!”라고 말한다.', axis:'P' },
+      { t:'사진보다 순간의 감정이 더 중요하다고 느낀다.', axis:'F' },
+      { t:'문제가 생기면 일단 원인부터 분석한다.', axis:'T' },
+      { t:'사람 많은 곳에서 에너지를 얻는다.', axis:'E' },
+      { t:'계획이 바뀌면 금방 대안을 떠올린다.', axis:'P' },
+    ];
+    // 점수: O면 해당 축 +1, X면 반대축 +1(E↔I, S↔N, T↔F, J↔P)
+    function axisOpp(a){ return ({E:'I', I:'E', S:'N', N:'S', T:'F', F:'T', J:'P', P:'J'})[a] }
+
+    let psyIdx = 0, psyScore = {E:0,I:0,S:0,N:0,T:0,F:0,J:0,P:0};
+
+    function renderPsyProgress(){
+      const wrap = document.getElementById('psyProgress');
+      wrap.innerHTML = '';
+      for(let i=0;i<psyQuestions.length;i++){
+        const d = document.createElement('div');
+        d.className = 'dot' + (i<psyIdx ? ' on' : '');
+        wrap.appendChild(d);
+      }
+    }
+    function renderPsyQuestion(){
+      document.getElementById('psyResult').classList.add('hidden');
+      document.getElementById('psyQuestionCard').classList.remove('hidden');
+      renderPsyProgress();
+      const q = psyQuestions[psyIdx];
+      document.getElementById('psyQuestionText').textContent = `${psyIdx+1}. ${q.t}`;
+    }
+    function finishPsy(){
+      // 네 축 묶어 간단 유형화
+      const e = psyScore.E >= psyScore.I ? 'E':'I';
+      const s = psyScore.S >= psyScore.N ? 'S':'N';
+      const t = psyScore.T >= psyScore.F ? 'T':'F';
+      const j = psyScore.J >= psyScore.P ? 'J':'P';
+
+      // 유형 결정 로직(가벼운 규칙)
+      let type='탐험가', headline='새로움을 즐기는 탐험가';
+      if (j==='J' && t==='T') { type='계획가'; headline='체계로 성과 만드는 계획가'; }
+      else if (e==='E' && p('P')) { type='도전가'; headline='즉흥 에너지 가득한 도전가'; }
+      else if (f('F') && n('N')) { type='감성가'; headline='감각 대신 감성, 스토리 중심 감성가'; }
+
+      function p(x){ return (x==='P') ? (psyScore.P>psyScore.J):false }
+      function f(x){ return (x==='F') ? (psyScore.F>psyScore.T):false }
+      function n(x){ return (x==='N') ? (psyScore.N>psyScore.S):false }
+
+      const descMap = {
+        '탐험가':'지도 밖의 경험을 찾고 호기심이 많아요. 코스의 여지를 남겨두면 만족도가 쑥 올라갑니다. 추천: 자유시간 슬롯, 깜짝 스팟.',
+        '도전가':'빠른 실행과 추진력! 액티비티·한정 이벤트에 강합니다. 추천: 즉흥 미션, 현장 깜짝 할인.',
+        '계획가':'정보·시간·예산을 통제해 최적 경로를 만듭니다. 추천: 타임라인·체크리스트·예상 대기시간 표시.',
+        '감성가':'감정 몰입형 경험에 강합니다. 스토리텔링·포토스팟·굿즈에 반응이 좋아요.'
+      };
+
+      document.getElementById('psyType').textContent = type;
+      document.getElementById('psyHeadline').textContent = headline;
+      document.getElementById('psyDesc').textContent = descMap[type];
+
+      document.getElementById('psyQuestionCard').classList.add('hidden');
+      document.getElementById('psyResult').classList.remove('hidden');
+    }
+    function resetPsy(){
+      psyIdx = 0;
+      psyScore = {E:0,I:0,S:0,N:0,T:0,F:0,J:0,P:0};
+      renderPsyQuestion();
+    }
+
+    /***** [NEW] 오늘의 운세 생성 *****/
+    function openFortune(){
+      const name = currentUser || '게스트';
+      const today = new Date();
+      const yyyy = today.getFullYear();
+      const mm = String(today.getMonth()+1).padStart(2,'0');
+      const dd = String(today.getDate()).padStart(2,'0');
+      const seed = `${name}-${yyyy}${mm}${dd}`;
+      const rng = seededRng(seed);
+
+      const grade = ['★★★★★','★★★★☆','★★★☆☆','★★☆☆☆','★☆☆☆☆'];
+      const advices = [
+        '작게 시작하면 크게 돌아옵니다.',
+        '과감히 덜어내면 속도가 납니다.',
+        '타이밍은 지금! 미루지 말기.',
+        '사람을 먼저 챙기면 일이 풀립니다.',
+        '데이터가 답. 감보다 수치 확인.'
+      ];
+      const areas = ['전체운','연애운','금전운','건강운','업무/학업'];
+      const colors = ['네이비','코발트 블루','민트','옐로','코랄','라일락','화이트','블랙'];
+      const items = ['텀블러','우산','볼펜','노트','키링','카드지갑','양말','스카프'];
+      const places = ['카페 창가','강변 산책로','도서관','작은 서점','공원 벤치','박물관','전망대','시장 골목'];
+      const mbti = ['INTJ','INTP','ENTJ','ENTP','INFJ','INFP','ENFJ','ENFP','ISTJ','ISFJ','ESTJ','ESFJ','ISTP','ISFP','ESTP','ESFP'];
+
+      function secBlock(title){
+        const g = pick(rng, grade);
+        const tip = pick(rng, advices);
+        return `<div class="card"><div class="q-title">${title} <span style="float:right">${g}</span></div><div style="color:var(--text-secondary)">${tip}</div></div>`;
+      }
+
+      const luckyNumber = Math.floor(rng()*99)+1;
+      const luckyColor = pick(rng, colors);
+      const luckyItem = pick(rng, items);
+      const luckyPlace = pick(rng, places);
+      const luckyMBTI = pick(rng, mbti);
+
+      const body = `
+        <div class="card" style="text-align:center">
+          <div class="result-badge">오늘 (${yyyy}.${mm}.${dd})</div>
+          <h3 style="margin:.5rem 0 .25rem;">${name}님의 데일리 포춘</h3>
+          <p style="color:var(--text-secondary)">하루 동안 동일하게 유지됩니다.</p>
+        </div>
+        ${areas.map(secBlock).join('')}
+        <div class="card" style="display:grid;grid-template-columns:1fr 1fr;gap:.6rem;">
+          <div><div class="q-title">럭키 넘버</div><div>${luckyNumber}</div></div>
+          <div><div class="q-title">럭키 컬러</div><div>${luckyColor}</div></div>
+          <div><div class="q-title">럭키 아이템</div><div>${luckyItem}</div></div>
+          <div><div class="q-title">럭키 장소</div><div>${luckyPlace}</div></div>
+          <div style="grid-column:1/3"><div class="q-title">궁합 MBTI</div><div>${luckyMBTI}</div></div>
+        </div>
+      `;
+      const el = document.getElementById('fortuneBody');
+      el.innerHTML = body;
+      document.getElementById('fortuneModal').style.display = 'block';
+    }
+
     /***** 초기화 & 이벤트 *****/
     document.addEventListener('DOMContentLoaded', () => {
       // 로그인/로그아웃/참여
@@ -525,7 +711,6 @@
       document.getElementById('startBtn').addEventListener('click', startTimer);
 
       // 메뉴
-      // [NEW] MBTI 관계도: RELATION_URL이 준비되면 새 탭 오픈, 아니면 안내
       const relationMenu = document.getElementById('relationMenu');
       relationMenu.addEventListener('click', (e)=>{
         const ready = RELATION_URL && !RELATION_URL.includes('<<');
@@ -540,9 +725,31 @@
 
       document.getElementById('scheduleMenu').addEventListener('click', ()=> document.getElementById('scheduleModal').style.display='block');
       document.getElementById('linkMenu').addEventListener('click', ()=> { document.getElementById('linkModal').style.display='block'; loadLinks(); });
-
-      // [NEW] 설문 메뉴: 언제든지 설문 열기
       document.getElementById('surveyMenu').addEventListener('click', openSurvey);
+
+      // [NEW] 심리테스트
+      document.getElementById('psyMenu').addEventListener('click', ()=>{
+        document.getElementById('psyModal').style.display = 'block';
+        resetPsy();
+      });
+      document.getElementById('btnO').addEventListener('click', ()=>{
+        const axis = psyQuestions[psyIdx].axis;
+        psyScore[axis]++; // O는 해당 축 +
+        psyIdx++;
+        if (psyIdx >= psyQuestions.length) return finishPsy();
+        renderPsyQuestion();
+      });
+      document.getElementById('btnX').addEventListener('click', ()=>{
+        const axis = psyQuestions[psyIdx].axis;
+        psyScore[axisOpp(axis)]++; // X는 반대 축 +
+        psyIdx++;
+        if (psyIdx >= psyQuestions.length) return finishPsy();
+        renderPsyQuestion();
+      });
+      document.getElementById('psyRetry').addEventListener('click', resetPsy);
+
+      // [NEW] 오늘의 운세
+      document.getElementById('fortuneMenu').addEventListener('click', openFortune);
 
       // AI 챗봇
       const ai = document.getElementById('aiMenu');
@@ -576,7 +783,6 @@
         sessionId = localStorage.getItem('sessionId');
         document.getElementById('loginScreen').classList.add('hidden');
         document.getElementById('mainScreen').classList.remove('hidden');
-
         const info = TEMP_USER_DATA[currentUser];
         document.getElementById('userNameDisplay').textContent = currentUser;
         document.getElementById('userTeamDisplay').textContent = `${info.team} | ${info.position}`;
