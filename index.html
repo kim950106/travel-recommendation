@@ -58,7 +58,7 @@
     .menu-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1rem}
     .menu-item{background:var(--surface-primary);border:1.5px solid rgba(59,130,246,.08);border-radius:20px;padding:1.25rem;text-align:center;cursor:pointer;transition:.3s;text-decoration:none;color:inherit}
     .menu-item:hover{transform:translateY(-3px);box-shadow:var(--shadow-xl);border-color:var(--secondary-brand)}
-    .menu-title{font-weight:800;font-size:1.05rem;margin-bottom:.35rem}
+    .menu-title{font-weight:800;font-size:1.05rem;margin-bottom:.35rem;display:flex;gap:.4rem;justify-content:center;align-items:center}
     .menu-desc{font-size:.85rem;color:var(--text-secondary)}
     .timer-card{background:var(--gradient-brand);color:#fff;text-align:center}
     .timer-display{font-size:3rem;font-weight:900}
@@ -148,7 +148,6 @@
         <p id="userTeamDisplay"></p>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-top:.6rem;">
           <button class="btn btn-link" id="logoutBtn">로그아웃</button>
-          <!-- [1] 워크숍 참여하기 버튼 -->
           <button class="btn btn-primary" id="startBtn">워크숍 참여하기</button>
         </div>
       </div>
@@ -159,23 +158,31 @@
       </div>
 
       <div class="menu-grid">
-        <div class="menu-item" id="mbtiMenu">
-          <div class="menu-title">참가자 현황</div>
-          <div class="menu-desc">MBTI 분포</div>
-        </div>
+        <!-- [NEW] 참가자 현황 → MBTI 관계도 보기 (새 탭 링크) -->
+        <a class="menu-item" id="relationMenu" href="#" target="_blank" rel="noopener">
+          <div class="menu-title">🔗 MBTI 관계도</div>
+          <div class="menu-desc">상호 궁합 보기</div>
+        </a>
 
         <div class="menu-item" id="scheduleMenu">
-          <div class="menu-title">워크샵 일정</div>
+          <div class="menu-title">🗓️ 워크숍 일정</div>
           <div class="menu-desc">프로그램</div>
         </div>
 
         <div class="menu-item" id="linkMenu">
-          <div class="menu-title">링크 보관함</div>
+          <div class="menu-title">📎 링크 보관함</div>
           <div class="menu-desc">자료 저장</div>
         </div>
 
+        <!-- [NEW] 만족도 설문 아이콘/버튼 (타이머 상관없이 항상 열림) -->
+        <div class="menu-item" id="surveyMenu">
+          <div class="menu-title">📝 만족도 설문</div>
+          <div class="menu-desc">바로 참여</div>
+        </div>
+
+        <!-- 기존: AI 챗봇 -->
         <a class="menu-item" id="aiMenu" href="#" target="_blank" rel="noopener">
-          <div class="menu-title">AI 챗봇</div>
+          <div class="menu-title">🤖 AI 챗봇</div>
           <div class="menu-desc">워크숍 전용 헬퍼</div>
         </a>
       </div>
@@ -194,7 +201,7 @@
     </div>
   </div>
 
-  <!-- MBTI 모달 -->
+  <!-- (보존) MBTI 모달: 메뉴에서는 더 이상 사용하지 않음 -->
   <div id="mbtiModal" class="modal">
     <div class="modal-content">
       <div class="modal-header">
@@ -215,7 +222,6 @@
         <h3>MBTI 분포</h3>
         <div class="mbti-grid" id="mbtiDistribution"></div>
 
-        <!-- [2] MBTI 관계도 링크 버튼 -->
         <div style="margin-top:1rem;display:flex;gap:.6rem;">
           <a id="relationBtn" href="#" class="btn btn-link" target="_blank" rel="noopener">MBTI 관계도 보기</a>
         </div>
@@ -272,7 +278,7 @@
     </div>
   </div>
 
-  <!-- [3] 설문 모달 (개편 버전) -->
+  <!-- 설문 모달 -->
   <div id="surveyModal" class="modal">
     <div class="modal-content">
       <div class="modal-header">
@@ -280,8 +286,6 @@
         <button class="close-btn" data-close="surveyModal">&times;</button>
       </div>
       <div class="modal-body">
-
-        <!-- Q1: 5점 척도 -->
         <div class="q-card">
           <div class="q-title">1. 워크숍 전체 만족도</div>
           <div class="scale">
@@ -293,7 +297,6 @@
           </div>
         </div>
 
-        <!-- Q2: 가장 마음에 들었던 프로그램 -->
         <div class="q-card">
           <div class="q-title">2. 가장 마음에 들었던 프로그램</div>
           <div class="pill-group">
@@ -304,7 +307,6 @@
           </div>
         </div>
 
-        <!-- Q3: 개선사항 -->
         <div class="q-card">
           <div class="q-title">3. 개선사항 및 의견</div>
           <textarea id="feedback" rows="5" placeholder="자유롭게 작성해주세요"></textarea>
@@ -317,7 +319,7 @@
 
   <script>
     /***** 설정 *****/
-    const API_URL = 'https://script.google.com/macros/s/AKfycbxP7oI1CUK7vvga2HJbUp6r_U5bOsFWwFzcIAhIrRjKfCbUf7Mwlu56Ayqa3EokUJXz/exec'; // 예: https://script.google.com/macros/s/AKfycb.../exec
+    const API_URL = 'https://script.google.com/macros/s/AKfycbxP7oI1CUK7vvga2HJbUp6r_U5bOsFWwFzcIAhIrRjKfCbUf7Mwlu56Ayqa3EokUJXz/exec';
     const RELATION_URL = '<<MBTI_관계도_URL(추후_교체)>>';
     const AI_CHATBOT_URL = 'https://chatgpt.com/g/g-689acc0b7bd08191bb31112e0a19cffc-tueopaeseu-saeobjeanseo-ai-eosiseunteu';
 
@@ -408,14 +410,13 @@
       location.reload();
     }
 
-    /***** [1] 타이머: 참여 버튼 클릭 시 시작 → 종료 시 블러 & 설문 호출 *****/
+    /***** 타이머 & 종료 플로우 *****/
     function startTimer() {
       if (timerRunning) return;
       timerRunning = true;
 
-      // 48시간 후 종료
       workshopEndAt = new Date(Date.now() + 48*60*60*1000);
-      tick(); // 즉시 1회 갱신
+      tick();
       timerInterval = setInterval(tick, 1000);
 
       function tick(){
@@ -431,14 +432,13 @@
     }
 
     function endFlow(){
-      // 블러 & 오버레이, 설문 자동 오픈
       document.getElementById('blurTarget').classList.add('blurred');
       const overlay = document.getElementById('overlay');
       overlay.style.display = 'flex';
       openSurvey(); // 자동 오픈
     }
 
-    /***** MBTI *****/
+    /***** (보존) MBTI 통계 로딩 - 현재 메뉴에서 사용하지 않음 *****/
     async function loadMBTIStats() {
       document.getElementById('mbtiModal').style.display = 'block';
       const res = await apiRequest('getMBTIStats');
@@ -456,9 +456,8 @@
         el.innerHTML = `<div class="mbti-type">${t}</div><div class="mbti-count">${c}</div>`;
         grid.appendChild(el);
       });
-      // 링크 세팅
       const btn = document.getElementById('relationBtn');
-      btn.href = RELATION_URL !== '<<MBTI_관계도_URL(추후_교체)>>' ? RELATION_URL : '#';
+      btn.href = RELATION_URL && !RELATION_URL.includes('<<') ? RELATION_URL : '#';
       if (btn.href.endsWith('#')) btn.textContent = 'MBTI 관계도 (URL 준비 중)';
     }
 
@@ -497,10 +496,8 @@
       `).join('');
     }
 
-    /***** [3] 설문 제출 *****/
-    function openSurvey(){
-      document.getElementById('surveyModal').style.display = 'block';
-    }
+    /***** 설문 *****/
+    function openSurvey(){ document.getElementById('surveyModal').style.display = 'block'; }
 
     async function submitSurvey() {
       const q1 = document.querySelector('input[name="q1"]:checked');
@@ -508,11 +505,10 @@
       const feedback = document.getElementById('feedback').value;
       if (!q1 || !q2) return showAlert('문항 1, 2를 선택해주세요','error');
 
-      // 서버 기존 스키마에 맞춰 전달(필드명 매핑)
       const res = await apiRequest('saveSurvey', {
         user: currentUser,
-        satisfaction: q1.value,                 // 1~5
-        useful_program: q2.value,               // 선택값
+        satisfaction: q1.value,
+        useful_program: q2.value,
         feedback
       });
       if (!res.success) return showAlert('설문 제출 실패: ' + (res.error || ''), 'error');
@@ -521,7 +517,7 @@
       document.getElementById('surveyModal').style.display = 'none';
     }
 
-    /***** 초기화 및 이벤트 *****/
+    /***** 초기화 & 이벤트 *****/
     document.addEventListener('DOMContentLoaded', () => {
       // 로그인/로그아웃/참여
       document.getElementById('loginBtn').addEventListener('click', handleLogin);
@@ -529,9 +525,24 @@
       document.getElementById('startBtn').addEventListener('click', startTimer);
 
       // 메뉴
-      document.getElementById('mbtiMenu').addEventListener('click', loadMBTIStats);
+      // [NEW] MBTI 관계도: RELATION_URL이 준비되면 새 탭 오픈, 아니면 안내
+      const relationMenu = document.getElementById('relationMenu');
+      relationMenu.addEventListener('click', (e)=>{
+        const ready = RELATION_URL && !RELATION_URL.includes('<<');
+        if (!ready) {
+          e.preventDefault();
+          showAlert('MBTI 관계도 링크가 아직 준비 중입니다.','error');
+        } else {
+          relationMenu.setAttribute('href', RELATION_URL);
+          relationMenu.setAttribute('target', '_blank');
+        }
+      });
+
       document.getElementById('scheduleMenu').addEventListener('click', ()=> document.getElementById('scheduleModal').style.display='block');
       document.getElementById('linkMenu').addEventListener('click', ()=> { document.getElementById('linkModal').style.display='block'; loadLinks(); });
+
+      // [NEW] 설문 메뉴: 언제든지 설문 열기
+      document.getElementById('surveyMenu').addEventListener('click', openSurvey);
 
       // AI 챗봇
       const ai = document.getElementById('aiMenu');
