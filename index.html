@@ -1,1228 +1,641 @@
-&lt;!DOCTYPE html&gt;
-&lt;html lang=&quot;ko&quot;&gt;
-&lt;head&gt;
-    &lt;meta charset=&quot;UTF-8&quot;&gt;
-    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
-    &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot;&gt;
-    &lt;title&gt;투어패스사업부 2025 워크숍&lt;/title&gt;
-    &lt;style&gt;
-        @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary-brand: #1e40af;
-            --secondary-brand: #3b82f6;
-            --accent-warm: #f59e0b;
-            --accent-cool: #06b6d4;
-            --text-primary: #0f172a;
-            --text-secondary: #475569;
-            --text-muted: #64748b;
-            --surface-primary: #ffffff;
-            --surface-secondary: #f8fafc;
-            --surface-elevated: #f1f5f9;
-            --success: #10b981;
-            --warning: #f59e0b;
-            --error: #ef4444;
-            --gradient-brand: linear-gradient(135deg, var(--primary-brand), var(--secondary-brand));
-            --gradient-warm: linear-gradient(135deg, #fbbf24, #f59e0b);
-            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-        }
-
-        body {
-            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Malgun Gothic', '맑은 고딕', sans-serif;
-            background: var(--surface-secondary);
-            color: var(--text-primary);
-            line-height: 1.7;
-        }
-
-        .container {
-            max-width: 428px;
-            margin: 0 auto;
-            padding: 1.5rem;
-            min-height: 100vh;
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 3rem;
-            padding: 3rem 0;
-        }
-
-        .header h1 {
-            font-size: 2.25rem;
-            font-weight: 800;
-            margin-bottom: 0.5rem;
-        }
-
-        .header p {
-            font-size: 1.25rem;
-            color: var(--text-secondary);
-        }
-
-        .card {
-            background: var(--surface-primary);
-            border-radius: 24px;
-            padding: 2rem;
-            margin-bottom: 1.5rem;
-            box-shadow: var(--shadow-md);
-            border: 1px solid rgba(59, 130, 246, 0.1);
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            font-size: 0.875rem;
-        }
-
-        select, input, textarea {
-            width: 100%;
-            padding: 1rem 1.25rem;
-            border: 1.5px solid #e2e8f0;
-            border-radius: 16px;
-            font-size: 1rem;
-            font-family: inherit;
-        }
-
-        select:focus, input:focus, textarea:focus {
-            outline: none;
-            border-color: var(--secondary-brand);
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-        }
-
-        .btn {
-            padding: 1rem 1.5rem;
-            border: none;
-            border-radius: 16px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-            width: 100%;
-        }
-
-        .btn-primary {
-            background: var(--gradient-brand);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .btn-secondary {
-            background: var(--surface-elevated);
-            color: var(--text-primary);
-        }
-
-        .btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-
-        .menu-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-
-        .menu-item {
-            background: var(--surface-primary);
-            border: 1.5px solid rgba(59, 130, 246, 0.1);
-            border-radius: 20px;
-            padding: 1.5rem;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-decoration: none;
-            color: inherit;
-        }
-
-        .menu-item:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-xl);
-            border-color: var(--secondary-brand);
-        }
-
-        .menu-title {
-            font-weight: 700;
-            font-size: 1.125rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .menu-desc {
-            font-size: 0.875rem;
-            color: var(--text-secondary);
-        }
-
-        .timer-card {
-            background: var(--gradient-brand);
-            color: white;
-            text-align: center;
-        }
-
-        .timer-display {
-            font-size: 3.5rem;
-            font-weight: 800;
-        }
-
-        .user-info {
-            background: var(--gradient-surface);
-            border: 1.5px solid rgba(59, 130, 246, 0.1);
-            padding: 1.5rem;
-            border-radius: 20px;
-            margin-bottom: 1.5rem;
-            text-align: center;
-        }
-
-        .alert {
-            padding: 1rem;
-            border-radius: 16px;
-            margin-bottom: 1.5rem;
-            text-align: center;
-            animation: slideIn 0.4s;
-        }
-
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .alert-success {
-            background: rgba(16, 185, 129, 0.1);
-            color: #047857;
-            border: 1px solid rgba(16, 185, 129, 0.3);
-        }
-
-        .alert-error {
-            background: rgba(239, 68, 68, 0.1);
-            color: #dc2626;
-            border: 1px solid rgba(239, 68, 68, 0.3);
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 1000;
-            overflow-y: auto;
-        }
-
-        .modal-content {
-            background: white;
-            margin: 50px auto;
-            padding: 0;
-            width: 90%;
-            max-width: 600px;
-            border-radius: 24px;
-            animation: modalSlideIn 0.3s;
-        }
-
-        @keyframes modalSlideIn {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .modal-header {
-            padding: 1.5rem;
-            border-bottom: 1px solid #e2e8f0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .modal-header h2 {
-            margin: 0;
-            font-size: 1.5rem;
-        }
-
-        .close-btn {
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--text-muted);
-        }
-
-        .modal-body {
-            padding: 1.5rem;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .stat-card {
-            background: var(--surface-elevated);
-            padding: 1.5rem;
-            border-radius: 16px;
-            text-align: center;
-        }
-
-        .stat-number {
-            font-size: 2rem;
-            font-weight: 800;
-            color: var(--primary-brand);
-        }
-
-        .stat-label {
-            font-size: 0.875rem;
-            color: var(--text-secondary);
-        }
-
-        .mbti-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 0.75rem;
-        }
-
-        .mbti-item {
-            background: var(--surface-elevated);
-            padding: 1rem;
-            border-radius: 12px;
-            text-align: center;
-            border: 1px solid #e2e8f0;
-        }
-
-        .mbti-type {
-            font-weight: 700;
-            color: var(--primary-brand);
-            font-size: 0.875rem;
-            margin-bottom: 0.25rem;
-        }
-
-        .mbti-count {
-            font-size: 1.5rem;
-            font-weight: 800;
-        }
-
-        .schedule-item {
-            background: white;
-            padding: 1.25rem;
-            border-radius: 16px;
-            margin-bottom: 1rem;
-            border-left: 4px solid var(--gradient-brand);
-            border: 1px solid #e2e8f0;
-        }
-
-        .schedule-time {
-            font-weight: 700;
-            color: var(--primary-brand);
-            font-size: 0.875rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .schedule-title {
-            font-weight: 600;
-            margin-bottom: 0.25rem;
-        }
-
-        .schedule-desc {
-            font-size: 0.875rem;
-            color: var(--text-secondary);
-        }
-
-        .radio-group {
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-        }
-
-        .radio-item {
-            display: flex;
-            align-items: center;
-            padding: 0.75rem;
-            background: var(--surface-elevated);
-            border-radius: 12px;
-            cursor: pointer;
-            border: 1px solid #e2e8f0;
-        }
-
-        .radio-item:hover {
-            background: #e2e8f0;
-        }
-
-        .radio-item input[type=&quot;radio&quot;] {
-            margin-right: 0.75rem;
-        }
-
-        .loading {
-            text-align: center;
-            padding: 3rem;
-            color: var(--text-muted);
-        }
-
-        .hidden {
-            display: none;
-        }
-    &lt;/style&gt;
-&lt;/head&gt;
-&lt;body&gt;
-    &lt;div class=&quot;container&quot;&gt;
-        &lt;!-- 헤더 --&gt;
-        &lt;div class=&quot;header&quot;&gt;
-            &lt;h1&gt;투어패스사업부&lt;/h1&gt;
-            &lt;p&gt;2025 워크숍&lt;/p&gt;
-        &lt;/div&gt;
-
-        &lt;!-- 로그인 화면 --&gt;
-        &lt;div id=&quot;loginScreen&quot; class=&quot;card&quot;&gt;
-            &lt;div class=&quot;form-group&quot;&gt;
-                &lt;label for=&quot;userName&quot;&gt;이름을 선택하세요&lt;/label&gt;
-                &lt;select id=&quot;userName&quot; required&gt;
-                    &lt;option value=&quot;&quot;&gt;이름을 선택해주세요&lt;/option&gt;
-                    &lt;option value=&quot;남도현&quot;&gt;남도현&lt;/option&gt;
-                    &lt;option value=&quot;김수인&quot;&gt;김수인&lt;/option&gt;
-                    &lt;option value=&quot;고다현&quot;&gt;고다현&lt;/option&gt;
-                    &lt;option value=&quot;심재희&quot;&gt;심재희&lt;/option&gt;
-                    &lt;option value=&quot;판티니안&quot;&gt;판티니안&lt;/option&gt;
-                    &lt;option value=&quot;김현철&quot;&gt;김현철&lt;/option&gt;
-                    &lt;option value=&quot;이유진&quot;&gt;이유진&lt;/option&gt;
-                    &lt;option value=&quot;정어진&quot;&gt;정어진&lt;/option&gt;
-                    &lt;option value=&quot;장원준&quot;&gt;장원준&lt;/option&gt;
-                    &lt;option value=&quot;김대진&quot;&gt;김대진&lt;/option&gt;
-                    &lt;option value=&quot;손현우&quot;&gt;손현우&lt;/option&gt;
-                    &lt;option value=&quot;이주아&quot;&gt;이주아&lt;/option&gt;
-                    &lt;option value=&quot;장은진&quot;&gt;장은진&lt;/option&gt;
-                &lt;/select&gt;
-            &lt;/div&gt;
-            
-            &lt;div class=&quot;form-group&quot;&gt;
-                &lt;label for=&quot;userMBTI&quot;&gt;MBTI를 선택하세요&lt;/label&gt;
-                &lt;select id=&quot;userMBTI&quot; required&gt;
-                    &lt;option value=&quot;&quot;&gt;MBTI를 선택해주세요&lt;/option&gt;
-                    &lt;option value=&quot;INTJ&quot;&gt;INTJ&lt;/option&gt;
-                    &lt;option value=&quot;INTP&quot;&gt;INTP&lt;/option&gt;
-                    &lt;option value=&quot;ENTJ&quot;&gt;ENTJ&lt;/option&gt;
-                    &lt;option value=&quot;ENTP&quot;&gt;ENTP&lt;/option&gt;
-                    &lt;option value=&quot;INFJ&quot;&gt;INFJ&lt;/option&gt;
-                    &lt;option value=&quot;INFP&quot;&gt;INFP&lt;/option&gt;
-                    &lt;option value=&quot;ENFJ&quot;&gt;ENFJ&lt;/option&gt;
-                    &lt;option value=&quot;ENFP&quot;&gt;ENFP&lt;/option&gt;
-                    &lt;option value=&quot;ISTJ&quot;&gt;ISTJ&lt;/option&gt;
-                    &lt;option value=&quot;ISFJ&quot;&gt;ISFJ&lt;/option&gt;
-                    &lt;option value=&quot;ESTJ&quot;&gt;ESTJ&lt;/option&gt;
-                    &lt;option value=&quot;ESFJ&quot;&gt;ESFJ&lt;/option&gt;
-                    &lt;option value=&quot;ISTP&quot;&gt;ISTP&lt;/option&gt;
-                    &lt;option value=&quot;ISFP&quot;&gt;ISFP&lt;/option&gt;
-                    &lt;option value=&quot;ESTP&quot;&gt;ESTP&lt;/option&gt;
-                    &lt;option value=&quot;ESFP&quot;&gt;ESFP&lt;/option&gt;
-                &lt;/select&gt;
-            &lt;/div&gt;
-            
-            &lt;button class=&quot;btn btn-primary&quot; id=&quot;loginBtn&quot;&gt;로그인&lt;/button&gt;
-        &lt;/div&gt;
-
-        &lt;!-- 메인 화면 --&gt;
-        &lt;div id=&quot;mainScreen&quot; class=&quot;hidden&quot;&gt;
-            &lt;!-- 사용자 정보 --&gt;
-            &lt;div class=&quot;user-info&quot;&gt;
-                &lt;h3 id=&quot;userNameDisplay&quot;&gt;&lt;/h3&gt;
-                &lt;p id=&quot;userTeamDisplay&quot;&gt;&lt;/p&gt;
-                &lt;button class=&quot;btn btn-secondary&quot; id=&quot;logoutBtn&quot; style=&quot;margin-top: 1rem;&quot;&gt;로그아웃&lt;/button&gt;
-            &lt;/div&gt;
-
-            &lt;!-- 타이머 --&gt;
-            &lt;div id=&quot;timerCard&quot; class=&quot;card timer-card&quot;&gt;
-                &lt;div style=&quot;font-size: 1.125rem; margin-bottom: 1rem; opacity: 0.9;&quot;&gt;워크숍 남은 시간&lt;/div&gt;
-                &lt;div id=&quot;timerDisplay&quot; class=&quot;timer-display&quot;&gt;48:00:00&lt;/div&gt;
-            &lt;/div&gt;
-
-            &lt;!-- 메뉴 그리드 --&gt;
-            &lt;div class=&quot;menu-grid&quot;&gt;
-                &lt;div class=&quot;menu-item&quot; id=&quot;mbtiMenu&quot;&gt;
-                    &lt;div class=&quot;menu-title&quot;&gt;참가자 현황&lt;/div&gt;
-                    &lt;div class=&quot;menu-desc&quot;&gt;MBTI 분포&lt;/div&gt;
-                &lt;/div&gt;
-
-                &lt;div class=&quot;menu-item&quot; id=&quot;scheduleMenu&quot;&gt;
-                    &lt;div class=&quot;menu-title&quot;&gt;워크샵 일정&lt;/div&gt;
-                    &lt;div class=&quot;menu-desc&quot;&gt;프로그램&lt;/div&gt;
-                &lt;/div&gt;
-
-                &lt;div class=&quot;menu-item&quot; id=&quot;linkMenu&quot;&gt;
-                    &lt;div class=&quot;menu-title&quot;&gt;링크 보관함&lt;/div&gt;
-                    &lt;div class=&quot;menu-desc&quot;&gt;자료 저장&lt;/div&gt;
-                &lt;/div&gt;
-
-                &lt;div class=&quot;menu-item&quot; id=&quot;surveyMenu&quot;&gt;
-                    &lt;div class=&quot;menu-title&quot;&gt;설문조사&lt;/div&gt;
-                    &lt;div class=&quot;menu-desc&quot;&gt;만족도&lt;/div&gt;
-                &lt;/div&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-
-        &lt;!-- 알림 메시지 --&gt;
-        &lt;div id=&quot;alertMessage&quot; class=&quot;hidden&quot;&gt;&lt;/div&gt;
-    &lt;/div&gt;
-
-    &lt;!-- MBTI 통계 모달 --&gt;
-    &lt;div id=&quot;mbtiModal&quot; class=&quot;modal&quot;&gt;
-        &lt;div class=&quot;modal-content&quot;&gt;
-            &lt;div class=&quot;modal-header&quot;&gt;
-                &lt;h2&gt;참가자 현황&lt;/h2&gt;
-                &lt;button class=&quot;close-btn&quot;&gt;&amp;times;&lt;/button&gt;
-            &lt;/div&gt;
-            &lt;div class=&quot;modal-body&quot;&gt;
-                &lt;div class=&quot;stats-grid&quot;&gt;
-                    &lt;div class=&quot;stat-card&quot;&gt;
-                        &lt;div class=&quot;stat-number&quot; id=&quot;totalParticipants&quot;&gt;0&lt;/div&gt;
-                        &lt;div class=&quot;stat-label&quot;&gt;총 참가자&lt;/div&gt;
-                    &lt;/div&gt;
-                    &lt;div class=&quot;stat-card&quot;&gt;
-                        &lt;div class=&quot;stat-number&quot; id=&quot;onlineCount&quot;&gt;0&lt;/div&gt;
-                        &lt;div class=&quot;stat-label&quot;&gt;현재 접속&lt;/div&gt;
-                    &lt;/div&gt;
-                &lt;/div&gt;
-
-                &lt;h3&gt;MBTI 분포&lt;/h3&gt;
-                &lt;div class=&quot;mbti-grid&quot; id=&quot;mbtiDistribution&quot;&gt;&lt;/div&gt;
-
-                &lt;h3 style=&quot;margin-top: 2rem;&quot;&gt;팀별 분포&lt;/h3&gt;
-                &lt;div id=&quot;teamDistribution&quot;&gt;&lt;/div&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-
-    &lt;!-- 일정 모달 --&gt;
-    &lt;div id=&quot;scheduleModal&quot; class=&quot;modal&quot;&gt;
-        &lt;div class=&quot;modal-content&quot;&gt;
-            &lt;div class=&quot;modal-header&quot;&gt;
-                &lt;h2&gt;워크숍 일정&lt;/h2&gt;
-                &lt;button class=&quot;close-btn&quot;&gt;&amp;times;&lt;/button&gt;
-            &lt;/div&gt;
-            &lt;div class=&quot;modal-body&quot;&gt;
-                &lt;h3&gt;1일차&lt;/h3&gt;
-                &lt;div class=&quot;schedule-item&quot;&gt;
-                    &lt;div class=&quot;schedule-time&quot;&gt;14:50&lt;/div&gt;
-                    &lt;div class=&quot;schedule-title&quot;&gt;로비 집합&lt;/div&gt;
-                    &lt;div class=&quot;schedule-desc&quot;&gt;부여롯데리조트&lt;/div&gt;
-                &lt;/div&gt;
-                &lt;div class=&quot;schedule-item&quot;&gt;
-                    &lt;div class=&quot;schedule-time&quot;&gt;15:30&lt;/div&gt;
-                    &lt;div class=&quot;schedule-title&quot;&gt;체크인 및 백제문화단지&lt;/div&gt;
-                    &lt;div class=&quot;schedule-desc&quot;&gt;관광 및 체험&lt;/div&gt;
-                &lt;/div&gt;
-                &lt;div class=&quot;schedule-item&quot;&gt;
-                    &lt;div class=&quot;schedule-time&quot;&gt;18:30&lt;/div&gt;
-                    &lt;div class=&quot;schedule-title&quot;&gt;저녁식사&lt;/div&gt;
-                    &lt;div class=&quot;schedule-desc&quot;&gt;서동한우 구양점&lt;/div&gt;
-                &lt;/div&gt;
-                &lt;div class=&quot;schedule-item&quot;&gt;
-                    &lt;div class=&quot;schedule-time&quot;&gt;21:00&lt;/div&gt;
-                    &lt;div class=&quot;schedule-title&quot;&gt;회식 및 레크레이션&lt;/div&gt;
-                    &lt;div class=&quot;schedule-desc&quot;&gt;부여롯데리조트&lt;/div&gt;
-                &lt;/div&gt;
-
-                &lt;h3 style=&quot;margin-top: 2rem;&quot;&gt;2일차&lt;/h3&gt;
-                &lt;div class=&quot;schedule-item&quot;&gt;
-                    &lt;div class=&quot;schedule-time&quot;&gt;11:00&lt;/div&gt;
-                    &lt;div class=&quot;schedule-title&quot;&gt;아침겸 점심&lt;/div&gt;
-                    &lt;div class=&quot;schedule-desc&quot;&gt;장원막국수&lt;/div&gt;
-                &lt;/div&gt;
-                &lt;div class=&quot;schedule-item&quot;&gt;
-                    &lt;div class=&quot;schedule-time&quot;&gt;12:30&lt;/div&gt;
-                    &lt;div class=&quot;schedule-title&quot;&gt;워크숍&lt;/div&gt;
-                    &lt;div class=&quot;schedule-desc&quot;&gt;사비123창작센터&lt;/div&gt;
-                &lt;/div&gt;
-                &lt;div class=&quot;schedule-item&quot;&gt;
-                    &lt;div class=&quot;schedule-time&quot;&gt;14:10&lt;/div&gt;
-                    &lt;div class=&quot;schedule-title&quot;&gt;귀가&lt;/div&gt;
-                    &lt;div class=&quot;schedule-desc&quot;&gt;워크숍 종료&lt;/div&gt;
-                &lt;/div&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-
-    &lt;!-- 링크 모달 --&gt;
-    &lt;div id=&quot;linkModal&quot; class=&quot;modal&quot;&gt;
-        &lt;div class=&quot;modal-content&quot;&gt;
-            &lt;div class=&quot;modal-header&quot;&gt;
-                &lt;h2&gt;링크 보관함&lt;/h2&gt;
-                &lt;button class=&quot;close-btn&quot;&gt;&amp;times;&lt;/button&gt;
-            &lt;/div&gt;
-            &lt;div class=&quot;modal-body&quot;&gt;
-                &lt;div class=&quot;card&quot;&gt;
-                    &lt;h3&gt;새 링크 추가&lt;/h3&gt;
-                    &lt;div class=&quot;form-group&quot;&gt;
-                        &lt;input type=&quot;text&quot; id=&quot;linkTitle&quot; placeholder=&quot;제목&quot;&gt;
-                    &lt;/div&gt;
-                    &lt;div class=&quot;form-group&quot;&gt;
-                        &lt;input type=&quot;url&quot; id=&quot;linkUrl&quot; placeholder=&quot;URL (https://...)&quot;&gt;
-                    &lt;/div&gt;
-                    &lt;div class=&quot;form-group&quot;&gt;
-                        &lt;select id=&quot;linkCategory&quot;&gt;
-                            &lt;option value=&quot;워크숍 자료&quot;&gt;워크숍 자료&lt;/option&gt;
-                            &lt;option value=&quot;업무 도구&quot;&gt;업무 도구&lt;/option&gt;
-                            &lt;option value=&quot;참고 자료&quot;&gt;참고 자료&lt;/option&gt;
-                            &lt;option value=&quot;기타&quot;&gt;기타&lt;/option&gt;
-                        &lt;/select&gt;
-                    &lt;/div&gt;
-                    &lt;div class=&quot;form-group&quot;&gt;
-                        &lt;textarea id=&quot;linkDescription&quot; rows=&quot;3&quot; placeholder=&quot;설명 (선택)&quot;&gt;&lt;/textarea&gt;
-                    &lt;/div&gt;
-                    &lt;button class=&quot;btn btn-primary&quot; id=&quot;saveLinkBtn&quot;&gt;링크 저장&lt;/button&gt;
-                &lt;/div&gt;
-
-                &lt;h3 style=&quot;margin-top: 2rem;&quot;&gt;저장된 링크&lt;/h3&gt;
-                &lt;div id=&quot;linksList&quot;&gt;&lt;/div&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-
-    &lt;!-- 설문 모달 --&gt;
-    &lt;div id=&quot;surveyModal&quot; class=&quot;modal&quot;&gt;
-        &lt;div class=&quot;modal-content&quot;&gt;
-            &lt;div class=&quot;modal-header&quot;&gt;
-                &lt;h2&gt;만족도 설문조사&lt;/h2&gt;
-                &lt;button class=&quot;close-btn&quot;&gt;&amp;times;&lt;/button&gt;
-            &lt;/div&gt;
-            &lt;div class=&quot;modal-body&quot;&gt;
-                &lt;div class=&quot;form-group&quot;&gt;
-                    &lt;label&gt;1. 워크숍 전반적인 만족도&lt;/label&gt;
-                    &lt;div class=&quot;radio-group&quot;&gt;
-                        &lt;label class=&quot;radio-item&quot;&gt;
-                            &lt;input type=&quot;radio&quot; name=&quot;satisfaction&quot; value=&quot;5&quot;&gt;
-                            매우 만족
-                        &lt;/label&gt;
-                        &lt;label class=&quot;radio-item&quot;&gt;
-                            &lt;input type=&quot;radio&quot; name=&quot;satisfaction&quot; value=&quot;4&quot;&gt;
-                            만족
-                        &lt;/label&gt;
-                        &lt;label class=&quot;radio-item&quot;&gt;
-                            &lt;input type=&quot;radio&quot; name=&quot;satisfaction&quot; value=&quot;3&quot;&gt;
-                            보통
-                        &lt;/label&gt;
-                        &lt;label class=&quot;radio-item&quot;&gt;
-                            &lt;input type=&quot;radio&quot; name=&quot;satisfaction&quot; value=&quot;2&quot;&gt;
-                            불만족
-                        &lt;/label&gt;
-                        &lt;label class=&quot;radio-item&quot;&gt;
-                            &lt;input type=&quot;radio&quot; name=&quot;satisfaction&quot; value=&quot;1&quot;&gt;
-                            매우 불만족
-                        &lt;/label&gt;
-                    &lt;/div&gt;
-                &lt;/div&gt;
-
-                &lt;div class=&quot;form-group&quot;&gt;
-                    &lt;label&gt;2. 가장 유용했던 프로그램&lt;/label&gt;
-                    &lt;div class=&quot;radio-group&quot;&gt;
-                        &lt;label class=&quot;radio-item&quot;&gt;
-                            &lt;input type=&quot;radio&quot; name=&quot;useful_program&quot; value=&quot;백제문화단지&quot;&gt;
-                            백제문화단지
-                        &lt;/label&gt;
-                        &lt;label class=&quot;radio-item&quot;&gt;
-                            &lt;input type=&quot;radio&quot; name=&quot;useful_program&quot; value=&quot;워크숍&quot;&gt;
-                            워크숍 세션
-                        &lt;/label&gt;
-                        &lt;label class=&quot;radio-item&quot;&gt;
-                            &lt;input type=&quot;radio&quot; name=&quot;useful_program&quot; value=&quot;레크레이션&quot;&gt;
-                            레크레이션
-                        &lt;/label&gt;
-                        &lt;label class=&quot;radio-item&quot;&gt;
-                            &lt;input type=&quot;radio&quot; name=&quot;useful_program&quot; value=&quot;기타&quot;&gt;
-                            기타
-                        &lt;/label&gt;
-                    &lt;/div&gt;
-                &lt;/div&gt;
-
-                &lt;div class=&quot;form-group&quot;&gt;
-                    &lt;label&gt;3. 개선사항 및 의견&lt;/label&gt;
-                    &lt;textarea id=&quot;feedback&quot; rows=&quot;4&quot; placeholder=&quot;자유롭게 작성해주세요&quot;&gt;&lt;/textarea&gt;
-                &lt;/div&gt;
-
-                &lt;button class=&quot;btn btn-primary&quot; id=&quot;submitSurveyBtn&quot;&gt;설문 제출&lt;/button&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-
-    &lt;!-- 관리자 모달 --&gt;
-    &lt;div id=&quot;adminModal&quot; class=&quot;modal&quot;&gt;
-        &lt;div class=&quot;modal-content&quot; style=&quot;max-width: 800px;&quot;&gt;
-            &lt;div class=&quot;modal-header&quot;&gt;
-                &lt;h2&gt;🛡️ 관리자 대시보드&lt;/h2&gt;
-                &lt;button class=&quot;close-btn&quot;&gt;&amp;times;&lt;/button&gt;
-            &lt;/div&gt;
-            &lt;div class=&quot;modal-body&quot;&gt;
-                &lt;div class=&quot;stats-grid&quot; style=&quot;grid-template-columns: repeat(4, 1fr);&quot;&gt;
-                    &lt;div class=&quot;stat-card&quot;&gt;
-                        &lt;div class=&quot;stat-number&quot; id=&quot;adminTotal&quot;&gt;0&lt;/div&gt;
-                        &lt;div class=&quot;stat-label&quot;&gt;총 참가자&lt;/div&gt;
-                    &lt;/div&gt;
-                    &lt;div class=&quot;stat-card&quot;&gt;
-                        &lt;div class=&quot;stat-number&quot; id=&quot;adminOnline&quot;&gt;0&lt;/div&gt;
-                        &lt;div class=&quot;stat-label&quot;&gt;현재 접속&lt;/div&gt;
-                    &lt;/div&gt;
-                    &lt;div class=&quot;stat-card&quot;&gt;
-                        &lt;div class=&quot;stat-number&quot; id=&quot;adminSurveys&quot;&gt;0&lt;/div&gt;
-                        &lt;div class=&quot;stat-label&quot;&gt;설문 완료&lt;/div&gt;
-                    &lt;/div&gt;
-                    &lt;div class=&quot;stat-card&quot;&gt;
-                        &lt;div class=&quot;stat-number&quot; id=&quot;adminLinks&quot;&gt;0&lt;/div&gt;
-                        &lt;div class=&quot;stat-label&quot;&gt;저장 링크&lt;/div&gt;
-                    &lt;/div&gt;
-                &lt;/div&gt;
-
-                &lt;h3 style=&quot;margin-top: 2rem;&quot;&gt;참가자 목록&lt;/h3&gt;
-                &lt;div id=&quot;participantsList&quot; style=&quot;max-height: 300px; overflow-y: auto;&quot;&gt;
-                    &lt;div class=&quot;loading&quot;&gt;데이터를 불러오는 중...&lt;/div&gt;
-                &lt;/div&gt;
-
-                &lt;h3 style=&quot;margin-top: 2rem;&quot;&gt;최근 활동 로그&lt;/h3&gt;
-                &lt;div id=&quot;activityLog&quot; style=&quot;max-height: 200px; overflow-y: auto; background: var(--surface-elevated); padding: 1rem; border-radius: 12px;&quot;&gt;
-                    &lt;div class=&quot;loading&quot;&gt;로그를 불러오는 중...&lt;/div&gt;
-                &lt;/div&gt;
-
-                &lt;div style=&quot;margin-top: 2rem; display: flex; gap: 1rem;&quot;&gt;
-                    &lt;button class=&quot;btn btn-primary&quot; onclick=&quot;exportData()&quot;&gt;📊 데이터 내보내기&lt;/button&gt;
-                    &lt;button class=&quot;btn btn-secondary&quot; onclick=&quot;refreshAdminData()&quot;&gt;🔄 새로고침&lt;/button&gt;
-                &lt;/div&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-        // 전역 변수
-        let currentUser = null;
-        let sessionId = null;
-        let workshopStartTime = null;
-        let timerInterval = null;
-
-        const API_URL = 'https://script.google.com/macros/s/AKfycbxP7oI1CUK7vvga2HJbUp6r_U5bOsFWwFzcIAhIrRjKfCbUf7Mwlu56Ayqa3EokUJXz/exec';
-
-        const TEMP_USER_DATA = {
-            &quot;남도현&quot;: { team:&quot;투어패스사업부&quot;, position:&quot;이사&quot; },
-            &quot;김수인&quot;: { team:&quot;투어패스사업부 영업 1팀&quot;, position:&quot;팀장&quot; },
-            &quot;고다현&quot;: { team:&quot;투어패스사업부 영업 1팀&quot;, position:&quot;사원&quot; },
-            &quot;심재희&quot;: { team:&quot;투어패스사업부 영업 1팀&quot;, position:&quot;매니저&quot; },
-            &quot;판티니안&quot;: { team:&quot;투어패스사업부 영업 1팀&quot;, position:&quot;매니저&quot; },
-            &quot;김현철&quot;: { team:&quot;투어패스사업부 영업 2팀&quot;, position:&quot;팀장&quot; },
-            &quot;이유진&quot;: { team:&quot;투어패스사업부 영업 2팀&quot;, position:&quot;사원&quot; },
-            &quot;정어진&quot;: { team:&quot;투어패스사업부 영업 2팀&quot;, position:&quot;사원&quot; },
-            &quot;장원준&quot;: { team:&quot;투어패스사업부 영업 2팀&quot;, position:&quot;사원&quot; },
-            &quot;김대진&quot;: { team:&quot;투어패스사업부 영업 2팀&quot;, position:&quot;팀장&quot; },
-            &quot;손현우&quot;: { team:&quot;투어패스사업부 영업 2팀&quot;, position:&quot;대리&quot; },
-            &quot;이주아&quot;: { team:&quot;투어패스사업부 영업 2팀&quot;, position:&quot;주임&quot; },
-            &quot;장은진&quot;: { team:&quot;투어패스사업부 영업 2팀&quot;, position:&quot;주임&quot; }
-        };
-
-        // API 요청 함수 - no-cors 제거, 실제 응답 처리
-        async function apiRequest(action, data = {}) {
-            try {
-                const response = await fetch(API_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'text/plain' // preflight 없이 JSON 문자열 전송
-                    },
-                    body: JSON.stringify({
-                        action: action,
-                        sessionId: sessionId,
-                        ...data
-                    })
-                });
-                
-                if (!response.ok) {
-                    return { success: false, error: `HTTP ${response.status}` };
-                }
-                
-                const result = await response.json();
-                return result;
-            } catch (error) {
-                console.error('API 오류:', error);
-                return { success: false, error: error.message };
-            }
-        }
-
-        // XSS 방지 유틸리티
-        function escapeHtml(s='') {
-            return String(s)
-                .replaceAll('&amp;','&amp;amp;')
-                .replaceAll('&lt;','&amp;lt;')
-                .replaceAll('&gt;','&amp;gt;')
-                .replaceAll('&quot;','&amp;quot;')
-                .replaceAll(&quot;'&quot;,'&amp;#39;');
-        }
-
-        function escapeAttr(s='') {
-            return escapeHtml(s).replaceAll(' ','%20');
-        }
-
-        // 로그인 - 응답 체크 추가
-        async function handleLogin() {
-            const userName = document.getElementById('userName').value;
-            const userMBTI = document.getElementById('userMBTI').value;
-
-            if (!userName || !userMBTI) {
-                showAlert('이름과 MBTI를 모두 선택해주세요', 'error');
-                return;
-            }
-
-            const loginBtn = document.getElementById('loginBtn');
-            loginBtn.disabled = true;
-            loginBtn.textContent = '로그인 중...';
-
-            try {
-                currentUser = userName;
-                const userInfo = TEMP_USER_DATA[userName];
-                
-                // 서버에 로그인 정보 전송
-                const res = await apiRequest('login', {
-                    userName: userName,
-                    mbti: userMBTI,
-                    team: userInfo.team,
-                    position: userInfo.position
-                });
-
-                if (!res.success) {
-                    throw new Error(res.error || '로그인 실패');
-                }
-
-                // 성공 시 세션 저장
-                sessionId = res.data?.sessionId || 'session_' + Date.now();
-                
-                // 로컬 스토리지 저장
-                localStorage.setItem('currentUser', userName);
-                localStorage.setItem('userMBTI', userMBTI);
-                localStorage.setItem('sessionId', sessionId);
-                
-                showMainScreen();
-                showAlert('환영합니다, ' + userName + '님!', 'success');
-                
-            } catch (error) {
-                console.error('로그인 오류:', error);
-                showAlert('로그인 실패: ' + error.message, 'error');
-            } finally {
-                loginBtn.disabled = false;
-                loginBtn.textContent = '로그인';
-            }
-        }
-
-        // 메인 화면 표시
-        function showMainScreen() {
-            document.getElementById('loginScreen').classList.add('hidden');
-            document.getElementById('mainScreen').classList.remove('hidden');
-            
-            const userInfo = TEMP_USER_DATA[currentUser];
-            document.getElementById('userNameDisplay').textContent = currentUser;
-            document.getElementById('userTeamDisplay').textContent = `${userInfo.team} | ${userInfo.position}`;
-            
-            // 관리자 확인 (김현철)
-            if (currentUser === '김현철') {
-                addAdminMenu();
-            }
-            
-            // 워크숍 타이머 시작
-            workshopStartTime = new Date('2025-01-17T15:00:00');
-            startTimer();
-        }
-
-        // 관리자 메뉴 추가
-        function addAdminMenu() {
-            const menuGrid = document.querySelector('.menu-grid');
-            
-            // 관리자 메뉴 아이템 추가
-            const adminMenu = document.createElement('div');
-            adminMenu.className = 'menu-item';
-            adminMenu.id = 'adminMenu';
-            adminMenu.style.background = 'linear-gradient(135deg, #f59e0b, #d97706)';
-            adminMenu.innerHTML = `
-                &lt;div class=&quot;menu-title&quot; style=&quot;color: white;&quot;&gt;관리자&lt;/div&gt;
-                &lt;div class=&quot;menu-desc&quot; style=&quot;color: white;&quot;&gt;전체 관리&lt;/div&gt;
-            `;
-            menuGrid.appendChild(adminMenu);
-            
-            // 관리자 배지 추가
-            const nameDisplay = document.getElementById('userNameDisplay');
-            nameDisplay.innerHTML += ' &lt;span style=&quot;background: var(--accent-warm); color: white; padding: 0.25rem 0.5rem; border-radius: 8px; font-size: 0.75rem; margin-left: 0.5rem;&quot;&gt;관리자&lt;/span&gt;';
-        }
-
-        // 타이머
-        function startTimer() {
-            const updateTimer = () =&gt; {
-                const now = new Date();
-                const end = new Date(workshopStartTime);
-                end.setHours(end.getHours() + 48);
-                
-                const remaining = end - now;
-                
-                if (remaining &lt;= 0) {
-                    document.getElementById('timerDisplay').textContent = '종료됨';
-                    clearInterval(timerInterval);
-                    return;
-                }
-                
-                const hours = Math.floor(remaining / (1000 * 60 * 60));
-                const minutes = Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((remaining % (1000 * 60)) / 1000);
-                
-                document.getElementById('timerDisplay').textContent = 
-                    `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-            };
-            
-            updateTimer();
-            timerInterval = setInterval(updateTimer, 1000);
-        }
-
-        // MBTI 통계 조회 - 서버 연동
-        async function loadMBTIStats() {
-            document.getElementById('mbtiModal').style.display = 'block';
-            
-            // 로딩 표시
-            document.getElementById('totalParticipants').textContent = '...';
-            document.getElementById('onlineCount').textContent = '...';
-            document.getElementById('mbtiDistribution').innerHTML = '&lt;div class=&quot;loading&quot;&gt;통계를 불러오는 중...&lt;/div&gt;';
-            
-            try {
-                const res = await apiRequest('getMBTIStats');
-                
-                if (!res.success) {
-                    showAlert('통계를 불러오지 못했습니다', 'error');
-                    return;
-                }
-                
-                // 통계 표시
-                document.getElementById('totalParticipants').textContent = res.data?.totalParticipants || 0;
-                document.getElementById('onlineCount').textContent = res.data?.onlineUsers || 0;
-                
-                // MBTI 분포 표시
-                const mbtiGrid = document.getElementById('mbtiDistribution');
-                mbtiGrid.innerHTML = '';
-                
-                const allMBTI = ['INTJ','INTP','ENTJ','ENTP','INFJ','INFP','ENFJ','ENFP',
-                                'ISTJ','ISFJ','ESTJ','ESFJ','ISTP','ISFP','ESTP','ESFP'];
-                
-                allMBTI.forEach(type =&gt; {
-                    const count = (res.data?.mbtiDistribution &amp;&amp; res.data.mbtiDistribution[type]) || 0;
-                    const item = document.createElement('div');
-                    item.className = 'mbti-item';
-                    if (count &gt; 0) {
-                        item.style.background = 'rgba(59, 130, 246, 0.1)';
-                        item.style.borderColor = 'var(--secondary-brand)';
-                    }
-                    item.innerHTML = `
-                        &lt;div class=&quot;mbti-type&quot;&gt;${type}&lt;/div&gt;
-                        &lt;div class=&quot;mbti-count&quot;&gt;${count}&lt;/div&gt;
-                    `;
-                    mbtiGrid.appendChild(item);
-                });
-                
-                // 팀 분포
-                document.getElementById('teamDistribution').innerHTML = 
-                    '&lt;p style=&quot;color:var(--text-muted); text-align: center;&quot;&gt;팀 분포는 추후 업데이트 예정&lt;/p&gt;';
-                    
-            } catch (error) {
-                console.error('MBTI 통계 조회 오류:', error);
-                showAlert('통계 조회 중 오류가 발생했습니다', 'error');
-            }
-        }
-
-        // 링크 저장 - 응답 체크 추가
-        async function saveLink() {
-            const title = document.getElementById('linkTitle').value;
-            const url = document.getElementById('linkUrl').value;
-            const category = document.getElementById('linkCategory').value;
-            const description = document.getElementById('linkDescription').value;
-
-            if (!title || !url) {
-                showAlert('제목과 URL을 입력해주세요', 'error');
-                return;
-            }
-
-            const saveBtn = document.getElementById('saveLinkBtn');
-            saveBtn.disabled = true;
-            saveBtn.textContent = '저장 중...';
-
-            try {
-                const res = await apiRequest('saveLink', {
-                    user: currentUser,
-                    title: title,
-                    url: url,
-                    category: category,
-                    description: description
-                });
-
-                if (res.success) {
-                    showAlert('링크가 저장되었습니다', 'success');
-                    
-                    // 입력 초기화
-                    document.getElementById('linkTitle').value = '';
-                    document.getElementById('linkUrl').value = '';
-                    document.getElementById('linkDescription').value = '';
-                    
-                    // 목록 새로고침
-                    loadLinks();
-                } else {
-                    showAlert('링크 저장 실패: ' + (res.error || ''), 'error');
-                }
-            } catch (error) {
-                console.error('링크 저장 오류:', error);
-                showAlert('링크 저장 중 오류가 발생했습니다', 'error');
-            } finally {
-                saveBtn.disabled = false;
-                saveBtn.textContent = '링크 저장';
-            }
-        }
-
-        // 링크 목록 로드 - 서버 기반
-        async function loadLinks() {
-            const linksList = document.getElementById('linksList');
-            linksList.innerHTML = '&lt;div class=&quot;loading&quot;&gt;불러오는 중...&lt;/div&gt;';
-            
-            try {
-                const res = await apiRequest('getLinks', { user: currentUser });
-                
-                if (!res.success) {
-                    linksList.innerHTML = '&lt;p style=&quot;text-align:center;color:var(--error);&quot;&gt;링크를 불러오지 못했습니다.&lt;/p&gt;';
-                    return;
-                }
-                
-                const links = res.data?.links || [];
-                
-                if (links.length === 0) {
-                    linksList.innerHTML = '&lt;p style=&quot;text-align:center;color:var(--text-muted);&quot;&gt;저장된 링크가 없습니다&lt;/p&gt;';
-                    return;
-                }
-                
-                linksList.innerHTML = links.map(link =&gt; `
-                    &lt;div class=&quot;card&quot; style=&quot;margin-bottom:1rem;&quot;&gt;
-                        &lt;strong&gt;${escapeHtml(link.title)}&lt;/strong&gt;&lt;br&gt;
-                        &lt;a href=&quot;${escapeAttr(link.url)}&quot; target=&quot;_blank&quot; style=&quot;color: var(--secondary-brand);&quot;&gt;${escapeHtml(link.url)}&lt;/a&gt;&lt;br&gt;
-                        &lt;small style=&quot;color: var(--text-secondary);&quot;&gt;${escapeHtml(link.category || '')}&lt;/small&gt;
-                        ${link.description ? `&lt;br&gt;&lt;small&gt;${escapeHtml(link.description)}&lt;/small&gt;` : ''}
-                    &lt;/div&gt;
-                `).join('');
-                
-            } catch (error) {
-                console.error('링크 로드 오류:', error);
-                linksList.innerHTML = '&lt;p style=&quot;text-align:center;color:var(--error);&quot;&gt;링크를 불러올 수 없습니다.&lt;/p&gt;';
-            }
-        }
-
-        // 설문 제출 - 응답 체크 추가
-        async function submitSurvey() {
-            const satisfaction = document.querySelector('input[name=&quot;satisfaction&quot;]:checked');
-            const useful_program = document.querySelector('input[name=&quot;useful_program&quot;]:checked');
-            const feedback = document.getElementById('feedback').value;
-
-            if (!satisfaction || !useful_program) {
-                showAlert('모든 필수 항목을 선택해주세요', 'error');
-                return;
-            }
-
-            const submitBtn = document.getElementById('submitSurveyBtn');
-            submitBtn.disabled = true;
-            submitBtn.textContent = '제출 중...';
-
-            try {
-                const res = await apiRequest('saveSurvey', {
-                    user: currentUser,
-                    satisfaction: satisfaction.value,
-                    useful_program: useful_program.value,
-                    feedback: feedback
-                });
-
-                if (res.success) {
-                    showAlert('설문이 제출되었습니다. 감사합니다!', 'success');
-                    document.getElementById('surveyModal').style.display = 'none';
-                    
-                    // 폼 초기화
-                    document.querySelectorAll('input[name=&quot;satisfaction&quot;]').forEach(r =&gt; r.checked = false);
-                    document.querySelectorAll('input[name=&quot;useful_program&quot;]').forEach(r =&gt; r.checked = false);
-                    document.getElementById('feedback').value = '';
-                } else {
-                    showAlert('설문 제출 실패: ' + (res.error || ''), 'error');
-                }
-            } catch (error) {
-                console.error('설문 제출 오류:', error);
-                showAlert('설문 제출 중 오류가 발생했습니다', 'error');
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.textContent = '설문 제출';
-            }
-        }
-
-        // 알림 표시
-        function showAlert(message, type) {
-            const alert = document.getElementById('alertMessage');
-            alert.className = `alert alert-${type}`;
-            alert.textContent = message;
-            alert.classList.remove('hidden');
-            
-            setTimeout(() =&gt; {
-                alert.classList.add('hidden');
-            }, 3000);
-        }
-
-        // 관리자 대시보드 열기
-        async function openAdminDashboard() {
-            document.getElementById('adminModal').style.display = 'block';
-            await loadAdminData();
-        }
-
-        // 관리자 데이터 로드
-        async function loadAdminData() {
-            try {
-                // 참가자 통계
-                const stats = await apiRequest('getMBTIStats');
-                document.getElementById('adminTotal').textContent = '13'; // 임시 데이터
-                document.getElementById('adminOnline').textContent = '1';
-                document.getElementById('adminSurveys').textContent = '0';
-                document.getElementById('adminLinks').textContent = '0';
-                
-                // 참가자 목록
-                const participantsList = document.getElementById('participantsList');
-                participantsList.innerHTML = `
-                    &lt;table style=&quot;width: 100%; border-collapse: collapse;&quot;&gt;
-                        &lt;thead&gt;
-                            &lt;tr style=&quot;background: var(--surface-elevated);&quot;&gt;
-                                &lt;th style=&quot;padding: 0.5rem; text-align: left;&quot;&gt;이름&lt;/th&gt;
-                                &lt;th style=&quot;padding: 0.5rem; text-align: left;&quot;&gt;팀&lt;/th&gt;
-                                &lt;th style=&quot;padding: 0.5rem; text-align: left;&quot;&gt;MBTI&lt;/th&gt;
-                                &lt;th style=&quot;padding: 0.5rem; text-align: left;&quot;&gt;상태&lt;/th&gt;
-                            &lt;/tr&gt;
-                        &lt;/thead&gt;
-                        &lt;tbody&gt;
-                            &lt;tr&gt;
-                                &lt;td style=&quot;padding: 0.5rem;&quot;&gt;${currentUser}&lt;/td&gt;
-                                &lt;td style=&quot;padding: 0.5rem;&quot;&gt;${TEMP_USER_DATA[currentUser].team}&lt;/td&gt;
-                                &lt;td style=&quot;padding: 0.5rem;&quot;&gt;${localStorage.getItem('userMBTI')}&lt;/td&gt;
-                                &lt;td style=&quot;padding: 0.5rem;&quot;&gt;&lt;span style=&quot;color: var(--success);&quot;&gt;●&lt;/span&gt; 온라인&lt;/td&gt;
-                            &lt;/tr&gt;
-                        &lt;/tbody&gt;
-                    &lt;/table&gt;
-                `;
-                
-                // 활동 로그
-                const activityLog = document.getElementById('activityLog');
-                const now = new Date().toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' });
-                activityLog.innerHTML = `
-                    &lt;div style=&quot;padding: 0.5rem 0; border-bottom: 1px solid #e2e8f0;&quot;&gt;
-                        &lt;span style=&quot;color: var(--text-muted); margin-right: 1rem;&quot;&gt;${now}&lt;/span&gt;
-                        &lt;strong&gt;${currentUser}&lt;/strong&gt; 님이 로그인했습니다
-                    &lt;/div&gt;
-                `;
-                
-            } catch (error) {
-                console.error('관리자 데이터 로드 오류:', error);
-            }
-        }
-
-        // 데이터 내보내기
-        function exportData() {
-            showAlert('데이터 내보내기 기능은 준비 중입니다', 'success');
-        }
-
-        // 관리자 데이터 새로고침
-        function refreshAdminData() {
-            loadAdminData();
-            showAlert('데이터를 새로고침했습니다', 'success');
-        }
-
-        // 엔터키로 로그인
-        function setupEnterKeyLogin() {
-            const inputs = document.querySelectorAll('#loginScreen select');
-            inputs.forEach(input =&gt; {
-                input.addEventListener('keypress', function(e) {
-                    if (e.key === 'Enter') {
-                        handleLogin();
-                    }
-                });
-            });
-        }
-
-        // 이벤트 리스너
-        document.addEventListener('DOMContentLoaded', function() {
-            // 엔터키 로그인 설정
-            setupEnterKeyLogin();
-            
-            // 로그인
-            document.getElementById('loginBtn').addEventListener('click', handleLogin);
-            
-            // 로그아웃
-            document.getElementById('logoutBtn').addEventListener('click', function() {
-                if (confirm('로그아웃하시겠습니까?')) {
-                    // 서버에 로그아웃 알림
-                    apiRequest('updateUserStatus', {
-                        userName: currentUser,
-                        status: 'offline'
-                    });
-                    
-                    localStorage.clear();
-                    location.reload();
-                }
-            });
-            
-            // 메뉴 클릭
-            document.getElementById('mbtiMenu').addEventListener('click', loadMBTIStats);
-            
-            document.getElementById('scheduleMenu').addEventListener('click', function() {
-                document.getElementById('scheduleModal').style.display = 'block';
-            });
-            
-            document.getElementById('linkMenu').addEventListener('click', function() {
-                document.getElementById('linkModal').style.display = 'block';
-                loadLinks();
-            });
-            
-            document.getElementById('surveyMenu').addEventListener('click', function() {
-                document.getElementById('surveyModal').style.display = 'block';
-            });
-            
-            // 관리자 메뉴 클릭 이벤트는 동적으로 추가
-            setTimeout(() =&gt; {
-                const adminMenu = document.getElementById('adminMenu');
-                if (adminMenu) {
-                    adminMenu.addEventListener('click', openAdminDashboard);
-                }
-            }, 100);
-            
-            // 링크 저장
-            document.getElementById('saveLinkBtn').addEventListener('click', saveLink);
-            
-            // 설문 제출
-            document.getElementById('submitSurveyBtn').addEventListener('click', submitSurvey);
-            
-            // 모달 닫기
-            document.querySelectorAll('.close-btn').forEach(btn =&gt; {
-                btn.addEventListener('click', function() {
-                    this.closest('.modal').style.display = 'none';
-                });
-            });
-            
-            // 모달 외부 클릭 시 닫기
-            window.addEventListener('click', function(event) {
-                if (event.target.classList.contains('modal')) {
-                    event.target.style.display = 'none';
-                }
-            });
-            
-            // 저장된 세션 복원
-            const savedUser = localStorage.getItem('currentUser');
-            if (savedUser) {
-                currentUser = savedUser;
-                sessionId = localStorage.getItem('sessionId');
-                showMainScreen();
-            }
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>투어패스사업부 2025 워크숍</title>
+  <style>
+    @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
+
+    :root {
+      --primary-brand: #1e40af;
+      --secondary-brand: #3b82f6;
+      --accent-warm: #f59e0b;
+      --accent-cool: #06b6d4;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #64748b;
+      --surface-primary: #ffffff;
+      --surface-secondary: #f8fafc;
+      --surface-elevated: #f1f5f9;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --error: #ef4444;
+      --gradient-brand: linear-gradient(135deg, var(--primary-brand), var(--secondary-brand));
+      --gradient-warm: linear-gradient(135deg, #fbbf24, #f59e0b);
+      --shadow-sm: 0 1px 2px 0 rgba(0,0,0,0.05);
+      --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1);
+      --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1);
+      --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.1);
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Pretendard',-apple-system,BlinkMacSystemFont,'Segoe UI','Malgun Gothic','맑은 고딕',sans-serif;background:var(--surface-secondary);color:var(--text-primary);line-height:1.7}
+    .container{max-width:428px;margin:0 auto;padding:1.5rem;min-height:100vh}
+    .header{text-align:center;margin-bottom:3rem;padding:3rem 0}
+    .header h1{font-size:2.25rem;font-weight:800;margin-bottom:.5rem}
+    .header p{font-size:1.25rem;color:var(--text-secondary)}
+    .card{background:var(--surface-primary);border-radius:24px;padding:2rem;margin-bottom:1.5rem;box-shadow:var(--shadow-md);border:1px solid rgba(59,130,246,.1)}
+    .form-group{margin-bottom:1.5rem}
+    label{display:block;font-weight:600;margin-bottom:.5rem;font-size:.875rem}
+    select,input,textarea{width:100%;padding:1rem 1.25rem;border:1.5px solid #e2e8f0;border-radius:16px;font-size:1rem;font-family:inherit}
+    select:focus,input:focus,textarea:focus{outline:none;border-color:var(--secondary-brand);box-shadow:0 0 0 3px rgba(59,130,246,.1)}
+    .btn{padding:1rem 1.5rem;border:none;border-radius:16px;font-size:1rem;font-weight:600;cursor:pointer;transition:.2s;width:100%}
+    .btn-primary{background:var(--gradient-brand);color:#fff}
+    .btn-primary:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}
+    .btn-secondary{background:var(--surface-elevated);color:var(--text-primary)}
+    .btn:disabled{opacity:.6;cursor:not-allowed}
+    .menu-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:2rem}
+    .menu-item{background:var(--surface-primary);border:1.5px solid rgba(59,130,246,.1);border-radius:20px;padding:1.5rem;text-align:center;cursor:pointer;transition:.3s;text-decoration:none;color:inherit}
+    .menu-item:hover{transform:translateY(-4px);box-shadow:var(--shadow-xl);border-color:var(--secondary-brand)}
+    .menu-title{font-weight:700;font-size:1.125rem;margin-bottom:.5rem}
+    .menu-desc{font-size:.875rem;color:var(--text-secondary)}
+    .timer-card{background:var(--gradient-brand);color:#fff;text-align:center}
+    .timer-display{font-size:3.5rem;font-weight:800}
+    .user-info{background:var(--gradient-surface);border:1.5px solid rgba(59,130,246,.1);padding:1.5rem;border-radius:20px;margin-bottom:1.5rem;text-align:center}
+    .alert{padding:1rem;border-radius:16px;margin-bottom:1.5rem;text-align:center;animation:slideIn .4s}
+    @keyframes slideIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
+    .alert-success{background:rgba(16,185,129,.1);color:#047857;border:1px solid rgba(16,185,129,.3)}
+    .alert-error{background:rgba(239,68,68,.1);color:#dc2626;border:1px solid rgba(239,68,68,.3)}
+    .modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);z-index:1000;overflow-y:auto}
+    .modal-content{background:#fff;margin:50px auto;padding:0;width:90%;max-width:600px;border-radius:24px;animation:modalSlideIn .3s}
+    @keyframes modalSlideIn{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:translateY(0)}}
+    .modal-header{padding:1.5rem;border-bottom:1px solid #e2e8f0;display:flex;justify-content:space-between;align-items:center}
+    .modal-header h2{margin:0;font-size:1.5rem}
+    .close-btn{background:none;border:none;font-size:1.5rem;cursor:pointer;color:var(--text-muted)}
+    .modal-body{padding:1.5rem}
+    .stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem}
+    .stat-card{background:var(--surface-elevated);padding:1.5rem;border-radius:16px;text-align:center}
+    .stat-number{font-size:2rem;font-weight:800;color:var(--primary-brand)}
+    .stat-label{font-size:.875rem;color:var(--text-secondary)}
+    .mbti-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.75rem}
+    .mbti-item{background:var(--surface-elevated);padding:1rem;border-radius:12px;text-align:center;border:1px solid #e2e8f0}
+    .mbti-type{font-weight:700;color:var(--primary-brand);font-size:.875rem;margin-bottom:.25rem}
+    .mbti-count{font-size:1.5rem;font-weight:800}
+    .schedule-item{background:#fff;padding:1.25rem;border-radius:16px;margin-bottom:1rem;border-left:4px solid var(--secondary-brand);border:1px solid #e2e8f0}
+    .schedule-time{font-weight:700;color:var(--primary-brand);font-size:.875rem;margin-bottom:.5rem}
+    .schedule-title{font-weight:600;margin-bottom:.25rem}
+    .schedule-desc{font-size:.875rem;color:var(--text-secondary)}
+    .radio-group{display:flex;flex-direction:column;gap:.75rem}
+    .radio-item{display:flex;align-items:center;padding:.75rem;background:var(--surface-elevated);border-radius:12px;cursor:pointer;border:1px solid #e2e8f0}
+    .radio-item:hover{background:#e2e8f0}
+    .radio-item input[type="radio"]{margin-right:.75rem}
+    .loading{text-align:center;padding:3rem;color:var(--text-muted)}
+    .hidden{display:none}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>투어패스사업부</h1>
+      <p>2025 워크숍</p>
+    </div>
+
+    <!-- 로그인 -->
+    <div id="loginScreen" class="card">
+      <div class="form-group">
+        <label for="userName">이름을 선택하세요</label>
+        <select id="userName" required>
+          <option value="">이름을 선택해주세요</option>
+          <option value="남도현">남도현</option>
+          <option value="김수인">김수인</option>
+          <option value="고다현">고다현</option>
+          <option value="심재희">심재희</option>
+          <option value="판티니안">판티니안</option>
+          <option value="김현철">김현철</option>
+          <option value="이유진">이유진</option>
+          <option value="정어진">정어진</option>
+          <option value="장원준">장원준</option>
+          <option value="김대진">김대진</option>
+          <option value="손현우">손현우</option>
+          <option value="이주아">이주아</option>
+          <option value="장은진">장은진</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="userMBTI">MBTI를 선택하세요</label>
+        <select id="userMBTI" required>
+          <option value="">MBTI를 선택해주세요</option>
+          <option>INTJ</option><option>INTP</option><option>ENTJ</option><option>ENTP</option>
+          <option>INFJ</option><option>INFP</option><option>ENFJ</option><option>ENFP</option>
+          <option>ISTJ</option><option>ISFJ</option><option>ESTJ</option><option>ESFJ</option>
+          <option>ISTP</option><option>ISFP</option><option>ESTP</option><option>ESFP</option>
+        </select>
+      </div>
+      <button class="btn btn-primary" id="loginBtn">로그인</button>
+    </div>
+
+    <!-- 메인 -->
+    <div id="mainScreen" class="hidden">
+      <div class="user-info">
+        <h3 id="userNameDisplay"></h3>
+        <p id="userTeamDisplay"></p>
+        <button class="btn btn-secondary" id="logoutBtn" style="margin-top:1rem;">로그아웃</button>
+      </div>
+
+      <div id="timerCard" class="card timer-card">
+        <div style="font-size:1.125rem;margin-bottom:1rem;opacity:.9;">워크숍 남은 시간</div>
+        <div id="timerDisplay" class="timer-display">48:00:00</div>
+      </div>
+
+      <div class="menu-grid">
+        <div class="menu-item" id="mbtiMenu">
+          <div class="menu-title">참가자 현황</div>
+          <div class="menu-desc">MBTI 분포</div>
+        </div>
+        <div class="menu-item" id="scheduleMenu">
+          <div class="menu-title">워크샵 일정</div>
+          <div class="menu-desc">프로그램</div>
+        </div>
+        <div class="menu-item" id="linkMenu">
+          <div class="menu-title">링크 보관함</div>
+          <div class="menu-desc">자료 저장</div>
+        </div>
+        <div class="menu-item" id="surveyMenu">
+          <div class="menu-title">설문조사</div>
+          <div class="menu-desc">만족도</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 알림 -->
+    <div id="alertMessage" class="hidden"></div>
+  </div>
+
+  <!-- MBTI 모달 -->
+  <div id="mbtiModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>참가자 현황</h2>
+        <button class="close-btn" data-close="mbtiModal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-number" id="totalParticipants">0</div>
+            <div class="stat-label">총 참가자</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number" id="onlineCount">0</div>
+            <div class="stat-label">현재 접속</div>
+          </div>
+        </div>
+        <h3>MBTI 분포</h3>
+        <div class="mbti-grid" id="mbtiDistribution"></div>
+        <h3 style="margin-top:2rem;">팀별 분포</h3>
+        <div id="teamDistribution"><p style="color:var(--text-muted);">팀 분포는 추후 업데이트 예정</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 일정 모달 -->
+  <div id="scheduleModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>워크숍 일정</h2>
+        <button class="close-btn" data-close="scheduleModal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <h3>1일차</h3>
+        <div class="schedule-item"><div class="schedule-time">14:50</div><div class="schedule-title">로비 집합</div><div class="schedule-desc">부여롯데리조트</div></div>
+        <div class="schedule-item"><div class="schedule-time">15:30</div><div class="schedule-title">체크인 및 백제문화단지</div><div class="schedule-desc">관광 및 체험</div></div>
+        <div class="schedule-item"><div class="schedule-time">18:30</div><div class="schedule-title">저녁식사</div><div class="schedule-desc">서동한우 구양점</div></div>
+        <div class="schedule-item"><div class="schedule-time">21:00</div><div class="schedule-title">회식 및 레크레이션</div><div class="schedule-desc">부여롯데리조트</div></div>
+        <h3 style="margin-top:2rem;">2일차</h3>
+        <div class="schedule-item"><div class="schedule-time">11:00</div><div class="schedule-title">아침겸 점심</div><div class="schedule-desc">장원막국수</div></div>
+        <div class="schedule-item"><div class="schedule-time">12:30</div><div class="schedule-title">워크숍</div><div class="schedule-desc">사비123창작센터</div></div>
+        <div class="schedule-item"><div class="schedule-time">14:10</div><div class="schedule-title">귀가</div><div class="schedule-desc">워크숍 종료</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 링크 모달 -->
+  <div id="linkModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>링크 보관함</h2>
+        <button class="close-btn" data-close="linkModal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="card">
+          <h3>새 링크 추가</h3>
+          <div class="form-group"><input type="text" id="linkTitle" placeholder="제목"></div>
+          <div class="form-group"><input type="url" id="linkUrl" placeholder="URL (https://...)"></div>
+          <div class="form-group">
+            <select id="linkCategory">
+              <option>워크숍 자료</option><option>업무 도구</option>
+              <option>참고 자료</option><option>기타</option>
+            </select>
+          </div>
+          <div class="form-group"><textarea id="linkDescription" rows="3" placeholder="설명 (선택)"></textarea></div>
+          <button class="btn btn-primary" id="saveLinkBtn">링크 저장</button>
+        </div>
+
+        <h3 style="margin-top:2rem;">저장된 링크</h3>
+        <div id="linksList"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 설문 모달 -->
+  <div id="surveyModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>만족도 설문조사</h2>
+        <button class="close-btn" data-close="surveyModal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>1. 워크숍 전반적인 만족도</label>
+          <div class="radio-group">
+            <label class="radio-item"><input type="radio" name="satisfaction" value="5">매우 만족</label>
+            <label class="radio-item"><input type="radio" name="satisfaction" value="4">만족</label>
+            <label class="radio-item"><input type="radio" name="satisfaction" value="3">보통</label>
+            <label class="radio-item"><input type="radio" name="satisfaction" value="2">불만족</label>
+            <label class="radio-item"><input type="radio" name="satisfaction" value="1">매우 불만족</label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>2. 가장 유용했던 프로그램</label>
+          <div class="radio-group">
+            <label class="radio-item"><input type="radio" name="useful_program" value="백제문화단지">백제문화단지</label>
+            <label class="radio-item"><input type="radio" name="useful_program" value="워크숍">워크숍 세션</label>
+            <label class="radio-item"><input type="radio" name="useful_program" value="레크레이션">레크레이션</label>
+            <label class="radio-item"><input type="radio" name="useful_program" value="기타">기타</label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>3. 개선사항 및 의견</label>
+          <textarea id="feedback" rows="4" placeholder="자유롭게 작성해주세요"></textarea>
+        </div>
+        <button class="btn btn-primary" id="submitSurveyBtn">설문 제출</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 관리자 모달 -->
+  <div id="adminModal" class="modal">
+    <div class="modal-content" style="max-width:800px;">
+      <div class="modal-header">
+        <h2>🛡️ 관리자 대시보드</h2>
+        <button class="close-btn" data-close="adminModal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="stats-grid" style="grid-template-columns:repeat(4,1fr);">
+          <div class="stat-card"><div class="stat-number" id="adminTotal">0</div><div class="stat-label">총 참가자</div></div>
+          <div class="stat-card"><div class="stat-number" id="adminOnline">0</div><div class="stat-label">현재 접속</div></div>
+          <div class="stat-card"><div class="stat-number" id="adminSurveys">0</div><div class="stat-label">설문 완료</div></div>
+          <div class="stat-card"><div class="stat-number" id="adminLinks">0</div><div class="stat-label">저장 링크</div></div>
+        </div>
+        <h3 style="margin-top:2rem;">참가자 목록</h3>
+        <div id="participantsList" style="max-height:300px;overflow-y:auto;">
+          <div class="loading">데이터를 불러오는 중...</div>
+        </div>
+        <h3 style="margin-top:2rem;">최근 활동 로그</h3>
+        <div id="activityLog" style="max-height:200px;overflow-y:auto;background:var(--surface-elevated);padding:1rem;border-radius:12px;">
+          <div class="loading">로그를 불러오는 중...</div>
+        </div>
+        <div style="margin-top:2rem;display:flex;gap:1rem;">
+          <button class="btn btn-primary" id="exportBtn">📊 데이터 내보내기</button>
+          <button class="btn btn-secondary" id="refreshBtn">🔄 새로고침</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /***** 환경설정: 배포한 웹 앱 URL을 넣으세요 *****/
+    const API_URL = '<<여기에_웹앱_배포_URL_붙여넣기>>';
+
+    /***** 전역 상태 *****/
+    let currentUser = null;
+    let sessionId = null;
+    let workshopStartTime = null;
+    let timerInterval = null;
+
+    const TEMP_USER_DATA = {
+      "남도현": { team:"투어패스사업부", position:"이사" },
+      "김수인": { team:"투어패스사업부 영업 1팀", position:"팀장" },
+      "고다현": { team:"투어패스사업부 영업 1팀", position:"사원" },
+      "심재희": { team:"투어패스사업부 영업 1팀", position:"매니저" },
+      "판티니안": { team:"투어패스사업부 영업 1팀", position:"매니저" },
+      "김현철": { team:"투어패스사업부 영업 2팀", position:"팀장" },
+      "이유진": { team:"투어패스사업부 영업 2팀", position:"사원" },
+      "정어진": { team:"투어패스사업부 영업 2팀", position:"사원" },
+      "장원준": { team:"투어패스사업부 영업 2팀", position:"사원" },
+      "김대진": { team:"투어패스사업부 영업 2팀", position:"팀장" },
+      "손현우": { team:"투어패스사업부 영업 2팀", position:"대리" },
+      "이주아": { team:"투어패스사업부 영업 2팀", position:"주임" },
+      "장은진": { team:"투어패스사업부 영업 2팀", position:"주임" }
+    };
+
+    /***** 공통 유틸 *****/
+    function escapeHtml(s=''){return String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#39;')}
+    function escapeAttr(s=''){return escapeHtml(s).replaceAll(' ','%20')}
+
+    function showAlert(message, type) {
+      const alert = document.getElementById('alertMessage');
+      alert.className = `alert alert-${type}`;
+      alert.textContent = message;
+      alert.classList.remove('hidden');
+      setTimeout(() => alert.classList.add('hidden'), 3000);
+    }
+
+    /***** API 요청 (CORS 대응) *****/
+    async function apiRequest(action, data = {}) {
+      try {
+        const response = await fetch(API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain' }, // preflight 회피
+          body: JSON.stringify({ action, sessionId, ...data })
         });
-    &lt;/script&gt;
-&lt;/body&gt;
-&lt;/html&gt;
+        if (!response.ok) return { success: false, error: `HTTP ${response.status}` };
+        const result = await response.json();
+        return result;
+      } catch (error) {
+        console.error('API 오류:', error);
+        return { success: false, error: error.message };
+      }
+    }
+
+    /***** 로그인 *****/
+    async function handleLogin() {
+      const userName = document.getElementById('userName').value;
+      const userMBTI = document.getElementById('userMBTI').value;
+      if (!userName || !userMBTI) {
+        showAlert('이름과 MBTI를 모두 선택해주세요', 'error');
+        return;
+      }
+      currentUser = userName;
+      sessionId = 'session_' + Date.now();
+      const userInfo = TEMP_USER_DATA[userName];
+
+      const res = await apiRequest('login', {
+        userName, mbti: userMBTI, team: userInfo.team, position: userInfo.position
+      });
+      if (!res.success) {
+        showAlert('로그인 실패: ' + (res.error || ''), 'error');
+        return;
+      }
+
+      localStorage.setItem('currentUser', userName);
+      localStorage.setItem('userMBTI', userMBTI);
+      localStorage.setItem('sessionId', sessionId);
+
+      showMainScreen();
+      showAlert('환영합니다, ' + userName + '님!', 'success');
+    }
+
+    function showMainScreen() {
+      document.getElementById('loginScreen').classList.add('hidden');
+      document.getElementById('mainScreen').classList.remove('hidden');
+
+      const userInfo = TEMP_USER_DATA[currentUser];
+      document.getElementById('userNameDisplay').innerHTML = escapeHtml(currentUser);
+      document.getElementById('userTeamDisplay').textContent = `${userInfo.team} | ${userInfo.position}`;
+
+      // 관리자 배지 + 메뉴
+      if (currentUser === '김현철') addAdminMenu();
+
+      workshopStartTime = new Date('2025-01-17T15:00:00');
+      startTimer();
+    }
+
+    function addAdminMenu() {
+      const menuGrid = document.querySelector('.menu-grid');
+      if (document.getElementById('adminMenu')) return;
+      const adminMenu = document.createElement('div');
+      adminMenu.className = 'menu-item';
+      adminMenu.id = 'adminMenu';
+      adminMenu.style.background = 'linear-gradient(135deg, #f59e0b, #d97706)';
+      adminMenu.innerHTML = `<div class="menu-title" style="color:#fff;">관리자</div><div class="menu-desc" style="color:#fff;">전체 관리</div>`;
+      menuGrid.appendChild(adminMenu);
+
+      const nameDisplay = document.getElementById('userNameDisplay');
+      nameDisplay.innerHTML += ' <span style="background: var(--accent-warm); color: white; padding: 0.25rem 0.5rem; border-radius: 8px; font-size: 0.75rem; margin-left: 0.5rem;">관리자</span>';
+
+      adminMenu.addEventListener('click', openAdminDashboard);
+    }
+
+    /***** 타이머 *****/
+    function startTimer() {
+      const updateTimer = () => {
+        const now = new Date();
+        const end = new Date(workshopStartTime);
+        end.setHours(end.getHours() + 48);
+        const remaining = end - now;
+        const display = document.getElementById('timerDisplay');
+
+        if (remaining <= 0) {
+          display.textContent = '종료됨';
+          clearInterval(timerInterval);
+          return;
+        }
+        const hours = Math.floor(remaining / (1000*60*60));
+        const minutes = Math.floor((remaining % (1000*60*60)) / (1000*60));
+        const seconds = Math.floor((remaining % (1000*60)) / 1000);
+        display.textContent =
+          `${String(hours).padStart(2,'0')}:${String(minutes).padStart(2,'0')}:${String(seconds).padStart(2,'0')}`;
+      };
+      updateTimer();
+      timerInterval = setInterval(updateTimer, 1000);
+    }
+
+    /***** MBTI 통계 *****/
+    async function loadMBTIStats() {
+      document.getElementById('mbtiModal').style.display = 'block';
+      const res = await apiRequest('getMBTIStats');
+      if (!res.success) {
+        showAlert('통계를 불러오지 못했습니다', 'error');
+        return;
+      }
+      document.getElementById('totalParticipants').textContent = res.totalParticipants || 0;
+      document.getElementById('onlineCount').textContent = res.onlineUsers || 0;
+
+      const mbtiGrid = document.getElementById('mbtiDistribution');
+      mbtiGrid.innerHTML = '';
+      const allMBTI = ['INTJ','INTP','ENTJ','ENTP','INFJ','INFP','ENFJ','ENFP','ISTJ','ISFJ','ESTJ','ESFJ','ISTP','ISFP','ESTP','ESFP'];
+      allMBTI.forEach(type => {
+        const count = (res.mbtiDistribution && res.mbtiDistribution[type]) || 0;
+        const item = document.createElement('div');
+        item.className = 'mbti-item';
+        if (count > 0) { item.style.background = 'rgba(59,130,246,.1)'; item.style.borderColor = 'var(--secondary-brand)'; }
+        item.innerHTML = `<div class="mbti-type">${type}</div><div class="mbti-count">${count}</div>`;
+        mbtiGrid.appendChild(item);
+      });
+    }
+
+    /***** 링크 저장/조회 *****/
+    async function saveLink() {
+      const title = document.getElementById('linkTitle').value.trim();
+      const url = document.getElementById('linkUrl').value.trim();
+      const category = document.getElementById('linkCategory').value;
+      const description = document.getElementById('linkDescription').value.trim();
+
+      if (!title || !url) {
+        showAlert('제목과 URL을 입력해주세요', 'error');
+        return;
+      }
+      const res = await apiRequest('saveLink', { user: currentUser, title, url, category, description });
+      if (!res.success) {
+        showAlert('링크 저장 실패: ' + (res.error || ''), 'error');
+        return;
+      }
+      showAlert('링크가 저장되었습니다', 'success');
+      document.getElementById('linkTitle').value = '';
+      document.getElementById('linkUrl').value = '';
+      document.getElementById('linkDescription').value = '';
+      loadLinks();
+    }
+
+    async function loadLinks() {
+      const linksList = document.getElementById('linksList');
+      linksList.innerHTML = '<div class="loading">불러오는 중...</div>';
+      const res = await apiRequest('getLinks', { user: currentUser });
+      if (!res.success) {
+        linksList.innerHTML = '<p style="text-align:center;color:var(--error);">링크를 불러오지 못했습니다.</p>';
+        return;
+      }
+      const links = res.items || [];
+      if (links.length === 0) {
+        linksList.innerHTML = '<p style="text-align:center;color:var(--text-muted);">저장된 링크가 없습니다</p>';
+        return;
+      }
+      linksList.innerHTML = links.map(link => `
+        <div class="card" style="margin-bottom:1rem;">
+          <strong>${escapeHtml(link.title)}</strong><br>
+          <a href="${escapeAttr(link.url)}" target="_blank" style="color: var(--secondary-brand);">${escapeHtml(link.url)}</a><br>
+          <small style="color: var(--text-secondary);">${escapeHtml(link.category || '')}</small>
+          ${link.description ? `<br><small>${escapeHtml(link.description)}</small>` : ''}
+        </div>
+      `).join('');
+    }
+
+    /***** 설문 *****/
+    async function submitSurvey() {
+      const satisfaction = document.querySelector('input[name="satisfaction"]:checked');
+      const useful_program = document.querySelector('input[name="useful_program"]:checked');
+      const feedback = document.getElementById('feedback').value;
+      if (!satisfaction || !useful_program) {
+        showAlert('모든 필수 항목을 선택해주세요', 'error');
+        return;
+      }
+      const res = await apiRequest('saveSurvey', {
+        user: currentUser,
+        satisfaction: satisfaction.value,
+        useful_program: useful_program.value,
+        feedback
+      });
+      if (!res.success) {
+        showAlert('설문 제출 실패: ' + (res.error || ''), 'error');
+        return;
+      }
+      showAlert('설문이 제출되었습니다. 감사합니다!', 'success');
+      document.getElementById('surveyModal').style.display = 'none';
+    }
+
+    /***** 관리자 *****/
+    async function openAdminDashboard() {
+      document.getElementById('adminModal').style.display = 'block';
+      await loadAdminData();
+    }
+
+    async function loadAdminData() {
+      // 간단 집계: 서버 통계 + 현재 사용자 표기
+      const stats = await apiRequest('getMBTIStats');
+      document.getElementById('adminTotal').textContent = stats.success ? (stats.totalParticipants||0) : '0';
+      document.getElementById('adminOnline').textContent = stats.success ? (stats.onlineUsers||0) : '0';
+
+      // 설문/링크 수는 간단 표시(필요시 별도 API 확장)
+      document.getElementById('adminSurveys').textContent = '—';
+      document.getElementById('adminLinks').textContent = '—';
+
+      const participantsList = document.getElementById('participantsList');
+      participantsList.innerHTML = `
+        <table style="width:100%;border-collapse:collapse;">
+          <thead>
+            <tr style="background:var(--surface-elevated);">
+              <th style="padding:.5rem;text-align:left;">이름</th>
+              <th style="padding:.5rem;text-align:left;">팀</th>
+              <th style="padding:.5rem;text-align:left;">MBTI</th>
+              <th style="padding:.5rem;text-align:left;">상태</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="padding:.5rem;">${escapeHtml(currentUser)}</td>
+              <td style="padding:.5rem;">${escapeHtml(TEMP_USER_DATA[currentUser].team)}</td>
+              <td style="padding:.5rem;">${escapeHtml(localStorage.getItem('userMBTI')||'')}</td>
+              <td style="padding:.5rem;"><span style="color: var(--success);">●</span> 온라인</td>
+            </tr>
+          </tbody>
+        </table>
+      `;
+
+      const activityLog = document.getElementById('activityLog');
+      const now = new Date().toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' });
+      activityLog.innerHTML = `
+        <div style="padding:.5rem 0;border-bottom:1px solid #e2e8f0;">
+          <span style="color:var(--text-muted);margin-right:1rem;">${now}</span>
+          <strong>${escapeHtml(currentUser)}</strong> 님이 로그인했습니다
+        </div>
+      `;
+    }
+
+    function exportData() { showAlert('데이터 내보내기 기능은 준비 중입니다', 'success'); }
+    function refreshAdminData() { loadAdminData(); showAlert('데이터를 새로고침했습니다', 'success'); }
+
+    /***** 이벤트 바인딩 *****/
+    function setupEnterKeyLogin() {
+      const selects = document.querySelectorAll('#loginScreen select');
+      selects.forEach(el => el.addEventListener('keypress', e => { if (e.key === 'Enter') handleLogin(); }));
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      setupEnterKeyLogin();
+      document.getElementById('loginBtn').addEventListener('click', handleLogin);
+      document.getElementById('logoutBtn').addEventListener('click', async () => {
+        if (!currentUser) return location.reload();
+        if (confirm('로그아웃하시겠습니까?')) {
+          await apiRequest('updateUserStatus', { userName: currentUser, status: 'offline' });
+          localStorage.clear();
+          location.reload();
+        }
+      });
+      document.getElementById('mbtiMenu').addEventListener('click', loadMBTIStats);
+      document.getElementById('scheduleMenu').addEventListener('click', () => { document.getElementById('scheduleModal').style.display = 'block'; });
+      document.getElementById('linkMenu').addEventListener('click', () => { document.getElementById('linkModal').style.display = 'block'; loadLinks(); });
+      document.getElementById('surveyMenu').addEventListener('click', () => { document.getElementById('surveyModal').style.display = 'block'; });
+      document.getElementById('saveLinkBtn').addEventListener('click', saveLink);
+      document.getElementById('submitSurveyBtn').addEventListener('click', submitSurvey);
+      document.getElementById('exportBtn')?.addEventListener('click', exportData);
+      document.getElementById('refreshBtn')?.addEventListener('click', refreshAdminData);
+
+      document.querySelectorAll('.close-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const targetId = this.getAttribute('data-close');
+          if (targetId) document.getElementById(targetId).style.display = 'none';
+          else this.closest('.modal').style.display = 'none';
+        });
+      });
+      window.addEventListener('click', e => {
+        if (e.target.classList && e.target.classList.contains('modal')) e.target.style.display = 'none';
+      });
+
+      // 세션 복원
+      const savedUser = localStorage.getItem('currentUser');
+      if (savedUser) {
+        currentUser = savedUser;
+        sessionId = localStorage.getItem('sessionId');
+        document.getElementById('mainScreen').classList.remove('hidden');
+        document.getElementById('loginScreen').classList.add('hidden');
+        const userInfo = TEMP_USER_DATA[currentUser];
+        document.getElementById('userNameDisplay').textContent = currentUser;
+        document.getElementById('userTeamDisplay').textContent = `${userInfo.team} | ${userInfo.position}`;
+        if (currentUser === '김현철') addAdminMenu();
+        workshopStartTime = new Date('2025-01-17T15:00:00');
+        startTimer();
+      }
+    });
+  </script>
+</body>
+</html>
