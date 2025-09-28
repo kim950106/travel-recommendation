@@ -98,6 +98,26 @@
     .ox-btn{flex:1;border:1.5px solid #e2e8f0;border-radius:14px;padding:0.9rem 1rem;text-align:center;font-weight:800;cursor:pointer}
     .ox-btn:hover{box-shadow:0 0 0 3px rgba(59,130,246,.12);border-color:var(--secondary-brand)}
     .result-badge{display:inline-block;padding:.4rem .7rem;border-radius:999px;background:rgba(59,130,246,.12);color:#1e40af;font-weight:900;font-size:.85rem}
+    /* [NEW] Kawaii result styles */
+.kawaii-card{position:relative;background:linear-gradient(180deg,#fff 0%,#f8fbff 100%);border:1.5px solid #e6eeff;border-radius:22px;padding:1.1rem;box-shadow:0 6px 20px rgba(59,130,246,.08)}
+.k-badge{display:inline-block;background:#eef4ff;border:1px dashed #93c5fd;color:#1e40af;border-radius:999px;padding:.35rem .8rem;font-weight:900;font-size:.85rem}
+.k-head{display:flex;gap:.9rem;align-items:center;justify-content:center;margin:.3rem 0 .2rem}
+.k-emoji{font-size:2.2rem;filter:drop-shadow(0 2px 0 rgba(0,0,0,.05))}
+.k-title{font-weight:900;font-size:1.1rem}
+.k-desc{color:var(--text-secondary);text-align:center}
+.k-stickers{display:flex;gap:.4rem;justify-content:center;margin-top:.35rem;font-size:1.1rem}
+.k-tags{display:flex;flex-wrap:wrap;gap:.4rem;justify-content:center;margin:.65rem 0 0}
+.k-tag{background:#fff;border:1px solid #e9eef9;border-radius:999px;padding:.35rem .6rem;font-size:.8rem}
+.k-bars{margin-top:.8rem;display:grid;gap:.45rem}
+.k-bar{background:#eff6ff;border:1px solid #e5edff;border-radius:12px;overflow:hidden;height:8px}
+.k-bar>span{display:block;height:100%;background:linear-gradient(90deg,#93c5fd,#60a5fa)}
+.k-actions{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-top:.9rem}
+.k-tip{font-size:.85rem;color:#6b7280;text-align:center;margin-top:.35rem}
+
+/* confetti */
+#confettiCanvas{position:fixed;inset:0;pointer-events:none;z-index:3000;opacity:0;transition:opacity .25s}
+#confettiCanvas.on{opacity:1}
+
   </style>
 </head>
 <body>
@@ -371,7 +391,7 @@
   <script>
     /***** 설정 *****/
     const API_URL = 'https://script.google.com/macros/s/AKfycbxP7oI1CUK7vvga2HJbUp6r_U5bOsFWwFzcIAhIrRjKfCbUf7Mwlu56Ayqa3EokUJXz/exec';
-    const RELATION_URL = '<<MBTI_관계도_URL(추후_교체)>>';
+    const RELATION_URL = 'https://kim950106.github.io/tour/';
     const AI_CHATBOT_URL = 'https://chatgpt.com/g/g-689acc0b7bd08191bb31112e0a19cffc-tueopaeseu-saeobjeanseo-ai-eosiseunteu';
 
     /***** 상태 *****/
