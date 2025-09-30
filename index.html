@@ -49,10 +49,10 @@
     .btn-secondary{background:var(--surface-elevated);color:var(--text-primary)}
     .btn-link{background:#fff;border:1px solid #e2e8f0}
     .menu-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1rem}
-    .menu-item{background:var(--surface-primary);border:1.5px solid rgba(59,130,246,.08);border-radius:20px;padding:1.25rem;text-align:center;cursor:pointer;transition:.3s;text-decoration:none;color:inherit}
+    .menu-item{background:var(--surface-primary);border:1.5px solid rgba(59,130,246,.08);border-radius:20px;padding:1.25rem;text-align:center;cursor:pointer;transition:.3s;text-decoration:none;color:inherit;position:relative}
     .menu-item:hover{transform:translateY(-3px);box-shadow:var(--shadow-xl);border-color:var(--secondary-brand)}
     .menu-title{font-weight:800;font-size:1.05rem;margin-bottom:.35rem;display:flex;gap:.4rem;justify-content:center;align-items:center}
-    .menu-desc{font-size:.85rem;color:var(--text-secondary)}
+    .menu-desc{font-size:.85rem;color:var(--text-secondary);min-height:1.4em}
     .timer-card{background:var(--gradient-brand);color:#fff;text-align:center}
     .timer-display{font-size:3rem;font-weight:900}
     .user-info{border:1.5px solid rgba(59,130,246,.08);padding:1.25rem;border-radius:20px;margin-bottom:1rem;text-align:center}
@@ -172,7 +172,7 @@
         </div>
       </div>
 
-      <div id="timerCard" class="card timer-card">
+      <div class="card timer-card">
         <div style="font-size:1.05rem;margin-bottom:.6rem;opacity:.9;">워크숍 남은 시간</div>
         <div id="timerDisplay" class="timer-display">48:00:00</div>
       </div>
@@ -188,9 +188,10 @@
           <div class="menu-desc">프로그램</div>
         </div>
 
-        <div class="menu-item" id="linkMenu">
-          <div class="menu-title">📎 링크 보관함</div>
-          <div class="menu-desc">자료 저장</div>
+        <!-- 명칭 변경: 투어패스 보관함 -->
+        <div class="menu-item" id="vaultMenu" tabindex="0">
+          <div class="menu-title">📎 투어패스 보관함</div>
+          <div class="menu-desc" id="vaultDesc">티켓 선택 후 바로 이동</div>
         </div>
 
         <div class="menu-item" id="surveyMenu">
@@ -201,11 +202,6 @@
         <div class="menu-item" id="psyMenu">
           <div class="menu-title">🎯 심리테스트</div>
           <div class="menu-desc">O / X 10문항</div>
-        </div>
-
-        <div class="menu-item" id="fortuneMenu">
-          <div class="menu-title">🔮 오늘의 운세</div>
-          <div class="menu-desc">럭키 정보</div>
         </div>
 
         <a class="menu-item" id="aiMenu" href="#" target="_blank" rel="noopener">
@@ -255,35 +251,30 @@
     </div>
   </div>
 
-  <!-- 일정 모달 -->
-  <div id="scheduleModal" class="modal">
+  <!-- 투어패스 보관함(선택 & 내 링크) 모달 -->
+  <div id="vaultModal" class="modal">
     <div class="modal-content">
       <div class="modal-header">
-        <h2>워크숍 일정</h2>
-        <button class="close-btn" data-close="scheduleModal">&times;</button>
+        <h2>투어패스 보관함</h2>
+        <button class="close-btn" data-close="vaultModal">&times;</button>
       </div>
       <div class="modal-body">
-        <h3>1일차</h3>
-        <div class="card"><div class="q-title">14:50 로비 및 방배정</div><div class="text-sm">롯데리조트 부여점</div></div>
-        <div class="card"><div class="q-title">15:30 백제문화단지 관광</div><div class="text-sm">원준님 도슨트투어</div></div>
-        <div class="card"><div class="q-title">18:30 저녁식사</div><div class="text-sm">서동한우 규암점</div></div>
-        <div class="card"><div class="q-title">21:00 자율회식</div><div class="text-sm">부여통닭과 보령맥주의 만남</div></div>
-        <h3 style="margin-top:1rem;">2일차</h3>
-        <div class="card"><div class="q-title">11:00 아침겸 점심</div><div class="text-sm">장원막국수</div></div>
-        <div class="card"><div class="q-title">12:30 성과공유 및 2026 사업추진계획</div><div class="text-sm">사비123창작센터</div></div>
-        <div class="card"><div class="q-title">14:10 귀가</div><div class="text-sm">워크숍 종료</div></div>
-      </div>
-    </div>
-  </div>
+        <!-- 사전 등록 티켓 선택 -->
+        <div class="card">
+          <div class="q-title" style="display:flex;justify-content:space-between;align-items:center;">
+            <span>사전 등록 티켓 선택</span>
+            <button class="btn btn-link" id="vaultClearBtn" style="width:auto;padding:.5rem .8rem">선택 해제</button>
+          </div>
+          <div id="presetList"></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-top:.8rem;">
+            <button class="btn btn-primary" id="savePresetBtn">선택 저장</button>
+            <button class="btn btn-secondary" id="goPresetBtn">저장 없이 이동</button>
+          </div>
+          <div class="k-tip" id="currentChoiceTip" style="margin-top:.5rem;text-align:center;"></div>
+        </div>
 
-  <!-- 링크 모달 -->
-  <div id="linkModal" class="modal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2>링크 보관함</h2>
-        <button class="close-btn" data-close="linkModal">&times;</button>
-      </div>
-      <div class="modal-body">
+        <!-- (하위) 내 링크 저장 영역 - 기존 기능 유지 -->
+        <h3 style="margin-top:.25rem;">내 링크 관리</h3>
         <div class="card">
           <h3>새 링크 추가</h3>
           <div class="form-group"><input type="text" id="linkTitle" placeholder="제목"></div>
@@ -408,6 +399,13 @@
     const RELATION_URL = 'https://kim950106.github.io/tour/';
     const AI_CHATBOT_URL = 'https://chatgpt.com/g/g-689acc0b7bd08191bb31112e0a19cffc-tueopaeseu-saeobjeanseo-ai-eosiseunteu';
 
+    // 사전 등록 티켓
+    const PRESET_TICKETS = [
+      { code: '9403', name: '네이버', url: 'www.naver.com' },
+      { code: '8027', name: '다음',   url: 'www.daum.net' },
+      { code: '1402', name: '투어패스', url: 'www.tourpass.ai' }
+    ];
+
     /***** 상태 *****/
     let currentUser = null;
     let sessionId = null;
@@ -446,6 +444,11 @@
       const m = String(Math.floor((total%3600)/60)).padStart(2,'0');
       const s = String(total%60).padStart(2,'0');
       return `${h}:${m}:${s}`;
+    }
+    function normalizeUrl(u=''){
+      let url = (u||'').trim();
+      if (!/^https?:\/\//i.test(url)) url = 'https://' + url;
+      return url;
     }
 
     /* 귀여운 스티커/태그/이모지 */
@@ -537,6 +540,9 @@
       // 로그인 직후에도 캐시된 타이머가 있다면 재개
       const storedEnd = localStorage.getItem('workshopEndAt');
       if (storedEnd) beginTimerInterval();
+
+      // 보관함 설명 라벨 갱신
+      updateVaultDesc();
     }
 
     async function handleLogout() {
@@ -549,6 +555,9 @@
       localStorage.removeItem('workshopEndAt');
       if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
       timerRunning = false;
+
+      // 선택 티켓 유지 여부는 정책상 유지(필요시 아래 줄 주석 해제)
+      // localStorage.removeItem('selectedTicketCode');
 
       localStorage.clear();
       location.reload();
@@ -631,7 +640,49 @@
       if (btn.href.endsWith('#')) btn.textContent = 'MBTI 관계도 (URL 준비 중)';
     }
 
-    /***** 링크 저장/조회 *****/
+    /***** 투어패스 보관함 - 사전 티켓 선택/이동 *****/
+    function getSelectedTicketCode(){ return localStorage.getItem('selectedTicketCode') || ''; }
+    function setSelectedTicketCode(code){ localStorage.setItem('selectedTicketCode', code || ''); updateVaultDesc(); }
+    function findTicketByCode(code){ return PRESET_TICKETS.find(t => t.code === code); }
+
+    function updateVaultDesc(){
+      const desc = document.getElementById('vaultDesc');
+      const code = getSelectedTicketCode();
+      if (!code) { desc.textContent = '티켓 선택 후 바로 이동'; return; }
+      const t = findTicketByCode(code);
+      if (t) desc.textContent = `선택됨: ${t.code} · ${t.name}`;
+      else desc.textContent = '티켓 선택 후 바로 이동';
+    }
+
+    function openVaultModal(){
+      // 프리셋 목록 렌더
+      const wrap = document.getElementById('presetList');
+      const selected = getSelectedTicketCode();
+      wrap.innerHTML = PRESET_TICKETS.map(t=>{
+        const checked = t.code === selected ? 'checked' : '';
+        return `
+          <label class="q-card" style="display:flex;align-items:center;gap:.8rem;cursor:pointer">
+            <input type="radio" name="presetTicket" value="${t.code}" ${checked} style="width:18px;height:18px">
+            <div>
+              <div class="q-title">코드 ${t.code} · ${escapeHtml(t.name)}</div>
+              <div style="color:var(--text-secondary)">${escapeHtml(t.url)}</div>
+            </div>
+          </label>
+        `;
+      }).join('');
+
+      document.getElementById('currentChoiceTip').textContent = selected ? `현재 선택: ${selected}` : '아직 선택된 티켓이 없습니다.';
+      document.getElementById('vaultModal').style.display = 'block';
+    }
+
+    function gotoSelectedTicket(){
+      const code = getSelectedTicketCode();
+      const t = findTicketByCode(code);
+      if (!t) { openVaultModal(); showAlert('먼저 티켓을 선택해주세요.', 'error'); return; }
+      window.open(normalizeUrl(t.url), '_blank', 'noopener');
+    }
+
+    /***** 링크 저장/조회 (내 링크 관리 - 기존 유지) *****/
     async function saveLink() {
       const title = document.getElementById('linkTitle').value.trim();
       const url = document.getElementById('linkUrl').value.trim();
@@ -658,7 +709,7 @@
       target.innerHTML = items.map(l=>`
         <div class="card" style="margin-bottom:.6rem;">
           <strong>${escapeHtml(l.title)}</strong><br>
-          <a href="${escapeHtml(l.url)}" target="_blank" style="color: var(--secondary-brand);">${escapeHtml(l.url)}</a><br>
+          <a href="${escapeHtml(normalizeUrl(l.url))}" target="_blank" style="color: var(--secondary-brand);">${escapeHtml(l.url)}</a><br>
           <small style="color: var(--text-secondary);">${escapeHtml(l.category||'')}</small>
           ${l.description?`<br><small>${escapeHtml(l.description)}</small>`:''}
         </div>
@@ -839,9 +890,45 @@
         }
       });
 
-      document.getElementById('scheduleMenu').addEventListener('click', ()=> document.getElementById('scheduleModal').style.display='block');
-      document.getElementById('linkMenu').addEventListener('click', ()=> { document.getElementById('linkModal').style.display='block'; loadLinks(); });
+      document.getElementById('scheduleMenu').addEventListener('click', ()=> document.getElementById('vaultModal').style.display='none' || (document.getElementById('scheduleModal').style.display='block'));
       document.getElementById('surveyMenu').addEventListener('click', openSurvey);
+
+      // 투어패스 보관함: 클릭 = 이동, 롱프레스 = 변경
+      const vault = document.getElementById('vaultMenu');
+      let pressTimer=null;
+      const longPressMs = 700;
+
+      vault.addEventListener('mousedown', ()=>{ pressTimer = setTimeout(()=>{ openVaultModal(); }, longPressMs); });
+      vault.addEventListener('touchstart', ()=>{ pressTimer = setTimeout(()=>{ openVaultModal(); }, longPressMs); }, {passive:true});
+      function cancelPress(){ if (pressTimer){ clearTimeout(pressTimer); pressTimer=null; } }
+      ['mouseup','mouseleave','touchend','touchcancel'].forEach(ev=> vault.addEventListener(ev, (e)=>{
+        if (pressTimer){ // 롱프레스 전에 떼면 클릭으로 간주 -> 이동
+          clearTimeout(pressTimer); pressTimer=null;
+          // 단일 탭: 이동
+          gotoSelectedTicket();
+        }
+      }, {passive:true}));
+
+      // 보관함 모달 내부 버튼
+      document.getElementById('savePresetBtn').addEventListener('click', ()=>{
+        const chosen = document.querySelector('input[name="presetTicket"]:checked');
+        if (!chosen) { showAlert('티켓을 선택해주세요','error'); return; }
+        setSelectedTicketCode(chosen.value);
+        showAlert('선택이 저장되었습니다');
+        document.getElementById('vaultModal').style.display='none';
+        gotoSelectedTicket();
+      });
+      document.getElementById('goPresetBtn').addEventListener('click', ()=>{
+        const chosen = document.querySelector('input[name="presetTicket"]:checked');
+        if (!chosen) { showAlert('티켓을 선택해주세요','error'); return; }
+        const t = findTicketByCode(chosen.value);
+        window.open(normalizeUrl(t.url), '_blank', 'noopener');
+      });
+      document.getElementById('vaultClearBtn').addEventListener('click', ()=>{
+        setSelectedTicketCode('');
+        showAlert('선택이 해제되었습니다');
+        updateVaultDesc();
+      });
 
       // 심리테스트
       document.getElementById('psyMenu').addEventListener('click', ()=>{
@@ -865,13 +952,13 @@
       document.getElementById('psyRetry').addEventListener('click', resetPsy);
 
       // 오늘의 운세
-      document.getElementById('fortuneMenu').addEventListener('click', openFortune);
+      document.getElementById('fortuneMenu')?.addEventListener('click', openFortune);
 
       // AI 챗봇
       const ai = document.getElementById('aiMenu');
       ai.href = AI_CHATBOT_URL;
 
-      // 모달 닫기 & 외부 클릭 닫기
+      // 공통: 모달 닫기 & 외부 클릭 닫기
       document.querySelectorAll('.close-btn').forEach(btn=>{
         btn.addEventListener('click', function(){
           const id = this.getAttribute('data-close');
@@ -904,9 +991,12 @@
         document.getElementById('userTeamDisplay').textContent = `${info.team} | ${info.position}`;
       }
 
-      // 🔁 타이머 자동 복원 (로그인 상태와 무관하게 캐시 있으면 표시)
+      // 🔁 타이머 자동 복원
       const storedEnd = localStorage.getItem('workshopEndAt');
       if (storedEnd) beginTimerInterval();
+
+      // 초기 보관함 라벨
+      updateVaultDesc();
     });
   </script>
 </body>
