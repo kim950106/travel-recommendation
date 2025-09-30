@@ -26,18 +26,21 @@
       --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1);
       --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.1);
     }
+
     *{margin:0;padding:0;box-sizing:border-box}
     body{font-family:'Pretendard',-apple-system,BlinkMacSystemFont,'Segoe UI','Malgun Gothic','맑은 고딕',sans-serif;background:var(--surface-secondary);color:var(--text-primary);line-height:1.7}
     .container{max-width:428px;margin:0 auto;padding:1.5rem;min-height:100vh;transition:filter .25s ease}
     .blurred{filter:blur(6px)}
-    .overlay {position: fixed; inset: 0; background: rgba(15,23,42,.45); display: none; align-items: center; justify-content: center; z-index: 2000; backdrop-filter: blur(2px);}
-    .overlay-card {background:#fff;border-radius:20px;padding:1.5rem 1.25rem;max-width:420px;width:90%;text-align:center; box-shadow: var(--shadow-xl);}
-    .overlay h2{font-size:1.35rem;margin-bottom:.5rem}
+
+    .overlay {position: fixed; inset: 0; background: rgba(15,23,42,.45); display: none; align-items: center; justify-content: center; z-index: 2000; backdrop-filter: blur(2px);} 
+    .overlay-card {background:#fff;border-radius:20px;padding:1.5rem 1.25rem;max-width:420px;width:90%;text-align:center; box-shadow: var(--shadow-xl);} 
+    .overlay h2{font-size:1.35rem;margin-bottom:.5rem} 
     .overlay p{color:var(--text-secondary);margin-bottom:1rem}
 
     .header{text-align:center;margin-bottom:2rem;padding:2.25rem 0}
     .header h1{font-size:2.15rem;font-weight:800;margin-bottom:.25rem}
     .header p{font-size:1.1rem;color:var(--text-secondary)}
+
     .card{background:var(--surface-primary);border-radius:24px;padding:1.5rem;margin-bottom:1.25rem;box-shadow:var(--shadow-md);border:1px solid rgba(59,130,246,.08)}
     .form-group{margin-bottom:1rem}
     label{display:block;font-weight:600;margin-bottom:.5rem;font-size:.9rem}
@@ -48,14 +51,20 @@
     .btn-primary:hover{transform:translateY(-1px);box-shadow:var(--shadow-lg)}
     .btn-secondary{background:var(--surface-elevated);color:var(--text-primary)}
     .btn-link{background:#fff;border:1px solid #e2e8f0}
+    .btn-ghost{background:transparent;border:1px dashed #cbd5e1;color:var(--text-secondary)}
+
     .menu-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1rem}
     .menu-item{background:var(--surface-primary);border:1.5px solid rgba(59,130,246,.08);border-radius:20px;padding:1.25rem;text-align:center;cursor:pointer;transition:.3s;text-decoration:none;color:inherit;position:relative}
     .menu-item:hover{transform:translateY(-3px);box-shadow:var(--shadow-xl);border-color:var(--secondary-brand)}
     .menu-title{font-weight:800;font-size:1.05rem;margin-bottom:.35rem;display:flex;gap:.4rem;justify-content:center;align-items:center}
     .menu-desc{font-size:.85rem;color:var(--text-secondary);min-height:1.4em}
+
     .timer-card{background:var(--gradient-brand);color:#fff;text-align:center}
     .timer-display{font-size:3rem;font-weight:900}
+
     .user-info{border:1.5px solid rgba(59,130,246,.08);padding:1.25rem;border-radius:20px;margin-bottom:1rem;text-align:center}
+    .inline-grid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-top:.6rem}
+
     .alert{padding:.85rem;border-radius:16px;margin-bottom:1rem;text-align:center}
     .alert-success{background:rgba(16,185,129,.1);color:#047857;border:1px solid rgba(16,185,129,.25)}
     .alert-error{background:rgba(239,68,68,.1);color:#dc2626;border:1px solid rgba(239,68,68,.25)}
@@ -69,7 +78,7 @@
     .close-btn{background:none;border:none;font-size:1.5rem;cursor:pointer;color:var(--text-muted)}
     .modal-body{padding:1.25rem}
 
-    /* 심리/결과 카드 등 */
+    /* 심리/결과 카드 (유지) */
     .q-card{background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:1rem;margin-bottom:1rem}
     .q-title{font-weight:800;margin-bottom:.6rem}
     .progress-wrap{display:flex;gap:.25rem;margin:.5rem 0 .75rem}
@@ -79,6 +88,7 @@
     .ox-btn{flex:1;border:1.5px solid #e2e8f0;border-radius:14px;padding:0.9rem 1rem;text-align:center;font-weight:800;cursor:pointer}
     .ox-btn:hover{box-shadow:0 0 0 3px rgba(59,130,246,.12);border-color:var(--secondary-brand)}
     .result-badge{display:inline-block;padding:.4rem .7rem;border-radius:999px;background:rgba(59,130,246,.12);color:#1e40af;font-weight:900;font-size:.85rem}
+
     .kawaii-card{position:relative;background:linear-gradient(180deg,#fff 0%,#f8fbff 100%);border:1.5px solid #e6eeff;border-radius:22px;padding:1.1rem;box-shadow:0 6px 20px rgba(59,130,246,.08)}
     .k-badge{display:inline-block;background:#eef4ff;border:1px dashed #93c5fd;color:#1e40af;border-radius:999px;padding:.35rem .8rem;font-weight:900;font-size:.85rem}
     .k-head{display:flex;gap:.9rem;align-items:center;justify-content:center;margin:.3rem 0 .2rem}
@@ -93,732 +103,738 @@
     .k-bar>span{display:block;height:100%;background:linear-gradient(90deg,#93c5fd,#60a5fa)}
     .k-actions{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-top:.9rem}
     .k-tip{font-size:.85rem;color:#6b7280;text-align:center;margin-top:.35rem}
+
     #confettiCanvas{position:fixed;inset:0;pointer-events:none;z-index:3000;opacity:0;transition:opacity .25s}
     #confettiCanvas.on{opacity:1}
   </style>
 </head>
 <body>
-  <div id="blurTarget" class="container">
-    <div class="header">
-      <h1>투어패스사업부</h1>
-      <p>2025 워크숍</p>
-    </div>
-
-    <!-- 로그인 -->
-    <div id="loginScreen" class="card">
-      <div class="form-group">
-        <label for="userName">이름을 선택하세요</label>
-        <select id="userName" required>
-          <option value="">이름을 선택해주세요</option>
-          <option value="남도현">남도현</option>
-          <option value="김수인">김수인</option>
-          <option value="고다현">고다현</option>
-          <option value="심재희">심재희</option>
-          <option value="판티니안">판티니안</option>
-          <option value="김현철">김현철</option>
-          <option value="이유진">이유진</option>
-          <option value="정어진">정어진</option>
-          <option value="장원준">장원준</option>
-          <option value="김대진">김대진</option>
-          <option value="손현우">손현우</option>
-          <option value="이주아">이주아</option>
-          <option value="장은진">장은진</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="userMBTI">MBTI를 선택하세요</label>
-        <select id="userMBTI" required>
-          <option value="">MBTI를 선택해주세요</option>
-          <option>INTJ</option><option>INTP</option><option>ENTJ</option><option>ENTP</option>
-          <option>INFJ</option><option>INFP</option><option>ENFJ</option><option>ENFP</option>
-          <option>ISTJ</option><option>ISFJ</option><option>ESTJ</option><option>ESFJ</option>
-          <option>ISTP</option><option>ISFP</option><option>ESTP</option><option>ESFP</option>
-        </select>
-      </div>
-      <button class="btn btn-primary" id="loginBtn">로그인</button>
-    </div>
-
-    <!-- 메인 -->
-    <div id="mainScreen" class="hidden">
-      <div class="user-info">
-        <h3 id="userNameDisplay"></h3>
-        <p id="userTeamDisplay"></p>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-top:.6rem;">
-          <button class="btn btn-link" id="logoutBtn">로그아웃</button>
-          <button class="btn btn-primary" id="startBtn">워크숍 참여하기</button>
-        </div>
-      </div>
-
-      <div class="card timer-card">
-        <div style="font-size:1.05rem;margin-bottom:.6rem;opacity:.9;">워크숍 남은 시간</div>
-        <div id="timerDisplay" class="timer-display">48:00:00</div>
-      </div>
-
-      <div class="menu-grid">
-        <a class="menu-item" id="relationMenu" href="#" target="_blank" rel="noopener">
-          <div class="menu-title">🔗 MBTI 관계도</div>
-          <div class="menu-desc">상호 궁합 보기</div>
-        </a>
-
-        <div class="menu-item" id="scheduleMenu">
-          <div class="menu-title">🗓️ 워크숍 일정</div>
-          <div class="menu-desc">프로그램</div>
-        </div>
-
-        <!-- 투어패스 보관함 -->
-        <div class="menu-item" id="vaultMenu" tabindex="0">
-          <div class="menu-title">📎 투어패스 보관함</div>
-          <div class="menu-desc" id="vaultDesc">티켓 선택 후 바로 이동</div>
-        </div>
-
-        <!-- 만족도 설문 -->
-        <div class="menu-item" id="surveyMenu">
-          <div class="menu-title">📝 만족도 설문</div>
-          <div class="menu-desc">바로 참여</div>
-        </div>
-
-        <!-- 데일리 포춘 -->
-        <div class="menu-item" id="fortuneMenu">
-          <div class="menu-title">🔮 데일리 포춘</div>
-          <div class="menu-desc">오늘의 운세</div>
-        </div>
-
-        <!-- 투어패스 v3 초안 -->
-        <div class="menu-item" id="tpv3Menu">
-          <div class="menu-title">🧩 투어패스 v3 초안</div>
-          <div class="menu-desc">프로토타입</div>
-        </div>
-
-        <!-- AI 챗봇 -->
-        <a class="menu-item" id="aiMenu" href="#" target="_blank" rel="noopener">
-          <div class="menu-title">🤖 AI 챗봇</div>
-          <div class="menu-desc">워크숍 전용 헬퍼</div>
-        </a>
-      </div>
-    </div>
-
-    <!-- 알림 -->
-    <div id="alertMessage" class="hidden"></div>
+<div id="blurTarget" class="container">
+  <div class="header">
+    <h1>투어패스사업부</h1>
+    <p>2025 워크숍</p>
   </div>
 
-  <!-- 타이머 종료 오버레이 -->
-  <div id="overlay" class="overlay">
-    <div class="overlay-card">
-      <h2>워크숍이 종료되었습니다</h2>
-      <p>설문을 진행해 주세요.</p>
-      <button class="btn btn-primary" id="openSurveyFromOverlay">설문 시작하기</button>
+  <!-- 로그인 -->
+  <div id="loginScreen" class="card">
+    <div class="form-group">
+      <label for="userName">이름을 선택하세요</label>
+      <select id="userName" required>
+        <option value="">이름을 선택해주세요</option>
+        <option value="남도현">남도현</option>
+        <option value="김수인">김수인</option>
+        <option value="고다현">고다현</option>
+        <option value="심재희">심재희</option>
+        <option value="판티니안">판티니안</option>
+        <option value="김현철">김현철</option>
+        <option value="이유진">이유진</option>
+        <option value="정어진">정어진</option>
+        <option value="장원준">장원준</option>
+        <option value="김대진">김대진</option>
+        <option value="손현우">손현우</option>
+        <option value="이주아">이주아</option>
+        <option value="장은진">장은진</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="userMBTI">MBTI를 선택하세요</label>
+      <select id="userMBTI" required>
+        <option value="">MBTI를 선택해주세요</option>
+        <option>INTJ</option><option>INTP</option><option>ENTJ</option><option>ENTP</option>
+        <option>INFJ</option><option>INFP</option><option>ENFJ</option><option>ENFP</option>
+        <option>ISTJ</option><option>ISFJ</option><option>ESTJ</option><option>ESFJ</option>
+        <option>ISTP</option><option>ISFP</option><option>ESTP</option><option>ESFP</option>
+      </select>
+    </div>
+    <button class="btn btn-primary" id="loginBtn">로그인</button>
+  </div>
+
+  <!-- 메인 -->
+  <div id="mainScreen" class="hidden">
+    <div class="user-info">
+      <h3 id="userNameDisplay"></h3>
+      <p id="userTeamDisplay"></p>
+      <div class="inline-grid">
+        <button class="btn btn-link" id="logoutBtn">로그아웃</button>
+        <button class="btn btn-primary" id="startBtn">워크숍 참여하기</button>
+      </div>
+    </div>
+
+    <div class="card timer-card">
+      <div style="font-size:1.05rem;margin-bottom:.6rem;opacity:.9;">워크숍 남은 시간</div>
+      <div id="timerDisplay" class="timer-display">48:00:00</div>
+    </div>
+
+    <div class="menu-grid">
+      <a class="menu-item" id="relationMenu" href="#" target="_blank" rel="noopener">
+        <div class="menu-title">🔗 MBTI 관계도</div>
+        <div class="menu-desc">상호 궁합 보기</div>
+      </a>
+
+      <div class="menu-item" id="scheduleMenu">
+        <div class="menu-title">🗓️ 워크숍 일정</div>
+        <div class="menu-desc">프로그램</div>
+      </div>
+
+      <!-- 투어패스 티켓 (보관함 개명) -->
+      <div class="menu-item" id="vaultMenu" tabindex="0">
+        <div class="menu-title">📎 투어패스 티켓 <button id="ticketConfigOpen" class="btn btn-ghost" style="width:auto;padding:.25rem .5rem;font-size:.8rem;margin-left:.3rem">링크 설정</button></div>
+        <div class="menu-desc" id="vaultDesc">티켓 선택 후 바로 이동</div>
+      </div>
+
+      <!-- 만족도 설문 -->
+      <div class="menu-item" id="surveyMenu">
+        <div class="menu-title">📝 만족도 설문</div>
+        <div class="menu-desc">바로 참여</div>
+      </div>
+
+      <!-- 데일리 포춘 -->
+      <div class="menu-item" id="fortuneMenu">
+        <div class="menu-title">🔮 데일리 포춘</div>
+        <div class="menu-desc">오늘의 운세</div>
+      </div>
+
+      <!-- 투어패스 v3 초안 (기존 유지) -->
+      <div class="menu-item" id="tpv3Menu">
+        <div class="menu-title">🧩 투어패스 v3 초안</div>
+        <div class="menu-desc">프로토타입</div>
+      </div>
+
+      <!-- 모바일티켓 v3 (신규 버튼) -->
+      <div class="menu-item" id="mtv3Menu">
+        <div class="menu-title">📱 모바일티켓 v3</div>
+        <div class="menu-desc">링크 준비 중</div>
+      </div>
+
+      <!-- AI 챗봇 -->
+      <a class="menu-item" id="aiMenu" href="#" target="_blank" rel="noopener">
+        <div class="menu-title">🤖 AI 챗봇</div>
+        <div class="menu-desc">워크숍 전용 헬퍼</div>
+      </a>
     </div>
   </div>
 
-  <!-- MBTI 모달(보존) -->
-  <div id="mbtiModal" class="modal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2>참가자 현황</h2>
-        <button class="close-btn" data-close="mbtiModal">&times;</button>
+  <!-- 알림 -->
+  <div id="alertMessage" class="hidden"></div>
+</div>
+
+<!-- 타이머 종료 오버레이 -->
+<div id="overlay" class="overlay">
+  <div class="overlay-card">
+    <h2>워크숍이 종료되었습니다</h2>
+    <p>설문을 진행해 주세요.</p>
+    <button class="btn btn-primary" id="openSurveyFromOverlay">설문 시작하기</button>
+  </div>
+</div>
+
+<!-- MBTI 모달(보존) -->
+<div id="mbtiModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>참가자 현황</h2>
+      <button class="close-btn" data-close="mbtiModal">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="stats-grid">
+        <div class="card"><div class="q-title">총 참가자</div><div id="totalParticipants" style="font-size:1.6rem;font-weight:900;color:var(--primary-brand)">0</div></div>
+        <div class="card"><div class="q-title">현재 접속</div><div id="onlineCount" style="font-size:1.6rem;font-weight:900;color:var(--primary-brand)">0</div></div>
       </div>
-      <div class="modal-body">
-        <div class="stats-grid">
-          <div class="card"><div class="q-title">총 참가자</div><div id="totalParticipants" style="font-size:1.6rem;font-weight:900;color:var(--primary-brand)">0</div></div>
-          <div class="card"><div class="q-title">현재 접속</div><div id="onlineCount" style="font-size:1.6rem;font-weight:900;color:var(--primary-brand)">0</div></div>
-        </div>
-        <h3>MBTI 분포</h3>
-        <div class="mbti-grid" id="mbtiDistribution"></div>
-        <div style="margin-top:1rem;display:flex;gap:.6rem;">
-          <a id="relationBtn" href="#" class="btn btn-link" target="_blank" rel="noopener">MBTI 관계도 보기</a>
-        </div>
+      <h3>MBTI 분포</h3>
+      <div class="mbti-grid" id="mbtiDistribution"></div>
+      <div style="margin-top:1rem;display:flex;gap:.6rem;">
+        <a id="relationBtn" href="#" class="btn btn-link" target="_blank" rel="noopener">MBTI 관계도 보기</a>
       </div>
     </div>
   </div>
+</div>
 
-  <!-- 투어패스 보관함(사전 티켓 선택 전용) -->
-  <div id="vaultModal" class="modal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2>투어패스 보관함</h2>
-        <button class="close-btn" data-close="vaultModal">&times;</button>
-      </div>
-      <div class="modal-body">
-        <div class="card">
-          <div class="q-title" style="display:flex;justify-content:space-between;align-items:center;">
-            <span>사전 등록 티켓 선택</span>
+<!-- 투어패스 티켓(사전 티켓 선택/이동) -->
+<div id="vaultModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>투어패스 티켓</h2>
+      <button class="close-btn" data-close="vaultModal">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="card">
+        <div class="q-title" style="display:flex;justify-content:space-between;align-items:center;">
+          <span>사전 등록 티켓 선택</span>
+          <div style="display:flex;gap:.4rem">
             <button class="btn btn-link" id="vaultClearBtn" style="width:auto;padding:.5rem .8rem">선택 해제</button>
+            <button class="btn btn-ghost" id="ticketConfigOpen2" style="width:auto;padding:.5rem .8rem">링크 설정</button>
           </div>
-          <div id="presetList"></div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-top:.8rem;">
-            <button class="btn btn-primary" id="savePresetBtn">선택 저장</button>
-            <button class="btn btn-secondary" id="goPresetBtn">저장 없이 이동</button>
-          </div>
-          <div class="k-tip" id="currentChoiceTip" style="margin-top:.5rem;text-align:center;"></div>
         </div>
+        <div id="presetList"></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-top:.8rem;">
+          <button class="btn btn-primary" id="savePresetBtn">선택 저장</button>
+          <button class="btn btn-secondary" id="goPresetBtn">저장 없이 이동</button>
+        </div>
+        <div class="k-tip" id="currentChoiceTip" style="margin-top:.5rem;text-align:center;"></div>
       </div>
     </div>
   </div>
+</div>
 
-  <!-- 데일리 포춘 모달 -->
-  <div id="fortuneModal" class="modal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2>데일리 포춘</h2>
-        <button class="close-btn" data-close="fortuneModal">&times;</button>
+<!-- 티켓 링크 설정 모달 -->
+<div id="ticketConfigModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>티켓 링크 설정</h2>
+      <button class="close-btn" data-close="ticketConfigModal">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="q-card">
+        <div class="q-title">코드 9403</div>
+        <input id="cfg_9403" placeholder="예: https://..." />
       </div>
-      <div class="modal-body" id="fortuneBody"></div>
+      <div class="q-card">
+        <div class="q-title">코드 8027</div>
+        <input id="cfg_8027" placeholder="예: https://..." />
+      </div>
+      <div class="q-card">
+        <div class="q-title">코드 1402</div>
+        <input id="cfg_1402" placeholder="예: https://..." />
+      </div>
+      <div class="inline-grid" style="margin-top:.6rem">
+        <button class="btn btn-primary" id="saveTicketConfig">저장</button>
+        <button class="btn btn-secondary" data-close="ticketConfigModal">닫기</button>
+      </div>
+      <p class="k-tip" style="margin-top:.5rem">입력값은 이 브라우저의 로컬에 저장됩니다.</p>
     </div>
   </div>
+</div>
 
-  <!-- 투어패스 v3 초안 모달 (URL 없을 때) -->
-  <div id="tpv3Modal" class="modal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2>투어패스 v3 초안</h2>
-        <button class="close-btn" data-close="tpv3Modal">&times;</button>
+<!-- 데일리 포춘 모달 -->
+<div id="fortuneModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>데일리 포춘</h2>
+      <button class="close-btn" data-close="fortuneModal">&times;</button>
+    </div>
+    <div class="modal-body" id="fortuneBody"></div>
+  </div>
+</div>
+
+<!-- 투어패스 v3 초안 모달 (URL 없을 때) -->
+<div id="tpv3Modal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>투어패스 v3 초안</h2>
+      <button class="close-btn" data-close="tpv3Modal">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="card">
+        <div class="q-title">프로토타입 준비 중</div>
+        <p style="color:var(--text-secondary)">외부 URL이 설정되면 바로 이동합니다. 현재는 간단 요약만 보여드려요.</p>
       </div>
-      <div class="modal-body">
-        <div class="card">
-          <div class="q-title">프로토타입 준비 중</div>
-          <p style="color:var(--text-secondary)">외부 URL이 설정되면 바로 이동합니다. 현재는 간단 요약만 보여드려요.</p>
-        </div>
-        <div class="card">
-          <div class="q-title">핵심 체크리스트</div>
-          <ul style="padding-left:1rem; color:var(--text-secondary); line-height:1.9">
-            <li>QR 인증 UX: 스캔 → 결과 피드백 1초 내</li>
-            <li>가맹점 안내: 대기/혼잡도, 추천 코스, 운영시간</li>
-            <li>외국어 대응: 다국어 자동감지 + 간편 전환</li>
-            <li>쿠폰/혜택: 남은시간·잔여혜택 실시간 표시</li>
-            <li>접근성: 폰트/대비/터치 영역 최적화</li>
-          </ul>
-        </div>
+      <div class="card">
+        <div class="q-title">핵심 체크리스트</div>
+        <ul style="padding-left:1rem; color:var(--text-secondary); line-height:1.9">
+          <li>QR 인증 UX: 스캔 → 결과 피드백 1초 내</li>
+          <li>가맹점 안내: 대기/혼잡도, 추천 코스, 운영시간</li>
+          <li>외국어 대응: 다국어 자동감지 + 간편 전환</li>
+          <li>쿠폰/혜택: 남은시간·잔여혜택 실시간 표시</li>
+          <li>접근성: 폰트/대비/터치 영역 최적화</li>
+        </ul>
       </div>
     </div>
   </div>
+</div>
 
-  <script>
-    /***** 설정 *****/
-    const API_URL = 'https://script.google.com/macros/s/AKfycbxP7oI1CUK7vvga2HJbUp6r_U5bOsFWwFzcIAhIrRjKfCbUf7Mwlu56Ayqa3EokUJXz/exec';
-    const RELATION_URL = 'https://kim950106.github.io/tour/';
-    const AI_CHATBOT_URL = 'https://chatgpt.com/g/g-689acc0b7bd08191bb31112e0a19cffc-tueopaeseu-saeobjeanseo-ai-eosiseunteu';
-    const TPV3_URL = ''; // ← v3 초안 외부 링크 있으면 입력
+<script>
+  /***** 설정 *****/
+  const API_URL = 'https://script.google.com/macros/s/AKfycbxP7oI1CUK7vvga2HJbUp6r_U5bOsFWwFzcIAhIrRjKfCbUf7Mwlu56Ayqa3EokUJXz/exec';
+  const RELATION_URL = 'https://kim950106.github.io/tour/';
+  const AI_CHATBOT_URL = 'https://chatgpt.com/g/g-689acc0b7bd08191bb31112e0a19cffc-tueopaeseu-saeobjeanseo-ai-eosiseunteu';
+  const TPV3_URL = ''; // v3 초안 외부 링크 (예: 'https://your-prototype-url')
+  const MOBILE_TICKET_V3_URL = ''; // 신규: 모바일티켓 v3 링크 (예: 'https://your-mobile-v3')
 
-    // 사전 등록 티켓
-    const PRESET_TICKETS = [
-      { code: '9403', name: '네이버',  url: 'www.naver.com' },
-      { code: '8027', name: '다음',    url: 'www.daum.net' },
-      { code: '1402', name: '투어패스', url: 'www.tourpass.ai' }
+  // 기본 티켓 정의 (URL은 로컬스토리지에서 주입)
+  const DEFAULT_TICKETS = [
+    { code: '9403', name: '9403', url: '' },
+    { code: '8027', name: '8027', url: '' },
+    { code: '1402', name: '1402', url: '' }
+  ];
+
+  /***** 상태 *****/
+  let currentUser = null;
+  let sessionId = null;
+  let timerInterval = null;
+  let timerRunning = false;
+  let workshopEndAt = null;
+
+  const TEMP_USER_DATA = {
+    "남도현": { team:"투어패스사업부", position:"이사" },
+    "김수인": { team:"투어패스사업부 영업 1팀", position:"팀장" },
+    "고다현": { team:"투어패스사업부 영업 1팀", position:"사원" },
+    "심재희": { team:"투어패스사업부 영업 1팀", position:"매니저" },
+    "판티니안": { team:"투어패스사업부 영업 1팀", position:"매니저" },
+    "김현철": { team:"투어패스사업부 영업 2팀", position:"팀장" },
+    "이유진": { team:"투어패스사업부 영업 2팀", position:"사원" },
+    "정어진": { team:"투어패스사업부 영업 2팀", position:"사원" },
+    "장원준": { team:"투어패스사업부 영업 2팀", position:"사원" },
+    "김대진": { team:"투어패스사업부 영업 2팀", position:"팀장" },
+    "손현우": { team:"투어패스사업부 영업 2팀", position:"대리" },
+    "이주아": { team:"투어패스사업부 영업 2팀", position:"주임" },
+    "장은진": { team:"투어패스사업부 영업 2팀", position:"주임" }
+  };
+
+  /***** 유틸 *****/
+  function escapeHtml(s=''){
+    return String(s)
+      .replaceAll('&','&amp;')
+      .replaceAll('<','&lt;')
+      .replaceAll('>','&gt;')
+      .replaceAll('"','&quot;')
+      .replaceAll("'",'&#39;');
+  }
+
+  function showAlert(message, type='success') {
+    const alert = document.getElementById('alertMessage');
+    alert.className = 'alert ' + (type === 'error' ? 'alert-error' : 'alert-success');
+    alert.textContent = message;
+    alert.classList.remove('hidden');
+    setTimeout(() => alert.classList.add('hidden'), 2500);
+  }
+
+  function fmt(ms){
+    const total = Math.max(0, Math.floor(ms/1000));
+    const h = String(Math.floor(total/3600)).padStart(2,'0');
+    const m = String(Math.floor((total%3600)/60)).padStart(2,'0');
+    const s = String(total%60).padStart(2,'0');
+    return `${h}:${m}:${s}`;
+  }
+
+  function normalizeUrl(u=''){
+    let url = (u||'').trim();
+    if (!url) return '';
+    if (!/^https?:\/\//i.test(url)) url = 'https://' + url;
+    return url;
+  }
+
+  // confetti
+  function confettiBurst(ms=1200){
+    let c = document.getElementById('confettiCanvas');
+    if(!c){
+      c = document.createElement('canvas');
+      c.id = 'confettiCanvas';
+      document.body.appendChild(c);
+    }
+    const ctx = c.getContext('2d');
+    const dpr = window.devicePixelRatio || 1;
+    c.width = innerWidth * dpr;
+    c.height = innerHeight * dpr;
+    ctx.scale(dpr,dpr);
+    const n=120, parts=[];
+    for(let i=0;i<n;i++){
+      parts.push({x: Math.random()*innerWidth, y: -20-Math.random()*100, r: 3+Math.random()*4, vx: -1+Math.random()*2, vy: 2+Math.random()*2, a: Math.random()*Math.PI, col: `hsl(${Math.random()*360},90%,65%)`});
+    }
+    c.classList.add('on');
+    const t0 = performance.now();
+    (function tick(t){
+      const dt = (t-(tick.t||t))/16; tick.t=t;
+      ctx.clearRect(0,0,innerWidth,innerHeight);
+      parts.forEach(p=>{
+        p.x+=p.vx*dt; p.y+=p.vy*dt; p.a+=0.1*dt;
+        ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.a);
+        ctx.fillStyle=p.col; ctx.fillRect(-p.r,-p.r,p.r*2,p.r*2);
+        ctx.restore();
+      });
+      if(t-t0 < ms) requestAnimationFrame(tick); else {
+        c.classList.remove('on'); ctx.clearRect(0,0,innerWidth,innerHeight);
+      }
+    })(t0);
+  }
+
+  // 시드 RNG (포춘용)
+  function seededRng(seedStr='seed'){
+    let t = 0; for (let i=0;i<seedStr.length;i++) t = (t * 31 + seedStr.charCodeAt(i)) >>> 0;
+    return function(){
+      t = (t + 0x6D2B79F5) >>> 0; let r = Math.imul(t ^ (t>>>15), 1 | t);
+      r ^= r + Math.imul(r ^ (r>>>7), 61 | r);
+      return ((r ^ (r>>>14)) >>> 0) / 4294967296;
+    }
+  }
+  function pick(rng, arr){ return arr[Math.floor(rng()*arr.length)] }
+
+  /***** API *****/
+  async function apiRequest(action, data = {}) {
+    try {
+      const res = await fetch(API_URL, {
+        method: 'POST', headers: { 'Content-Type': 'text/plain' },
+        body: JSON.stringify({ action, sessionId, ...data })
+      });
+      if (!res.ok) return { success: false, error: `HTTP ${res.status}` };
+      return await res.json();
+    } catch (e) { return { success: false, error: e.message }; }
+  }
+
+  /***** 로그인/메인 *****/
+  async function handleLogin() {
+    const userName = document.getElementById('userName').value;
+    const userMBTI = document.getElementById('userMBTI').value;
+    if (!userName || !userMBTI) return showAlert('이름과 MBTI를 모두 선택해주세요','error');
+    currentUser = userName;
+    sessionId = 'session_' + Date.now();
+    const userInfo = TEMP_USER_DATA[userName];
+    const res = await apiRequest('login', { userName, mbti: userMBTI, team: userInfo.team, position: userInfo.position });
+    if (!res.success) return showAlert('로그인 실패: ' + (res.error || ''), 'error');
+
+    localStorage.setItem('currentUser', userName);
+    localStorage.setItem('userMBTI', userMBTI);
+    localStorage.setItem('sessionId', sessionId);
+
+    document.getElementById('loginScreen').classList.add('hidden');
+    document.getElementById('mainScreen').classList.remove('hidden');
+    document.getElementById('userNameDisplay').textContent = currentUser;
+    document.getElementById('userTeamDisplay').textContent = `${userInfo.team} | ${userInfo.position}`;
+
+    showAlert(`환영합니다, ${currentUser}님!`);
+
+    const storedEnd = localStorage.getItem('workshopEndAt');
+    if (storedEnd) beginTimerInterval();
+    updateVaultDesc();
+  }
+
+  async function handleLogout() {
+    if (!currentUser) return location.reload();
+    if (!confirm('로그아웃하시겠습니까?')) return;
+    await apiRequest('updateUserStatus', { userName: currentUser, status: 'offline' });
+    localStorage.removeItem('workshopEndAt');
+    if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+    timerRunning = false;
+    localStorage.clear();
+    location.reload();
+  }
+
+  /***** 타이머 *****/
+  function startTimer() {
+    const stored = localStorage.getItem('workshopEndAt');
+    if (stored) { showAlert('이미 카운트다운이 진행 중입니다.'); beginTimerInterval(); return; }
+    const endTs = Date.now() + 48*60*60*1000;
+    localStorage.setItem('workshopEndAt', String(endTs));
+    workshopEndAt = new Date(endTs);
+    beginTimerInterval();
+    showAlert('카운트다운을 시작합니다.');
+  }
+
+  function beginTimerInterval(){
+    if (timerRunning) return;
+    const stored = localStorage.getItem('workshopEndAt');
+    if (!stored) return;
+    workshopEndAt = new Date(parseInt(stored, 10));
+    timerRunning = true;
+    const btn = document.getElementById('startBtn');
+    if (btn){ btn.disabled = true; btn.textContent = '카운트다운 진행 중'; }
+    function tick(){
+      const remain = workshopEndAt - Date.now();
+      document.getElementById('timerDisplay').textContent = fmt(remain);
+      if (remain <= 0) {
+        clearInterval(timerInterval); timerInterval = null; timerRunning = false;
+        localStorage.removeItem('workshopEndAt');
+        if (btn){ btn.disabled = false; btn.textContent = '워크숍 참여하기'; }
+        endFlow();
+      }
+    }
+    tick();
+    timerInterval = setInterval(tick, 1000);
+  }
+
+  function endFlow(){
+    document.getElementById('blurTarget').classList.add('blurred');
+    document.getElementById('overlay').style.display = 'flex';
+    openSurvey();
+  }
+
+  /***** MBTI 통계(보존) *****/
+  async function loadMBTIStats() {
+    document.getElementById('mbtiModal').style.display = 'block';
+    const res = await apiRequest('getMBTIStats');
+    if (!res.success) return showAlert('통계를 불러오지 못했습니다','error');
+    document.getElementById('totalParticipants').textContent = res.totalParticipants || 0;
+    document.getElementById('onlineCount').textContent = res.onlineUsers || 0;
+
+    const grid = document.getElementById('mbtiDistribution');
+    grid.innerHTML = '';
+    const all = ['INTJ','INTP','ENTJ','ENTP','INFJ','INFP','ENFJ','ENFP','ISTJ','ISFJ','ESTJ','ESFJ','ISTP','ISFP','ESTP','ESFP'];
+    all.forEach(t=>{
+      const c = (res.mbtiDistribution && res.mbtiDistribution[t]) || 0;
+      const el = document.createElement('div');
+      el.className = 'mbti-item';
+      if (c>0){ el.style.background='rgba(59,130,246,.1)'; el.style.borderColor='var(--secondary-brand)'; }
+      el.innerHTML = `<div class="mbti-type">${t}</div><div class="mbti-count">${c}</div>`;
+      grid.appendChild(el);
+    });
+
+    const btn = document.getElementById('relationBtn');
+    btn.href = RELATION_URL ? RELATION_URL : '#';
+    if (!RELATION_URL) btn.textContent = 'MBTI 관계도 (URL 준비 중)';
+  }
+
+  /***** 투어패스 티켓 - 링크 설정/선택/이동 *****/
+  function getPresetTickets(){
+    const t9403 = localStorage.getItem('ticket_url_9403') || '';
+    const t8027 = localStorage.getItem('ticket_url_8027') || '';
+    const t1402 = localStorage.getItem('ticket_url_1402') || '';
+    return [
+      { code:'9403', name:'9403', url:t9403 },
+      { code:'8027', name:'8027', url:t8027 },
+      { code:'1402', name:'1402', url:t1402 }
     ];
+  }
 
-    /***** 상태 *****/
-    let currentUser = null;
-    let sessionId = null;
-    let timerInterval = null;
-    let timerRunning = false;
-    let workshopEndAt = null;
+  function getSelectedTicketCode(){ return localStorage.getItem('selectedTicketCode') || ''; }
+  function setSelectedTicketCode(code){ localStorage.setItem('selectedTicketCode', code || ''); updateVaultDesc(); }
+  function findTicketByCode(code){ return getPresetTickets().find(t => t.code === code); }
 
-    const TEMP_USER_DATA = {
-      "남도현": { team:"투어패스사업부", position:"이사" },
-      "김수인": { team:"투어패스사업부 영업 1팀", position:"팀장" },
-      "고다현": { team:"투어패스사업부 영업 1팀", position:"사원" },
-      "심재희": { team:"투어패스사업부 영업 1팀", position:"매니저" },
-      "판티니안": { team:"투어패스사업부 영업 1팀", position:"매니저" },
-      "김현철": { team:"투어패스사업부 영업 2팀", position:"팀장" },
-      "이유진": { team:"투어패스사업부 영업 2팀", position:"사원" },
-      "정어진": { team:"투어패스사업부 영업 2팀", position:"사원" },
-      "장원준": { team:"투어패스사업부 영업 2팀", position:"사원" },
-      "김대진": { team:"투어패스사업부 영업 2팀", position:"팀장" },
-      "손현우": { team:"투어패스사업부 영업 2팀", position:"대리" },
-      "이주아": { team:"투어패스사업부 영업 2팀", position:"주임" },
-      "장은진": { team:"투어패스사업부 영업 2팀", position:"주임" }
-    };
+  function updateVaultDesc(){
+    const desc = document.getElementById('vaultDesc');
+    const code = getSelectedTicketCode();
+    if (!code) { desc.textContent = '티켓 선택 후 바로 이동'; return; }
+    const t = findTicketByCode(code);
+    if (t && t.url) desc.textContent = `선택됨: ${t.code} · 링크 설정됨`;
+    else if (t && !t.url) desc.textContent = `선택됨: ${t.code} · (링크 미설정)`;
+    else desc.textContent = '티켓 선택 후 바로 이동';
+  }
 
-    /***** 유틸 *****/
-    function escapeHtml(s=''){return String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#39;')}
-    function showAlert(message, type='success') {
-      const alert = document.getElementById('alertMessage');
-      alert.className = `alert alert-${type}`;
-      alert.textContent = message;
-      alert.classList.remove('hidden');
-      setTimeout(() => alert.classList.add('hidden'), 2500);
+  function renderPresetList(){
+    const wrap = document.getElementById('presetList');
+    const selected = getSelectedTicketCode();
+    const tickets = getPresetTickets();
+    wrap.innerHTML = tickets.map(t=>{
+      const checked = t.code === selected ? 'checked' : '';
+      const urlText = t.url ? escapeHtml(t.url) : '(링크 미설정)';
+      return `
+        <label class="q-card" style="display:flex;align-items:center;gap:.8rem;cursor:pointer">
+          <input type="radio" name="presetTicket" value="${t.code}" ${checked} style="width:18px;height:18px">
+          <div>
+            <div class="q-title">코드 ${t.code}</div>
+            <div style="color:var(--text-secondary)">${urlText}</div>
+          </div>
+        </label>`;
+    }).join('');
+    document.getElementById('currentChoiceTip').textContent = selected ? `현재 선택: ${selected}` : '아직 선택된 티켓이 없습니다.';
+  }
+
+  function openVaultModal(){ renderPresetList(); document.getElementById('vaultModal').style.display = 'block'; }
+
+  function gotoSelectedTicket(){
+    const code = getSelectedTicketCode();
+    const t = findTicketByCode(code);
+    if (!t) { openVaultModal(); showAlert('먼저 티켓을 선택해주세요.', 'error'); return; }
+    if (!t.url) { showAlert('선택한 티켓의 링크가 설정되지 않았습니다. "링크 설정"에서 입력해주세요.', 'error'); openVaultModal(); return; }
+    window.open(normalizeUrl(t.url), '_blank', 'noopener');
+  }
+
+  // 링크 설정 모달 채우기/저장
+  function openTicketConfig(){
+    document.getElementById('cfg_9403').value = localStorage.getItem('ticket_url_9403') || '';
+    document.getElementById('cfg_8027').value = localStorage.getItem('ticket_url_8027') || '';
+    document.getElementById('cfg_1402').value = localStorage.getItem('ticket_url_1402') || '';
+    document.getElementById('ticketConfigModal').style.display = 'block';
+  }
+  function saveTicketConfig(){
+    const u9403 = document.getElementById('cfg_9403').value.trim();
+    const u8027 = document.getElementById('cfg_8027').value.trim();
+    const u1402 = document.getElementById('cfg_1402').value.trim();
+    if (u9403) localStorage.setItem('ticket_url_9403', u9403); else localStorage.removeItem('ticket_url_9403');
+    if (u8027) localStorage.setItem('ticket_url_8027', u8027); else localStorage.removeItem('ticket_url_8027');
+    if (u1402) localStorage.setItem('ticket_url_1402', u1402); else localStorage.removeItem('ticket_url_1402');
+    showAlert('링크가 저장되었습니다');
+    document.getElementById('ticketConfigModal').style.display = 'none';
+    renderPresetList();
+    updateVaultDesc();
+  }
+
+  /***** 설문 *****/
+  function openSurvey(){ document.getElementById('surveyModal')?.classList.add('show') || (document.getElementById('surveyModal') && (document.getElementById('surveyModal').style.display='block')); }
+
+  /***** 심리테스트 (유지) *****/
+  const psyQuestions = [
+    { t:'새로운 장소를 보면 계획 없이도 바로 들어가 본다.', axis:'E' },
+    { t:'여행은 촘촘한 일정표가 있어야 마음이 편하다.', axis:'J' },
+    { t:'메뉴 고를 때 직관적으로 끌리는 걸 고른다.', axis:'N' },
+    { t:'할인/혜택을 꼼꼼히 따져본 뒤 결정한다.', axis:'S' },
+    { t:'팀 의견을 조율하는 역할을 자연스럽게 맡는다.', axis:'E' },
+    { t:'즉흥 제안에도 부담 없이 “가자!”라고 말한다.', axis:'P' },
+    { t:'사진보다 순간의 감정이 더 중요하다고 느낀다.', axis:'F' },
+    { t:'문제가 생기면 일단 원인부터 분석한다.', axis:'T' },
+    { t:'사람 많은 곳에서 에너지를 얻는다.', axis:'E' },
+    { t:'계획이 바뀌면 금방 대안을 떠올린다.', axis:'P' },
+  ];
+  function axisOpp(a){ return ({E:'I', I:'E', S:'N', N:'S', T:'F', F:'T', J:'P', P:'J'})[a] }
+  let psyIdx = 0, psyScore = {E:0,I:0,S:0,N:0,T:0,F:0,J:0,P:0};
+  function renderPsyProgress(){ const wrap = document.getElementById('psyProgress'); if(!wrap) return; wrap.innerHTML = ''; for(let i=0;i<psyQuestions.length;i++){ const d = document.createElement('div'); d.className = 'dot' + (i<psyIdx ? ' on' : ''); wrap.appendChild(d); } }
+  function renderPsyQuestion(){ const qc = document.getElementById('psyQuestionCard'); if(!qc) return; document.getElementById('psyResult')?.classList.add('hidden'); qc.classList.remove('hidden'); renderPsyProgress(); const q = psyQuestions[psyIdx]; const qt = document.getElementById('psyQuestionText'); if(qt) qt.textContent = `${psyIdx+1}. ${q.t}`; }
+  function finishPsy(){ const e = psyScore.E >= psyScore.I ? 'E':'I'; const s = psyScore.S >= psyScore.N ? 'S':'N'; const t = psyScore.T >= psyScore.F ? 'T':'F'; const j = psyScore.J >= psyScore.P ? 'J':'P'; let type='탐험가', headline='새로움을 즐기는 탐험가'; if (j==='J' && t==='T') { type='계획가'; headline='체계로 성과 만드는 계획가'; } else if (e==='E' && psyScore.P>psyScore.J) { type='도전가'; headline='즉흥 에너지 가득한 도전가'; } else if (psyScore.F>psyScore.T && psyScore.N>psyScore.S) { type='감성가'; headline='스토리에 몰입하는 감성가'; }
+    const descMap = { '탐험가':'지금 내 마음이 가는 곳이 지도입니다. 가벼운 여유와 깜짝 스팟이 행복을 크게 키워줘요.', '도전가':'“가보자!”가 자연스러운 타입. 액티비티와 즉흥 미션이 오늘의 스파크를 켜요.', '계획가':'타임라인·예산·동선까지 싹! 깔끔한 화면과 체크리스트가 최고의 무기.', '감성가':'한 장의 사진, 한 모금의 공기. 스토리텔링 코스와 굿즈가 마음에 착—.' };
+    const typeEl = document.getElementById('psyType'); if(typeEl) typeEl.textContent = type;
+    const emoEl = document.getElementById('psyEmoji'); if(emoEl) emoEl.textContent = {'탐험가':'🧭✨','도전가':'🚀🔥','계획가':'📒🧩','감성가':'🎀🌸'}[type];
+    const headEl = document.getElementById('psyHeadline'); if(headEl) headEl.textContent = headline;
+    const descEl = document.getElementById('psyDesc'); if(descEl) descEl.textContent = descMap[type];
+    const stickers = Array.from({length:3}, ()=> ['✨','🌟','🍀','🎈','🧃','🍭','🫧','🌈','💫','🩵'][Math.floor(Math.random()*10)]);
+    const stEl = document.getElementById('psyStickers'); if(stEl) stEl.innerHTML = stickers.join(' ');
+    const explore = Math.round((psyScore.E+psyScore.P) / (psyScore.E+psyScore.P+psyScore.I+psyScore.J) * 100) || 40;
+    const plan = Math.round((psyScore.J+psyScore.S) / (psyScore.J+psyScore.S+psyScore.P+psyScore.N) * 100) || 40;
+    const story = Math.round((psyScore.F+psyScore.N) / (psyScore.F+psyScore.N+psyScore.T+psyScore.S) * 100) || 40;
+    const b1 = document.getElementById('barExplore'); if(b1) b1.style.width = Math.min(100,Math.max(10,explore))+'%';
+    const b2 = document.getElementById('barPlan'); if(b2) b2.style.width = Math.min(100,Math.max(10,plan))+'%';
+    const b3 = document.getElementById('barStory'); if(b3) b3.style.width = Math.min(100,Math.max(10,story))+'%';
+    document.getElementById('psyQuestionCard')?.classList.add('hidden');
+    document.getElementById('psyResult')?.classList.remove('hidden');
+    confettiBurst();
+  }
+  function resetPsy(){ psyIdx = 0; psyScore = {E:0,I:0,S:0,N:0,T:0,F:0,J:0,P:0}; renderPsyQuestion(); }
+
+  /***** 데일리 포춘 *****/
+  function openFortune(){
+    const name = currentUser || '게스트';
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth()+1).padStart(2,'0');
+    const dd = String(today.getDate()).padStart(2,'0');
+    const seed = `${name}-${yyyy}${mm}${dd}`;
+    const rng = seededRng(seed);
+
+    const grade = ['★★★★★','★★★★☆','★★★☆☆','★★☆☆☆','★☆☆☆☆'];
+    const advices = [ '작게 시작하면 크게 돌아옵니다.', '과감히 덜어내면 속도가 납니다.', '타이밍은 지금! 미루지 말기.', '사람을 먼저 챙기면 일이 풀립니다.', '데이터가 답. 감보다 수치 확인.' ];
+    const areas = ['전체운','연애운','금전운','건강운','업무/학업'];
+    const colors = ['네이비','코발트 블루','민트','옐로','코랄','라일락','화이트','블랙'];
+    const items = ['텀블러','우산','볼펜','노트','키링','카드지갑','양말','스카프'];
+    const places = ['카페 창가','강변 산책로','도서관','작은 서점','공원 벤치','박물관','전망대','시장 골목'];
+    const mbti = ['INTJ','INTP','ENTJ','ENTP','INFJ','INFP','ENFJ','ENFP','ISTJ','ISFJ','ESTJ','ESFJ','ISTP','ISFP','ESTP','ESFP'];
+
+    function secBlock(title){
+      const g = pick(rng, grade);
+      const tip = pick(rng, advices);
+      return `<div class="card"><div class="q-title">${title} <span style="float:right">${g}</span></div><div style="color:var(--text-secondary)">${tip}</div></div>`;
     }
-    function fmt(ms){
-      const total = Math.max(0, Math.floor(ms/1000));
-      const h = String(Math.floor(total/3600)).padStart(2,'0');
-      const m = String(Math.floor((total%3600)/60)).padStart(2,'0');
-      const s = String(total%60).padStart(2,'0');
-      return `${h}:${m}:${s}`;
-    }
-    function normalizeUrl(u=''){
-      let url = (u||'').trim();
-      if (!/^https?:\/\//i.test(url)) url = 'https://' + url;
-      return url;
-    }
 
-    /* confetti */
-    function confettiBurst(ms=1200){
-      let c = document.getElementById('confettiCanvas');
-      if(!c){ c = document.createElement('canvas'); c.id = 'confettiCanvas'; document.body.appendChild(c); }
-      const ctx = c.getContext('2d');
-      const dpr = window.devicePixelRatio || 1;
-      c.width = innerWidth * dpr; c.height = innerHeight * dpr; ctx.scale(dpr,dpr);
-      const n=120, parts=[];
-      for(let i=0;i<n;i++){
-        parts.push({x: Math.random()*innerWidth, y: -20-Math.random()*100, r: 3+Math.random()*4, vx: -1+Math.random()*2, vy: 2+Math.random()*2, a: Math.random()*Math.PI, col: `hsl(${Math.random()*360},90%,65%)`});
-      }
-      c.classList.add('on');
-      const t0 = performance.now();
-      (function tick(t){
-        const dt = (t-(tick.t||t))/16; tick.t=t;
-        ctx.clearRect(0,0,innerWidth,innerHeight);
-        parts.forEach(p=>{
-          p.x+=p.vx*dt; p.y+=p.vy*dt; p.a+=0.1*dt;
-          ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.a);
-          ctx.fillStyle=p.col; ctx.fillRect(-p.r,-p.r,p.r*2,p.r*2); ctx.restore();
-        });
-        if(t-t0 < ms) requestAnimationFrame(tick); else { c.classList.remove('on'); ctx.clearRect(0,0,innerWidth,innerHeight); }
-      })(t0);
-    }
+    const luckyNumber = Math.floor(rng()*99)+1;
+    const luckyColor = pick(rng, colors);
+    const luckyItem = pick(rng, items);
+    const luckyPlace = pick(rng, places);
+    const luckyMBTI = pick(rng, mbti);
 
-    // 시드 RNG (포춘용)
-    function seededRng(seedStr='seed'){
-      let t = 0;
-      for (let i=0;i<seedStr.length;i++) t = (t * 31 + seedStr.charCodeAt(i)) >>> 0;
-      return function(){
-        t = (t + 0x6D2B79F5) >>> 0;
-        let r = Math.imul(t ^ (t>>>15), 1 | t);
-        r ^= r + Math.imul(r ^ (r>>>7), 61 | r);
-        return ((r ^ (r>>>14)) >>> 0) / 4294967296;
-      }
-    }
-    function pick(rng, arr){ return arr[Math.floor(rng()*arr.length)] }
+    const body = `
+      <div class="card" style="text-align:center">
+        <div class="result-badge">오늘 (${yyyy}.${mm}.${dd})</div>
+        <h3 style="margin:.5rem 0 .25rem;">${name}님의 데일리 포춘</h3>
+        <p style="color:var(--text-secondary)">하루 동안 동일하게 유지됩니다.</p>
+      </div>
+      ${areas.map(secBlock).join('')}
+      <div class="card" style="display:grid;grid-template-columns:1fr 1fr;gap:.6rem;">
+        <div><div class="q-title">럭키 넘버</div><div>${luckyNumber}</div></div>
+        <div><div class="q-title">럭키 컬러</div><div>${luckyColor}</div></div>
+        <div><div class="q-title">럭키 아이템</div><div>${luckyItem}</div></div>
+        <div><div class="q-title">럭키 장소</div><div>${luckyPlace}</div></div>
+        <div style="grid-column:1/3"><div class="q-title">궁합 MBTI</div><div>${luckyMBTI}</div></div>
+      </div>`;
 
-    /***** API (개선) *****/
-    async function apiRequest(action, data = {}) {
-      try {
-        const res = await fetch(API_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' }, // ← 중요: application/json
-          body: JSON.stringify({ action, sessionId, ...data })
-        });
-        const text = await res.text();
-        let json = {};
-        try { json = JSON.parse(text); } catch(e) {
-          console.error('[apiRequest] JSON parse error:', e, text);
-          return { success: false, error: 'Invalid JSON from server' };
-        }
-        if (!res.ok) {
-          console.error('[apiRequest] HTTP ' + res.status, json);
-          return { success: false, error: 'HTTP ' + res.status };
-        }
-        return json;
-      } catch (e) {
-        console.error('[apiRequest] network error:', e);
-        return { success: false, error: e.message || 'network error' };
-      }
-    }
+    const el = document.getElementById('fortuneBody');
+    el.innerHTML = body;
+    document.getElementById('fortuneModal').style.display = 'block';
+  }
 
-    /***** 로그인/메인 (개선: 서버 실패시 로컬 우회) *****/
-    async function handleLogin() {
-      const userName = document.getElementById('userName').value;
-      const userMBTI = document.getElementById('userMBTI').value;
-      if (!userName || !userMBTI) return showAlert('이름과 MBTI를 모두 선택해주세요','error');
+  /***** 초기화 & 이벤트 *****/
+  document.addEventListener('DOMContentLoaded', () => {
+    // 로그인/로그아웃/참여
+    document.getElementById('loginBtn').addEventListener('click', handleLogin);
+    document.getElementById('logoutBtn').addEventListener('click', handleLogout);
+    document.getElementById('startBtn').addEventListener('click', startTimer);
 
-      currentUser = userName;
-      sessionId = 'session_' + Date.now();
-      const userInfo = TEMP_USER_DATA[userName] || { team:'투어패스사업부', position:'' };
+    // 관계도
+    const relationMenu = document.getElementById('relationMenu');
+    relationMenu.addEventListener('click', (e)=>{
+      const ready = !!RELATION_URL;
+      if (!ready) { e.preventDefault(); showAlert('MBTI 관계도 링크가 아직 준비 중입니다.','error'); }
+      else { relationMenu.setAttribute('href', RELATION_URL); relationMenu.setAttribute('target', '_blank'); }
+    });
 
-      // 서버 로그인 시도
-      let usedLocalFallback = false;
-      const res = await apiRequest('login', { userName, mbti: userMBTI, team: userInfo.team, position: userInfo.position });
+    // 일정
+    document.getElementById('scheduleMenu').addEventListener('click', ()=> document.getElementById('scheduleModal')?.classList.add('show') || (document.getElementById('scheduleModal') && (document.getElementById('scheduleModal').style.display='block')));
 
-      if (!res.success) {
-        usedLocalFallback = true;
-        console.warn('[login] server failed, fallback to local:', res.error);
-        showAlert('서버 연결 불가: 로컬 모드로 로그인합니다.', 'error');
-      }
+    // 투어패스 티켓: 클릭=이동, 롱프레스=변경
+    const vault = document.getElementById('vaultMenu');
+    let pressTimer=null; const longPressMs = 700;
+    vault.addEventListener('mousedown', ()=>{ pressTimer = setTimeout(()=>{ openVaultModal(); }, longPressMs); });
+    vault.addEventListener('touchstart', ()=>{ pressTimer = setTimeout(()=>{ openVaultModal(); }, longPressMs); }, {passive:true});
+    ['mouseup','mouseleave','touchend','touchcancel'].forEach(ev=> vault.addEventListener(ev, ()=>{
+      if (pressTimer){ clearTimeout(pressTimer); pressTimer=null; gotoSelectedTicket(); }
+    }, {passive:true}));
 
-      // 로컬 상태 저장
-      localStorage.setItem('currentUser', userName);
-      localStorage.setItem('userMBTI', userMBTI);
-      localStorage.setItem('sessionId', sessionId);
+    // 보관함 모달 버튼
+    document.getElementById('savePresetBtn').addEventListener('click', ()=>{
+      const chosen = document.querySelector('input[name="presetTicket"]:checked');
+      if (!chosen) { showAlert('티켓을 선택해주세요','error'); return; }
+      setSelectedTicketCode(chosen.value);
+      showAlert('선택이 저장되었습니다');
+      document.getElementById('vaultModal').style.display='none';
+      gotoSelectedTicket();
+    });
+    document.getElementById('goPresetBtn').addEventListener('click', ()=>{
+      const chosen = document.querySelector('input[name="presetTicket"]:checked');
+      if (!chosen) { showAlert('티켓을 선택해주세요','error'); return; }
+      const t = findTicketByCode(chosen.value);
+      if (!t.url) { showAlert('선택한 티켓의 링크가 설정되지 않았습니다.','error'); return; }
+      window.open(normalizeUrl(t.url), '_blank', 'noopener');
+    });
+    document.getElementById('vaultClearBtn').addEventListener('click', ()=>{ setSelectedTicketCode(''); showAlert('선택이 해제되었습니다'); updateVaultDesc(); });
 
-      // 화면 전환
+    // 티켓 링크 설정 열기/저장
+    document.getElementById('ticketConfigOpen').addEventListener('click', (e)=>{ e.stopPropagation(); openTicketConfig(); });
+    document.getElementById('ticketConfigOpen2').addEventListener('click', openTicketConfig);
+    document.getElementById('saveTicketConfig').addEventListener('click', saveTicketConfig);
+
+    // 설문
+    document.getElementById('surveyMenu').addEventListener('click', openSurvey);
+    document.getElementById('openSurveyFromOverlay').addEventListener('click', ()=>{ document.getElementById('surveyModal')?.classList.add('show') || (document.getElementById('surveyModal') && (document.getElementById('surveyModal').style.display='block')); });
+
+    // 데일리 포춘
+    document.getElementById('fortuneMenu').addEventListener('click', openFortune);
+
+    // 투어패스 v3 초안
+    document.getElementById('tpv3Menu').addEventListener('click', ()=>{
+      if (TPV3_URL && TPV3_URL.trim().length > 0) { window.open(TPV3_URL, '_blank', 'noopener'); }
+      else { document.getElementById('tpv3Modal').style.display = 'block'; }
+    });
+
+    // 모바일티켓 v3 (신규)
+    document.getElementById('mtv3Menu').addEventListener('click', ()=>{
+      if (MOBILE_TICKET_V3_URL && MOBILE_TICKET_V3_URL.trim().length > 0) { window.open(MOBILE_TICKET_V3_URL, '_blank', 'noopener'); }
+      else { showAlert('모바일티켓 v3 링크가 아직 준비 중입니다.','error'); }
+    });
+
+    // AI 챗봇
+    const ai = document.getElementById('aiMenu');
+    ai.href = AI_CHATBOT_URL;
+
+    // 공통: 모달 닫기 & 외부 클릭 닫기
+    document.querySelectorAll('.close-btn').forEach(btn=>{
+      btn.addEventListener('click', function(){
+        const id = this.getAttribute('data-close');
+        if (id) document.getElementById(id).style.display='none';
+        else this.closest('.modal').style.display='none';
+      })
+    });
+    window.addEventListener('click', e=>{ if (e.target.classList && e.target.classList.contains('modal')) e.target.style.display='none'; });
+
+    // 세션 복원
+    const savedUser = localStorage.getItem('currentUser');
+    if (savedUser) {
+      currentUser = savedUser; sessionId = localStorage.getItem('sessionId');
       document.getElementById('loginScreen').classList.add('hidden');
       document.getElementById('mainScreen').classList.remove('hidden');
+      const info = TEMP_USER_DATA[currentUser] || {team:'', position:''};
       document.getElementById('userNameDisplay').textContent = currentUser;
-      document.getElementById('userTeamDisplay').textContent = `${userInfo.team} | ${userInfo.position}`;
-      showAlert(usedLocalFallback ? `오프라인 모드 로그인: ${currentUser}님` : `환영합니다, ${currentUser}님!`);
-
-      const storedEnd = localStorage.getItem('workshopEndAt');
-      if (storedEnd) beginTimerInterval();
-      updateVaultDesc();
+      document.getElementById('userTeamDisplay').textContent = `${info.team} | ${info.position}`;
     }
 
-    async function handleLogout() {
-      if (!currentUser) return location.reload();
-      if (!confirm('로그아웃하시겠습니까?')) return;
-
-      // 서버 상태 업데이트는 실패해도 무시
-      apiRequest('updateUserStatus', { userName: currentUser, status: 'offline' }).catch(()=>{});
-
-      localStorage.removeItem('workshopEndAt');
-      if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
-      timerRunning = false;
-
-      localStorage.clear();
-      location.reload();
-    }
-
-    /***** 타이머 *****/
-    function startTimer() {
-      const stored = localStorage.getItem('workshopEndAt');
-      if (stored) {
-        showAlert('이미 카운트다운이 진행 중입니다.');
-        beginTimerInterval();
-        return;
-      }
-      const endTs = Date.now() + 48*60*60*1000;
-      localStorage.setItem('workshopEndAt', String(endTs));
-      workshopEndAt = new Date(endTs);
-
-      beginTimerInterval();
-      showAlert('카운트다운을 시작합니다.');
-    }
-    function beginTimerInterval(){
-      if (timerRunning) return;
-      const stored = localStorage.getItem('workshopEndAt');
-      if (!stored) return;
-      workshopEndAt = new Date(parseInt(stored, 10));
-      timerRunning = true;
-
-      const btn = document.getElementById('startBtn');
-      if (btn){ btn.disabled = true; btn.textContent = '카운트다운 진행 중'; }
-
-      function tick(){
-        const remain = workshopEndAt - Date.now();
-        document.getElementById('timerDisplay').textContent = fmt(remain);
-        if (remain <= 0) {
-          clearInterval(timerInterval);
-          timerInterval = null;
-          timerRunning = false;
-          localStorage.removeItem('workshopEndAt');
-          if (btn){ btn.disabled = false; btn.textContent = '워크숍 참여하기'; }
-          endFlow();
-        }
-      }
-      tick();
-      timerInterval = setInterval(tick, 1000);
-    }
-    function endFlow(){
-      document.getElementById('blurTarget').classList.add('blurred');
-      document.getElementById('overlay').style.display = 'flex';
-      openSurvey();
-    }
-
-    /***** MBTI 통계(보존) *****/
-    async function loadMBTIStats() {
-      document.getElementById('mbtiModal').style.display = 'block';
-      const res = await apiRequest('getMBTIStats');
-      if (!res.success) return showAlert('통계를 불러오지 못했습니다','error');
-      document.getElementById('totalParticipants').textContent = res.totalParticipants || 0;
-      document.getElementById('onlineCount').textContent = res.onlineUsers || 0;
-      const grid = document.getElementById('mbtiDistribution');
-      grid.innerHTML = '';
-      const all = ['INTJ','INTP','ENTJ','ENTP','INFJ','INFP','ENFJ','ENFP','ISTJ','ISFJ','ESTJ','ESFJ','ISTP','ISFP','ESTP','ESFP'];
-      all.forEach(t=>{
-        const c = (res.mbtiDistribution && res.mbtiDistribution[t]) || 0;
-        const el = document.createElement('div');
-        el.className = 'mbti-item';
-        if (c>0){ el.style.background='rgba(59,130,246,.1)'; el.style.borderColor='var(--secondary-brand)'; }
-        el.innerHTML = `<div class="mbti-type">${t}</div><div class="mbti-count">${c}</div>`;
-        grid.appendChild(el);
-      });
-      const btn = document.getElementById('relationBtn');
-      btn.href = RELATION_URL && !RELATION_URL.includes('<<') ? RELATION_URL : '#';
-      if (btn.href.endsWith('#')) btn.textContent = 'MBTI 관계도 (URL 준비 중)';
-    }
-
-    /***** 투어패스 보관함 - 사전 티켓 선택/이동 *****/
-    function getSelectedTicketCode(){ return localStorage.getItem('selectedTicketCode') || ''; }
-    function setSelectedTicketCode(code){ localStorage.setItem('selectedTicketCode', code || ''); updateVaultDesc(); }
-    function findTicketByCode(code){ return PRESET_TICKETS.find(t => t.code === code); }
-
-    function updateVaultDesc(){
-      const desc = document.getElementById('vaultDesc');
-      const code = getSelectedTicketCode();
-      if (!code) { desc.textContent = '티켓 선택 후 바로 이동'; return; }
-      const t = findTicketByCode(code);
-      if (t) desc.textContent = `선택됨: ${t.code} · ${t.name}`;
-      else desc.textContent = '티켓 선택 후 바로 이동';
-    }
-
-    function openVaultModal(){
-      const wrap = document.getElementById('presetList');
-      const selected = getSelectedTicketCode();
-      wrap.innerHTML = PRESET_TICKETS.map(t=>{
-        const checked = t.code === selected ? 'checked' : '';
-        return `
-          <label class="q-card" style="display:flex;align-items:center;gap:.8rem;cursor:pointer">
-            <input type="radio" name="presetTicket" value="${t.code}" ${checked} style="width:18px;height:18px">
-            <div>
-              <div class="q-title">코드 ${t.code} · ${escapeHtml(t.name)}</div>
-              <div style="color:var(--text-secondary)">${escapeHtml(t.url)}</div>
-            </div>
-          </label>
-        `;
-      }).join('');
-      document.getElementById('currentChoiceTip').textContent = selected ? `현재 선택: ${selected}` : '아직 선택된 티켓이 없습니다.';
-      document.getElementById('vaultModal').style.display = 'block';
-    }
-
-    function gotoSelectedTicket(){
-      const code = getSelectedTicketCode();
-      const t = findTicketByCode(code);
-      if (!t) { openVaultModal(); showAlert('먼저 티켓을 선택해주세요.', 'error'); return; }
-      window.open(normalizeUrl(t.url), '_blank', 'noopener');
-    }
-
-    /***** 설문 *****/
-    function openSurvey(){ document.getElementById('surveyModal')?.style.display = 'block'; }
-
-    /***** 심리테스트 *****/
-    const psyQuestions = [
-      { t:'새로운 장소를 보면 계획 없이도 바로 들어가 본다.', axis:'E' },
-      { t:'여행은 촘촘한 일정표가 있어야 마음이 편하다.', axis:'J' },
-      { t:'메뉴 고를 때 직관적으로 끌리는 걸 고른다.', axis:'N' },
-      { t:'할인/혜택을 꼼꼼히 따져본 뒤 결정한다.', axis:'S' },
-      { t:'팀 의견을 조율하는 역할을 자연스럽게 맡는다.', axis:'E' },
-      { t:'즉흥 제안에도 부담 없이 “가자!”라고 말한다.', axis:'P' },
-      { t:'사진보다 순간의 감정이 더 중요하다고 느낀다.', axis:'F' },
-      { t:'문제가 생기면 일단 원인부터 분석한다.', axis:'T' },
-      { t:'사람 많은 곳에서 에너지를 얻는다.', axis:'E' },
-      { t:'계획이 바뀌면 금방 대안을 떠올린다.', axis:'P' },
-    ];
-    function axisOpp(a){ return ({E:'I', I:'E', S:'N', N:'S', T:'F', F:'T', J:'P', P:'J'})[a] }
-    let psyIdx = 0, psyScore = {E:0,I:0,S:0,N:0,T:0,F:0,J:0,P:0};
-
-    function renderPsyProgress(){
-      const wrap = document.getElementById('psyProgress');
-      wrap.innerHTML = '';
-      for(let i=0;i<psyQuestions.length;i++){
-        const d = document.createElement('div');
-        d.className = 'dot' + (i<psyIdx ? ' on' : '');
-        wrap.appendChild(d);
-      }
-    }
-    function renderPsyQuestion(){
-      document.getElementById('psyResult').classList.add('hidden');
-      document.getElementById('psyQuestionCard').classList.remove('hidden');
-      renderPsyProgress();
-      const q = psyQuestions[psyIdx];
-      document.getElementById('psyQuestionText').textContent = `${psyIdx+1}. ${q.t}`;
-    }
-    function finishPsy(){
-      const e = psyScore.E >= psyScore.I ? 'E':'I';
-      const s = psyScore.S >= psyScore.N ? 'S':'N';
-      const t = psyScore.T >= psyScore.F ? 'T':'F';
-      const j = psyScore.J >= psyScore.P ? 'J':'P';
-
-      let type='탐험가', headline='새로움을 즐기는 탐험가';
-      if (j==='J' && t==='T') { type='계획가'; headline='체계로 성과 만드는 계획가'; }
-      else if (e==='E' && psyScore.P>psyScore.J) { type='도전가'; headline='즉흥 에너지 가득한 도전가'; }
-      else if (psyScore.F>psyScore.T && psyScore.N>psyscore.S) { type='감성가'; headline='스토리에 몰입하는 감성가'; }
-
-      const descMap = {
-        '탐험가':'지금 내 마음이 가는 곳이 지도입니다. 가벼운 여유와 깜짝 스팟이 행복을 크게 키워줘요.',
-        '도전가':'“가보자!”가 자연스러운 타입. 액티비티와 즉흥 미션이 오늘의 스파크를 켜요.',
-        '계획가':'타임라인·예산·동선까지 싹! 깔끔한 화면과 체크리스트가 최고의 무기.',
-        '감성가':'한 장의 사진, 한 모금의 공기. 스토리텔링 코스와 굿즈가 마음에 착—.'
-      };
-
-      document.getElementById('psyType').textContent = type;
-      document.getElementById('psyEmoji').textContent = {'탐험가':'🧭✨','도전가':'🚀🔥','계획가':'📒🧩','감성가':'🎀🌸'}[type];
-      document.getElementById('psyHeadline').textContent = headline;
-      document.getElementById('psyDesc').textContent = descMap[type];
-
-      const stickers = Array.from({length:3}, ()=> ['✨','🌟','🍀','🎈','🧃','🍭','🫧','🌈','💫','🩵'][Math.floor(Math.random()*10)]);
-      document.getElementById('psyStickers').innerHTML = stickers.join(' ');
-
-      const explore = Math.round((psyScore.E+psyScore.P) / (psyScore.E+psyScore.P+psyScore.I+psyScore.J) * 100) || 40;
-      const plan    = Math.round((psyScore.J+psyScore.S) / (psyScore.J+psyScore.S+psyScore.P+psyScore.N) * 100) || 40;
-      const story   = Math.round((psyScore.F+psyScore.N) / (psyScore.F+psyScore.N+psyScore.T+psyScore.S) * 100) || 40;
-      document.getElementById('barExplore').style.width = Math.min(100,Math.max(10,explore))+'%';
-      document.getElementById('barPlan').style.width    = Math.min(100,Math.max(10,plan))+'%';
-      document.getElementById('barStory').style.width   = Math.min(100,Math.max(10,story))+'%';
-
-      document.getElementById('psyQuestionCard').classList.add('hidden');
-      document.getElementById('psyResult').classList.remove('hidden');
-      confettiBurst();
-    }
-    function resetPsy(){
-      psyIdx = 0;
-      psyScore = {E:0,I:0,S:0,N:0,T:0,F:0,J:0,P:0};
-      renderPsyQuestion();
-    }
-
-    /***** 데일리 포춘 *****/
-    function openFortune(){
-      const name = currentUser || '게스트';
-      const today = new Date();
-      const yyyy = today.getFullYear();
-      const mm = String(today.getMonth()+1).padStart(2,'0');
-      const dd = String(today.getDate()).padStart(2,'0');
-      const seed = `${name}-${yyyy}${mm}${dd}`;
-      const rng = seededRng(seed);
-
-      const grade = ['★★★★★','★★★★☆','★★★☆☆','★★☆☆☆','★☆☆☆☆'];
-      const advices = [
-        '작게 시작하면 크게 돌아옵니다.',
-        '과감히 덜어내면 속도가 납니다.',
-        '타이밍은 지금! 미루지 말기.',
-        '사람을 먼저 챙기면 일이 풀립니다.',
-        '데이터가 답. 감보다 수치 확인.'
-      ];
-      const areas = ['전체운','연애운','금전운','건강운','업무/학업'];
-      const colors = ['네이비','코발트 블루','민트','옐로','코랄','라일락','화이트','블랙'];
-      const items = ['텀블러','우산','볼펜','노트','키링','카드지갑','양말','스카프'];
-      const places = ['카페 창가','강변 산책로','도서관','작은 서점','공원 벤치','박물관','전망대','시장 골목'];
-      const mbti = ['INTJ','INTP','ENTJ','ENTP','INFJ','INFP','ENFJ','ENFP','ISTJ','ISFJ','ESTJ','ESFJ','ISTP','ISFP','ESTP','ESFP'];
-
-      function secBlock(title){
-        const g = pick(rng, grade);
-        const tip = pick(rng, advices);
-        return `<div class="card"><div class="q-title">${title} <span style="float:right">${g}</span></div><div style="color:var(--text-secondary)">${tip}</div></div>`;
-      }
-
-      const luckyNumber = Math.floor(rng()*99)+1;
-      const luckyColor = pick(rng, colors);
-      const luckyItem = pick(rng, items);
-      const luckyPlace = pick(rng, places);
-      const luckyMBTI = pick(rng, mbti);
-
-      const body = `
-        <div class="card" style="text-align:center">
-          <div class="result-badge">오늘 (${yyyy}.${mm}.${dd})</div>
-          <h3 style="margin:.5rem 0 .25rem;">${name}님의 데일리 포춘</h3>
-          <p style="color:var(--text-secondary)">하루 동안 동일하게 유지됩니다.</p>
-        </div>
-        ${areas.map(secBlock).join('')}
-        <div class="card" style="display:grid;grid-template-columns:1fr 1fr;gap:.6rem;">
-          <div><div class="q-title">럭키 넘버</div><div>${luckyNumber}</div></div>
-          <div><div class="q-title">럭키 컬러</div><div>${luckyColor}</div></div>
-          <div><div class="q-title">럭키 아이템</div><div>${luckyItem}</div></div>
-          <div><div class="q-title">럭키 장소</div><div>${luckyPlace}</div></div>
-          <div style="grid-column:1/3"><div class="q-title">궁합 MBTI</div><div>${luckyMBTI}</div></div>
-        </div>
-      `;
-      const el = document.getElementById('fortuneBody');
-      el.innerHTML = body;
-      document.getElementById('fortuneModal').style.display = 'block';
-    }
-
-    /***** 초기화 & 이벤트 *****/
-    document.addEventListener('DOMContentLoaded', () => {
-      // 로그인 버튼: 연타 방지 래퍼
-      let loginBusy = false;
-      document.getElementById('loginBtn').addEventListener('click', async () => {
-        if (loginBusy) return;
-        loginBusy = true;
-        try { await handleLogin(); } finally { loginBusy = false; }
-      });
-
-      document.getElementById('logoutBtn').addEventListener('click', handleLogout);
-      document.getElementById('startBtn').addEventListener('click', startTimer);
-
-      // 관계도
-      const relationMenu = document.getElementById('relationMenu');
-      relationMenu.addEventListener('click', (e)=>{
-        const ready = RELATION_URL && !RELATION_URL.includes('<<');
-        if (!ready) {
-          e.preventDefault();
-          showAlert('MBTI 관계도 링크가 아직 준비 중입니다.','error');
-        } else {
-          relationMenu.setAttribute('href', RELATION_URL);
-          relationMenu.setAttribute('target', '_blank');
-        }
-      });
-
-      // 일정
-      document.getElementById('scheduleMenu').addEventListener('click', ()=> document.getElementById('scheduleModal')?.classList.add('show') || (document.getElementById('scheduleModal').style.display='block'));
-
-      // 투어패스 보관함: 클릭=이동, 롱프레스=변경
-      const vault = document.getElementById('vaultMenu');
-      let pressTimer=null;
-      const longPressMs = 700;
-
-      vault.addEventListener('mousedown', ()=>{ pressTimer = setTimeout(()=>{ openVaultModal(); }, longPressMs); });
-      vault.addEventListener('touchstart', ()=>{ pressTimer = setTimeout(()=>{ openVaultModal(); }, longPressMs); }, {passive:true});
-      ['mouseup','mouseleave','touchend','touchcancel'].forEach(ev=> vault.addEventListener(ev, ()=>{
-        if (pressTimer){ clearTimeout(pressTimer); pressTimer=null; gotoSelectedTicket(); }
-      }, {passive:true}));
-
-      // 보관함 모달 버튼
-      document.getElementById('savePresetBtn').addEventListener('click', ()=>{
-        const chosen = document.querySelector('input[name="presetTicket"]:checked');
-        if (!chosen) { showAlert('티켓을 선택해주세요','error'); return; }
-        setSelectedTicketCode(chosen.value);
-        showAlert('선택이 저장되었습니다');
-        document.getElementById('vaultModal').style.display='none';
-        gotoSelectedTicket();
-      });
-      document.getElementById('goPresetBtn').addEventListener('click', ()=>{
-        const chosen = document.querySelector('input[name="presetTicket"]:checked');
-        if (!chosen) { showAlert('티켓을 선택해주세요','error'); return; }
-        const t = PRESET_TICKETS.find(x=>x.code===chosen.value);
-        window.open(normalizeUrl(t.url), '_blank', 'noopener');
-      });
-      document.getElementById('vaultClearBtn').addEventListener('click', ()=>{
-        setSelectedTicketCode('');
-        showAlert('선택이 해제되었습니다');
-        updateVaultDesc();
-      });
-
-      // 설문
-      document.getElementById('surveyMenu').addEventListener('click', openSurvey);
-      document.getElementById('openSurveyFromOverlay').addEventListener('click', ()=>{ document.getElementById('surveyModal')?.style.display='block'; });
-
-      // 데일리 포춘
-      document.getElementById('fortuneMenu').addEventListener('click', openFortune);
-
-      // 투어패스 v3 초안
-      document.getElementById('tpv3Menu').addEventListener('click', ()=>{
-        if (TPV3_URL && TPV3_URL.trim().length > 0) {
-          window.open(TPV3_URL, '_blank', 'noopener');
-        } else {
-          document.getElementById('tpv3Modal').style.display = 'block';
-        }
-      });
-
-      // AI 챗봇
-      const ai = document.getElementById('aiMenu');
-      ai.href = AI_CHATBOT_URL;
-
-      // 공통: 모달 닫기 & 외부 클릭 닫기
-      document.querySelectorAll('.close-btn').forEach(btn=>{
-        btn.addEventListener('click', function(){
-          const id = this.getAttribute('data-close');
-          if (id) document.getElementById(id).style.display='none';
-          else this.closest('.modal').style.display='none';
-        })
-      });
-      window.addEventListener('click', e=>{
-        if (e.target.classList && e.target.classList.contains('modal')) e.target.style.display='none';
-      });
-
-      // 세션 복원
-      const savedUser = localStorage.getItem('currentUser');
-      if (savedUser) {
-        currentUser = savedUser;
-        sessionId = localStorage.getItem('sessionId');
-        document.getElementById('loginScreen').classList.add('hidden');
-        document.getElementById('mainScreen').classList.remove('hidden');
-        const info = TEMP_USER_DATA[currentUser] || { team:'투어패스사업부', position:'' };
-        document.getElementById('userNameDisplay').textContent = currentUser;
-        document.getElementById('userTeamDisplay').textContent = `${info.team} | ${info.position}`;
-      }
-
-      // 타이머 자동 복원 + 보관함 라벨
-      const storedEnd = localStorage.getItem('workshopEndAt');
-      if (storedEnd) beginTimerInterval();
-      updateVaultDesc();
-    });
-  </script>
+    // 타이머 자동 복원 + 라벨 업데이트
+    const storedEnd = localStorage.getItem('workshopEndAt');
+    if (storedEnd) beginTimerInterval();
+    updateVaultDesc();
+  });
+</script>
 </body>
 </html>
