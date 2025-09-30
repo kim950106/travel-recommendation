@@ -69,7 +69,7 @@
     .close-btn{background:none;border:none;font-size:1.5rem;cursor:pointer;color:var(--text-muted)}
     .modal-body{padding:1.25rem}
 
-    /* 심리/결과 카드 등... (생략 없이 유지) */
+    /* 심리/결과 카드 등 */
     .q-card{background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:1rem;margin-bottom:1rem}
     .q-title{font-weight:800;margin-bottom:.6rem}
     .progress-wrap{display:flex;gap:.25rem;margin:.5rem 0 .75rem}
@@ -297,7 +297,7 @@
     const API_URL = 'https://script.google.com/macros/s/AKfycbxP7oI1CUK7vvga2HJbUp6r_U5bOsFWwFzcIAhIrRjKfCbUf7Mwlu56Ayqa3EokUJXz/exec';
     const RELATION_URL = 'https://kim950106.github.io/tour/';
     const AI_CHATBOT_URL = 'https://chatgpt.com/g/g-689acc0b7bd08191bb31112e0a19cffc-tueopaeseu-saeobjeanseo-ai-eosiseunteu';
-    const TPV3_URL = ''; // ← v3 초안 외부 링크 있으면 여기에 입력 (예: 'https://your-prototype-url')
+    const TPV3_URL = ''; // ← v3 초안 외부 링크 있으면 입력
 
     // 사전 등록 티켓
     const PRESET_TICKETS = [
@@ -351,7 +351,7 @@
       return url;
     }
 
-    /* confetti (그대로 유지) */
+    /* confetti */
     function confettiBurst(ms=1200){
       let c = document.getElementById('confettiCanvas');
       if(!c){ c = document.createElement('canvas'); c.id = 'confettiCanvas'; document.body.appendChild(c); }
@@ -389,22 +389,32 @@
     }
     function pick(rng, arr){ return arr[Math.floor(rng()*arr.length)] }
 
-    /***** API *****/
+    /***** API (개선) *****/
     async function apiRequest(action, data = {}) {
       try {
         const res = await fetch(API_URL, {
           method: 'POST',
-          headers: { 'Content-Type': 'text/plain' },
+          headers: { 'Content-Type': 'application/json' }, // ← 중요: application/json
           body: JSON.stringify({ action, sessionId, ...data })
         });
-        if (!res.ok) return { success: false, error: `HTTP ${res.status}` };
-        return await res.json();
+        const text = await res.text();
+        let json = {};
+        try { json = JSON.parse(text); } catch(e) {
+          console.error('[apiRequest] JSON parse error:', e, text);
+          return { success: false, error: 'Invalid JSON from server' };
+        }
+        if (!res.ok) {
+          console.error('[apiRequest] HTTP ' + res.status, json);
+          return { success: false, error: 'HTTP ' + res.status };
+        }
+        return json;
       } catch (e) {
-        return { success: false, error: e.message };
+        console.error('[apiRequest] network error:', e);
+        return { success: false, error: e.message || 'network error' };
       }
     }
 
-    /***** 로그인/메인 *****/
+    /***** 로그인/메인 (개선: 서버 실패시 로컬 우회) *****/
     async function handleLogin() {
       const userName = document.getElementById('userName').value;
       const userMBTI = document.getElementById('userMBTI').value;
@@ -412,24 +422,32 @@
 
       currentUser = userName;
       sessionId = 'session_' + Date.now();
-      const userInfo = TEMP_USER_DATA[userName];
+      const userInfo = TEMP_USER_DATA[userName] || { team:'투어패스사업부', position:'' };
 
+      // 서버 로그인 시도
+      let usedLocalFallback = false;
       const res = await apiRequest('login', { userName, mbti: userMBTI, team: userInfo.team, position: userInfo.position });
-      if (!res.success) return showAlert('로그인 실패: ' + (res.error || ''), 'error');
 
+      if (!res.success) {
+        usedLocalFallback = true;
+        console.warn('[login] server failed, fallback to local:', res.error);
+        showAlert('서버 연결 불가: 로컬 모드로 로그인합니다.', 'error');
+      }
+
+      // 로컬 상태 저장
       localStorage.setItem('currentUser', userName);
       localStorage.setItem('userMBTI', userMBTI);
       localStorage.setItem('sessionId', sessionId);
 
+      // 화면 전환
       document.getElementById('loginScreen').classList.add('hidden');
       document.getElementById('mainScreen').classList.remove('hidden');
       document.getElementById('userNameDisplay').textContent = currentUser;
       document.getElementById('userTeamDisplay').textContent = `${userInfo.team} | ${userInfo.position}`;
-      showAlert(`환영합니다, ${currentUser}님!`);
+      showAlert(usedLocalFallback ? `오프라인 모드 로그인: ${currentUser}님` : `환영합니다, ${currentUser}님!`);
 
       const storedEnd = localStorage.getItem('workshopEndAt');
       if (storedEnd) beginTimerInterval();
-
       updateVaultDesc();
     }
 
@@ -437,7 +455,8 @@
       if (!currentUser) return location.reload();
       if (!confirm('로그아웃하시겠습니까?')) return;
 
-      await apiRequest('updateUserStatus', { userName: currentUser, status: 'offline' });
+      // 서버 상태 업데이트는 실패해도 무시
+      apiRequest('updateUserStatus', { userName: currentUser, status: 'offline' }).catch(()=>{});
 
       localStorage.removeItem('workshopEndAt');
       if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
@@ -559,7 +578,7 @@
     /***** 설문 *****/
     function openSurvey(){ document.getElementById('surveyModal')?.style.display = 'block'; }
 
-    /***** 심리테스트 (그대로 유지) *****/
+    /***** 심리테스트 *****/
     const psyQuestions = [
       { t:'새로운 장소를 보면 계획 없이도 바로 들어가 본다.', axis:'E' },
       { t:'여행은 촘촘한 일정표가 있어야 마음이 편하다.', axis:'J' },
@@ -600,7 +619,7 @@
       let type='탐험가', headline='새로움을 즐기는 탐험가';
       if (j==='J' && t==='T') { type='계획가'; headline='체계로 성과 만드는 계획가'; }
       else if (e==='E' && psyScore.P>psyScore.J) { type='도전가'; headline='즉흥 에너지 가득한 도전가'; }
-      else if (psyScore.F>psyScore.T && psyScore.N>psyScore.S) { type='감성가'; headline='스토리에 몰입하는 감성가'; }
+      else if (psyScore.F>psyScore.T && psyScore.N>psyscore.S) { type='감성가'; headline='스토리에 몰입하는 감성가'; }
 
       const descMap = {
         '탐험가':'지금 내 마음이 가는 곳이 지도입니다. 가벼운 여유와 깜짝 스팟이 행복을 크게 키워줘요.',
@@ -692,8 +711,14 @@
 
     /***** 초기화 & 이벤트 *****/
     document.addEventListener('DOMContentLoaded', () => {
-      // 로그인/로그아웃/참여
-      document.getElementById('loginBtn').addEventListener('click', handleLogin);
+      // 로그인 버튼: 연타 방지 래퍼
+      let loginBusy = false;
+      document.getElementById('loginBtn').addEventListener('click', async () => {
+        if (loginBusy) return;
+        loginBusy = true;
+        try { await handleLogin(); } finally { loginBusy = false; }
+      });
+
       document.getElementById('logoutBtn').addEventListener('click', handleLogout);
       document.getElementById('startBtn').addEventListener('click', startTimer);
 
@@ -736,7 +761,7 @@
       document.getElementById('goPresetBtn').addEventListener('click', ()=>{
         const chosen = document.querySelector('input[name="presetTicket"]:checked');
         if (!chosen) { showAlert('티켓을 선택해주세요','error'); return; }
-        const t = findTicketByCode(chosen.value);
+        const t = PRESET_TICKETS.find(x=>x.code===chosen.value);
         window.open(normalizeUrl(t.url), '_blank', 'noopener');
       });
       document.getElementById('vaultClearBtn').addEventListener('click', ()=>{
@@ -784,7 +809,7 @@
         sessionId = localStorage.getItem('sessionId');
         document.getElementById('loginScreen').classList.add('hidden');
         document.getElementById('mainScreen').classList.remove('hidden');
-        const info = TEMP_USER_DATA[currentUser];
+        const info = TEMP_USER_DATA[currentUser] || { team:'투어패스사업부', position:'' };
         document.getElementById('userNameDisplay').textContent = currentUser;
         document.getElementById('userTeamDisplay').textContent = `${info.team} | ${info.position}`;
       }
