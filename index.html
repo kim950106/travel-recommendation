@@ -1,40 +1,40 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8" />
+<meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>투어패스사업부 2025 워크숍</title>
 <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
-
 <style>
   :root{
-    --brand-1:#1e3a8a; --brand-2:#2563eb; --brand-3:#3b82f6;
+    --brand-1:#1e3a8a;        /* 보조 네이비(타이틀) */
+    --brand-2:#e97357;        /* ⬅ 메인 포인트(첨부색) */
+    --brand-3:#f08b68;        /* ⬅ 보조 포인트(그라데이션 상단) */
     --text:#0f172a; --muted:#64748b; --line:#e2e8f0;
   }
-  body{font-family:'Pretendard',sans-serif;background:linear-gradient(180deg,#f0f4ff 0%,#ffffff 100%);min-height:100vh;color:var(--text);display:flex;flex-direction:column;align-items:center;justify-content:start;padding:2rem 1rem 4rem}
-  .header{text-align:center;margin-bottom:1.25rem}
+  body{font-family:'Pretendard',sans-serif;background:linear-gradient(180deg,#fff6f2 0%,#ffffff 100%);min-height:100vh;color:var(--text);display:flex;flex-direction:column;align-items:center;justify-content:start;padding:2rem 1rem 4rem}
+  .header{text-align:center;margin-bottom:1.1rem}
   .header h1{font-weight:800;font-size:1.8rem;color:var(--brand-1)}
   .header p{color:#94a3b8}
-  .card{background:#fff;border-radius:1.25rem;box-shadow:0 8px 24px rgba(0,0,0,.08);padding:1.5rem;width:100%;max-width:420px;margin-bottom:1.1rem;transition:.25s}
+  .card{background:#fff;border-radius:1.25rem;box-shadow:0 8px 24px rgba(0,0,0,.08);padding:1.5rem;width:100%;max-width:420px;margin-bottom:1rem;transition:.25s}
   .card:hover{transform:translateY(-2px)}
   label{display:block;font-weight:600;font-size:.9rem;color:#334155;margin-bottom:.35rem}
   select,input{width:100%;border:1px solid var(--line);border-radius:.9rem;padding:.85rem 1rem;background:#f9fafb;transition:.2s}
-  select:focus,input:focus{background:#fff;border-color:var(--brand-3);box-shadow:0 0 0 3px rgba(59,130,246,.18);outline:0}
+  select:focus,input:focus{background:#fff;border-color:var(--brand-3);box-shadow:0 0 0 3px rgba(240,139,104,.22);outline:0}
   .btn{display:inline-block;width:100%;border-radius:.9rem;font-weight:800;padding:.9rem;text-align:center;transition:.25s}
-  .btn-primary{background:linear-gradient(90deg,var(--brand-2),var(--brand-3));color:#fff;box-shadow:0 4px 14px rgba(37,99,235,.25)}
-  .btn-primary:hover{background:linear-gradient(90deg,#1d4ed8,var(--brand-2));transform:translateY(-1px)}
+  .btn-primary{background:linear-gradient(90deg,var(--brand-2),var(--brand-3));color:#fff;box-shadow:0 4px 14px rgba(233,115,87,.28)}
+  .btn-primary:hover{background:linear-gradient(90deg,#df6444,var(--brand-2));transform:translateY(-1px)}
   .btn-outline{background:#fff;border:1px solid var(--line);color:var(--brand-1)}
-  .btn-outline:hover{background:#f8fafc}
   .menu-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.9rem}
-  .menu-item{border:1px solid var(--line);border-radius:1rem;background:#f9fafb;padding:1.1rem;text-align:center;color:var(--brand-1);font-weight:700;box-shadow:0 3px 10px rgba(0,0,0,.04);cursor:pointer;transition:.25s}
-  .menu-item:hover{background:#eef2ff;border-color:var(--brand-3);transform:translateY(-2px)}
-  .timer-box{background:linear-gradient(90deg,var(--brand-2),var(--brand-3));color:#fff;border-radius:1rem;padding:1.2rem;text-align:center;box-shadow:0 6px 16px rgba(37,99,235,.25)}
+  .menu-item{border:1px solid var(--line);border-radius:1rem;background:#fff;padding:1rem;text-align:center;color:#0f172a;font-weight:700;box-shadow:0 2px 8px rgba(0,0,0,.04);cursor:pointer;transition:.25s}
+  .menu-item:hover{background:#fff7f4;border-color:var(--brand-3);transform:translateY(-2px)}
+  .timer-box{background:linear-gradient(90deg,var(--brand-2),var(--brand-3));color:#fff;border-radius:1rem;padding:1rem;text-align:center;box-shadow:0 6px 16px rgba(233,115,87,.28)}
   .timer-display{font-size:2rem;font-weight:900}
-  .logout{max-width:420px;margin-top:1.1rem}
+  .logout{max-width:420px;margin-top:.9rem}
   /* 게이트 */
   #mainScreen.gated .menu-grid{filter:blur(3px);pointer-events:none}
-  #gatedNote{display:none;text-align:center;color:var(--muted);margin:.5rem 0 -.3rem}
+  #gatedNote{display:none;text-align:center;color:var(--muted);margin:.4rem 0 -.2rem}
   #gatedNote.on{display:block}
   /* 모달 공통 */
   .modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:50;align-items:center;justify-content:center;padding:1rem}
@@ -44,10 +44,18 @@
   /* 알림 */
   #alertMessage{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:var(--brand-2);color:#fff;padding:.7rem 1rem;border-radius:.7rem;box-shadow:0 3px 10px rgba(0,0,0,.15);opacity:0;transition:.25s;z-index:60}
   #alertMessage.show{opacity:1}
+  /* 심리테스트 결과 카드(오렌지 톤) */
+  #psyResultCard{animation:fadeIn .45s ease forwards;}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+  .psy-card{background:#fff;border-radius:1rem;box-shadow:0 6px 18px rgba(0,0,0,.08);padding:1.2rem;text-align:center;margin-top:1rem}
+  .psy-title{font-weight:900;font-size:1.15rem;color:#ffffff;background:linear-gradient(90deg,var(--brand-2),var(--brand-3));border-radius:.75rem;padding:.5rem 1rem;display:inline-block;margin-top:.35rem}
+  .psy-desc{background:#fff7f4;border:1px dashed #f3b39d;border-radius:.9rem;padding:.8rem;margin-top:.8rem;color:#6b7280;line-height:1.55}
+  .psy-tags{display:flex;flex-wrap:wrap;gap:.4rem;justify-content:center;margin-top:.6rem}
+  .psy-tags span{background:#ffe0d6;color:#8a4b38;border:1px solid #ffc6b6;border-radius:9999px;padding:.2rem .7rem;font-size:.8rem}
 </style>
 </head>
-
 <body>
+
   <div class="header">
     <h1>투어패스사업부</h1>
     <p>2025 워크숍</p>
@@ -90,31 +98,33 @@
         <button id="logoutBtn" class="btn btn-outline">로그아웃</button>
         <button id="startBtn" class="btn btn-primary">워크숍 참여하기</button>
       </div>
-      <div id="gatedNote" class="">🔒 아래 메뉴는 <b>“워크숍 참여하기”</b> 버튼을 누르면 열립니다.</div>
+      <div id="gatedNote">🔒 아래 메뉴는 <b>“워크숍 참여하기”</b> 버튼을 누르면 열립니다.</div>
+    </div>
+
+    <div class="timer-box w-full max-w-md mb-3">
+      <div class="text-sm opacity-90">워크숍 남은 시간</div>
+      <div id="timerDisplay" class="timer-display">48:00:00</div>
     </div>
 
     <div class="card">
+      <!-- ✅ 메뉴 순서: (좌)MBTI 관계도 | (우)투어패스 초안 … -->
       <div class="menu-grid">
         <div class="menu-item" id="menuMbti">🔗 MBTI 관계도</div>
+        <div class="menu-item" id="menuDraft">🍀 투어패스 초안</div>
         <div class="menu-item" id="menuVault">📎 투어패스 보관함</div>
-        <div class="menu-item" id="menuFortune">🔮 데일리 포춘</div>
-        <div class="menu-item" id="menuDraft">🧩 투어패스 초안</div>
+        <div class="menu-item" id="menuSchedule">📅 워크숍 일정</div>
+        <div class="menu-item" id="menuFortune">💫 데일리 포춘</div>
         <div class="menu-item" id="menuAI">🤖 AI 챗봇</div>
         <div class="menu-item" id="menuPsy">🧠 심리테스트</div>
-        <div class="menu-item" id="menuSchedule">🗓️ 워크숍 일정</div>
         <div class="menu-item" id="menuLibrary">📚 자료실</div>
       </div>
     </div>
 
-    <div class="timer-box">
-      <div style="font-size:.95rem;opacity:.9">워크숍 남은 시간</div>
-      <div id="timerDisplay" class="timer-display">48:00:00</div>
-    </div>
-
+    <button id="menuSurvey" class="btn btn-primary max-w-md">만족도 조사</button>
     <button class="btn btn-outline logout">로그아웃</button>
   </div>
 
-  <!-- 모달들 -->
+  <!-- 보관함 -->
   <div id="vaultModal" class="modal">
     <div class="modal-content">
       <div class="modal-header"><h3>투어패스 보관함</h3><button class="close" data-close="vaultModal">×</button></div>
@@ -127,6 +137,7 @@
     </div>
   </div>
 
+  <!-- 포춘 -->
   <div id="fortuneModal" class="modal">
     <div class="modal-content">
       <div class="modal-header"><h3>데일리 포춘</h3><button class="close" data-close="fortuneModal">×</button></div>
@@ -134,10 +145,11 @@
     </div>
   </div>
 
+  <!-- 심리테스트 -->
   <div id="psyModal" class="modal">
     <div class="modal-content">
       <div class="modal-header"><h3>O/X 심리테스트 (5문항)</h3><button class="close" data-close="psyModal">×</button></div>
-      <div id="psyStep" class="">
+      <div id="psyStep">
         <div class="text-sm text-gray-500" id="psyTitle">1/5</div>
         <div id="psyQuestion" class="mt-1 mb-3"></div>
         <div class="grid grid-cols-2 gap-2">
@@ -146,15 +158,18 @@
         </div>
       </div>
       <div id="psyResult" class="hidden">
-        <div style="font-size:2rem" id="resEmoji">🐶</div>
-        <div style="font-weight:800" id="resTitle">활발한 강아지</div>
-        <div class="text-gray-600 mt-1" id="resDesc">사람이 좋고 새로운 자극에 설렌다!</div>
-        <div id="resTags" class="flex flex-wrap gap-1 mt-2"></div>
-        <div class="mt-3"><button class="btn btn-outline" id="psyRetry">다시 하기</button></div>
+        <div id="psyResultCard" class="psy-card max-w-md mx-auto">
+          <div style="font-size:2.2rem" id="resEmoji">🦊</div>
+          <div class="psy-title" id="resTitle">똑똑한 여우형 리더</div>
+          <div class="psy-desc" id="resDesc">논리적이지만 따뜻한 통찰을 가진 추진형 리더</div>
+          <div class="psy-tags" id="resTags"></div>
+          <div class="mt-3"><button class="btn btn-outline" id="psyRetry">다시 하기</button></div>
+        </div>
       </div>
     </div>
   </div>
 
+  <!-- 일정 -->
   <div id="scheduleModal" class="modal">
     <div class="modal-content">
       <div class="modal-header"><h3>워크숍 일정</h3><button class="close" data-close="scheduleModal">×</button></div>
@@ -162,6 +177,7 @@
     </div>
   </div>
 
+  <!-- 자료실 -->
   <div id="libraryModal" class="modal">
     <div class="modal-content">
       <div class="modal-header"><h3>자료실</h3><button class="close" data-close="libraryModal">×</button></div>
@@ -170,26 +186,75 @@
     </div>
   </div>
 
+  <!-- 만족도 조사 -->
+  <div id="surveyModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>워크숍 만족도 조사</h3>
+        <button class="close" data-close="surveyModal">×</button>
+      </div>
+
+      <form id="surveyForm">
+        <div class="border border-gray-200 rounded-lg p-3 mb-3">
+          <div class="font-bold mb-2">1) 전체 만족도 (5점 만점)</div>
+          <div class="grid grid-cols-5 gap-2 text-center">
+            <label><input type="radio" name="satisfaction" value="1" required> 1</label>
+            <label><input type="radio" name="satisfaction" value="2"> 2</label>
+            <label><input type="radio" name="satisfaction" value="3"> 3</label>
+            <label><input type="radio" name="satisfaction" value="4"> 4</label>
+            <label><input type="radio" name="satisfaction" value="5"> 5</label>
+          </div>
+        </div>
+
+        <div class="border border-gray-200 rounded-lg p-3 mb-3">
+          <div class="font-bold mb-2">2) 가장 만족했던 활동</div>
+          <select id="bestProgram" class="w-full border border-gray-200 rounded-lg p-2">
+            <option value="">선택해주세요</option>
+            <option>숙소</option><option>음식</option><option>성과 및 추진보고</option>
+            <option>자유시간</option><option>아로마 만들기</option><option>도슨트 투어</option>
+            <option>회식 이벤트</option><option>기타(아래 직접입력)</option>
+          </select>
+          <input id="bestProgramEtc" class="w-full border border-gray-200 rounded-lg p-2 mt-2" placeholder="기타 선택 시 입력 (선택)" />
+        </div>
+
+        <div class="border border-gray-200 rounded-lg p-3 mb-3">
+          <div class="font-bold mb-2">3) 개선 요청 사항</div>
+          <textarea id="improve" rows="4" class="w-full border border-gray-200 rounded-lg p-2" placeholder="예) 일정 간격, 이동 동선, 프로그램 추가 등"></textarea>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2">
+          <button type="button" class="btn btn-outline" data-close="surveyModal">닫기</button>
+          <button type="submit" class="btn btn-primary">제출하기</button>
+        </div>
+        <p class="text-sm text-gray-500 mt-2">※ 제출 즉시 백엔드(GAS)에 저장됩니다.</p>
+      </form>
+
+      <div id="surveyDone" class="hidden">
+        <div class="text-center">
+          <div style="font-size:2rem">🎉</div>
+          <div class="font-bold text-lg mt-1">제출되었습니다. 감사합니다!</div>
+        </div>
+        <div id="surveySummary" class="border border-gray-200 rounded-lg p-3 mt-3 text-sm text-gray-600"></div>
+        <button class="btn btn-primary mt-3" data-close="surveyModal">닫기</button>
+      </div>
+    </div>
+  </div>
+
   <div id="alertMessage"></div>
 
 <script>
 /* ====== CONFIG ====== */
-// 백엔드(GAS) WebApp URL — MBTI 저장/이벤트 트래킹 용 (없어도 UI 동작)
 const API_URL = "https://script.google.com/macros/s/AKfycbxM8pNBBnAxRyoIYHO8be82IzlTCPYOcRRjq_aoiTvcyoprVNhfXQx_KsZlVSVGJlhn/exec";
-
-// 외부 링크(원하는 값으로 교체)
-const RELATION_URL = "https://kim950106.github.io/tour/";       // MBTI 관계도
+const RELATION_URL = "https://kim950106.github.io/tour/";
 const AI_CHATBOT_URL = "https://kim950106.github.io/tourpass.ai/";
 const TPV3_URL = "https://claude.ai/public/artifacts/65f1dc58-6271-47af-8ee7-f159eb01d4e6";
 
-// 보관함 사전 등록 티켓(코드/이름/URL)
 const PRESET_TICKETS = [
   { code:"9403", name:"1조 충남투어패스", url:"www.naver.com" },
   { code:"8027", name:"2조 충남투어패스", url:"www.daum.net" },
   { code:"1402", name:"3조 충남투어패스", url:"www.tourpass.ai" }
 ];
 
-// 📚 자료실: 저장이 아닌 “코드 고정형”
 const LIBRARY_LINKS = [
   { title:"워크숍 리플렛", url:"https://example.com/leaflet.pdf", desc:"PDF 다운로드" },
   { title:"성과 및 추진보고", url:"https://example.com/report", desc:"Google Docs" },
@@ -197,32 +262,27 @@ const LIBRARY_LINKS = [
   { title:"부여 관광지도", url:"https://example.com/map", desc:"이미지 지도" },
 ];
 
-// 참여코드 매핑
 const PARTICIPATION_CODES = {
   "남도현":"20191001","김현철":"20200211","김수인":"202201171","김대진":"202201172",
   "이주아":"20220118","장은진":"20221101","이유진":"20230614","정어진":"20240419",
   "판티니안":"20250507","장원준":"20250526","고다현":"20250804","심재희":"20250901"
 };
-function validateParticipation(name, code){
-  return (PARTICIPATION_CODES[name]||"") === String(code||"").trim();
-}
+function validateParticipation(name, code){ return (PARTICIPATION_CODES[name]||"") === String(code||"").trim(); }
 
 /* ====== STATE ====== */
 let currentUser="", sessionId="", workshopEndAt=null, timerInterval=null;
 
 /* ====== UTILS ====== */
 async function apiRequest(action, payload={}){
-  try{
-    const r = await fetch(API_URL,{method:"POST",headers:{'Content-Type':'application/json'},body:JSON.stringify({action,...payload})});
-    return await r.json();
-  }catch(e){return {success:false,error:String(e)}}
+  try{ const r=await fetch(API_URL,{method:"POST",headers:{'Content-Type':'application/json'},body:JSON.stringify({action,...payload})}); return await r.json(); }
+  catch(e){ return {success:false,error:String(e)} }
 }
 function toast(msg,type="info",ms=2000){
   const el=document.getElementById('alertMessage');
-  el.textContent=msg; el.style.background = type==="error"?"#ef4444":type==="success"?"#10b981": "var(--brand-2)";
+  el.textContent=msg; el.style.background = type==="error"?"#ef4444":type==="success"?"#10b981":"var(--brand-2)";
   el.classList.add('show'); setTimeout(()=>el.classList.remove('show'),ms);
 }
-function normalizeUrl(u){ if(!/^https?:\/\//i.test(u)) return 'https://'+u; return u; }
+function normalizeUrl(u){ return /^https?:\/\//i.test(u)?u:'https://'+u; }
 function fmt(ms){const t=Math.max(0,Math.floor(ms/1000));const h=String(Math.floor(t/3600)).padStart(2,'0');const m=String(Math.floor((t%3600)/60)).padStart(2,'0');const s=String(t%60).padStart(2,'0');return `${h}:${m}:${s}`;}
 async function track(event,meta={}){ try{ await apiRequest('trackEvent',{sessionId,userName:currentUser,event,meta}); }catch(_){} }
 
@@ -258,24 +318,20 @@ async function doLogin(){
   document.getElementById('userNameDisplay').textContent=currentUser;
   document.getElementById('userTeamDisplay').textContent='투어패스사업부';
 
-  // 캐시 저장 (로그아웃 전까지 유지)
   localStorage.setItem('loginCache',JSON.stringify({name,mbti,code}));
   localStorage.setItem('sessionId',sessionId);
 
-  // 백엔드에 MBTI 포함 저장 (있으면)
   apiRequest('login',{sessionId,userName:name,mbti,team:'투어패스사업부',position:''});
   track('login',{mbti});
 
-  // 타이머 상태 반영
   const stored=localStorage.getItem('workshopEndAt');
   if(stored){ workshopEndAt=new Date(Number(stored)); runTick(); clearGate(); } else { applyGate(); }
 
   toast(`환영합니다, ${name}님!`,'success');
 }
-
 async function doLogout(){
   await apiRequest('updateUserStatus',{sessionId,userName:currentUser,status:'offline'});
-  localStorage.removeItem('loginCache'); localStorage.removeItem('sessionId'); // 타이머는 유지 원하시면 주석
+  localStorage.removeItem('loginCache'); localStorage.removeItem('sessionId'); /* 타이머 유지 원치 않으면 아래 주석 해제 */
   // localStorage.removeItem('workshopEndAt');
   location.reload();
 }
@@ -283,7 +339,7 @@ function restore(){
   const cache=localStorage.getItem('loginCache'); if(!cache) return;
   try{
     const {name,mbti,code}=JSON.parse(cache);
-    if(!validateParticipation(name,code)) return; // 코드가 바뀌면 로그인 무효
+    if(!validateParticipation(name,code)) return;
     currentUser=name; sessionId=localStorage.getItem('sessionId')||('session_'+Date.now());
     document.getElementById('loginScreen').classList.add('hidden');
     document.getElementById('mainScreen').classList.remove('hidden');
@@ -295,7 +351,7 @@ function restore(){
   }catch(_){}
 }
 
-/* ====== MENU: 보관함 ====== */
+/* ====== 보관함 ====== */
 function renderVault(){
   const wrap=document.getElementById('presetWrap');
   const selected=localStorage.getItem('selectedTicketCode')||'';
@@ -324,7 +380,7 @@ function goVault(){
   const t=PRESET_TICKETS.find(x=>x.code===ch.value); if(t) window.open(normalizeUrl(t.url),'_blank');
 }
 
-/* ====== MENU: 데일리 포춘 ====== */
+/* ====== 포춘 ====== */
 function seeded(name){let t=0;for(let i=0;i<name.length;i++)t=(t*31+name.charCodeAt(i))>>>0;return ()=>{t=(t+0x6D2B79F5)>>>0;let r=Math.imul(t^(t>>>15),1|t);r^=r+Math.imul(r^(r>>>7),61|r);return((r^(r>>>14))>>>0)/4294967296;};}
 function openFortune(){
   const rng=seeded(currentUser + new Date().toISOString().slice(0,10));
@@ -338,15 +394,17 @@ function openFortune(){
     sec('전체운')+sec('연애운')+sec('금전운')+sec('건강운')+sec('업무/학업')+
     `<div class="grid grid-cols-2 gap-2 mt-2">
        <div class="border border-gray-200 rounded-lg p-3"><div class="font-bold">럭키 넘버</div><div>${lucky}</div></div>
-       <div class="border border-gray-200 rounded-lg p-3"><div class="font-bold">럭키 컬러</div><div>${pick(['네이비','코발트','민트','옐로','코랄','라일락'])}</div></div>
+       <div class="border border-gray-200 rounded-lg p-3"><div class="font-bold">럭키 컬러</div><div>${pick(['코랄','사모너 오렌지','라이트 피치','아이보리','모카'])}</div></div>
      </div>`;
   showModal('fortuneModal'); track('click:menu_fortune');
 }
 
-/* ====== MENU: 심리테스트 ====== */
+/* ====== 심리테스트 ====== */
 const PSY_QUESTIONS=[
-  {text:'사람 많은 활동에서 에너지가 생긴다.',pos:'E'},{text:'계획대로 움직일 때 안정감을 느낀다.',pos:'J'},
-  {text:'결정보다 관계의 조화가 더 중요하다.',pos:'F'},{text:'예상치 못한 제안도 즉흥적으로 수락한다.',pos:'P'},
+  {text:'사람 많은 활동에서 에너지가 생긴다.',pos:'E'},
+  {text:'계획대로 움직일 때 안정감을 느낀다.',pos:'J'},
+  {text:'결정보다 관계의 조화가 더 중요하다.',pos:'F'},
+  {text:'예상치 못한 제안도 즉흥적으로 수락한다.',pos:'P'},
   {text:'혼자만의 시간에서 집중력이 오른다.',pos:'I'}
 ];
 let psyIdx=0, score={E:0,I:0,J:0,P:0,F:0,T:0};
@@ -358,7 +416,7 @@ function answerPsy(isO){
 function showPsyResult(){
   const EI=(score.E||0)>=(score.I||0)?'E':'I', JP=(score.J||0)>=(score.P||0)?'J':'P', FT=(score.F||0)>=(score.T||0)?'F':'T';
   let animal={emoji:'🐶',title:'활발한 강아지',desc:'사교성·즉흥력이 강점!'};
-  if(EI==='E'&&JP==='J') animal={emoji:'🦊',title:'똑똑한 여우',desc:'계획적 소통형 리더'};
+  if(EI==='E'&&JP==='J') animal={emoji:'🦊',title:'똑똑한 여우형 리더',desc:'계획적 소통형 리더'};
   if(EI==='I'&&JP==='P') animal={emoji:'🐱',title:'고양이 탐험가',desc:'혼자 충전·번뜩임'};
   if(EI==='I'&&JP==='J') animal={emoji:'🦉',title:'현자 올빼미',desc:'분석·체계 전략가'};
   if(FT==='F'&&EI==='E') animal={emoji:'🦦',title:'사교적인 수달',desc:'팀 분위기 메이커'};
@@ -367,12 +425,12 @@ function showPsyResult(){
   document.getElementById('resEmoji').textContent=animal.emoji;
   document.getElementById('resTitle').textContent=animal.title;
   document.getElementById('resDesc').textContent=animal.desc;
-  document.getElementById('resTags').innerHTML=['E/I','J/P','F/T'].map(t=>`<span class="px-2 py-1 bg-gray-100 rounded text-sm">#${t}</span>`).join(' ');
+  document.getElementById('resTags').innerHTML=['E/I','J/P','F/T'].map(t=>`<span>#${t}</span>`).join(' ');
 }
 function resetPsy(){ psyIdx=0; score={E:0,I:0,J:0,P:0,F:0,T:0}; document.getElementById('psyStep').classList.remove('hidden'); document.getElementById('psyResult').classList.add('hidden'); renderPsy(); }
 function openPsy(){ resetPsy(); showModal('psyModal'); track('click:menu_psy'); }
 
-/* ====== MENU: 일정 ====== */
+/* ====== 일정 ====== */
 const SCHEDULE=[
   { dayTitle:'첫째 날 (10월 16일)', rows:[
     {time:'14:50',act:'로비 집합',place:'롯데리조트 부여점'},
@@ -398,19 +456,19 @@ function renderSchedule(){
   const body=document.getElementById('scheduleBody');
   body.innerHTML=SCHEDULE.map(day=>{
     const rows=day.rows.map(r=>`<tr>
-      <td class="py-2 px-2 font-bold text-blue-600">${r.time}</td>
+      <td class="py-2 px-2 font-bold text-${'orange'}-600">${r.time}</td>
       <td class="py-2 px-2">${r.act.replaceAll('\\n','<br>')}</td>
       <td class="py-2 px-2 text-gray-600">${r.place}</td></tr>`).join('');
-    return `<div class="bg-blue-50 rounded-lg px-3 py-2 font-extrabold text-blue-700 mt-1 mb-2">${day.dayTitle}</div>
+    return `<div class="px-3 py-2 font-extrabold text-${'orange'}-700" style="background:#fff2ec;border-radius:.75rem;margin:.25rem 0 .5rem"> ${day.dayTitle}</div>
       <table class="w-full border-collapse">
-        <thead><tr class="text-left"><th class="py-2 px-2 w-20">시간</th><th class="py-2 px-2">활동</th><th class="py-2 px-2 w-32">장소</th></tr></thead>
+        <thead><tr class="text-left text-gray-500"><th class="py-2 px-2 w-20">시간</th><th class="py-2 px-2">활동</th><th class="py-2 px-2 w-32">장소</th></tr></thead>
         <tbody class="border-t border-gray-200">${rows}</tbody>
       </table>`;
   }).join('');
 }
 function openSchedule(){ renderSchedule(); showModal('scheduleModal'); track('click:menu_schedule'); }
 
-/* ====== MENU: 자료실(고정형) ====== */
+/* ====== 자료실 ====== */
 function openLibrary(){
   const list=document.getElementById('libList');
   list.innerHTML = LIBRARY_LINKS.map(x=>`<a class="menu-item" href="${normalizeUrl(x.url)}" target="_blank">
@@ -418,6 +476,48 @@ function openLibrary(){
       <div class="text-gray-500 text-sm">${x.desc||x.url}</div>
     </a>`).join('');
   showModal('libraryModal'); track('click:menu_library');
+}
+
+/* ====== 만족도 조사 ====== */
+function openSurvey(){
+  document.getElementById('surveyForm').reset();
+  document.getElementById('surveyForm').classList.remove('hidden');
+  document.getElementById('surveyDone').classList.add('hidden');
+  showModal('surveyModal');
+  track('click:menu_survey');
+}
+async function submitSurvey(e){
+  e.preventDefault();
+  const fd = new FormData(e.target);
+  const satisfaction = fd.get('satisfaction');
+  let best = document.getElementById('bestProgram').value || '';
+  const etc = document.getElementById('bestProgramEtc').value.trim();
+  if (best.startsWith('기타') && etc) best = `기타(${etc})`;
+  const feedback = (document.getElementById('improve').value || '').trim();
+
+  if(!satisfaction){ toast('만족도를 선택해주세요','error'); return; }
+
+  const res = await apiRequest('saveSurvey', {
+    user: currentUser || '게스트',
+    satisfaction,
+    useful_program: best,
+    feedback
+  });
+
+  if(res && res.success){
+    toast('제출 완료!','success');
+    track('submit:survey',{satisfaction, best});
+    const box = document.getElementById('surveySummary');
+    box.innerHTML = `
+      <div><b>만족도</b> : ${satisfaction} / 5</div>
+      <div><b>가장 만족</b> : ${best || '-'}</div>
+      <div><b>개선사항</b> : ${feedback ? feedback.replaceAll('<','&lt;') : '-'}</div>
+    `;
+    document.getElementById('surveyForm').classList.add('hidden');
+    document.getElementById('surveyDone').classList.remove('hidden');
+  } else {
+    toast('저장 실패. 네트워크를 확인해주세요.','error');
+  }
 }
 
 /* ====== MODAL HELPERS ====== */
@@ -447,8 +547,13 @@ document.getElementById('psyRetry').addEventListener('click',resetPsy);
 document.getElementById('menuSchedule').addEventListener('click',openSchedule);
 document.getElementById('menuLibrary').addEventListener('click',openLibrary);
 
+document.getElementById('menuSurvey').addEventListener('click',openSurvey);
+document.getElementById('surveyForm').addEventListener('submit',submitSurvey);
+
 /* ====== INIT ====== */
 (function init(){
+  // 닫기 버튼 공용
+  document.querySelectorAll('[data-close]').forEach(b=>b.addEventListener('click',()=>hideModal(b.getAttribute('data-close'))));
   restore();
   const end=localStorage.getItem('workshopEndAt');
   if(end){ workshopEndAt=new Date(Number(end)); runTick(); clearGate(); }
