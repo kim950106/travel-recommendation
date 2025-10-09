@@ -9,8 +9,8 @@
 <style>
   :root{
     --brand-1:#1e3a8a;        /* 보조 네이비(타이틀) */
-    --brand-2:#e97357;        /* ⬅ 메인 포인트(첨부색) */
-    --brand-3:#f08b68;        /* ⬅ 보조 포인트(그라데이션 상단) */
+    --brand-2:#e97357;        /* 메인 포인트(첨부색) */
+    --brand-3:#f08b68;        /* 보조 포인트(그라데이션 상단) */
     --text:#0f172a; --muted:#64748b; --line:#e2e8f0;
   }
   body{font-family:'Pretendard',sans-serif;background:linear-gradient(180deg,#fff6f2 0%,#ffffff 100%);min-height:100vh;color:var(--text);display:flex;flex-direction:column;align-items:center;justify-content:start;padding:2rem 1rem 4rem}
@@ -29,7 +29,7 @@
   .menu-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.9rem}
   .menu-item{border:1px solid var(--line);border-radius:1rem;background:#fff;padding:1rem;text-align:center;color:#0f172a;font-weight:700;box-shadow:0 2px 8px rgba(0,0,0,.04);cursor:pointer;transition:.25s}
   .menu-item:hover{background:#fff7f4;border-color:var(--brand-3);transform:translateY(-2px)}
-  .timer-box{background:linear-gradient(90deg,var(--brand-2),var(--brand-3));color:#fff;border-radius:1rem;padding:1rem;text-align:center;box-shadow:0 6px 16px rgba(233,115,87,.28)}
+  .timer-box{background:linear-gradient(90deg,var(--brand-2),var(--brand-3));color:#fff;border-radius:1rem;padding:1rem;text-align:center;box-shadow:0 6px 16px rgba(233,115,87,.28);user-select:none}
   .timer-display{font-size:2rem;font-weight:900}
   .logout{max-width:420px;margin-top:.9rem}
   /* 게이트 */
@@ -67,9 +67,9 @@
       <label>이름을 선택하세요</label>
       <select id="userName">
         <option value="">이름을 선택해주세요</option>
-        <option>남도현 이사</option><option>김현철 팀장</option><option>김수인 팀장</option><option>김대진 팀장</option><option>손현우 대리</option>
-        <option>이주아 주임</option><option>장은진 주임</option><option>이유진 주임</option><option>정어진 사원</option>
-        <option>판티니안 매니저</option><option>장원준 사원</option><option>고다현 사원</option><option>심재희 실장</option>
+        <option>남도현</option><option>김현철</option><option>김수인</option><option>김대진</option>
+        <option>이주아</option><option>장은진</option><option>이유진</option><option>정어진</option>
+        <option>판티니안</option><option>장원준</option><option>고다현</option><option>손현우</option>
       </select>
     </div>
     <div class="mb-4">
@@ -84,7 +84,7 @@
     </div>
     <div class="mb-2">
       <label>참여코드를 입력하세요</label>
-      <input id="userCode" type="password" placeholder="웰컴키트 내 티켓 뒷편 참여코드를 확인해주세요."/>
+      <input id="userCode" type="password" placeholder="예: 20200211"/>
     </div>
     <button id="loginBtn" class="btn btn-primary mt-3">로그인</button>
   </div>
@@ -101,13 +101,13 @@
       <div id="gatedNote">🔒 아래 메뉴는 <b>“워크숍 참여하기”</b> 버튼을 누르면 열립니다.</div>
     </div>
 
-    <div class="timer-box w-full max-w-md mb-3">
+    <div class="timer-box w-full max-w-md mb-3" id="timerBox" title="길게 누르면 참여 이전 상태로 되돌리기">
       <div class="text-sm opacity-90">워크숍 남은 시간</div>
       <div id="timerDisplay" class="timer-display">48:00:00</div>
     </div>
 
     <div class="card">
-      <!-- ✅ 메뉴 순서: (좌)MBTI 관계도 | (우)투어패스 초안 … -->
+      <!-- 메뉴 순서 -->
       <div class="menu-grid">
         <div class="menu-item" id="menuMbti">🔗 MBTI 관계도</div>
         <div class="menu-item" id="menuDraft">🍀 투어패스 초안</div>
@@ -250,22 +250,22 @@ const AI_CHATBOT_URL = "https://kim950106.github.io/tourpass.ai/";
 const TPV3_URL = "https://claude.ai/public/artifacts/65f1dc58-6271-47af-8ee7-f159eb01d4e6";
 
 const PRESET_TICKETS = [
-  { code:"9403", name:"1조", url:"www.naver.com" },
-  { code:"8027", name:"2조", url:"www.daum.net" },
-  { code:"1402", name:"3조", url:"www.tourpass.ai" }
+  { code:"9403", name:"1조 충남투어패스", url:"www.naver.com" },
+  { code:"8027", name:"2조 충남투어패스", url:"www.daum.net" },
+  { code:"1402", name:"3조 충남투어패스", url:"www.tourpass.ai" }
 ];
 
 const LIBRARY_LINKS = [
-  { title:"사업계획서", url:"https://example.com/leaflet.pdf", desc:"다운받기" },
+  { title:"사업계획서", url:"https://example.com/leaflet.pdf", desc:"이동하기" },
   { title:"1팀 성과보고", url:"https://example.com/report", desc:"다운받기" },
   { title:"2팀 성과보고", url:"https://example.com/guide", desc:"다운받기" },
   { title:"3팀 성과보고", url:"https://example.com/map", desc:"다운받기" },
 ];
 
 const PARTICIPATION_CODES = {
-  "남도현 이사":"20191001","김현철 팀장":"20200211","김수인 팀장":"202201171","김대진 팀장":"202201172","손현우 대리":"20251014"
-  "이주아 주임":"20220118","장은진 주임":"20221101","이유진 주임":"20230614","정어진 사원":"20240419",
-  "판티니안 매니저":"20250507","장원준 사원":"20250526","고다현 사원":"20250804","심재희 실장":"20250901"
+  "남도현":"20191001","김현철":"20200211","김수인":"202201171","김대진":"202201172",
+  "이주아":"20220118","장은진":"20221101","이유진":"20230614","정어진":"20240419",
+  "판티니안":"20250507","장원준":"20250526","고다현":"20250804","손현우":"20251014"
 };
 function validateParticipation(name, code){ return (PARTICIPATION_CODES[name]||"") === String(code||"").trim(); }
 
@@ -295,12 +295,25 @@ function beginTimer(){
   const end=Date.now()+48*60*60*1000;
   localStorage.setItem('workshopEndAt',String(end));
   workshopEndAt=new Date(end); runTick(); clearGate(); toast('카운트다운 시작!','success');
+  track('start');
 }
 function runTick(){
   if(timerInterval) clearInterval(timerInterval);
   const disp=document.getElementById('timerDisplay');
   const tick=()=>{ const remain=workshopEndAt-Date.now(); disp.textContent=fmt(remain); if(remain<=0){clearInterval(timerInterval); disp.textContent="00:00:00";} };
   tick(); timerInterval=setInterval(tick,1000);
+}
+/* ✅ 참여 이전 상태로 되돌리기 */
+function revertToPreStart(){
+  try{
+    if (timerInterval) { clearInterval(timerInterval); timerInterval=null; }
+    localStorage.removeItem('workshopEndAt');
+    workshopEndAt=null;
+    const disp=document.getElementById('timerDisplay'); if(disp) disp.textContent='48:00:00';
+    const btn=document.getElementById('startBtn'); if(btn){ btn.disabled=false; btn.textContent='워크숍 참여하기'; }
+    applyGate();
+    track('revert:pre_start'); toast('참여 이전 상태로 되돌렸습니다.','success');
+  }catch(e){ console.error(e); toast('되돌리기 실패','error'); }
 }
 
 /* ====== LOGIN ====== */
@@ -331,8 +344,8 @@ async function doLogin(){
 }
 async function doLogout(){
   await apiRequest('updateUserStatus',{sessionId,userName:currentUser,status:'offline'});
-  localStorage.removeItem('loginCache'); localStorage.removeItem('sessionId'); /* 타이머 유지 원치 않으면 아래 주석 해제 */
-  // localStorage.removeItem('workshopEndAt');
+  localStorage.removeItem('loginCache'); localStorage.removeItem('sessionId'); 
+  // localStorage.removeItem('workshopEndAt'); // 유지하려면 주석 유지
   location.reload();
 }
 function restore(){
@@ -394,7 +407,7 @@ function openFortune(){
     sec('전체운')+sec('연애운')+sec('금전운')+sec('건강운')+sec('업무/학업')+
     `<div class="grid grid-cols-2 gap-2 mt-2">
        <div class="border border-gray-200 rounded-lg p-3"><div class="font-bold">럭키 넘버</div><div>${lucky}</div></div>
-       <div class="border border-gray-200 rounded-lg p-3"><div class="font-bold">럭키 컬러</div><div>${pick(['코랄','사모너 오렌지','라이트 피치','아이보리','모카'])}</div></div>
+       <div class="border border-gray-200 rounded-lg p-3"><div class="font-bold">럭키 컬러</div><div>${pick(['코랄','오렌지','라이트 피치','아이보리','모카'])}</div></div>
      </div>`;
   showModal('fortuneModal'); track('click:menu_fortune');
 }
@@ -456,10 +469,10 @@ function renderSchedule(){
   const body=document.getElementById('scheduleBody');
   body.innerHTML=SCHEDULE.map(day=>{
     const rows=day.rows.map(r=>`<tr>
-      <td class="py-2 px-2 font-bold text-${'orange'}-600">${r.time}</td>
+      <td class="py-2 px-2 font-bold" style="color:#df6444">${r.time}</td>
       <td class="py-2 px-2">${r.act.replaceAll('\\n','<br>')}</td>
       <td class="py-2 px-2 text-gray-600">${r.place}</td></tr>`).join('');
-    return `<div class="px-3 py-2 font-extrabold text-${'orange'}-700" style="background:#fff2ec;border-radius:.75rem;margin:.25rem 0 .5rem"> ${day.dayTitle}</div>
+    return `<div class="px-3 py-2 font-extrabold" style="background:#fff2ec;border-radius:.75rem;margin:.25rem 0 .5rem;color:#c04e32"> ${day.dayTitle}</div>
       <table class="w-full border-collapse">
         <thead><tr class="text-left text-gray-500"><th class="py-2 px-2 w-20">시간</th><th class="py-2 px-2">활동</th><th class="py-2 px-2 w-32">장소</th></tr></thead>
         <tbody class="border-t border-gray-200">${rows}</tbody>
@@ -530,7 +543,7 @@ window.addEventListener('click',e=>{document.querySelectorAll('.modal').forEach(
 document.getElementById('loginBtn').addEventListener('click',doLogin);
 document.getElementById('logoutBtn').addEventListener('click',doLogout);
 document.querySelector('.logout').addEventListener('click',doLogout);
-document.getElementById('startBtn').addEventListener('click',()=>{beginTimer(); track('click:start');});
+document.getElementById('startBtn').addEventListener('click',beginTimer);
 
 document.getElementById('menuMbti').addEventListener('click',()=>{ window.open(RELATION_URL,'_blank'); track('click:mbti'); });
 document.getElementById('menuVault').addEventListener('click',openVault);
@@ -550,11 +563,26 @@ document.getElementById('menuLibrary').addEventListener('click',openLibrary);
 document.getElementById('menuSurvey').addEventListener('click',openSurvey);
 document.getElementById('surveyForm').addEventListener('submit',submitSurvey);
 
+/* 타이머 카드 롱프레스 → revert */
+(function setupLongPressRevert(){
+  const box=document.getElementById('timerBox'); if(!box) return;
+  let t=null;
+  const start=()=>{ t=setTimeout(()=>revertToPreStart(),800); };
+  const clear=()=>{ if(t){clearTimeout(t);t=null;} };
+  box.addEventListener('mousedown',start); box.addEventListener('touchstart',start,{passive:true});
+  ['mouseup','mouseleave','touchend','touchcancel'].forEach(ev=>box.addEventListener(ev,clear,{passive:true}));
+})();
+
 /* ====== INIT ====== */
 (function init(){
   // 닫기 버튼 공용
   document.querySelectorAll('[data-close]').forEach(b=>b.addEventListener('click',()=>hideModal(b.getAttribute('data-close'))));
+  // 자동 로그인 복구
   restore();
+  // 쿼리스트링 ?reset=1 → 참여 이전
+  const params = new URLSearchParams(location.search);
+  if (params.get('reset') === '1') revertToPreStart();
+  // 타이머 복구
   const end=localStorage.getItem('workshopEndAt');
   if(end){ workshopEndAt=new Date(Number(end)); runTick(); clearGate(); }
 })();
