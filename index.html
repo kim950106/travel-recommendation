@@ -1,1129 +1,458 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>투어패스사업부 2025 워크숍</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>투어패스사업부 2025 워크숍</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
 
-  <!-- Part 2: 스타일(CSS) 여기 삽입 예정 -->
-  <!-- ===== PART 2 PLACEHOLDER (CSS) ===== -->
+<style>
+  :root{
+    --brand-1:#1e3a8a; --brand-2:#2563eb; --brand-3:#3b82f6;
+    --text:#0f172a; --muted:#64748b; --line:#e2e8f0;
+  }
+  body{font-family:'Pretendard',sans-serif;background:linear-gradient(180deg,#f0f4ff 0%,#ffffff 100%);min-height:100vh;color:var(--text);display:flex;flex-direction:column;align-items:center;justify-content:start;padding:2rem 1rem 4rem}
+  .header{text-align:center;margin-bottom:1.25rem}
+  .header h1{font-weight:800;font-size:1.8rem;color:var(--brand-1)}
+  .header p{color:#94a3b8}
+  .card{background:#fff;border-radius:1.25rem;box-shadow:0 8px 24px rgba(0,0,0,.08);padding:1.5rem;width:100%;max-width:420px;margin-bottom:1.1rem;transition:.25s}
+  .card:hover{transform:translateY(-2px)}
+  label{display:block;font-weight:600;font-size:.9rem;color:#334155;margin-bottom:.35rem}
+  select,input{width:100%;border:1px solid var(--line);border-radius:.9rem;padding:.85rem 1rem;background:#f9fafb;transition:.2s}
+  select:focus,input:focus{background:#fff;border-color:var(--brand-3);box-shadow:0 0 0 3px rgba(59,130,246,.18);outline:0}
+  .btn{display:inline-block;width:100%;border-radius:.9rem;font-weight:800;padding:.9rem;text-align:center;transition:.25s}
+  .btn-primary{background:linear-gradient(90deg,var(--brand-2),var(--brand-3));color:#fff;box-shadow:0 4px 14px rgba(37,99,235,.25)}
+  .btn-primary:hover{background:linear-gradient(90deg,#1d4ed8,var(--brand-2));transform:translateY(-1px)}
+  .btn-outline{background:#fff;border:1px solid var(--line);color:var(--brand-1)}
+  .btn-outline:hover{background:#f8fafc}
+  .menu-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.9rem}
+  .menu-item{border:1px solid var(--line);border-radius:1rem;background:#f9fafb;padding:1.1rem;text-align:center;color:var(--brand-1);font-weight:700;box-shadow:0 3px 10px rgba(0,0,0,.04);cursor:pointer;transition:.25s}
+  .menu-item:hover{background:#eef2ff;border-color:var(--brand-3);transform:translateY(-2px)}
+  .timer-box{background:linear-gradient(90deg,var(--brand-2),var(--brand-3));color:#fff;border-radius:1rem;padding:1.2rem;text-align:center;box-shadow:0 6px 16px rgba(37,99,235,.25)}
+  .timer-display{font-size:2rem;font-weight:900}
+  .logout{max-width:420px;margin-top:1.1rem}
+  /* 게이트 */
+  #mainScreen.gated .menu-grid{filter:blur(3px);pointer-events:none}
+  #gatedNote{display:none;text-align:center;color:var(--muted);margin:.5rem 0 -.3rem}
+  #gatedNote.on{display:block}
+  /* 모달 공통 */
+  .modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:50;align-items:center;justify-content:center;padding:1rem}
+  .modal-content{background:#fff;border-radius:1rem;max-width:600px;width:100%;max-height:85vh;overflow:auto;padding:1rem 1.1rem}
+  .modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:.6rem}
+  .close{border:0;background:transparent;font-size:1.6rem;color:#94a3b8;cursor:pointer}
+  /* 알림 */
+  #alertMessage{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:var(--brand-2);color:#fff;padding:.7rem 1rem;border-radius:.7rem;box-shadow:0 3px 10px rgba(0,0,0,.15);opacity:0;transition:.25s;z-index:60}
+  #alertMessage.show{opacity:1}
+</style>
 </head>
+
 <body>
-  <div id="blurTarget" class="container">
-    <div class="header">
-      <h1>투어패스사업부</h1>
-      <p>2025 워크숍</p>
+  <div class="header">
+    <h1>투어패스사업부</h1>
+    <p>2025 워크숍</p>
+  </div>
+
+  <!-- 로그인 -->
+  <div id="loginScreen" class="card">
+    <div class="mb-4">
+      <label>이름을 선택하세요</label>
+      <select id="userName">
+        <option value="">이름을 선택해주세요</option>
+        <option>남도현</option><option>김현철</option><option>김수인</option><option>김대진</option>
+        <option>이주아</option><option>장은진</option><option>이유진</option><option>정어진</option>
+        <option>판티니안</option><option>장원준</option><option>고다현</option><option>심재희</option>
+      </select>
+    </div>
+    <div class="mb-4">
+      <label>MBTI를 선택하세요</label>
+      <select id="userMBTI">
+        <option value="">MBTI를 선택해주세요</option>
+        <option>ENTJ</option><option>ENFJ</option><option>ENFP</option><option>ENTP</option>
+        <option>ESTJ</option><option>ESFJ</option><option>ESFP</option><option>ESTP</option>
+        <option>INTJ</option><option>INFJ</option><option>INFP</option><option>INTP</option>
+        <option>ISTJ</option><option>ISFJ</option><option>ISFP</option><option>ISTP</option>
+      </select>
+    </div>
+    <div class="mb-2">
+      <label>참여코드를 입력하세요</label>
+      <input id="userCode" type="password" placeholder="예: 20200211"/>
+    </div>
+    <button id="loginBtn" class="btn btn-primary mt-3">로그인</button>
+  </div>
+
+  <!-- 메인 -->
+  <div id="mainScreen" class="hidden">
+    <div class="card text-center">
+      <div style="font-size:1.3rem;font-weight:800;color:var(--brand-1)" id="userNameDisplay">-</div>
+      <div style="color:var(--muted)" id="userTeamDisplay">투어패스사업부</div>
+      <div class="flex gap-2 mt-3">
+        <button id="logoutBtn" class="btn btn-outline">로그아웃</button>
+        <button id="startBtn" class="btn btn-primary">워크숍 참여하기</button>
+      </div>
+      <div id="gatedNote" class="">🔒 아래 메뉴는 <b>“워크숍 참여하기”</b> 버튼을 누르면 열립니다.</div>
     </div>
 
-    <!-- 로그인 -->
-    <div id="loginScreen" class="card">
-      <div class="form-group">
-        <label for="userName">이름을 선택하세요</label>
-        <select id="userName" required>
-          <option value="">이름을 선택해주세요</option>
-          <option value="남도현">남도현</option>
-          <option value="김수인">김수인</option>
-          <option value="고다현">고다현</option>
-          <option value="심재희">심재희</option>
-          <option value="판티니안">판티니안</option>
-          <option value="김현철">김현철</option>
-          <option value="이유진">이유진</option>
-          <option value="정어진">정어진</option>
-          <option value="장원준">장원준</option>
-          <option value="김대진">김대진</option>
-          <option value="손현우">손현우</option>
-          <option value="이주아">이주아</option>
-          <option value="장은진">장은진</option>
-        </select>
-      </div>
-
-      <div class="form-group">
-        <label for="userMBTI">MBTI를 선택하세요</label>
-        <select id="userMBTI" required>
-          <option value="">MBTI를 선택해주세요</option>
-          <option>INTJ</option><option>INTP</option><option>ENTJ</option><option>ENTP</option>
-          <option>INFJ</option><option>INFP</option><option>ENFJ</option><option>ENFP</option>
-          <option>ISTJ</option><option>ISFJ</option><option>ESTJ</option><option>ESFJ</option>
-          <option>ISTP</option><option>ISFP</option><option>ESTP</option><option>ESFP</option>
-        </select>
-      </div>
-
-      <!-- ✅ 참여코드 입력 (신규) -->
-      <div class="form-group">
-        <label for="userCode">참여코드를 입력하세요</label>
-        <input id="userCode" type="password" inputmode="numeric" autocomplete="one-time-code" placeholder="예: 20191001" />
-      </div>
-
-      <button class="btn btn-primary" id="loginBtn">로그인</button>
-    </div>
-
-    <!-- 메인 -->
-    <div id="mainScreen" class="hidden">
-      <div class="user-info">
-        <h3 id="userNameDisplay"></h3>
-        <p id="userTeamDisplay"></p>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-top:.6rem;">
-          <button class="btn btn-link" id="logoutBtn">로그아웃</button>
-          <button class="btn btn-primary" id="startBtn">워크숍 참여하기</button>
-        </div>
-      </div>
-
-      <!-- ✅ 참여 전 안내 라벨 (신규) -->
-      <div id="gatedNote" class=""></div>
-
-      <div class="card timer-card">
-        <div style="font-size:1.05rem;margin-bottom:.6rem;opacity:.9;">워크숍 남은 시간</div>
-        <div id="timerDisplay" class="timer-display">48:00:00</div>
-      </div>
-
+    <div class="card">
       <div class="menu-grid">
-        <a class="menu-item" id="relationMenu" href="#" target="_blank" rel="noopener">
-          <div class="menu-title">🔗 MBTI 관계도</div>
-          <div class="menu-desc">상호 궁합 보기</div>
-        </a>
-
-        <div class="menu-item" id="scheduleMenu">
-          <div class="menu-title">🗓️ 워크숍 일정</div>
-          <div class="menu-desc">프로그램</div>
-        </div>
-
-        <!-- 투어패스 보관함 -->
-        <div class="menu-item" id="vaultMenu" tabindex="0">
-          <div class="menu-title">📎 투어패스 보관함</div>
-          <div class="menu-desc" id="vaultDesc">티켓 선택 후 바로 이동</div>
-        </div>
-
-        <!-- 만족도 설문 -->
-        <div class="menu-item" id="surveyMenu">
-          <div class="menu-title">📝 만족도 설문</div>
-          <div class="menu-desc">바로 참여</div>
-        </div>
-
-        <!-- 데일리 포춘 -->
-        <div class="menu-item" id="fortuneMenu">
-          <div class="menu-title">🔮 데일리 포춘</div>
-          <div class="menu-desc">오늘의 운세</div>
-        </div>
-
-        <!-- 투어패스 v3 초안 -->
-        <div class="menu-item" id="tpv3Menu">
-          <div class="menu-title">🧩 투어패스 v3 초안</div>
-          <div class="menu-desc">프로토타입</div>
-        </div>
-
-        <!-- AI 챗봇 -->
-        <a class="menu-item" id="aiMenu" href="#" target="_blank" rel="noopener">
-          <div class="menu-title">🤖 AI 챗봇</div>
-          <div class="menu-desc">워크숍 전용 헬퍼</div>
-        </a>
-
-        <!-- 심리테스트 -->
-        <div class="menu-item" id="psyMenu">
-          <div class="menu-title">🧠 심리테스트</div>
-          <div class="menu-desc">O/X 5문항 · 동물 결과</div>
-        </div>
-
-        <!-- ✅ 자료실 (신규 버튼) -->
-        <div class="menu-item" id="libraryMenu">
-          <div class="menu-title">📚 자료실</div>
-          <div class="menu-desc">링크 4종</div>
-        </div>
+        <div class="menu-item" id="menuMbti">🔗 MBTI 관계도</div>
+        <div class="menu-item" id="menuVault">📎 투어패스 보관함</div>
+        <div class="menu-item" id="menuFortune">🔮 데일리 포춘</div>
+        <div class="menu-item" id="menuDraft">🧩 투어패스 초안</div>
+        <div class="menu-item" id="menuAI">🤖 AI 챗봇</div>
+        <div class="menu-item" id="menuPsy">🧠 심리테스트</div>
+        <div class="menu-item" id="menuSchedule">🗓️ 워크숍 일정</div>
+        <div class="menu-item" id="menuLibrary">📚 자료실</div>
       </div>
     </div>
 
-    <!-- 알림 -->
-    <div id="alertMessage" class="hidden"></div>
-  </div>
-
-  <!-- 타이머 종료 오버레이 -->
-  <div id="overlay" class="overlay">
-    <div class="overlay-card">
-      <h2>워크숍이 종료되었습니다</h2>
-      <p>설문을 진행해 주세요.</p>
-      <button class="btn btn-primary" id="openSurveyFromOverlay">설문 시작하기</button>
+    <div class="timer-box">
+      <div style="font-size:.95rem;opacity:.9">워크숍 남은 시간</div>
+      <div id="timerDisplay" class="timer-display">48:00:00</div>
     </div>
+
+    <button class="btn btn-outline logout">로그아웃</button>
   </div>
 
-  <!-- MBTI 모달 -->
-  <div id="mbtiModal" class="modal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2>참가자 현황</h2>
-        <button class="close-btn" data-close="mbtiModal">&times;</button>
-      </div>
-      <div class="modal-body">
-        <div class="stats-grid">
-          <div class="card"><div class="q-title">총 참가자</div><div id="totalParticipants" style="font-size:1.6rem;font-weight:900;color:var(--primary-brand)">0</div></div>
-          <div class="card"><div class="q-title">현재 접속</div><div id="onlineCount" style="font-size:1.6rem;font-weight:900;color:var(--primary-brand)">0</div></div>
-        </div>
-        <h3>MBTI 분포</h3>
-        <div class="mbti-grid" id="mbtiDistribution"></div>
-        <div style="margin-top:1rem;display:flex;gap:.6rem;">
-          <a id="relationBtn" href="#" class="btn btn-link" target="_blank" rel="noopener">MBTI 관계도 보기</a>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 투어패스 보관함 -->
+  <!-- 모달들 -->
   <div id="vaultModal" class="modal">
     <div class="modal-content">
-      <div class="modal-header">
-        <h2>투어패스 보관함</h2>
-        <button class="close-btn" data-close="vaultModal">&times;</button>
+      <div class="modal-header"><h3>투어패스 보관함</h3><button class="close" data-close="vaultModal">×</button></div>
+      <div id="presetWrap"></div>
+      <div class="flex gap-2 mt-3">
+        <button class="btn btn-outline" id="presetSave">선택 저장</button>
+        <button class="btn btn-primary" id="presetGo">저장 없이 이동</button>
       </div>
-      <div class="modal-body">
-        <div class="card">
-          <div class="q-title" style="display:flex;justify-content:space-between;align-items:center;">
-            <span>사전 등록 티켓 선택</span>
-            <button class="btn btn-link" id="vaultClearBtn" style="width:auto;padding:.5rem .8rem">선택 해제</button>
-          </div>
-          <div id="presetList"></div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-top:.8rem;">
-            <button class="btn btn-primary" id="savePresetBtn">선택 저장</button>
-            <button class="btn btn-secondary" id="goPresetBtn">저장 없이 이동</button>
-          </div>
-          <div class="k-tip" id="currentChoiceTip" style="margin-top:.5rem;text-align:center;"></div>
-        </div>
-      </div>
+      <p class="text-sm text-gray-500 mt-2" id="presetTip"></p>
     </div>
   </div>
 
-  <!-- 데일리 포춘 모달 -->
   <div id="fortuneModal" class="modal">
     <div class="modal-content">
-      <div class="modal-header">
-        <h2>데일리 포춘</h2>
-        <button class="close-btn" data-close="fortuneModal">&times;</button>
-      </div>
-      <div class="modal-body" id="fortuneBody"></div>
+      <div class="modal-header"><h3>데일리 포춘</h3><button class="close" data-close="fortuneModal">×</button></div>
+      <div id="fortuneBody"></div>
     </div>
   </div>
 
-  <!-- TP v3 모달 (URL 미설정 시) -->
-  <div id="tpv3Modal" class="modal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2>투어패스 v3 초안</h2>
-        <button class="close-btn" data-close="tpv3Modal">&times;</button>
-      </div>
-      <div class="modal-body">
-        <div class="card">
-          <div class="q-title">프로토타입 준비 중</div>
-          <p style="color:var(--text-secondary)">외부 URL이 설정되면 바로 이동합니다. 현재는 간단 요약만 보여드려요.</p>
-        </div>
-        <div class="card">
-          <div class="q-title">핵심 체크리스트</div>
-          <ul style="padding-left:1rem; color:var(--text-secondary); line-height:1.9">
-            <li>QR 인증 UX: 스캔 → 결과 피드백 1초 내</li>
-            <li>가맹점 안내: 대기/혼잡도, 추천 코스, 운영시간</li>
-            <li>외국어 대응: 다국어 자동감지 + 간편 전환</li>
-            <li>쿠폰/혜택: 남은시간·잔여혜택 실시간 표시</li>
-            <li>접근성: 폰트/대비/터치 영역 최적화</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ✅ 일정 모달 -->
-  <div id="scheduleModal" class="modal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2>워크숍 일정</h2>
-        <button class="close-btn" data-close="scheduleModal">&times;</button>
-      </div>
-      <div class="modal-body" id="scheduleBody">
-        <!-- JS에서 표로 렌더링 -->
-      </div>
-    </div>
-  </div>
-
-  <!-- ✅ 설문조사 모달 -->
-  <div id="surveyModal" class="modal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2>워크숍 만족도 설문</h2>
-        <button class="close-btn" data-close="surveyModal">&times;</button>
-      </div>
-      <div class="modal-body">
-        <form id="surveyForm">
-          <div class="q-card">
-            <div class="q-title">1) 전체 만족도 (5점 만점)</div>
-            <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:.5rem">
-              <label class="btn btn-link" style="padding:.7rem 0;text-align:center">
-                <input type="radio" name="satisfaction" value="1" required> 1
-              </label>
-              <label class="btn btn-link" style="padding:.7rem 0;text-align:center">
-                <input type="radio" name="satisfaction" value="2"> 2
-              </label>
-              <label class="btn btn-link" style="padding:.7rem 0;text-align:center">
-                <input type="radio" name="satisfaction" value="3"> 3
-              </label>
-              <label class="btn btn-link" style="padding:.7rem 0;text-align:center">
-                <input type="radio" name="satisfaction" value="4"> 4
-              </label>
-              <label class="btn btn-link" style="padding:.7rem 0;text-align:center">
-                <input type="radio" name="satisfaction" value="5"> 5
-              </label>
-            </div>
-          </div>
-
-          <div class="q-card">
-            <div class="q-title">2) 가장 만족했던 부분</div>
-            <div style="display:grid;gap:.5rem">
-              <label><input type="radio" name="best" value="숙소" required> 숙소</label>
-              <label><input type="radio" name="best" value="음식"> 음식</label>
-              <label><input type="radio" name="best" value="성과 및 추진보고"> 성과 및 추진보고</label>
-              <label style="display:grid;gap:.4rem">
-                <span><input type="radio" name="best" value="기타"> 기타</span>
-                <input id="bestOther" type="text" placeholder="기타를 선택했다면 입력해주세요 (선택)" />
-              </label>
-            </div>
-          </div>
-
-          <div class="q-card">
-            <div class="q-title">3) 개선사항 (자유 서술)</div>
-            <textarea name="improve" rows="4" placeholder="예) 일정 간격 조정, 이동 동선 단축, 프로그램 추가 아이디어 등"></textarea>
-          </div>
-
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:.6rem">
-            <button type="button" class="btn btn-secondary" id="surveyCancel">닫기</button>
-            <button type="submit" class="btn btn-primary">제출하기</button>
-          </div>
-          <p class="k-tip" style="margin-top:.5rem">※ 본 설문은 서버에 저장되며, 제출 후 요약도 화면에 표시됩니다.</p>
-        </form>
-
-        <div id="surveyResult" class="kawaii-card hidden" style="margin-top:1rem">
-          <span class="k-badge">제출 완료</span>
-          <div class="k-head">
-            <div class="k-emoji">🎉</div>
-            <div class="k-title">참여해 주셔서 감사합니다!</div>
-          </div>
-          <div id="surveySummary" class="k-desc" style="margin-top:.25rem"></div>
-          <div class="k-actions">
-            <button class="btn btn-secondary" id="surveyReset">다시 작성</button>
-            <button class="btn btn-primary" id="surveyClose">닫기</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ✅ 심리테스트 모달 -->
   <div id="psyModal" class="modal">
     <div class="modal-content">
-      <div class="modal-header">
-        <h2>O/X 심리테스트 (5문항)</h2>
-        <button class="close-btn" data-close="psyModal">&times;</button>
+      <div class="modal-header"><h3>O/X 심리테스트 (5문항)</h3><button class="close" data-close="psyModal">×</button></div>
+      <div id="psyStep" class="">
+        <div class="text-sm text-gray-500" id="psyTitle">1/5</div>
+        <div id="psyQuestion" class="mt-1 mb-3"></div>
+        <div class="grid grid-cols-2 gap-2">
+          <button class="btn btn-primary" id="btnO">O (그렇다)</button>
+          <button class="btn btn-outline" id="btnX">X (아니다)</button>
+        </div>
       </div>
-      <div class="modal-body">
-        <!-- 진행 -->
-        <div id="psyStep" class="card">
-          <div class="q-title" id="psyTitle">1/5</div>
-          <div class="progress-wrap" id="psyProgress"></div>
-          <div id="psyQuestion" style="font-size:1.05rem;margin:.25rem 0 1rem;"></div>
-          <div class="ox-wrap">
-            <button class="ox-btn" id="btnO">O (그렇다)</button>
-            <button class="ox-btn" id="btnX">X (아니다)</button>
-          </div>
-        </div>
-        <!-- 결과 -->
-        <div id="psyResult" class="kawaii-card hidden">
-          <span class="k-badge">테스트 결과</span>
-          <div class="k-head">
-            <div class="k-emoji" id="resEmoji">🐶</div>
-            <div class="k-title" id="resTitle">활발한 강아지</div>
-          </div>
-          <p class="k-desc" id="resDesc">사람이 좋고 새로운 자극에 설렌다!</p>
-          <div class="k-stickers" id="resStickers">✨ 🐾 🎈</div>
-          <div class="k-tags" id="resTags"></div>
-          <div class="k-bars" id="resBars"></div>
-          <div class="k-actions">
-            <button class="btn btn-secondary" id="psyRetry">다시 하기</button>
-            <button class="btn btn-primary" id="psyClose">닫기</button>
-          </div>
-          <div class="k-tip">테스트 결과는 저장되지 않으며, 새로고침 시 초기화됩니다.</div>
-        </div>
+      <div id="psyResult" class="hidden">
+        <div style="font-size:2rem" id="resEmoji">🐶</div>
+        <div style="font-weight:800" id="resTitle">활발한 강아지</div>
+        <div class="text-gray-600 mt-1" id="resDesc">사람이 좋고 새로운 자극에 설렌다!</div>
+        <div id="resTags" class="flex flex-wrap gap-1 mt-2"></div>
+        <div class="mt-3"><button class="btn btn-outline" id="psyRetry">다시 하기</button></div>
       </div>
     </div>
   </div>
 
-  <!-- ✅ 자료실 모달 (신규) -->
+  <div id="scheduleModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header"><h3>워크숍 일정</h3><button class="close" data-close="scheduleModal">×</button></div>
+      <div id="scheduleBody"></div>
+    </div>
+  </div>
+
   <div id="libraryModal" class="modal">
     <div class="modal-content">
-      <div class="modal-header">
-        <h2>자료실 (최대 4개 링크)</h2>
-        <button class="close-btn" data-close="libraryModal">&times;</button>
-      </div>
-      <div class="modal-body" id="libraryBody">
-        <div class="card">
-          <div class="q-title">링크 입력</div>
-          <div id="libForm" style="display:grid;gap:.8rem"><!-- JS로 4개 슬롯 렌더 --></div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-top:.6rem">
-            <button class="btn btn-secondary" id="libLoadBtn">불러오기</button>
-            <button class="btn btn-primary" id="libSaveBtn">저장하기</button>
-          </div>
-          <p class="k-tip" style="margin-top:.5rem">※ 저장 시 백엔드(GAS) <code>links</code> 시트에 기록됩니다.</p>
-        </div>
-
-        <div class="card">
-          <div class="q-title">저장된 링크</div>
-          <div id="libList" style="display:grid;gap:.5rem"></div>
-        </div>
-      </div>
+      <div class="modal-header"><h3>자료실</h3><button class="close" data-close="libraryModal">×</button></div>
+      <div id="libList" class="grid gap-2"></div>
+      <p class="text-gray-500 text-sm mt-2">※ 자료실은 코드에 고정된 링크 목록입니다.</p>
     </div>
   </div>
 
-  <!-- Part 3~5: 스크립트(JS) 여기 삽입 예정 -->
-  <!-- ===== PART 3 PLACEHOLDER (CONFIG & UTILS JS) ===== -->
-  <!-- ===== PART 4 PLACEHOLDER (CORE FEATURES JS) ===== -->
-  <!-- ===== PART 5 PLACEHOLDER (TRACKING & INIT JS) ===== -->
-</body>
-</html>
-<style>
-@import url('https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css');
-@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
+  <div id="alertMessage"></div>
 
-:root {
-  --primary-brand: #1e40af;
-  --secondary-brand: #3b82f6;
-  --accent-warm: #f59e0b;
-  --accent-cool: #06b6d4;
-  --text-primary: #0f172a;
-  --text-secondary: #475569;
-  --bg-light: #ffffff;
-  --bg-panel: #f8fafc;
-  --line: #e2e8f0;
-  --danger: #ef4444;
-  --success: #10b981;
-}
-
-body {
-  font-family: 'Pretendard', sans-serif;
-  background: var(--bg-panel);
-  color: var(--text-primary);
-  margin: 0;
-  padding: 0;
-}
-
-.container {
-  max-width: 640px;
-  margin: 0 auto;
-  padding: 1rem;
-}
-
-.header {
-  text-align: center;
-  margin-bottom: 1.5rem;
-}
-
-.card {
-  background: var(--bg-light);
-  border: 1px solid var(--line);
-  border-radius: 1rem;
-  padding: 1rem;
-  margin-bottom: 1rem;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-}
-
-.form-group { margin-bottom: 1rem; }
-.form-group label { font-weight: 600; display: block; margin-bottom: .4rem; }
-
-input, select, textarea {
-  width: 100%;
-  border: 1px solid var(--line);
-  border-radius: .5rem;
-  padding: .5rem .6rem;
-  font-size: .95rem;
-  transition: border .2s;
-}
-
-input:focus, select:focus, textarea:focus {
-  outline: none;
-  border-color: var(--secondary-brand);
-  box-shadow: 0 0 0 1px var(--secondary-brand);
-}
-
-/* 버튼 스타일 */
-.btn {
-  display: inline-block;
-  border: none;
-  border-radius: .6rem;
-  font-weight: 600;
-  text-align: center;
-  cursor: pointer;
-  padding: .7rem 1rem;
-  transition: all .2s;
-}
-
-.btn-primary {
-  background: var(--primary-brand);
-  color: #fff;
-}
-.btn-primary:hover { background: #1d4ed8; }
-
-.btn-secondary {
-  background: var(--accent-cool);
-  color: #fff;
-}
-.btn-secondary:hover { background: #0891b2; }
-
-.btn-link {
-  background: var(--bg-light);
-  border: 1px solid var(--line);
-  color: var(--text-primary);
-}
-.btn-link:hover { background: var(--bg-panel); }
-
-.hidden { display: none !important; }
-
-/* 메뉴 그리드 */
-.menu-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: .8rem;
-  margin-top: 1rem;
-}
-
-.menu-item {
-  background: var(--bg-light);
-  border-radius: .8rem;
-  border: 1px solid var(--line);
-  padding: .8rem;
-  cursor: pointer;
-  transition: background .2s;
-}
-.menu-item:hover { background: var(--bg-panel); }
-.menu-title { font-weight: 600; font-size: 1rem; margin-bottom: .25rem; }
-.menu-desc { font-size: .85rem; color: var(--text-secondary); }
-
-/* 타이머 */
-.timer-card { text-align: center; }
-.timer-display { font-size: 2rem; font-weight: 800; color: var(--primary-brand); }
-
-/* 모달 */
-.modal {
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,.45);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-}
-.modal-content {
-  background: #fff;
-  border-radius: 1rem;
-  padding: 1rem 1.25rem;
-  max-height: 85vh;
-  overflow-y: auto;
-  width: 90%;
-  max-width: 600px;
-  position: relative;
-}
-.modal-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: .75rem;
-}
-.close-btn {
-  border: none;
-  background: none;
-  font-size: 1.6rem;
-  cursor: pointer;
-}
-
-/* 오버레이 (타이머 종료) */
-.overlay {
-  display: none;
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,.7);
-  align-items: center;
-  justify-content: center;
-  z-index: 9998;
-}
-.overlay-card {
-  background: #fff;
-  padding: 2rem;
-  border-radius: 1rem;
-  text-align: center;
-}
-
-/* 알림 */
-#alertMessage {
-  position: fixed;
-  bottom: 1.2rem;
-  left: 50%;
-  transform: translateX(-50%);
-  background: var(--primary-brand);
-  color: #fff;
-  padding: .75rem 1.5rem;
-  border-radius: .6rem;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.15);
-  z-index: 99999;
-  opacity: 0;
-  transition: opacity .3s;
-}
-#alertMessage.show { opacity: 1; }
-
-/* 게이트 (참여 전 블라인드) */
-#gatedNote {
-  display: none;
-  text-align: center;
-  margin: .8rem 0;
-  color: var(--text-secondary);
-}
-#gatedNote.on { display: block; }
-#gatedNote b { color: var(--primary-brand); }
-#mainScreen.gated .menu-grid {
-  filter: blur(3px);
-  pointer-events: none;
-}
-
-/* kawaii 카드 */
-.kawaii-card {
-  background: #fff;
-  border: 1px solid var(--line);
-  border-radius: 1rem;
-  text-align: center;
-  padding: 1rem;
-}
-.k-badge {
-  background: var(--accent-cool);
-  color: #fff;
-  border-radius: .5rem;
-  padding: .2rem .6rem;
-  font-size: .8rem;
-}
-.k-head { margin-top: .6rem; }
-.k-emoji { font-size: 2rem; }
-.k-title { font-weight: 700; margin-top: .3rem; }
-.k-desc { color: var(--text-secondary); font-size: .9rem; margin-top: .4rem; }
-.k-actions { margin-top: 1rem; display: flex; gap: .5rem; justify-content: center; }
-
-/* progress/ox */
-.progress-wrap {
-  height: 8px;
-  background: var(--line);
-  border-radius: 4px;
-  margin-bottom: 1rem;
-  overflow: hidden;
-}
-.progress-wrap::after {
-  content: "";
-  display: block;
-  height: 8px;
-  background: var(--primary-brand);
-  width: 0%;
-  transition: width .3s;
-}
-.ox-wrap {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-}
-.ox-btn {
-  font-size: 1rem;
-  font-weight: 700;
-  padding: 1rem 0;
-  border-radius: .8rem;
-  background: var(--secondary-brand);
-  color: #fff;
-  border: none;
-  cursor: pointer;
-}
-.ox-btn:hover { background: #2563eb; }
-
-/* small helper classes */
-.text-center { text-align: center; }
-.k-tip { font-size: .8rem; color: var(--text-secondary); }
-
-</style>
 <script>
-/* ===========================
-   🧭 CONFIG
-=========================== */
-
-// ✅ 백엔드 Web App URL (Deploy as Web App)
+/* ====== CONFIG ====== */
+// 백엔드(GAS) WebApp URL — MBTI 저장/이벤트 트래킹 용 (없어도 UI 동작)
 const API_URL = "https://script.google.com/macros/s/AKfycbxM8pNBBnAxRyoIYHO8be82IzlTCPYOcRRjq_aoiTvcyoprVNhfXQx_KsZlVSVGJlhn/exec";
+
+// 외부 링크(원하는 값으로 교체)
+const RELATION_URL = "https://kim950106.github.io/tour/";       // MBTI 관계도
+const AI_CHATBOT_URL = "https://kim950106.github.io/tourpass.ai/";
+const TPV3_URL = "https://claude.ai/public/artifacts/65f1dc58-6271-47af-8ee7-f159eb01d4e6";
+
+// 보관함 사전 등록 티켓(코드/이름/URL)
+const PRESET_TICKETS = [
+  { code:"9403", name:"1조 충남투어패스", url:"www.naver.com" },
+  { code:"8027", name:"2조 충남투어패스", url:"www.daum.net" },
+  { code:"1402", name:"3조 충남투어패스", url:"www.tourpass.ai" }
+];
+
+// 📚 자료실: 저장이 아닌 “코드 고정형”
+const LIBRARY_LINKS = [
+  { title:"워크숍 리플렛", url:"https://example.com/leaflet.pdf", desc:"PDF 다운로드" },
+  { title:"성과 및 추진보고", url:"https://example.com/report", desc:"Google Docs" },
+  { title:"참가자 안내", url:"https://example.com/guide", desc:"웹 안내문" },
+  { title:"부여 관광지도", url:"https://example.com/map", desc:"이미지 지도" },
+];
 
 // 참여코드 매핑
 const PARTICIPATION_CODES = {
-  "남도현": "20191001",
-  "김현철": "20200211",
-  "김수인": "202201171",
-  "김대진": "202201172",
-  "이주아": "20220118",
-  "장은진": "20221101",
-  "이유진": "20230614",
-  "정어진": "20240419",
-  "판티니안": "20250507",
-  "장원준": "20250526",
-  "고다현": "20250804",
-  "심재희": "20250901",
-  "손현우": "20251014"
+  "남도현":"20191001","김현철":"20200211","김수인":"202201171","김대진":"202201172",
+  "이주아":"20220118","장은진":"20221101","이유진":"20230614","정어진":"20240419",
+  "판티니안":"20250507","장원준":"20250526","고다현":"20250804","심재희":"20250901"
 };
 function validateParticipation(name, code){
-  const need = PARTICIPATION_CODES[name] || '';
-  return need && code && String(need).trim() === String(code).trim();
+  return (PARTICIPATION_CODES[name]||"") === String(code||"").trim();
 }
 
-/* ===========================
-   🌐 API UTILS
-=========================== */
+/* ====== STATE ====== */
+let currentUser="", sessionId="", workshopEndAt=null, timerInterval=null;
 
-async function apiRequest(action, payload = {}) {
-  try {
-    const res = await fetch(API_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ action, ...payload }),
-    });
-    return await res.json();
-  } catch (e) {
-    console.error("API Request Error", e);
-    return { success: false, error: String(e) };
-  }
+/* ====== UTILS ====== */
+async function apiRequest(action, payload={}){
+  try{
+    const r = await fetch(API_URL,{method:"POST",headers:{'Content-Type':'application/json'},body:JSON.stringify({action,...payload})});
+    return await r.json();
+  }catch(e){return {success:false,error:String(e)}}
 }
-
-/* ===========================
-   🧩 GLOBAL STATE
-=========================== */
-
-let currentUser = "";
-let sessionId = "";
-let workshopEndAt = null;
-let timerInterval = null;
-let timerRunning = false;
-
-/* ===========================
-   💬 ALERT / TOAST
-=========================== */
-
-function showAlert(msg, type = "info", dur = 2200) {
-  const el = document.getElementById("alertMessage");
-  if (!el) return;
-  el.innerText = msg;
-  el.style.background = type === "error" ? "var(--danger)" : type === "success" ? "var(--success)" : "var(--primary-brand)";
-  el.classList.add("show");
-  el.classList.remove("hidden");
-  setTimeout(() => el.classList.remove("show"), dur);
+function toast(msg,type="info",ms=2000){
+  const el=document.getElementById('alertMessage');
+  el.textContent=msg; el.style.background = type==="error"?"#ef4444":type==="success"?"#10b981": "var(--brand-2)";
+  el.classList.add('show'); setTimeout(()=>el.classList.remove('show'),ms);
 }
+function normalizeUrl(u){ if(!/^https?:\/\//i.test(u)) return 'https://'+u; return u; }
+function fmt(ms){const t=Math.max(0,Math.floor(ms/1000));const h=String(Math.floor(t/3600)).padStart(2,'0');const m=String(Math.floor((t%3600)/60)).padStart(2,'0');const s=String(t%60).padStart(2,'0');return `${h}:${m}:${s}`;}
+async function track(event,meta={}){ try{ await apiRequest('trackEvent',{sessionId,userName:currentUser,event,meta}); }catch(_){} }
 
-/* ===========================
-   🕒 TIMER & GATE
-=========================== */
-
-function applyGateOn(){
-  const ms = document.getElementById('mainScreen');
-  ms.classList.add('gated');
-  const note = document.getElementById('gatedNote');
-  note.classList.add('on');
-  note.innerHTML = '🔒 아래 메뉴는 <b>“워크숍 참여하기”</b> 버튼을 누르면 열립니다.';
+/* ====== GATE & TIMER ====== */
+function applyGate(){ document.getElementById('mainScreen').classList.add('gated'); document.getElementById('gatedNote').classList.add('on'); }
+function clearGate(){ document.getElementById('mainScreen').classList.remove('gated'); document.getElementById('gatedNote').classList.remove('on'); }
+function beginTimer(){
+  const stored = localStorage.getItem('workshopEndAt');
+  if(stored){ workshopEndAt=new Date(Number(stored)); runTick(); clearGate(); toast('이미 카운트다운 중'); return; }
+  const end=Date.now()+48*60*60*1000;
+  localStorage.setItem('workshopEndAt',String(end));
+  workshopEndAt=new Date(end); runTick(); clearGate(); toast('카운트다운 시작!','success');
 }
-function removeGate(){
-  const ms = document.getElementById('mainScreen');
-  ms.classList.remove('gated');
-  document.getElementById('gatedNote').classList.remove('on');
-}
-
-/* ===========================
-   🧭 HELPERS
-=========================== */
-
-function escapeHtml(str=""){
-  return str.replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-}
-function normalizeUrl(url=""){
-  if(!url) return "#";
-  if(!/^https?:\/\//.test(url)) return "https://" + url;
-  return url;
-}
-function formatTime(ms){
-  const t = Math.max(0, Math.floor(ms/1000));
-  const h = String(Math.floor(t/3600)).padStart(2,"0");
-  const m = String(Math.floor(t%3600/60)).padStart(2,"0");
-  const s = String(t%60).padStart(2,"0");
-  return `${h}:${m}:${s}`;
-}
-
-/* ===========================
-   ⏱ TIMER LOGIC
-=========================== */
-function beginTimerInterval(){
+function runTick(){
   if(timerInterval) clearInterval(timerInterval);
-  timerInterval = setInterval(()=>{
-    const now = new Date();
-    const remain = workshopEndAt - now;
-    if(remain <= 0){
-      clearInterval(timerInterval);
-      timerInterval = null;
-      timerRunning = false;
-      document.getElementById("timerDisplay").textContent = "00:00:00";
-      document.getElementById("overlay").style.display = "flex";
-      return;
-    }
-    document.getElementById("timerDisplay").textContent = formatTime(remain);
-  },1000);
+  const disp=document.getElementById('timerDisplay');
+  const tick=()=>{ const remain=workshopEndAt-Date.now(); disp.textContent=fmt(remain); if(remain<=0){clearInterval(timerInterval); disp.textContent="00:00:00";} };
+  tick(); timerInterval=setInterval(tick,1000);
 }
 
-function startTimer(){
-  const stored = localStorage.getItem("workshopEndAt");
-  if(stored){ showAlert("이미 카운트다운이 진행 중입니다."); beginTimerInterval(); removeGate(); return; }
-  const endTs = Date.now() + 48*60*60*1000;
-  localStorage.setItem("workshopEndAt",String(endTs));
-  workshopEndAt = new Date(endTs);
-  beginTimerInterval();
-  removeGate();
-  showAlert("카운트다운 시작!");
+/* ====== LOGIN ====== */
+async function doLogin(){
+  const name=document.getElementById('userName').value.trim();
+  const mbti=document.getElementById('userMBTI').value.trim();
+  const code=(document.getElementById('userCode').value||"").trim();
+  if(!name || !mbti) return toast('이름과 MBTI를 선택하세요','error');
+  if(!code) return toast('참여코드를 입력하세요','error');
+  if(!validateParticipation(name,code)) return toast('참여코드가 일치하지 않습니다','error');
+
+  currentUser=name; sessionId='session_'+Date.now();
+  document.getElementById('loginScreen').classList.add('hidden');
+  document.getElementById('mainScreen').classList.remove('hidden');
+  document.getElementById('userNameDisplay').textContent=currentUser;
+  document.getElementById('userTeamDisplay').textContent='투어패스사업부';
+
+  // 캐시 저장 (로그아웃 전까지 유지)
+  localStorage.setItem('loginCache',JSON.stringify({name,mbti,code}));
+  localStorage.setItem('sessionId',sessionId);
+
+  // 백엔드에 MBTI 포함 저장 (있으면)
+  apiRequest('login',{sessionId,userName:name,mbti,team:'투어패스사업부',position:''});
+  track('login',{mbti});
+
+  // 타이머 상태 반영
+  const stored=localStorage.getItem('workshopEndAt');
+  if(stored){ workshopEndAt=new Date(Number(stored)); runTick(); clearGate(); } else { applyGate(); }
+
+  toast(`환영합니다, ${name}님!`,'success');
 }
 
-/* ===========================
-   🧭 EVENT TRACKING UTILITY
-=========================== */
-async function trackEvent(eventName, meta = {}){
-  try {
-    await apiRequest("trackEvent", {
-      sessionId,
-      userName: currentUser || "",
-      event: eventName,
-      meta
-    });
-  } catch(e){ console.warn("Track fail", e); }
-}
-</script>
-<script>
-/* ===========================
-   👤 LOGIN LOGIC
-=========================== */
-async function handleLogin() {
-  const userName = document.getElementById("userName").value.trim();
-  const userMBTI = document.getElementById("userMBTI").value.trim();
-  const userCode = (document.getElementById("userCode").value || "").trim();
-
-  if (!userName || !userMBTI) return showAlert("이름과 MBTI를 모두 입력해주세요.", "error");
-  if (!userCode) return showAlert("참여코드를 입력해주세요.", "error");
-
-  if (!validateParticipation(userName, userCode)) {
-    trackEvent("login_denied", { userName, reason: "code_mismatch" });
-    return showAlert("참여코드가 이름과 일치하지 않습니다.", "error");
-  }
-
-  currentUser = userName;
-  sessionId = "session_" + Date.now();
-
-  // 서버 로그인
-  const res = await apiRequest("login", {
-    sessionId, userName, mbti: userMBTI, team: "", position: ""
-  });
-  if (!res.success) {
-    showAlert("서버 연결 불가: 로컬 모드로 진입합니다.", "error");
-  }
-
-  // 캐시 저장
-  localStorage.setItem("loginCache", JSON.stringify({ userName, userMBTI, userCode, ts: Date.now() }));
-  localStorage.setItem("currentUser", userName);
-  localStorage.setItem("sessionId", sessionId);
-
-  document.getElementById("loginScreen").classList.add("hidden");
-  document.getElementById("mainScreen").classList.remove("hidden");
-  document.getElementById("userNameDisplay").textContent = userName;
-  document.getElementById("userTeamDisplay").textContent = "투어패스사업부";
-
-  showAlert(`환영합니다, ${userName}님!`, "success");
-  trackEvent("login", { mbti: userMBTI });
-
-  const storedEnd = localStorage.getItem("workshopEndAt");
-  if (storedEnd) { workshopEndAt = new Date(Number(storedEnd)); beginTimerInterval(); removeGate(); } 
-  else applyGateOn();
-}
-
-async function handleLogout() {
-  if (!confirm("로그아웃하시겠습니까?")) return;
-  await apiRequest("updateUserStatus", { userName: currentUser, sessionId, status: "offline" });
-  localStorage.clear();
+async function doLogout(){
+  await apiRequest('updateUserStatus',{sessionId,userName:currentUser,status:'offline'});
+  localStorage.removeItem('loginCache'); localStorage.removeItem('sessionId'); // 타이머는 유지 원하시면 주석
+  // localStorage.removeItem('workshopEndAt');
   location.reload();
 }
-
-/* ===========================
-   🚪 SESSION RESTORE / AUTO LOGIN
-=========================== */
-function restoreSession() {
-  const cacheStr = localStorage.getItem("loginCache");
-  if (!cacheStr) return;
-  try {
-    const cache = JSON.parse(cacheStr);
-    if (validateParticipation(cache.userName, cache.userCode)) {
-      currentUser = cache.userName;
-      sessionId = localStorage.getItem("sessionId") || "session_" + Date.now();
-      document.getElementById("loginScreen").classList.add("hidden");
-      document.getElementById("mainScreen").classList.remove("hidden");
-      document.getElementById("userNameDisplay").textContent = currentUser;
-      document.getElementById("userTeamDisplay").textContent = "투어패스사업부";
-      const storedEnd = localStorage.getItem("workshopEndAt");
-      if (storedEnd) { workshopEndAt = new Date(Number(storedEnd)); beginTimerInterval(); removeGate(); } 
-      else applyGateOn();
-      showAlert(`자동로그인: ${currentUser}님`, "success");
-    }
-  } catch (_) { console.warn("restoreSession fail"); }
-}
-
-/* ===========================
-   🕐 START WORKSHOP BUTTON
-=========================== */
-document.addEventListener("DOMContentLoaded",()=>{
-  document.getElementById("loginBtn").addEventListener("click", handleLogin);
-  document.getElementById("logoutBtn").addEventListener("click", handleLogout);
-  document.getElementById("startBtn").addEventListener("click", ()=>{ startTimer(); trackEvent("click:start_workshop"); });
-});
-
-/* ===========================
-   📋 SURVEY LOGIC
-=========================== */
-async function handleSurveySubmit(e){
-  e.preventDefault();
-  const fd = new FormData(e.target);
-  const satisfaction = fd.get("satisfaction");
-  let best = fd.get("best") || "";
-  const bestOther = document.getElementById("bestOther").value.trim();
-  if (best === "기타" && bestOther) best = `기타(${bestOther})`;
-  const improve = (fd.get("improve") || "").trim();
-
-  let saved = false;
-  try {
-    const res = await apiRequest("saveSurvey", {
-      user: currentUser || "게스트",
-      satisfaction,
-      useful_program: best || "",
-      feedback: improve || ""
-    });
-    saved = !!(res && res.success);
-  } catch(_) {}
-  trackEvent("submit:survey", { satisfaction, best, hasImprove: !!improve });
-
-  showAlert(saved ? "설문이 저장되었습니다." : "저장 실패: 화면에만 표시됩니다.", saved ? "success" : "error");
-
-  const summary = `
-    <div class="card">
-      <div class="q-title">요약</div>
-      <div><b>만족도</b>: ${satisfaction} / 5</div>
-      <div><b>가장 만족</b>: ${best || "-"}</div>
-      <div><b>개선사항</b>: ${escapeHtml(improve || "-")}</div>
-    </div>`;
-  document.getElementById("surveySummary").innerHTML = summary;
-  document.getElementById("surveyForm").classList.add("hidden");
-  document.getElementById("surveyResult").classList.remove("hidden");
-}
-
-/* ===========================
-   🗂 자료실 (LIBRARY)
-=========================== */
-function renderLibSlots(items=[]){
-  const wrap=document.getElementById("libForm");
-  const fill=i=>items[i]||{title:"",url:"",category:"",description:""};
-  wrap.innerHTML=Array.from({length:4}).map((_,i)=>{
-    const it=fill(i);
-    return `
-      <div class="q-card" data-slot="${i}">
-        <div class="q-title">링크 ${i+1}</div>
-        <div style="display:grid;gap:.4rem">
-          <input type="text" placeholder="제목" value="${escapeHtml(it.title||"")}"/>
-          <input type="text" placeholder="URL (https://…)" value="${escapeHtml(it.url||"")}"/>
-          <input type="text" placeholder="카테고리" value="${escapeHtml(it.category||"")}"/>
-          <input type="text" placeholder="설명" value="${escapeHtml(it.description||"")}"/>
-        </div>
-      </div>`;}).join("");
-}
-
-async function openLibrary(){
-  let items=[];
+function restore(){
+  const cache=localStorage.getItem('loginCache'); if(!cache) return;
   try{
-    const res=await apiRequest("getLinks",{user:currentUser||""});
-    if(res&&res.success&&Array.isArray(res.items)){
-      items=res.items.slice(-4).map(x=>({
-        title:x.title||"",url:x.url||"",category:x.category||"",description:x.description||""
-      }));
-    }
+    const {name,mbti,code}=JSON.parse(cache);
+    if(!validateParticipation(name,code)) return; // 코드가 바뀌면 로그인 무효
+    currentUser=name; sessionId=localStorage.getItem('sessionId')||('session_'+Date.now());
+    document.getElementById('loginScreen').classList.add('hidden');
+    document.getElementById('mainScreen').classList.remove('hidden');
+    document.getElementById('userNameDisplay').textContent=currentUser;
+    document.getElementById('userTeamDisplay').textContent='투어패스사업부';
+    const stored=localStorage.getItem('workshopEndAt');
+    if(stored){ workshopEndAt=new Date(Number(stored)); runTick(); clearGate(); } else { applyGate(); }
+    toast(`자동로그인: ${name}`,'success');
   }catch(_){}
-  renderLibSlots(items); renderLibList(items);
-  document.getElementById("libraryModal").style.display="block";
-  trackEvent("click:menu_library");
 }
 
-function renderLibList(items=[]){
-  const list=document.getElementById("libList");
-  if(!items.length){list.innerHTML='<div class="k-tip">저장된 링크가 없습니다.</div>';return;}
-  list.innerHTML=items.map(it=>`
-    <a class="menu-item" href="${normalizeUrl(it.url||"#")}" target="_blank">
-      <div class="menu-title">🔗 ${escapeHtml(it.title||"(제목 없음)")}</div>
-      <div class="menu-desc">${escapeHtml(it.url||"")}</div>
-    </a>`).join("");
+/* ====== MENU: 보관함 ====== */
+function renderVault(){
+  const wrap=document.getElementById('presetWrap');
+  const selected=localStorage.getItem('selectedTicketCode')||'';
+  wrap.innerHTML=PRESET_TICKETS.map(t=>
+    `<label class="block border border-gray-200 rounded-lg p-3 mb-2">
+      <div class="flex items-center gap-2">
+        <input type="radio" name="preset" value="${t.code}" ${t.code===selected?'checked':''}/>
+        <div>
+          <div class="font-bold">코드 ${t.code} · ${t.name}</div>
+          <div class="text-gray-500 text-sm">${t.url}</div>
+        </div>
+      </div>
+    </label>`).join('');
+  document.getElementById('presetTip').textContent= selected?`현재 선택: ${selected}`:'아직 선택된 티켓이 없습니다.';
+}
+function openVault(){ renderVault(); showModal('vaultModal'); track('click:menu_vault'); }
+function saveVault(){
+  const ch=document.querySelector('input[name="preset"]:checked');
+  if(!ch) return toast('티켓을 선택하세요','error');
+  localStorage.setItem('selectedTicketCode',ch.value); toast('선택이 저장되었습니다','success'); hideModal('vaultModal');
+  const t=PRESET_TICKETS.find(x=>x.code===ch.value); if(t) window.open(normalizeUrl(t.url),'_blank');
+}
+function goVault(){
+  const ch=document.querySelector('input[name="preset"]:checked');
+  if(!ch) return toast('티켓을 선택하세요','error');
+  const t=PRESET_TICKETS.find(x=>x.code===ch.value); if(t) window.open(normalizeUrl(t.url),'_blank');
 }
 
-async function saveLibrary(){
-  const cards=Array.from(document.querySelectorAll("#libForm .q-card"));
-  let savedCnt=0;
-  for(const c of cards){
-    const [titleEl,urlEl,catEl,descEl]=c.querySelectorAll("input");
-    const title=titleEl.value.trim();const url=urlEl.value.trim();
-    if(!title&&!url) continue;
-    try{
-      const res=await apiRequest("saveLink",{
-        user:currentUser||"",title,url,category:catEl.value.trim(),description:descEl.value.trim()
-      });
-      if(res&&res.success) savedCnt++;
-    }catch(_){}
-  }
-  showAlert(savedCnt>0?`${savedCnt}개 링크 저장 완료`:"저장할 항목이 없습니다",savedCnt>0?"success":"error");
-  trackEvent("click:library_save",{count:savedCnt});
-  const res = await apiRequest("getLinks",{user:currentUser||""});
-  if(res&&res.success) renderLibList(res.items.slice(-4));
+/* ====== MENU: 데일리 포춘 ====== */
+function seeded(name){let t=0;for(let i=0;i<name.length;i++)t=(t*31+name.charCodeAt(i))>>>0;return ()=>{t=(t+0x6D2B79F5)>>>0;let r=Math.imul(t^(t>>>15),1|t);r^=r+Math.imul(r^(r>>>7),61|r);return((r^(r>>>14))>>>0)/4294967296;};}
+function openFortune(){
+  const rng=seeded(currentUser + new Date().toISOString().slice(0,10));
+  const grade=['★★★★★','★★★★☆','★★★☆☆','★★☆☆☆','★☆☆☆☆'];
+  const pick=a=>a[Math.floor(rng()*a.length)];
+  const lucky=Math.floor(rng()*99)+1;
+  const sec=(tit)=>`<div class="border border-gray-200 rounded-lg p-3 mb-2"><div class="font-bold">${tit}<span class="float-right">${pick(grade)}</span></div><div class="text-gray-600 mt-1">`+
+    `${pick(['작게 시작하면 크게 돌아옵니다.','과감히 덜어내면 속도가 납니다.','타이밍은 지금! 미루지 말기.','사람을 먼저 챙기면 일이 풀립니다.','데이터로 확인하세요.'])}</div></div>`;
+  document.getElementById('fortuneBody').innerHTML=
+    `<div class="text-center mb-2"><div class="text-sm text-gray-500">오늘</div><div class="font-bold text-lg">${currentUser}님의 데일리 포춘</div></div>`+
+    sec('전체운')+sec('연애운')+sec('금전운')+sec('건강운')+sec('업무/학업')+
+    `<div class="grid grid-cols-2 gap-2 mt-2">
+       <div class="border border-gray-200 rounded-lg p-3"><div class="font-bold">럭키 넘버</div><div>${lucky}</div></div>
+       <div class="border border-gray-200 rounded-lg p-3"><div class="font-bold">럭키 컬러</div><div>${pick(['네이비','코발트','민트','옐로','코랄','라일락'])}</div></div>
+     </div>`;
+  showModal('fortuneModal'); track('click:menu_fortune');
 }
 
-/* ===========================
-   🎬 MODAL EVENTS INIT
-=========================== */
-document.addEventListener("DOMContentLoaded",()=>{
-  // 설문
-  document.getElementById("surveyForm").addEventListener("submit",handleSurveySubmit);
-  document.getElementById("surveyClose").addEventListener("click",()=>document.getElementById("surveyModal").style.display="none");
-  document.getElementById("surveyMenu").addEventListener("click",()=>{document.getElementById("surveyModal").style.display="block";trackEvent("click:menu_survey");});
-  document.getElementById("openSurveyFromOverlay").addEventListener("click",()=>{document.getElementById("overlay").style.display="none";document.getElementById("surveyModal").style.display="block";});
-  
-  // 자료실
-  document.getElementById("libraryMenu").addEventListener("click",openLibrary);
-  document.getElementById("libSaveBtn").addEventListener("click",saveLibrary);
-  document.getElementById("libLoadBtn").addEventListener("click",openLibrary);
+/* ====== MENU: 심리테스트 ====== */
+const PSY_QUESTIONS=[
+  {text:'사람 많은 활동에서 에너지가 생긴다.',pos:'E'},{text:'계획대로 움직일 때 안정감을 느낀다.',pos:'J'},
+  {text:'결정보다 관계의 조화가 더 중요하다.',pos:'F'},{text:'예상치 못한 제안도 즉흥적으로 수락한다.',pos:'P'},
+  {text:'혼자만의 시간에서 집중력이 오른다.',pos:'I'}
+];
+let psyIdx=0, score={E:0,I:0,J:0,P:0,F:0,T:0};
+function renderPsy(){ document.getElementById('psyTitle').textContent=`${psyIdx+1}/${PSY_QUESTIONS.length}`; document.getElementById('psyQuestion').textContent=PSY_QUESTIONS[psyIdx].text; }
+function answerPsy(isO){
+  const q=PSY_QUESTIONS[psyIdx]; if(isO) score[q.pos]=(score[q.pos]||0)+1; else score[{E:'I',I:'E',J:'P',P:'J',F:'T',T:'F'}[q.pos]]++;
+  psyIdx++; if(psyIdx<PSY_QUESTIONS.length) renderPsy(); else showPsyResult();
+}
+function showPsyResult(){
+  const EI=(score.E||0)>=(score.I||0)?'E':'I', JP=(score.J||0)>=(score.P||0)?'J':'P', FT=(score.F||0)>=(score.T||0)?'F':'T';
+  let animal={emoji:'🐶',title:'활발한 강아지',desc:'사교성·즉흥력이 강점!'};
+  if(EI==='E'&&JP==='J') animal={emoji:'🦊',title:'똑똑한 여우',desc:'계획적 소통형 리더'};
+  if(EI==='I'&&JP==='P') animal={emoji:'🐱',title:'고양이 탐험가',desc:'혼자 충전·번뜩임'};
+  if(EI==='I'&&JP==='J') animal={emoji:'🦉',title:'현자 올빼미',desc:'분석·체계 전략가'};
+  if(FT==='F'&&EI==='E') animal={emoji:'🦦',title:'사교적인 수달',desc:'팀 분위기 메이커'};
+  document.getElementById('psyStep').classList.add('hidden');
+  document.getElementById('psyResult').classList.remove('hidden');
+  document.getElementById('resEmoji').textContent=animal.emoji;
+  document.getElementById('resTitle').textContent=animal.title;
+  document.getElementById('resDesc').textContent=animal.desc;
+  document.getElementById('resTags').innerHTML=['E/I','J/P','F/T'].map(t=>`<span class="px-2 py-1 bg-gray-100 rounded text-sm">#${t}</span>`).join(' ');
+}
+function resetPsy(){ psyIdx=0; score={E:0,I:0,J:0,P:0,F:0,T:0}; document.getElementById('psyStep').classList.remove('hidden'); document.getElementById('psyResult').classList.add('hidden'); renderPsy(); }
+function openPsy(){ resetPsy(); showModal('psyModal'); track('click:menu_psy'); }
 
-  // 세션 복원
-  restoreSession();
-});
+/* ====== MENU: 일정 ====== */
+const SCHEDULE=[
+  { dayTitle:'첫째 날 (10월 16일)', rows:[
+    {time:'14:50',act:'로비 집합',place:'롯데리조트 부여점'},
+    {time:'15:30',act:'체크인 및 방배정',place:'롯데리조트 부여점'},
+    {time:'15:30',act:'아로마 버물리 만들기',place:'수복로1945'},
+    {time:'16:00',act:'원준님 도슨트 투어',place:'백제문화단지'},
+    {time:'17:30',act:'자유시간',place:'-'},
+    {time:'18:30',act:'저녁식사',place:'서동한우 규암점'},
+    {time:'21:00',act:'회식 (랜덤 상품 뽑기 이벤트 / 참가자 한정)\n*부여통닭 / 보령맥주',place:'부여룸펜션로즈'},
+    {time:'22:00',act:'자율휴식',place:'-'},
+  ]},
+  { dayTitle:'둘째 날 (10월 17일)', rows:[
+    {time:'11:00',act:'아침 겸 점심식사',place:'장원 막국수'},
+    {time:'12:30',act:'워크숍 장소 집합',place:'-'},
+    {time:'12:30',act:'2026 투어패스사업부 사업 추진계획 / 남도현 이사',place:'사비123창작센터'},
+    {time:'13:10',act:'3팀 성과 및 추진계획 / 김대진 팀장',place:'사비123창작센터'},
+    {time:'13:30',act:'2팀 성과 및 추진계획 / 김현철 팀장',place:'사비123창작센터'},
+    {time:'13:50',act:'1팀 성과 및 추진계획 / 김수인 팀장',place:'사비123창작센터'},
+    {time:'14:10',act:'귀가',place:'-'},
+  ]},
+];
+function renderSchedule(){
+  const body=document.getElementById('scheduleBody');
+  body.innerHTML=SCHEDULE.map(day=>{
+    const rows=day.rows.map(r=>`<tr>
+      <td class="py-2 px-2 font-bold text-blue-600">${r.time}</td>
+      <td class="py-2 px-2">${r.act.replaceAll('\\n','<br>')}</td>
+      <td class="py-2 px-2 text-gray-600">${r.place}</td></tr>`).join('');
+    return `<div class="bg-blue-50 rounded-lg px-3 py-2 font-extrabold text-blue-700 mt-1 mb-2">${day.dayTitle}</div>
+      <table class="w-full border-collapse">
+        <thead><tr class="text-left"><th class="py-2 px-2 w-20">시간</th><th class="py-2 px-2">활동</th><th class="py-2 px-2 w-32">장소</th></tr></thead>
+        <tbody class="border-t border-gray-200">${rows}</tbody>
+      </table>`;
+  }).join('');
+}
+function openSchedule(){ renderSchedule(); showModal('scheduleModal'); track('click:menu_schedule'); }
+
+/* ====== MENU: 자료실(고정형) ====== */
+function openLibrary(){
+  const list=document.getElementById('libList');
+  list.innerHTML = LIBRARY_LINKS.map(x=>`<a class="menu-item" href="${normalizeUrl(x.url)}" target="_blank">
+      <div class="font-bold">🔗 ${x.title}</div>
+      <div class="text-gray-500 text-sm">${x.desc||x.url}</div>
+    </a>`).join('');
+  showModal('libraryModal'); track('click:menu_library');
+}
+
+/* ====== MODAL HELPERS ====== */
+function showModal(id){document.getElementById(id).style.display='flex';}
+function hideModal(id){document.getElementById(id).style.display='none';}
+document.querySelectorAll('.close').forEach(btn=>btn.addEventListener('click',()=>hideModal(btn.dataset.close)));
+window.addEventListener('click',e=>{document.querySelectorAll('.modal').forEach(m=>{if(e.target===m) m.style.display='none';});});
+
+/* ====== EVENTS ====== */
+document.getElementById('loginBtn').addEventListener('click',doLogin);
+document.getElementById('logoutBtn').addEventListener('click',doLogout);
+document.querySelector('.logout').addEventListener('click',doLogout);
+document.getElementById('startBtn').addEventListener('click',()=>{beginTimer(); track('click:start');});
+
+document.getElementById('menuMbti').addEventListener('click',()=>{ window.open(RELATION_URL,'_blank'); track('click:mbti'); });
+document.getElementById('menuVault').addEventListener('click',openVault);
+document.getElementById('presetSave').addEventListener('click',saveVault);
+document.getElementById('presetGo').addEventListener('click',goVault);
+
+document.getElementById('menuFortune').addEventListener('click',openFortune);
+document.getElementById('menuDraft').addEventListener('click',()=>{ window.open(TPV3_URL,'_blank'); track('click:tpv3'); });
+document.getElementById('menuAI').addEventListener('click',()=>{ window.open(AI_CHATBOT_URL,'_blank'); track('click:ai'); });
+document.getElementById('menuPsy').addEventListener('click',openPsy);
+document.getElementById('btnO').addEventListener('click',()=>answerPsy(true));
+document.getElementById('btnX').addEventListener('click',()=>answerPsy(false));
+document.getElementById('psyRetry').addEventListener('click',resetPsy);
+document.getElementById('menuSchedule').addEventListener('click',openSchedule);
+document.getElementById('menuLibrary').addEventListener('click',openLibrary);
+
+/* ====== INIT ====== */
+(function init(){
+  restore();
+  const end=localStorage.getItem('workshopEndAt');
+  if(end){ workshopEndAt=new Date(Number(end)); runTick(); clearGate(); }
+})();
 </script>
-<script>
-/* ===========================
-   🧭 INITIALIZATION (FINAL)
-=========================== */
-
-document.addEventListener("DOMContentLoaded", () => {
-  console.log("✅ TourPass Workshop App Loaded");
-
-  // 타이머 표시 초기화
-  const storedEnd = localStorage.getItem("workshopEndAt");
-  if (storedEnd) {
-    workshopEndAt = new Date(Number(storedEnd));
-    beginTimerInterval();
-    removeGate();
-  } else {
-    applyGateOn();
-  }
-
-  // 오버레이 (타이머 종료 후)
-  const overlay = document.getElementById("overlay");
-  const surveyBtn = document.getElementById("openSurveyFromOverlay");
-  if (overlay && surveyBtn) {
-    surveyBtn.addEventListener("click", () => {
-      overlay.style.display = "none";
-      document.getElementById("surveyModal").style.display = "block";
-      trackEvent("click:overlay_survey");
-    });
-  }
-
-  // 모달 닫기 공통
-  document.querySelectorAll(".close-btn").forEach(btn => {
-    btn.addEventListener("click", () => {
-      btn.closest(".modal").style.display = "none";
-    });
-  });
-
-  // 외부 클릭 시 모달 닫기
-  window.addEventListener("click", (e) => {
-    document.querySelectorAll(".modal").forEach(modal => {
-      if (e.target === modal) modal.style.display = "none";
-    });
-  });
-
-  // 타이머 상태 확인 (1초마다)
-  setInterval(() => {
-    const stored = localStorage.getItem("workshopEndAt");
-    if (stored && !timerRunning) {
-      workshopEndAt = new Date(Number(stored));
-      beginTimerInterval();
-    }
-  }, 2000);
-
-  // 버튼별 자동 트래킹
-  document.querySelectorAll("button[data-track], .menu-item[data-track]").forEach(el => {
-    el.addEventListener("click", () => {
-      trackEvent(`click:${el.dataset.track}`);
-    });
-  });
-
-  // 로그인 캐시 복원 시도
-  restoreSession();
-});
-
-/* ===========================
-   🧾 TRACKING EXTENSION
-=========================== */
-
-// 추가 트래킹 포인트
-function trackButtonClicks() {
-  const map = {
-    startBtn: "click:start_workshop",
-    logoutBtn: "click:logout",
-    surveyMenu: "click:menu_survey",
-    libraryMenu: "click:menu_library",
-    libSaveBtn: "click:library_save",
-    libLoadBtn: "click:library_load",
-  };
-  Object.entries(map).forEach(([id, evt]) => {
-    const el = document.getElementById(id);
-    if (el) el.addEventListener("click", () => trackEvent(evt));
-  });
-}
-document.addEventListener("DOMContentLoaded", trackButtonClicks);
-
-/* ===========================
-   🧘 CLEANUP / RESET
-=========================== */
-
-function clearLocal() {
-  localStorage.removeItem("workshopEndAt");
-  localStorage.removeItem("loginCache");
-  localStorage.removeItem("sessionId");
-  localStorage.removeItem("currentUser");
-  showAlert("로컬 데이터가 초기화되었습니다.", "success");
-}
-
-/* ===========================
-   🧩 OPTIONAL DEBUG PANEL (관리자용)
-=========================== */
-function showDebugPanel() {
-  const dbg = document.createElement("div");
-  dbg.style.position = "fixed";
-  dbg.style.bottom = "0";
-  dbg.style.right = "0";
-  dbg.style.background = "#000";
-  dbg.style.color = "#0f0";
-  dbg.style.fontSize = "10px";
-  dbg.style.padding = "3px 5px";
-  dbg.textContent = "DEBUG";
-  dbg.onclick = () => {
-    alert(`USER: ${currentUser}\nSESSION: ${sessionId}\nEndAt: ${localStorage.getItem("workshopEndAt") || "none"}`);
-  };
-  document.body.appendChild(dbg);
-}
-if (location.search.includes("debug=1")) showDebugPanel();
-
-/* ===========================
-   💾 ONUNLOAD - STATUS SAVE
-=========================== */
-window.addEventListener("beforeunload", () => {
-  if (currentUser) {
-    apiRequest("updateUserStatus", { userName: currentUser, sessionId, status: "offline" });
-  }
-});
-</script>
+</body>
+</html>
