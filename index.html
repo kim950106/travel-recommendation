@@ -67,9 +67,9 @@
       <label>이름을 선택하세요</label>
       <select id="userName">
         <option value="">이름을 선택해주세요</option>
-        <option>남도현 이사</option><option>김현철 팀장</option><option>김수인 팀장</option><option>김대진 팀장</option>
-        <option>이주아</option><option>장은진</option><option>이유진</option><option>정어진</option>
-        <option>판티니안</option><option>장원준</option><option>고다현</option><option>심재희</option><option>손현우</option>
+        <option>남도현 이사</option><option>김현철 팀장</option><option>김수인 팀장</option><option>김대진 팀장</option><option>손현우 대리</option>
+        <option>이주아 주임</option><option>장은진 주임</option><option>이유진 주임</option><option>정어진 사원</option>
+        <option>판티니안 매니저</option><option>장원준 사원</option><option>고다현 사원</option><option>심재희 실장</option>
       </select>
     </div>
     <div class="mb-4">
@@ -263,9 +263,9 @@ const LIBRARY_LINKS = [
 ];
 
 const PARTICIPATION_CODES = {
-  "남도현":"20191001","김현철":"20200211","김수인":"202201171","김대진":"202201172",
-  "이주아":"20220118","장은진":"20221101","이유진":"20230614","정어진":"20240419",
-  "판티니안":"20250507","장원준":"20250526","고다현":"20250804","심재희":"20250901","손현우":"20251014"
+  "남도현 이사":"20191001","김현철 팀장":"20200211","김수인 팀장":"202201171","김대진 팀장":"202201172","손현우 대리":"20251014"
+  "이주아 주임":"20220118","장은진 주임":"20221101","이유진 주임":"20230614","정어진 사원":"20240419",
+  "판티니안 매니저":"20250507","장원준 사원":"20250526","고다현 사원":"20250804","심재희 실장":"20250901"
 };
 function validateParticipation(name, code){ return (PARTICIPATION_CODES[name]||"") === String(code||"").trim(); }
 
