@@ -69,7 +69,7 @@
         <option value="">이름을 선택해주세요</option>
         <option>남도현</option><option>김현철</option><option>김수인</option><option>김대진</option>
         <option>이주아</option><option>장은진</option><option>이유진</option><option>정어진</option>
-        <option>판티니안</option><option>장원준</option><option>고다현</option><option>심재희</option>
+        <option>판티니안</option><option>장원준</option><option>고다현</option><option>심재희</option><option>손현우</option>
       </select>
     </div>
     <div class="mb-4">
@@ -84,7 +84,7 @@
     </div>
     <div class="mb-2">
       <label>참여코드를 입력하세요</label>
-      <input id="userCode" type="password" placeholder="예: 20200211"/>
+      <input id="userCode" type="password" placeholder="웰컴키트 내 티켓 뒷편 참여코드를 확인해주세요."/>
     </div>
     <button id="loginBtn" class="btn btn-primary mt-3">로그인</button>
   </div>
@@ -250,22 +250,22 @@ const AI_CHATBOT_URL = "https://kim950106.github.io/tourpass.ai/";
 const TPV3_URL = "https://claude.ai/public/artifacts/65f1dc58-6271-47af-8ee7-f159eb01d4e6";
 
 const PRESET_TICKETS = [
-  { code:"9403", name:"1조 충남투어패스", url:"www.naver.com" },
-  { code:"8027", name:"2조 충남투어패스", url:"www.daum.net" },
-  { code:"1402", name:"3조 충남투어패스", url:"www.tourpass.ai" }
+  { code:"9403", name:"1조", url:"www.naver.com" },
+  { code:"8027", name:"2조", url:"www.daum.net" },
+  { code:"1402", name:"3조", url:"www.tourpass.ai" }
 ];
 
 const LIBRARY_LINKS = [
-  { title:"워크숍 리플렛", url:"https://example.com/leaflet.pdf", desc:"PDF 다운로드" },
-  { title:"성과 및 추진보고", url:"https://example.com/report", desc:"Google Docs" },
-  { title:"참가자 안내", url:"https://example.com/guide", desc:"웹 안내문" },
-  { title:"부여 관광지도", url:"https://example.com/map", desc:"이미지 지도" },
+  { title:"사업계획서", url:"https://example.com/leaflet.pdf", desc:"다운받기" },
+  { title:"1팀 성과보고", url:"https://example.com/report", desc:"다운받기" },
+  { title:"2팀 성과보고", url:"https://example.com/guide", desc:"다운받기" },
+  { title:"3팀 성과보고", url:"https://example.com/map", desc:"다운받기" },
 ];
 
 const PARTICIPATION_CODES = {
   "남도현":"20191001","김현철":"20200211","김수인":"202201171","김대진":"202201172",
   "이주아":"20220118","장은진":"20221101","이유진":"20230614","정어진":"20240419",
-  "판티니안":"20250507","장원준":"20250526","고다현":"20250804","심재희":"20250901"
+  "판티니안":"20250507","장원준":"20250526","고다현":"20250804","심재희":"20250901","손현우":"20251014"
 };
 function validateParticipation(name, code){ return (PARTICIPATION_CODES[name]||"") === String(code||"").trim(); }
 
