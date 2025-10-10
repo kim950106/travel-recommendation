@@ -271,12 +271,20 @@ function validateParticipation(name, code){ return (PARTICIPATION_CODES[name]||"
 
 /* ====== STATE ====== */
 let currentUser="", sessionId="", workshopEndAt=null, timerInterval=null;
+let serverSyncInterval=null;
 
 /* ====== UTILS ====== */
 async function apiRequest(action, payload={}){
-  try{ const r=await fetch(API_URL,{method:"POST",headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({action,...payload})}); return await r.json(); }
-  catch(e){ return {success:false,error:String(e)} }
+  try{
+    const r = await fetch(API_URL,{
+      method:'POST',
+      headers:{'Content-Type':'text/plain;charset=utf-8'}, // CORS preflight 회피
+      body: JSON.stringify({ action, ...payload })
+    });
+    return await r.json();
+  }catch(e){ return {success:false,error:String(e)} }
 }
+
 function toast(msg,type="info",ms=2000){
   const el=document.getElementById('alertMessage');
   el.textContent=msg; el.style.background = type==="error"?"#ef4444":type==="success"?"#10b981":"var(--brand-2)";
@@ -289,21 +297,64 @@ async function track(event,meta={}){ try{ await apiRequest('trackEvent',{session
 /* ====== GATE & TIMER ====== */
 function applyGate(){ document.getElementById('mainScreen').classList.add('gated'); document.getElementById('gatedNote').classList.add('on'); }
 function clearGate(){ document.getElementById('mainScreen').classList.remove('gated'); document.getElementById('gatedNote').classList.remove('on'); }
-function beginTimer(){
-  const stored = localStorage.getItem('workshopEndAt');
-  if(stored){ workshopEndAt=new Date(Number(stored)); runTick(); clearGate(); toast('이미 카운트다운 중'); return; }
-  const end=Date.now()+48*60*60*1000;
-  localStorage.setItem('workshopEndAt',String(end));
-  workshopEndAt=new Date(end); runTick(); clearGate(); toast('카운트다운 시작!','success');
-  track('start');
+
+// ★ 서버 타이머 시작(이미 있으면 기존 endAt을 반환)
+async function beginTimer(){
+  if(!currentUser || !sessionId){
+    toast('로그인 후 이용해주세요','error'); 
+    return;
+  }
+  const rsp = await apiRequest('startWorkshop', {
+    sessionId,
+    userName: currentUser,
+    durationHours: 48
+  });
+  if(!rsp || !rsp.success){
+    toast('시작 실패: 네트워크/서버 확인','error'); 
+    return;
+  }
+  workshopEndAt = new Date(rsp.endAt);
+  localStorage.setItem('workshopEndAt', String(rsp.endAt));
+  clearGate(); runTick(); startServerSync();
+  toast('카운트다운 시작!','success'); track('start');
 }
+
 function runTick(){
   if(timerInterval) clearInterval(timerInterval);
   const disp=document.getElementById('timerDisplay');
-  const tick=()=>{ const remain=workshopEndAt-Date.now(); disp.textContent=fmt(remain); if(remain<=0){clearInterval(timerInterval); disp.textContent="00:00:00";} };
+  const tick=()=>{ 
+    const remain=(workshopEndAt?workshopEndAt.getTime():Date.now())-Date.now(); 
+    disp.textContent=fmt(remain); 
+    if(remain<=0){ clearInterval(timerInterval); disp.textContent="00:00:00"; }
+  };
   tick(); timerInterval=setInterval(tick,1000);
 }
-/* ✅ 참여 이전 상태로 되돌리기 */
+
+// 30초마다 서버 기준 남은 시간 동기화
+function startServerSync(){
+  if(serverSyncInterval) clearInterval(serverSyncInterval);
+  serverSyncInterval = setInterval(refreshRemainingFromServer, 30000);
+  refreshRemainingFromServer(); // 즉시 1회
+}
+async function refreshRemainingFromServer(){
+  if(!currentUser || !sessionId) return;
+  const r = await apiRequest('getRemaining', { sessionId, userName: currentUser });
+  if(!r || !r.success) return;
+  if(r.status === 'nostart'){ applyGate(); return; }
+  workshopEndAt = new Date(r.endAt);
+  localStorage.setItem('workshopEndAt', String(r.endAt));
+  if(r.status === 'ended' || r.remainingMs <= 0) onTimerEnd();
+}
+// 종료 처리: 메뉴 잠그고 설문 자동 오픈
+function onTimerEnd(){
+  if(serverSyncInterval){ clearInterval(serverSyncInterval); serverSyncInterval=null; }
+  applyGate();
+  const disp=document.getElementById('timerDisplay'); if(disp) disp.textContent='00:00:00';
+  toast('워크숍이 종료되었습니다. 설문에 참여해주세요.','success');
+  openSurvey(); track('timer_end');
+}
+
+/* 참여 이전 상태로 되돌리기 */
 function revertToPreStart(){
   try{
     if (timerInterval) { clearInterval(timerInterval); timerInterval=null; }
@@ -311,8 +362,7 @@ function revertToPreStart(){
     workshopEndAt=null;
     const disp=document.getElementById('timerDisplay'); if(disp) disp.textContent='48:00:00';
     const btn=document.getElementById('startBtn'); if(btn){ btn.disabled=false; btn.textContent='워크숍 참여하기'; }
-    applyGate();
-    track('revert:pre_start'); toast('참여 이전 상태로 되돌렸습니다.','success');
+    applyGate(); track('revert:pre_start'); toast('참여 이전 상태로 되돌렸습니다.','success');
   }catch(e){ console.error(e); toast('되돌리기 실패','error'); }
 }
 
@@ -338,7 +388,7 @@ async function doLogin(){
   track('login',{mbti});
 
   const stored=localStorage.getItem('workshopEndAt');
-  if(stored){ workshopEndAt=new Date(Number(stored)); runTick(); clearGate(); } else { applyGate(); }
+  if(stored){ workshopEndAt=new Date(Number(stored)); runTick(); clearGate(); startServerSync(); } else { applyGate(); }
 
   toast(`환영합니다, ${name}님!`,'success');
 }
@@ -359,7 +409,7 @@ function restore(){
     document.getElementById('userNameDisplay').textContent=currentUser;
     document.getElementById('userTeamDisplay').textContent='투어패스사업부';
     const stored=localStorage.getItem('workshopEndAt');
-    if(stored){ workshopEndAt=new Date(Number(stored)); runTick(); clearGate(); } else { applyGate(); }
+    if(stored){ workshopEndAt=new Date(Number(stored)); runTick(); clearGate(); startServerSync(); } else { applyGate(); }
     toast(`자동로그인: ${name}`,'success');
   }catch(_){}
 }
@@ -575,14 +625,17 @@ document.getElementById('surveyForm').addEventListener('submit',submitSurvey);
 
 /* ====== INIT ====== */
 (function init(){
-  // 닫기 버튼 공용
   document.querySelectorAll('[data-close]').forEach(b=>b.addEventListener('click',()=>hideModal(b.getAttribute('data-close'))));
-  // 자동 로그인 복구
   restore();
+
+  // 로그인돼 있으면 서버 기준 남은 시간 동기화 시작
+  if(currentUser && sessionId){ startServerSync(); } else { applyGate(); }
+
   // 쿼리스트링 ?reset=1 → 참여 이전
   const params = new URLSearchParams(location.search);
   if (params.get('reset') === '1') revertToPreStart();
-  // 타이머 복구
+
+  // 로컬 end가 있으면 우선 표시(서버 동기화가 즉시 교정)
   const end=localStorage.getItem('workshopEndAt');
   if(end){ workshopEndAt=new Date(Number(end)); runTick(); clearGate(); }
 })();
