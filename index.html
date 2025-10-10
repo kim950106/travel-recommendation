@@ -298,23 +298,29 @@ async function track(event,meta={}){ try{ await apiRequest('trackEvent',{session
 function applyGate(){ document.getElementById('mainScreen').classList.add('gated'); document.getElementById('gatedNote').classList.add('on'); }
 function clearGate(){ document.getElementById('mainScreen').classList.remove('gated'); document.getElementById('gatedNote').classList.remove('on'); }
 
-// ★ 서버 타이머 시작(이미 있으면 기존 endAt을 반환)
+/* 참여 시작(서버 우선, 실패 시 로컬 48시간으로 강행) */
 async function beginTimer(){
   if(!currentUser || !sessionId){
     toast('로그인 후 이용해주세요','error'); 
     return;
   }
-  const rsp = await apiRequest('startWorkshop', {
-    sessionId,
-    userName: currentUser,
-    durationHours: 48
-  });
-  if(!rsp || !rsp.success){
-    toast('시작 실패: 네트워크/서버 확인','error'); 
-    return;
-  }
-  workshopEndAt = new Date(rsp.endAt);
-  localStorage.setItem('workshopEndAt', String(rsp.endAt));
+
+  // 기본값: 로컬 48시간
+  let endTs = Date.now() + 48*60*60*1000;
+
+  try{
+    const rsp = await apiRequest('startWorkshop', {
+      sessionId,
+      userName: currentUser,
+      durationHours: 48
+    });
+    if (rsp && rsp.success && rsp.endAt) {
+      endTs = Number(rsp.endAt); // 서버 기준 endAt 사용
+    }
+  }catch(_){ /* 서버 실패 무시하고 로컬로 진행 */ }
+
+  workshopEndAt = new Date(endTs);
+  localStorage.setItem('workshopEndAt', String(endTs));
   clearGate(); runTick(); startServerSync();
   toast('카운트다운 시작!','success'); track('start');
 }
@@ -330,7 +336,7 @@ function runTick(){
   tick(); timerInterval=setInterval(tick,1000);
 }
 
-// 30초마다 서버 기준 남은 시간 동기화
+/* 30초마다 서버 기준 남은 시간 동기화 */
 function startServerSync(){
   if(serverSyncInterval) clearInterval(serverSyncInterval);
   serverSyncInterval = setInterval(refreshRemainingFromServer, 30000);
@@ -345,7 +351,6 @@ async function refreshRemainingFromServer(){
   localStorage.setItem('workshopEndAt', String(r.endAt));
   if(r.status === 'ended' || r.remainingMs <= 0) onTimerEnd();
 }
-// 종료 처리: 메뉴 잠그고 설문 자동 오픈
 function onTimerEnd(){
   if(serverSyncInterval){ clearInterval(serverSyncInterval); serverSyncInterval=null; }
   applyGate();
@@ -628,14 +633,11 @@ document.getElementById('surveyForm').addEventListener('submit',submitSurvey);
   document.querySelectorAll('[data-close]').forEach(b=>b.addEventListener('click',()=>hideModal(b.getAttribute('data-close'))));
   restore();
 
-  // 로그인돼 있으면 서버 기준 남은 시간 동기화 시작
   if(currentUser && sessionId){ startServerSync(); } else { applyGate(); }
 
-  // 쿼리스트링 ?reset=1 → 참여 이전
   const params = new URLSearchParams(location.search);
   if (params.get('reset') === '1') revertToPreStart();
 
-  // 로컬 end가 있으면 우선 표시(서버 동기화가 즉시 교정)
   const end=localStorage.getItem('workshopEndAt');
   if(end){ workshopEndAt=new Date(Number(end)); runTick(); clearGate(); }
 })();
