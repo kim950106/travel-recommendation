@@ -64,13 +64,12 @@
   <!-- 로그인 -->
   <div id="loginScreen" class="card">
     <div class="mb-4">
-      <label>이름을 선택하세요</label>
-      <select id="userName">
-        <option value="">이름을 선택해주세요</option>
-        <option>남도현</option><option>김현철</option><option>김수인</option><option>김대진</option>
-        <option>이주아</option><option>장은진</option><option>이유진</option><option>정어진</option>
-        <option>판티니안</option><option>장원준</option><option>고다현</option><option>손현우</option>
-      </select>
+      <label>이름을 입력하세요</label>
+      <input
+        id="userName"
+        type="text"
+        placeholder="이름을 2~4글자로 입력해주세요."
+      />
     </div>
     <div class="mb-4">
       <label>MBTI를 선택하세요</label>
@@ -81,10 +80,6 @@
         <option>INTJ</option><option>INFJ</option><option>INFP</option><option>INTP</option>
         <option>ISTJ</option><option>ISFJ</option><option>ISFP</option><option>ISTP</option>
       </select>
-    </div>
-    <div class="mb-2">
-      <label>참여코드를 입력하세요</label>
-      <input id="userCode" type="password" placeholder="웰컴키트 내 티켓 뒷편 개인참여코드를 입력해주세요."/>
     </div>
     <button id="loginBtn" class="btn btn-primary mt-3">로그인</button>
   </div>
@@ -110,8 +105,8 @@
       <!-- 메뉴 순서 -->
       <div class="menu-grid">
         <div class="menu-item" id="menuMbti">🔗 MBTI 관계도</div>
-        <div class="menu-item" id="menuDraft">📱 모바일티켓 v3</div>
-        <div class="menu-item" id="menuVault">🎟 티켓 보관함</div>
+        <div class="menu-item" id="menuDraft">📱 회사소개서 받기 v3</div>
+        <div class="menu-item" id="menuVault">🎟 티켓v3 초안</div>
         <div class="menu-item" id="menuSchedule">📅 워크숍 일정</div>
         <div class="menu-item" id="menuFortune">🔮 데일리 포춘</div>
         <div class="menu-item" id="menuAI">🤖 AI 챗봇</div>
@@ -250,24 +245,12 @@ const AI_CHATBOT_URL = "https://opal.withgoogle.com/?flow=drive:/1tNBoV8E0pmfhYO
 const TPV3_URL = "https://www.figma.com/proto/jYBmdzo7x3FyYxA6xsn7ir/%ED%88%AC%EC%96%B4%ED%8C%A8%EC%8A%A4-%EB%B0%94%EC%BD%94%EB%93%9C-%EB%A6%AC%EB%89%B4%EC%96%BC?page-id=169%3A12814&node-id=169-12815&viewport=139%2C172%2C0.39&t=B0QR1CHxiKLGmX1L-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=169%3A12815";
 
 const PRESET_TICKETS = [
-  { code:"9403", name:"1조", url:"https://front-code.lscompany-coupon.com/c540f21539b795cb8bc5d29b6a20141d92e1a6a1054374bb8cd3606dd8bbbda2" },
-  { code:"8027", name:"2조", url:"https://front-code.lscompany-coupon.com/938079a09566dd3ae426937732bf3022f562d034ccd259f15fc5033f4d2ce045" },
-  { code:"1402", name:"3조", url:"https://front-code.lscompany-coupon.com/8174cc05d26c0198704d60e3e10c92bc89699379cf5d857660697802eb0a7717" }
+  { code:"티켓v3", name:"초안", url:"https://www.figma.com/proto/jYBmdzo7x3FyYxA6xsn7ir/%ED%88%AC%EC%96%B4%ED%8C%A8%EC%8A%A4-%EB%B0%94%EC%BD%94%EB%93%9C-%EB%A6%AC%EB%89%B4%EC%96%BC?page-id=169%3A12814&node-id=169-12815&viewport=139%2C172%2C0.39&t=B0QR1CHxiKLGmX1L-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=169%3A12815" },
 ];
 
 const LIBRARY_LINKS = [
-  { title:"사업계획서", url:"https://dumrexpx.gensparkspace.com/", desc:"이동하기" },
-  { title:"1팀 성과보고", url:"https://drive.google.com/drive/folders/1kOxjOsnFX8VaOGtL8zP2d9eOwFYYNqB-", desc:"다운받기" },
-  { title:"2팀 성과보고", url:"https://pozxhowg.gensparkspace.com/", desc:"이동하기" },
-  { title:"3팀 성과보고", url:"https://drive.google.com/drive/folders/1_-99BhL7l7czdJu6_5EP2C1BKfj7uaar", desc:"다운받기" },
+  { title:"발표자료", url:"https://dumrexpx.gensparkspace.com/", desc:"이동하기" },
 ];
-
-const PARTICIPATION_CODES = {
-  "남도현":"20191001","김현철":"20200211","김수인":"202201171","김대진":"202201172",
-  "이주아":"20220118","장은진":"20221101","이유진":"20230614","정어진":"20240419",
-  "판티니안":"20250507","장원준":"20250526","고다현":"20250804","손현우":"20251014"
-};
-function validateParticipation(name, code){ return (PARTICIPATION_CODES[name]||"") === String(code||"").trim(); }
 
 /* ====== STATE ====== */
 let currentUser="", sessionId="", workshopEndAt=null, timerInterval=null;
@@ -373,48 +356,81 @@ function revertToPreStart(){
 
 /* ====== LOGIN ====== */
 async function doLogin(){
-  const name=document.getElementById('userName').value.trim();
-  const mbti=document.getElementById('userMBTI').value.trim();
-  const code=(document.getElementById('userCode').value||"").trim();
-  if(!name || !mbti) return toast('이름과 MBTI를 선택하세요','error');
-  if(!code) return toast('참여코드를 입력하세요','error');
-  if(!validateParticipation(name,code)) return toast('참여코드가 일치하지 않습니다','error');
+  const name = document.getElementById('userName').value.trim();
+  const mbti = document.getElementById('userMBTI').value.trim();
 
-  currentUser=name; sessionId='session_'+Date.now();
+  if (!name || !mbti) {
+    return toast('이름과 MBTI를 입력/선택하세요', 'error');
+  }
+
+  // 이름 2~4글자 제한
+  if (name.length < 2 || name.length > 4) {
+    return toast('이름은 2~4글자로 입력해주세요', 'error');
+  }
+
+  currentUser = name;
+  sessionId = 'session_' + Date.now();
+
   document.getElementById('loginScreen').classList.add('hidden');
   document.getElementById('mainScreen').classList.remove('hidden');
-  document.getElementById('userNameDisplay').textContent=currentUser;
-  document.getElementById('userTeamDisplay').textContent='투어패스사업부';
+  document.getElementById('userNameDisplay').textContent = currentUser;
+  document.getElementById('userTeamDisplay').textContent = '투어패스사업부';
 
-  localStorage.setItem('loginCache',JSON.stringify({name,mbti,code}));
-  localStorage.setItem('sessionId',sessionId);
+  // 로그인 캐시 (참여코드 제거: 이름/MBTI만 저장)
+  localStorage.setItem('loginCache', JSON.stringify({ name, mbti }));
+  localStorage.setItem('sessionId', sessionId);
 
-  apiRequest('login',{sessionId,userName:name,mbti,team:'투어패스사업부',position:''});
-  track('login',{mbti});
+  apiRequest('login', { sessionId, userName: name, mbti, team:'투어패스사업부', position:'' });
+  track('login', { mbti });
 
-  const stored=localStorage.getItem('workshopEndAt');
-  if(stored){ workshopEndAt=new Date(Number(stored)); runTick(); clearGate(); startServerSync(); } else { applyGate(); }
+  const stored = localStorage.getItem('workshopEndAt');
+  if (stored) {
+    workshopEndAt = new Date(Number(stored));
+    runTick();
+    clearGate();
+    startServerSync();
+  } else {
+    applyGate();
+  }
 
-  toast(`환영합니다, ${name}님!`,'success');
+  toast(`환영합니다, ${name}님!`, 'success');
 }
+
 async function doLogout(){
   await apiRequest('updateUserStatus',{sessionId,userName:currentUser,status:'offline'});
   localStorage.removeItem('loginCache'); localStorage.removeItem('sessionId'); 
   // localStorage.removeItem('workshopEndAt'); // 유지하려면 주석 유지
   location.reload();
 }
+
 function restore(){
-  const cache=localStorage.getItem('loginCache'); if(!cache) return;
+  const cache = localStorage.getItem('loginCache');
+  if (!cache) return;
   try{
-    const {name,mbti,code}=JSON.parse(cache);
-    if(!validateParticipation(name,code)) return;
-    currentUser=name; sessionId=localStorage.getItem('sessionId')||('session_'+Date.now());
+    const data = JSON.parse(cache);
+    const name = data.name;
+    const mbti = data.mbti;
+
+    if (!name || !mbti) return;
+
+    currentUser = name;
+    sessionId = localStorage.getItem('sessionId') || ('session_' + Date.now());
+
     document.getElementById('loginScreen').classList.add('hidden');
     document.getElementById('mainScreen').classList.remove('hidden');
-    document.getElementById('userNameDisplay').textContent=currentUser;
-    document.getElementById('userTeamDisplay').textContent='투어패스사업부';
-    const stored=localStorage.getItem('workshopEndAt');
-    if(stored){ workshopEndAt=new Date(Number(stored)); runTick(); clearGate(); startServerSync(); } else { applyGate(); }
+    document.getElementById('userNameDisplay').textContent = currentUser;
+    document.getElementById('userTeamDisplay').textContent = '투어패스사업부';
+
+    const stored = localStorage.getItem('workshopEndAt');
+    if (stored) {
+      workshopEndAt = new Date(Number(stored));
+      runTick();
+      clearGate();
+      startServerSync();
+    } else {
+      applyGate();
+    }
+
     toast(`자동로그인: ${name}`,'success');
   }catch(_){}
 }
