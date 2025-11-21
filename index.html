@@ -9,13 +9,13 @@
 <style>
   :root{
     --brand-1:#1e3a8a;        /* 보조 네이비(타이틀) */
-    --brand-2:#e97357;        /* 메인 포인트(첨부색) */
-    --brand-3:#f08b68;        /* 보조 포인트(그라데이션 상단) */
+    --brand-2:#06c6ad;        /* 메인 포인트(첨부색) - 민트 */
+    --brand-3:#37d1bd;        /* 보조 포인트(그라데이션 상단) */
     --text:#0f172a; --muted:#64748b; --line:#e2e8f0;
   }
   body{
     font-family:'Pretendard',sans-serif;
-    background:linear-gradient(180deg,#fff6f2 0%,#ffffff 100%);
+    background:linear-gradient(180deg,#f4fffd 0%,#ffffff 100%);
     min-height:100vh;
     color:var(--text);
     display:flex;
@@ -28,205 +28,95 @@
   .header h1{font-weight:800;font-size:1.8rem;color:var(--brand-1)}
   .header p{color:#94a3b8}
   .card{
-    background:#fff;
-    border-radius:1.25rem;
-    box-shadow:0 8px 24px rgba(0,0,0,.08);
-    padding:1.5rem;
-    width:100%;
-    max-width:420px;
-    margin-bottom:1rem;
-    transition:.25s
+    background:#fff;border-radius:1.25rem;box-shadow:0 8px 24px rgba(0,0,0,.08);
+    padding:1.5rem;width:100%;max-width:420px;margin-bottom:1rem;transition:.25s
   }
   .card:hover{transform:translateY(-2px)}
-  label{
-    display:block;
-    font-weight:600;
-    font-size:.9rem;
-    color:#334155;
-    margin-bottom:.35rem
-  }
+  label{display:block;font-weight:600;font-size:.9rem;color:#334155;margin-bottom:.35rem}
   select,input{
-    width:100%;
-    border:1px solid var(--line);
-    border-radius:.9rem;
-    padding:.85rem 1rem;
-    background:#f9fafb;
-    transition:.2s
+    width:100%;border:1px solid var(--line);border-radius:.9rem;padding:.85rem 1rem;
+    background:#f9fafb;transition:.2s
   }
   select:focus,input:focus{
-    background:#fff;
-    border-color:var(--brand-3);
-    box-shadow:0 0 0 3px rgba(240,139,104,.22);
-    outline:0
+    background:#fff;border-color:var(--brand-3);
+    box-shadow:0 0 0 3px rgba(55,209,189,.22);outline:0
   }
   .btn{
-    display:inline-block;
-    width:100%;
-    border-radius:.9rem;
-    font-weight:800;
-    padding:.9rem;
-    text-align:center;
-    transition:.25s
+    display:inline-block;width:100%;border-radius:.9rem;font-weight:800;
+    padding:.9rem;text-align:center;transition:.25s
   }
   .btn-primary{
     background:linear-gradient(90deg,var(--brand-2),var(--brand-3));
-    color:#fff;
-    box-shadow:0 4px 14px rgba(233,115,87,.28)
+    color:#fff;box-shadow:0 4px 14px rgba(6,198,173,.28)
   }
   .btn-primary:hover{
-    background:linear-gradient(90deg,#df6444,var(--brand-2));
+    background:linear-gradient(90deg,#05b09a,var(--brand-2));
     transform:translateY(-1px)
   }
-  .btn-outline{
-    background:#fff;
-    border:1px solid var(--line);
-    color:var(--brand-1)
-  }
-  .menu-grid{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:.9rem
-  }
+  .btn-outline{background:#fff;border:1px solid var(--line);color:var(--brand-1)}
+  .menu-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.9rem}
   .menu-item{
-    border:1px solid var(--line);
-    border-radius:1rem;
-    background:#fff;
-    padding:1rem;
-    text-align:center;
-    color:#0f172a;
-    font-weight:700;
-    box-shadow:0 2px 8px rgba(0,0,0,.04);
-    cursor:pointer;
-    transition:.25s
+    border:1px solid var(--line);border-radius:1rem;background:#fff;
+    padding:1rem;text-align:center;color:#0f172a;font-weight:700;
+    box-shadow:0 2px 8px rgba(0,0,0,.04);cursor:pointer;transition:.25s
   }
-  .menu-item:hover{
-    background:#fff7f4;
-    border-color:var(--brand-3);
-    transform:translateY(-2px)
-  }
+  .menu-item:hover{background:#ebfcf9;border-color:var(--brand-3);transform:translateY(-2px)}
   .timer-box{
     background:linear-gradient(90deg,var(--brand-2),var(--brand-3));
-    color:#fff;
-    border-radius:1rem;
-    padding:1rem;
-    text-align:center;
-    box-shadow:0 6px 16px rgba(233,115,87,.28);
-    user-select:none
+    color:#fff;border-radius:1rem;padding:1rem;text-align:center;
+    box-shadow:0 6px 16px rgba(6,198,173,.28);user-select:none
   }
   .timer-display{font-size:2rem;font-weight:900}
   .logout{max-width:420px;margin-top:.9rem}
-
   /* 게이트 */
   #mainScreen.gated .menu-grid{filter:blur(3px);pointer-events:none}
   #gatedNote{display:none;text-align:center;color:var(--muted);margin:.4rem 0 -.2rem}
   #gatedNote.on{display:block}
-
   /* 모달 공통 */
-  .modal{
-    display:none;
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.55);
-    z-index:50;
-    align-items:center;
-    justify-content:center;
-    padding:1rem
-  }
+  .modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:50;align-items:center;justify-content:center;padding:1rem}
   .modal-content{
-    background:#fff;
-    border-radius:1rem;
-    max-width:600px;
-    width:100%;
-    max-height:85vh;
-    overflow:auto;
-    padding:1rem 1.1rem
+    background:#fff;border-radius:1rem;max-width:600px;width:100%;
+    max-height:85vh;overflow:auto;padding:1rem 1.1rem
   }
-  .modal-header{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    margin-bottom:.6rem
-  }
-  .close{
-    border:0;
-    background:transparent;
-    font-size:1.6rem;
-    color:#94a3b8;
-    cursor:pointer
-  }
-
+  .modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:.6rem}
+  .close{border:0;background:transparent;font-size:1.6rem;color:#94a3b8;cursor:pointer}
   /* 알림 */
   #alertMessage{
-    position:fixed;
-    bottom:16px;
-    left:50%;
-    transform:translateX(-50%);
-    background:var(--brand-2);
-    color:#fff;
-    padding:.7rem 1rem;
-    border-radius:.7rem;
-    box-shadow:0 3px 10px rgba(0,0,0,.15);
-    opacity:0;
-    transition:.25s;
-    z-index:60
+    position:fixed;bottom:16px;left:50%;transform:translateX(-50%);
+    background:var(--brand-2);color:#fff;padding:.7rem 1rem;border-radius:.7rem;
+    box-shadow:0 3px 10px rgba(0,0,0,.15);opacity:0;transition:.25s;z-index:60
   }
   #alertMessage.show{opacity:1}
-
-  /* 심리테스트 결과 카드(오렌지 톤) */
+  /* 심리테스트 결과 카드 */
   #psyResultCard{animation:fadeIn .45s ease forwards;}
-  @keyframes fadeIn{
-    from{opacity:0;transform:translateY(10px)}
-    to{opacity:1;transform:translateY(0)}
-  }
+  @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
   .psy-card{
-    background:#fff;
-    border-radius:1rem;
-    box-shadow:0 6px 18px rgba(0,0,0,.08);
-    padding:1.2rem;
-    text-align:center;
-    margin-top:1rem
+    background:#fff;border-radius:1rem;box-shadow:0 6px 18px rgba(0,0,0,.08);
+    padding:1.2rem;text-align:center;margin-top:1rem
   }
   .psy-title{
-    font-weight:900;
-    font-size:1.15rem;
-    color:#ffffff;
+    font-weight:900;font-size:1.15rem;color:#ffffff;
     background:linear-gradient(90deg,var(--brand-2),var(--brand-3));
-    border-radius:.75rem;
-    padding:.5rem 1rem;
-    display:inline-block;
-    margin-top:.35rem
+    border-radius:.75rem;padding:.5rem 1rem;display:inline-block;margin-top:.35rem
   }
   .psy-desc{
-    background:#fff7f4;
-    border:1px dashed #f3b39d;
-    border-radius:.9rem;
-    padding:.8rem;
-    margin-top:.8rem;
-    color:#6b7280;
-    line-height:1.55
+    background:#ebfcf9;border:1px dashed #b7eee4;border-radius:.9rem;
+    padding:.8rem;margin-top:.8rem;color:#4b5563;line-height:1.55
   }
   .psy-tags{
-    display:flex;
-    flex-wrap:wrap;
-    gap:.4rem;
-    justify-content:center;
-    margin-top:.6rem
+    display:flex;flex-wrap:wrap;gap:.4rem;justify-content:center;margin-top:.6rem
   }
   .psy-tags span{
-    background:#ffe0d6;
-    color:#8a4b38;
-    border:1px solid #ffc6b6;
-    border-radius:9999px;
-    padding:.2rem .7rem;
-    font-size:.8rem
+    background:#ccf7ef;color:#04695a;border:1px solid #a3efe3;
+    border-radius:9999px;padding:.2rem .7rem;font-size:.8rem
   }
 </style>
 </head>
 <body>
 
   <div class="header">
-    <h1>투어패스사업부</h1>
-    <p>2025 워크숍</p>
+    <h1>한국관광공사</h1>
+    <p>현업적용 우수사례</p>
   </div>
 
   <!-- 로그인 -->
@@ -245,672 +135,4 @@
         <option value="">MBTI를 선택해주세요</option>
         <option>ENTJ</option><option>ENFJ</option><option>ENFP</option><option>ENTP</option>
         <option>ESTJ</option><option>ESFJ</option><option>ESFP</option><option>ESTP</option>
-        <option>INTJ</option><option>INFJ</option><option>INFP</option><option>INTP</option>
-        <option>ISTJ</option><option>ISFJ</option><option>ISFP</option><option>ISTP</option>
-      </select>
-    </div>
-    <button id="loginBtn" class="btn btn-primary mt-3">로그인</button>
-  </div>
-
-  <!-- 메인 -->
-  <div id="mainScreen" class="hidden">
-    <div class="card text-center">
-      <div style="font-size:1.3rem;font-weight:800;color:var(--brand-1)" id="userNameDisplay">-</div>
-      <div style="color:var(--muted)" id="userTeamDisplay">투어패스사업부</div>
-      <div class="flex gap-2 mt-3">
-        <button id="logoutBtn" class="btn btn-outline">로그아웃</button>
-        <button id="startBtn" class="btn btn-primary">워크숍 참여하기</button>
-      </div>
-      <div id="gatedNote">🔒 아래 메뉴는 <b>“워크숍 참여하기”</b> 버튼을 누르면 열립니다.</div>
-    </div>
-
-    <div class="timer-box w-full max-w-md mb-3" id="timerBox" title="길게 누르면 참여 이전 상태로 되돌리기">
-      <div class="text-sm opacity-90">워크숍 남은 시간</div>
-      <div id="timerDisplay" class="timer-display">48:00:00</div>
-    </div>
-
-    <div class="card">
-      <!-- 메뉴 순서 -->
-      <div class="menu-grid">
-        <div class="menu-item" id="menuMbti">🔗 MBTI 관계도</div>
-        <div class="menu-item" id="menuDraft">📱 회사소개서 받기</div>
-        <!-- 티켓v3 초안 제거 -->
-        <div class="menu-item" id="menuSchedule">📅 워크숍 일정</div>
-        <div class="menu-item" id="menuFortune">🔮 데일리 포춘</div>
-        <div class="menu-item" id="menuAI">🤖 AI 챗봇</div>
-        <div class="menu-item" id="menuPsy">🧠 심리테스트</div>
-        <!-- 워크숍자료 버튼 제거 -->
-      </div>
-    </div>
-
-    <button id="menuSurvey" class="btn btn-primary max-w-md">만족도 조사</button>
-    <button class="btn btn-outline logout">로그아웃</button>
-  </div>
-
-  <!-- 데일리 포춘 -->
-  <div id="fortuneModal" class="modal">
-    <div class="modal-content">
-      <div class="modal-header"><h3>데일리 포춘</h3><button class="close" data-close="fortuneModal">×</button></div>
-      <div id="fortuneBody"></div>
-    </div>
-  </div>
-
-  <!-- 심리테스트 -->
-  <div id="psyModal" class="modal">
-    <div class="modal-content">
-      <div class="modal-header"><h3>O/X 심리테스트 (5문항)</h3><button class="close" data-close="psyModal">×</button></div>
-      <div id="psyStep">
-        <div class="text-sm text-gray-500" id="psyTitle">1/5</div>
-        <div id="psyQuestion" class="mt-1 mb-3"></div>
-        <div class="grid grid-cols-2 gap-2">
-          <button class="btn btn-primary" id="btnO">O (그렇다)</button>
-          <button class="btn btn-outline" id="btnX">X (아니다)</button>
-        </div>
-      </div>
-      <div id="psyResult" class="hidden">
-        <div id="psyResultCard" class="psy-card max-w-md mx-auto">
-          <div style="font-size:2.2rem" id="resEmoji">🦊</div>
-          <div class="psy-title" id="resTitle">똑똑한 여우형 리더</div>
-          <div class="psy-desc" id="resDesc">논리적이지만 따뜻한 통찰을 가진 추진형 리더</div>
-          <div class="psy-tags" id="resTags"></div>
-          <div class="mt-3"><button class="btn btn-outline" id="psyRetry">다시 하기</button></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 워크숍 일정 -->
-  <div id="scheduleModal" class="modal">
-    <div class="modal-content">
-      <div class="modal-header"><h3>워크숍 일정</h3><button class="close" data-close="scheduleModal">×</button></div>
-      <div id="scheduleBody"></div>
-    </div>
-  </div>
-
-  <!-- 만족도 조사 -->
-  <div id="surveyModal" class="modal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3>워크숍 만족도 조사</h3>
-        <button class="close" data-close="surveyModal">×</button>
-      </div>
-
-      <form id="surveyForm">
-        <div class="border border-gray-200 rounded-lg p-3 mb-3">
-          <div class="font-bold mb-2">1) 전체 만족도 (5점 만점)</div>
-          <div class="grid grid-cols-5 gap-2 text-center">
-            <label><input type="radio" name="satisfaction" value="1" required> 1</label>
-            <label><input type="radio" name="satisfaction" value="2"> 2</label>
-            <label><input type="radio" name="satisfaction" value="3"> 3</label>
-            <label><input type="radio" name="satisfaction" value="4"> 4</label>
-            <label><input type="radio" name="satisfaction" value="5"> 5</label>
-          </div>
-        </div>
-
-        <div class="border border-gray-200 rounded-lg p-3 mb-3">
-          <div class="font-bold mb-2">2) 가장 만족했던 활동</div>
-          <select id="bestProgram" class="w-full border border-gray-200 rounded-lg p-2">
-            <option value="">선택해주세요</option>
-            <option>숙소</option><option>음식</option><option>성과 및 추진보고</option>
-            <option>자유시간</option><option>아로마 만들기</option><option>도슨트 투어</option>
-            <option>회식 이벤트</option><option>기타(아래 직접입력)</option>
-          </select>
-          <input id="bestProgramEtc" class="w-full border border-gray-200 rounded-lg p-2 mt-2" placeholder="기타 선택 시 입력 (선택)" />
-        </div>
-
-        <div class="border border-gray-200 rounded-lg p-3 mb-3">
-          <div class="font-bold mb-2">3) 개선 요청 사항</div>
-          <textarea id="improve" rows="4" class="w-full border border-gray-200 rounded-lg p-2" placeholder="예) 일정 간격, 이동 동선, 프로그램 추가 등"></textarea>
-        </div>
-
-        <div class="grid grid-cols-2 gap-2">
-          <button type="button" class="btn btn-outline" data-close="surveyModal">닫기</button>
-          <button type="submit" class="btn btn-primary">제출하기</button>
-        </div>
-        <p class="text-sm text-gray-500 mt-2">※ 제출 즉시 백엔드(GAS)에 저장됩니다.</p>
-      </form>
-
-      <div id="surveyDone" class="hidden">
-        <div class="text-center">
-          <div style="font-size:2rem">🎉</div>
-          <div class="font-bold text-lg mt-1">제출되었습니다. 감사합니다!</div>
-        </div>
-        <div id="surveySummary" class="border border-gray-200 rounded-lg p-3 mt-3 text-sm text-gray-600"></div>
-        <button class="btn btn-primary mt-3" data-close="surveyModal">닫기</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- 회사소개서 받기 모달 -->
-  <div id="brochureModal" class="modal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3>회사소개서 받기</h3>
-        <button class="close" data-close="brochureModal">×</button>
-      </div>
-      <div class="mb-3 text-sm text-gray-600">
-        이메일을 입력하시면 투어패스 사업소개서를 자동으로 보내드립니다.
-      </div>
-      <div class="mb-3">
-        <label>이메일 주소</label>
-        <input
-          id="brochureEmail"
-          type="email"
-          class="w-full border border-gray-200 rounded-lg p-2"
-          placeholder="example@company.com"
-        />
-      </div>
-      <div class="grid grid-cols-2 gap-2">
-        <button type="button" class="btn btn-outline" data-close="brochureModal">취소</button>
-        <button type="button" class="btn btn-primary" id="brochureSendBtn">보내기</button>
-      </div>
-      <p class="text-xs text-gray-400 mt-2">
-        ※ 입력하신 이메일은 회사소개서 발송 및 통계 용도로만 사용됩니다.
-      </p>
-    </div>
-  </div>
-
-  <div id="alertMessage"></div>
-
-<script>
-/* ====== CONFIG ====== */
-const API_URL = "https://script.google.com/macros/s/AKfycbxP7oI1CUK7vvga2HJbUp6r_U5bOsFWwFzcIAhIrRjKfCbUf7Mwlu56Ayqa3EokUJXz/exec";
-const RELATION_URL = "https://kim950106.github.io/tour/";
-const AI_CHATBOT_URL = "https://opal.withgoogle.com/?flow=drive:/1tNBoV8E0pmfhYOkX7trfcCGnZeHi-XPD&shared&mode=app";
-
-/* ====== STATE ====== */
-let currentUser="", sessionId="", workshopEndAt=null, timerInterval=null;
-let serverSyncInterval=null;
-
-/* ====== UTILS ====== */
-async function apiRequest(action, payload={}){
-  try{
-    const r = await fetch(API_URL,{
-      method:'POST',
-      headers:{'Content-Type':'text/plain;charset=utf-8'}, // CORS preflight 회피
-      body: JSON.stringify({ action, ...payload })
-    });
-    return await r.json();
-  }catch(e){ return {success:false,error:String(e)} }
-}
-
-function toast(msg,type="info",ms=2000){
-  const el=document.getElementById('alertMessage');
-  el.textContent=msg;
-  el.style.background = type==="error"?"#ef4444":type==="success"?"#10b981":"var(--brand-2)";
-  el.classList.add('show');
-  setTimeout(()=>el.classList.remove('show'),ms);
-}
-function normalizeUrl(u){ return /^https?:\/\//i.test(u)?u:'https://'+u; }
-function fmt(ms){
-  const t=Math.max(0,Math.floor(ms/1000));
-  const h=String(Math.floor(t/3600)).padStart(2,'0');
-  const m=String(Math.floor((t%3600)/60)).padStart(2,'0');
-  const s=String(t%60).padStart(2,'0');
-  return `${h}:${m}:${s}`;
-}
-async function track(event,meta={}){ try{ await apiRequest('trackEvent',{sessionId,userName:currentUser,event,meta}); }catch(_){} }
-
-/* ====== GATE & TIMER ====== */
-function applyGate(){
-  document.getElementById('mainScreen').classList.add('gated');
-  document.getElementById('gatedNote').classList.add('on');
-}
-function clearGate(){
-  document.getElementById('mainScreen').classList.remove('gated');
-  document.getElementById('gatedNote').classList.remove('on');
-}
-
-/* 참여 시작(서버 우선, 실패 시 로컬 48시간으로 강행) */
-async function beginTimer(){
-  if(!currentUser || !sessionId){
-    toast('로그인 후 이용해주세요','error');
-    return;
-  }
-
-  // 기본값: 로컬 48시간
-  let endTs = Date.now() + 48*60*60*1000;
-
-  try{
-    const rsp = await apiRequest('startWorkshop', {
-      sessionId,
-      userName: currentUser,
-      durationHours: 48
-    });
-    if (rsp && rsp.success && rsp.endAt) {
-      endTs = Number(rsp.endAt); // 서버 기준 endAt 사용
-    }
-  }catch(_){ /* 서버 실패 무시하고 로컬로 진행 */ }
-
-  workshopEndAt = new Date(endTs);
-  localStorage.setItem('workshopEndAt', String(endTs));
-  clearGate();
-  runTick();
-  startServerSync();
-  toast('카운트다운 시작!','success');
-  track('start');
-}
-
-function runTick(){
-  if(timerInterval) clearInterval(timerInterval);
-  const disp=document.getElementById('timerDisplay');
-  const tick=()=>{
-    const remain=(workshopEndAt?workshopEndAt.getTime():Date.now())-Date.now();
-    disp.textContent=fmt(remain);
-    if(remain<=0){
-      clearInterval(timerInterval);
-      disp.textContent="00:00:00";
-    }
-  };
-  tick();
-  timerInterval=setInterval(tick,1000);
-}
-
-/* 30초마다 서버 기준 남은 시간 동기화 */
-function startServerSync(){
-  if(serverSyncInterval) clearInterval(serverSyncInterval);
-  serverSyncInterval = setInterval(refreshRemainingFromServer, 30000);
-  refreshRemainingFromServer(); // 즉시 1회
-}
-async function refreshRemainingFromServer(){
-  if(!currentUser || !sessionId) return;
-  const r = await apiRequest('getRemaining', { sessionId, userName: currentUser });
-  if(!r || !r.success) return;
-  if(r.status === 'nostart'){ applyGate(); return; }
-  workshopEndAt = new Date(r.endAt);
-  localStorage.setItem('workshopEndAt', String(r.endAt));
-  if(r.status === 'ended' || r.remainingMs <= 0) onTimerEnd();
-}
-function onTimerEnd(){
-  if(serverSyncInterval){ clearInterval(serverSyncInterval); serverSyncInterval=null; }
-  applyGate();
-  const disp=document.getElementById('timerDisplay'); if(disp) disp.textContent='00:00:00';
-  toast('워크숍이 종료되었습니다. 설문에 참여해주세요.','success');
-  openSurvey();
-  track('timer_end');
-}
-
-/* 참여 이전 상태로 되돌리기 */
-function revertToPreStart(){
-  try{
-    if (timerInterval) { clearInterval(timerInterval); timerInterval=null; }
-    localStorage.removeItem('workshopEndAt');
-    workshopEndAt=null;
-    const disp=document.getElementById('timerDisplay'); if(disp) disp.textContent='48:00:00';
-    const btn=document.getElementById('startBtn');
-    if(btn){
-      btn.disabled=false;
-      btn.textContent='워크숍 참여하기';
-    }
-    applyGate();
-    track('revert:pre_start');
-    toast('참여 이전 상태로 되돌렸습니다.','success');
-  }catch(e){
-    console.error(e);
-    toast('되돌리기 실패','error');
-  }
-}
-
-/* ====== LOGIN ====== */
-async function doLogin(){
-  const name = document.getElementById('userName').value.trim();
-  const mbti = document.getElementById('userMBTI').value.trim();
-
-  if (!name || !mbti) {
-    return toast('이름과 MBTI를 입력/선택하세요', 'error');
-  }
-
-  // 이름 2~4글자 제한
-  if (name.length < 2 || name.length > 4) {
-    return toast('이름은 2~4글자로 입력해주세요', 'error');
-  }
-
-  currentUser = name;
-  sessionId = 'session_' + Date.now();
-
-  document.getElementById('loginScreen').classList.add('hidden');
-  document.getElementById('mainScreen').classList.remove('hidden');
-  document.getElementById('userNameDisplay').textContent = currentUser;
-  document.getElementById('userTeamDisplay').textContent = '투어패스사업부';
-
-  // 로그인 캐시 (이름/MBTI만 저장)
-  localStorage.setItem('loginCache', JSON.stringify({ name, mbti }));
-  localStorage.setItem('sessionId', sessionId);
-
-  apiRequest('login', { sessionId, userName: name, mbti, team:'투어패스사업부', position:'' });
-  track('login', { mbti });
-
-  const stored = localStorage.getItem('workshopEndAt');
-  if (stored) {
-    workshopEndAt = new Date(Number(stored));
-    runTick();
-    clearGate();
-    startServerSync();
-  } else {
-    applyGate();
-  }
-
-  toast(`환영합니다, ${name}님!`, 'success');
-}
-
-async function doLogout(){
-  await apiRequest('updateUserStatus',{sessionId,userName:currentUser,status:'offline'});
-  localStorage.removeItem('loginCache');
-  localStorage.removeItem('sessionId');
-  // localStorage.removeItem('workshopEndAt'); // 유지하려면 그대로 둠
-  location.reload();
-}
-
-function restore(){
-  const cache = localStorage.getItem('loginCache');
-  if (!cache) return;
-  try{
-    const data = JSON.parse(cache);
-    const name = data.name;
-    const mbti = data.mbti;
-
-    if (!name || !mbti) return;
-
-    currentUser = name;
-    sessionId = localStorage.getItem('sessionId') || ('session_' + Date.now());
-
-    document.getElementById('loginScreen').classList.add('hidden');
-    document.getElementById('mainScreen').classList.remove('hidden');
-    document.getElementById('userNameDisplay').textContent = currentUser;
-    document.getElementById('userTeamDisplay').textContent = '투어패스사업부';
-
-    const stored = localStorage.getItem('workshopEndAt');
-    if (stored) {
-      workshopEndAt = new Date(Number(stored));
-      runTick();
-      clearGate();
-      startServerSync();
-    } else {
-      applyGate();
-    }
-
-    toast(`자동로그인: ${name}`,'success');
-  }catch(_){}
-}
-
-/* ====== 데일리 포춘 ====== */
-function seeded(name){
-  let t=0;
-  for(let i=0;i<name.length;i++) t=(t*31+name.charCodeAt(i))>>>0;
-  return ()=>{
-    t=(t+0x6D2B79F5)>>>0;
-    let r=Math.imul(t^(t>>>15),1|t);
-    r^=r+Math.imul(r^(r>>>7),61|r);
-    return((r^(r>>>14))>>>0)/4294967296;
-  };
-}
-function openFortune(){
-  const rng=seeded(currentUser + new Date().toISOString().slice(0,10));
-  const grade=['★★★★★','★★★★☆','★★★☆☆','★★☆☆☆','★☆☆☆☆'];
-  const pick=a=>a[Math.floor(rng()*a.length)];
-  const lucky=Math.floor(rng()*99)+1;
-  const sec=(tit)=>`<div class="border border-gray-200 rounded-lg p-3 mb-2"><div class="font-bold">${tit}<span class="float-right">${pick(grade)}</span></div><div class="text-gray-600 mt-1">`+
-    `${pick(['작게 시작하면 크게 돌아옵니다.','과감히 덜어내면 속도가 납니다.','타이밍은 지금! 미루지 말기.','사람을 먼저 챙기면 일이 풀립니다.','데이터로 확인하세요.'])}</div></div>`;
-  document.getElementById('fortuneBody').innerHTML=
-    `<div class="text-center mb-2"><div class="text-sm text-gray-500">오늘</div><div class="font-bold text-lg">${currentUser}님의 데일리 포춘</div></div>`+
-    sec('전체운')+sec('연애운')+sec('금전운')+sec('건강운')+sec('업무/학업')+
-    `<div class="grid grid-cols-2 gap-2 mt-2">
-       <div class="border border-gray-200 rounded-lg p-3"><div class="font-bold">럭키 넘버</div><div>${lucky}</div></div>
-       <div class="border border-gray-200 rounded-lg p-3"><div class="font-bold">럭키 컬러</div><div>${pick(['코랄','오렌지','라이트 피치','아이보리','모카'])}</div></div>
-     </div>`;
-  showModal('fortuneModal');
-  track('click:menu_fortune');
-}
-
-/* ====== 심리테스트 ====== */
-const PSY_QUESTIONS=[
-  {text:'사람 많은 활동에서 에너지가 생긴다.',pos:'E'},
-  {text:'계획대로 움직일 때 안정감을 느낀다.',pos:'J'},
-  {text:'결정보다 관계의 조화가 더 중요하다.',pos:'F'},
-  {text:'예상치 못한 제안도 즉흥적으로 수락한다.',pos:'P'},
-  {text:'혼자만의 시간에서 집중력이 오른다.',pos:'I'}
-];
-let psyIdx=0, score={E:0,I:0,J:0,P:0,F:0,T:0};
-function renderPsy(){
-  document.getElementById('psyTitle').textContent=`${psyIdx+1}/${PSY_QUESTIONS.length}`;
-  document.getElementById('psyQuestion').textContent=PSY_QUESTIONS[psyIdx].text;
-}
-function answerPsy(isO){
-  const q=PSY_QUESTIONS[psyIdx];
-  if(isO) score[q.pos]=(score[q.pos]||0)+1;
-  else score[{E:'I',I:'E',J:'P',P:'J',F:'T',T:'F'}[q.pos]]++;
-  psyIdx++;
-  if(psyIdx<PSY_QUESTIONS.length) renderPsy();
-  else showPsyResult();
-}
-function showPsyResult(){
-  const EI=(score.E||0)>=(score.I||0)?'E':'I';
-  const JP=(score.J||0)>=(score.P||0)?'J':'P';
-  const FT=(score.F||0)>=(score.T||0)?'F':'T';
-  let animal={emoji:'🐶',title:'활발한 강아지',desc:'사교성·즉흥력이 강점!'};
-  if(EI==='E'&&JP==='J') animal={emoji:'🦊',title:'똑똑한 여우형 리더',desc:'계획적 소통형 리더'};
-  if(EI==='I'&&JP==='P') animal={emoji:'🐱',title:'고양이 탐험가',desc:'혼자 충전·번뜩임'};
-  if(EI==='I'&&JP==='J') animal={emoji:'🦉',title:'현자 올빼미',desc:'분석·체계 전략가'};
-  if(FT==='F'&&EI==='E') animal={emoji:'🦦',title:'사교적인 수달',desc:'팀 분위기 메이커'};
-  document.getElementById('psyStep').classList.add('hidden');
-  document.getElementById('psyResult').classList.remove('hidden');
-  document.getElementById('resEmoji').textContent=animal.emoji;
-  document.getElementById('resTitle').textContent=animal.title;
-  document.getElementById('resDesc').textContent=animal.desc;
-  document.getElementById('resTags').innerHTML=['E/I','J/P','F/T'].map(t=>`<span>#${t}</span>`).join(' ');
-}
-function resetPsy(){
-  psyIdx=0;
-  score={E:0,I:0,J:0,P:0,F:0,T:0};
-  document.getElementById('psyStep').classList.remove('hidden');
-  document.getElementById('psyResult').classList.add('hidden');
-  renderPsy();
-}
-function openPsy(){
-  resetPsy();
-  showModal('psyModal');
-  track('click:menu_psy');
-}
-
-/* ====== 워크숍 일정 ====== */
-const SCHEDULE=[
-  { dayTitle:'첫째 날 (10월 16일)', rows:[
-    {time:'14:50',act:'로비 집합',place:'롯데리조트부여'},
-    {time:'15:30',act:'체크인 및 방배정',place:'롯데리조트부여'},
-    {time:'15:30',act:'아로마 버물리 만들기',place:'수복로1945'},
-    {time:'16:00',act:'원준님 도슨트 투어',place:'백제문화단지'},
-    {time:'17:30',act:'자유시간',place:'차량별'},
-    {time:'18:30',act:'저녁식사',place:'서동한우 규암점'},
-    {time:'21:00',act:'회식 (경품 이벤트)\n*부여통닭/보령맥주',place:'부여리조트부여'},
-    {time:'22:00',act:'자유회식/휴식',place:'-'},
-  ]},
-  { dayTitle:'둘째 날 (10월 17일)', rows:[
-    {time:'11:00',act:'아침 겸 점심식사',place:'장원막국수'},
-    {time:'12:30',act:'워크숍 장소 집합',place:'사비123창착센터'},
-    {time:'12:30',act:'2026 투어패스사업부 사업 추진계획 / 남도현 이사',place:'남도현'},
-    {time:'13:10',act:'3팀 성과 및 추진계획',place:'김대진'},
-    {time:'13:30',act:'2팀 성과 및 추진계획',place:'김현철'},
-    {time:'13:50',act:'1팀 성과 및 추진계획',place:'김수인'},
-    {time:'14:10',act:'귀가',place:'-'},
-  ]},
-];
-function renderSchedule(){
-  const body=document.getElementById('scheduleBody');
-  body.innerHTML=SCHEDULE.map(day=>{
-    const rows=day.rows.map(r=>`<tr>
-      <td class="py-2 px-2 font-bold" style="color:#df6444">${r.time}</td>
-      <td class="py-2 px-2">${r.act.replaceAll('\\n','<br>')}</td>
-      <td class="py-2 px-2 text-gray-600">${r.place}</td></tr>`).join('');
-    return `<div class="px-3 py-2 font-extrabold" style="background:#fff2ec;border-radius:.75rem;margin:.25rem 0 .5rem;color:#c04e32"> ${day.dayTitle}</div>
-      <table class="w-full border-collapse">
-        <thead><tr class="text-left text-gray-500"><th class="py-2 px-2 w-20">시간</th><th class="py-2 px-2">활동</th><th class="py-2 px-2 w-32">장소</th></tr></thead>
-        <tbody class="border-t border-gray-200">${rows}</tbody>
-      </table>`;
-  }).join('');
-}
-function openSchedule(){
-  renderSchedule();
-  showModal('scheduleModal');
-  track('click:menu_schedule');
-}
-
-/* ====== 만족도 조사 ====== */
-function openSurvey(){
-  document.getElementById('surveyForm').reset();
-  document.getElementById('surveyForm').classList.remove('hidden');
-  document.getElementById('surveyDone').classList.add('hidden');
-  showModal('surveyModal');
-  track('click:menu_survey');
-}
-async function submitSurvey(e){
-  e.preventDefault();
-  const fd = new FormData(e.target);
-  const satisfaction = fd.get('satisfaction');
-  let best = document.getElementById('bestProgram').value || '';
-  const etc = document.getElementById('bestProgramEtc').value.trim();
-  if (best.startsWith('기타') && etc) best = `기타(${etc})`;
-  const feedback = (document.getElementById('improve').value || '').trim();
-
-  if(!satisfaction){
-    toast('만족도를 선택해주세요','error');
-    return;
-  }
-
-  const res = await apiRequest('saveSurvey', {
-    user: currentUser || '게스트',
-    satisfaction,
-    useful_program: best,
-    feedback
-  });
-
-  if(res && res.success){
-    toast('제출 완료!','success');
-    track('submit:survey',{satisfaction, best});
-    const box = document.getElementById('surveySummary');
-    box.innerHTML = `
-      <div><b>만족도</b> : ${satisfaction} / 5</div>
-      <div><b>가장 만족</b> : ${best || '-'}</div>
-      <div><b>개선사항</b> : ${feedback ? feedback.replaceAll('<','&lt;') : '-'}</div>
-    `;
-    document.getElementById('surveyForm').classList.add('hidden');
-    document.getElementById('surveyDone').classList.remove('hidden');
-  } else {
-    toast('저장 실패. 네트워크를 확인해주세요.','error');
-  }
-}
-
-/* ====== 회사소개서 받기 ====== */
-function openBrochure(){
-  if(!currentUser){
-    toast('로그인 후 이용해주세요','error');
-    return;
-  }
-  const input=document.getElementById('brochureEmail');
-  if(input) input.value='';
-  showModal('brochureModal');
-  track('click:brochure');
-}
-
-async function sendBrochure(){
-  const input=document.getElementById('brochureEmail');
-  if(!input) return;
-  const email=input.value.trim();
-
-  if(!email){
-    toast('이메일을 입력해주세요','error');
-    return;
-  }
-  // 간단 이메일 형식 검증
-  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
-    toast('올바른 이메일 형식을 입력해주세요','error');
-    return;
-  }
-
-  const res = await apiRequest('requestBrochure',{
-    sessionId,
-    userName: currentUser || '',
-    email
-  });
-
-  if(res && res.success){
-    toast('회사소개서를 메일로 발송했습니다.','success');
-    hideModal('brochureModal');
-    track('send:brochure',{email});
-  }else{
-    toast('발송 요청에 실패했습니다. 잠시 후 다시 시도해주세요.','error');
-  }
-}
-
-/* ====== MODAL HELPERS ====== */
-function showModal(id){document.getElementById(id).style.display='flex';}
-function hideModal(id){document.getElementById(id).style.display='none';}
-document.querySelectorAll('.close').forEach(btn=>btn.addEventListener('click',()=>hideModal(btn.dataset.close)));
-window.addEventListener('click',e=>{
-  document.querySelectorAll('.modal').forEach(m=>{
-    if(e.target===m) m.style.display='none';
-  });
-});
-
-/* ====== EVENTS ====== */
-document.getElementById('loginBtn').addEventListener('click',doLogin);
-document.getElementById('logoutBtn').addEventListener('click',doLogout);
-document.querySelector('.logout').addEventListener('click',doLogout);
-document.getElementById('startBtn').addEventListener('click',beginTimer);
-
-document.getElementById('menuMbti').addEventListener('click',()=>{
-  window.open(RELATION_URL,'_blank');
-  track('click:mbti');
-});
-document.getElementById('menuFortune').addEventListener('click',openFortune);
-document.getElementById('menuAI').addEventListener('click',()=>{
-  window.open(AI_CHATBOT_URL,'_blank');
-  track('click:ai');
-});
-document.getElementById('menuPsy').addEventListener('click',openPsy);
-document.getElementById('btnO').addEventListener('click',()=>answerPsy(true));
-document.getElementById('btnX').addEventListener('click',()=>answerPsy(false));
-document.getElementById('psyRetry').addEventListener('click',resetPsy);
-document.getElementById('menuSchedule').addEventListener('click',openSchedule);
-
-document.getElementById('menuSurvey').addEventListener('click',openSurvey);
-document.getElementById('surveyForm').addEventListener('submit',submitSurvey);
-
-/* 회사소개서 받기 버튼 이벤트 */
-document.getElementById('menuDraft').addEventListener('click',openBrochure);
-document.getElementById('brochureSendBtn').addEventListener('click',sendBrochure);
-
-/* 타이머 카드 롱프레스 → revert */
-(function setupLongPressRevert(){
-  const box=document.getElementById('timerBox'); if(!box) return;
-  let t=null;
-  const start=()=>{ t=setTimeout(()=>revertToPreStart(),800); };
-  const clear=()=>{ if(t){clearTimeout(t);t=null;} };
-  box.addEventListener('mousedown',start);
-  box.addEventListener('touchstart',start,{passive:true});
-  ['mouseup','mouseleave','touchend','touchcancel'].forEach(ev=>box.addEventListener(ev,clear,{passive:true}));
-})();
-
-/* ====== INIT ====== */
-(function init(){
-  document.querySelectorAll('[data-close]').forEach(b=>b.addEventListener('click',()=>hideModal(b.getAttribute('data-close'))));
-  restore();
-
-  if(currentUser && sessionId){
-    startServerSync();
-  } else {
-    applyGate();
-  }
-
-  const params = new URLSearchParams(location.search);
-  if (params.get('reset') === '1') revertToPreStart();
-
-  const end=localStorage.getItem('workshopEndAt');
-  if(end){
-    workshopEndAt=new Date(Number(end));
-    runTick();
-    clearGate();
-  }
-})();
-</script>
-</body>
-</html>
+        <option>INTJ</option><option>INFJ</option><option>INFP</optio
